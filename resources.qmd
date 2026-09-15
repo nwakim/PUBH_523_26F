@@ -1,0 +1,11 @@
+---
+title: "Resources"
+listing:
+  contents: resources
+  fields: [title, description]
+  type: table           
+  sort: "title asc"
+  categories: true
+---
+
+

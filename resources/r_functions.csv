@@ -1,0 +1,146 @@
+Function,Package,Lesson_Introduced,Lesson_Topic,R_Documentation,Additional_Help,Appears_In_Lessons,Num_Lessons
+library,base,3,Download + Intro to R & RStudio,https://rdrr.io/r/base/library.html,,"3, 4, 9, 14, 15",5
+pacman::p_load,pacman,5,Basics,https://rdrr.io/cran/pacman/man/p_load.html,,"5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35",31
+sin,base,5,Basics,https://rdrr.io/r/base/Trig.html,,"5, 6",2
+sqrt,base,5,Basics,https://rdrr.io/r/base/MathFun.html,,"5, 17",2
+theme_grey,ggplot2,8,Quarto & .qmd's,https://ggplot2.tidyverse.org/reference/ggtheme.html,,"8, 30, 31, 32, 33, 34",6
+theme_set,ggplot2,8,Quarto & .qmd's,https://ggplot2.tidyverse.org/reference/theme_get.html,,"8, 30, 31, 32, 33, 34",6
+install.packages,utils,9,Packages,https://rdrr.io/r/utils/install.packages.html,,"9, 14",2
+getwd,base,10,R projects & working directories,https://rdrr.io/r/base/getwd.html,,10,1
+here,here,10,R projects & working directories,https://here.r-lib.org/reference/here.html,https://here.r-lib.org/articles/here.html,"10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35",26
+read_rds,readr,10,R projects & working directories,https://readr.tidyverse.org/reference/read_rds.html,,"10, 13, 16, 18",4
+setwd,base,10,R projects & working directories,https://rdrr.io/r/base/getwd.html,,10,1
+c,base,12,Functions,https://rdrr.io/r/base/c.html,,"12, 14, 15, 17, 23, 35",6
+mean,base,12,Functions,https://rdrr.io/r/base/mean.html,,"12, 14, 15, 17, 27, 30, 35",7
+sd,stats,12,Functions,https://rdrr.io/r/stats/sd.html,,"12, 17, 27",3
+seq,base,12,Functions,https://rdrr.io/r/base/seq.html,,"12, 17",2
+class,base,13,Objects,https://rdrr.io/r/base/class.html,,"13, 23",2
+clean_names,janitor,13,Objects,https://sfirke.github.io/janitor/reference/clean_names.html,,"13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33",21
+head,utils,13,Objects,https://rdrr.io/r/utils/head.html,,"13, 18, 20, 21, 35",5
+tibble,tibble,13,Objects,https://tibble.tidyverse.org/reference/tibble.html,,"13, 18, 19, 22, 23, 28, 29, 35",8
+all.equal,base,14,Common errors,https://rdrr.io/r/base/all.equal.html,,14,1
+data.frame,base,14,Common errors,https://rdrr.io/r/base/data.frame.html,,14,1
+log,base,14,Common errors,https://rdrr.io/r/base/Log.html,,"14, 17",2
+names,base,14,Common errors,https://rdrr.io/r/base/names.html,,"14, 18, 22, 23",4
+example,utils,15,Getting help,https://rdrr.io/r/utils/example.html,,15,1
+help,utils,15,Getting help,https://rdrr.io/r/utils/help.html,,15,1
+max,base,15,Getting help,https://rdrr.io/r/base/Extremes.html,,"15, 17, 27",3
+paste,base,15,Getting help,https://rdrr.io/r/base/paste.html,,15,1
+paste0,base,15,Getting help,https://rdrr.io/r/base/paste.html,,15,1
+round,base,15,Getting help,https://rdrr.io/r/base/Round.html,,"15, 17, 22, 30",4
+dim,base,16,Piping,https://rdrr.io/r/base/dim.html,,16,1
+lm,stats,16,Piping,https://rdrr.io/r/stats/lm.html,,16,1
+relocate,dplyr,16,Piping,https://dplyr.tidyverse.org/reference/relocate.html,,"16, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33",14
+select,dplyr,16,Piping,https://dplyr.tidyverse.org/reference/select.html,,"16, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 34, 35",13
+abs,base,17,Key operators & functions,https://rdrr.io/r/base/MathFun.html,,17,1
+ceiling,base,17,Key operators & functions,https://rdrr.io/r/base/Round.html,,17,1
+floor,base,17,Key operators & functions,https://rdrr.io/r/base/Round.html,,17,1
+janitor::round_half_up,janitor,17,Key operators & functions,https://sfirke.github.io/janitor/reference/round_half_up.html,,17,1
+log10,base,17,Key operators & functions,https://rdrr.io/r/base/Log.html,,17,1
+log2,base,17,Key operators & functions,https://rdrr.io/r/base/Log.html,,17,1
+median,stats,17,Key operators & functions,https://rdrr.io/r/stats/median.html,,"17, 27",2
+min,base,17,Key operators & functions,https://rdrr.io/r/base/Extremes.html,,"17, 27",2
+quantile,stats,17,Key operators & functions,https://rdrr.io/r/stats/quantile.html,,17,1
+range,base,17,Key operators & functions,https://rdrr.io/r/base/range.html,,17,1
+rep,base,17,Key operators & functions,https://rdrr.io/r/base/rep.html,,17,1
+sample,base,17,Key operators & functions,https://rdrr.io/r/base/sample.html,,17,1
+set.seed,base,17,Key operators & functions,https://rdrr.io/r/base/Random.html,,17,1
+sum,base,17,Key operators & functions,https://rdrr.io/r/base/sum.html,,17,1
+summary,base,17,Key operators & functions,https://rdrr.io/r/base/summary.html,,"17, 24, 25",3
+export,rio,18,Import & export,https://rdrr.io/cran/rio/man/export.html,,18,1
+glimpse,dplyr / pillar,18,Import & export,https://pillar.r-lib.org/reference/glimpse.html,,"18, 31",2
+import,rio,18,Import & export,https://rdrr.io/cran/rio/man/import.html,,"18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35",18
+print,base,18,Import & export,https://rdrr.io/r/base/print.html,,"18, 19",2
+read.csv,utils,18,Import & export,https://rdrr.io/r/utils/read.table.html,,18,1
+read_csv,readr,18,Import & export,https://readr.tidyverse.org/reference/read_delim.html,,18,1
+read_dta,haven,18,Import & export,https://haven.tidyverse.org/reference/read_dta.html,,18,1
+read_excel,readxl,18,Import & export,https://readxl.tidyverse.org/reference/read_excel.html,,18,1
+read_sas,haven,18,Import & export,https://haven.tidyverse.org/reference/read_sas.html,,18,1
+read_sav,haven,18,Import & export,https://haven.tidyverse.org/reference/read_spss.html,,18,1
+write.csv,utils,18,Import & export,https://rdrr.io/r/utils/write.table.html,,18,1
+write.xlsx,openxlsx,18,Import & export,https://rdrr.io/cran/openxlsx/man/write.xlsx.html,,18,1
+write_csv,readr,18,Import & export,https://readr.tidyverse.org/reference/write_delim.html,,18,1
+write_dta,haven,18,Import & export,https://haven.tidyverse.org/reference/read_dta.html,,18,1
+write_rds,readr,18,Import & export,https://readr.tidyverse.org/reference/read_rds.html,,18,1
+write_sas,haven,18,Import & export,https://haven.tidyverse.org/reference/read_sas.html,,18,1
+write_sav,haven,18,Import & export,https://haven.tidyverse.org/reference/read_spss.html,,18,1
+write_xlsx,writexl,18,Import & export,https://docs.ropensci.org/writexl/reference/write_xlsx.html,,18,1
+filter,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/filter.html,,"20, 21, 22, 23, 35",5
+group_by,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/group_by.html,,"20, 23, 24, 27",4
+inner_join,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/mutate-joins.html,,20,1
+left_join,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/mutate-joins.html,,20,1
+mutate,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/mutate.html,,"20, 22, 23, 24, 32, 33, 34, 35",8
+slice,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/slice.html,,20,1
+summarize,dplyr,20,Intro to data transformation & summarization,https://dplyr.tidyverse.org/reference/summarise.html,,"20, 24, 27",3
+arrange,dplyr,21,Data transformation: rows,https://dplyr.tidyverse.org/reference/arrange.html,,"21, 23, 35",3
+count,dplyr,21,Data transformation: rows,https://dplyr.tidyverse.org/reference/count.html,,"21, 23",2
+desc,dplyr,21,Data transformation: rows,https://dplyr.tidyverse.org/reference/desc.html,,21,1
+distinct,dplyr,21,Data transformation: rows,https://dplyr.tidyverse.org/reference/distinct.html,,"21, 23",2
+drop_na,tidyr,21,Data transformation: rows,https://tidyr.tidyverse.org/reference/drop_na.html,,"21, 32, 33, 35",4
+filter_out,dplyr,21,Data transformation: rows,https://dplyr.tidyverse.org/reference/filter.html,,"21, 35",2
+rename,dplyr,22,Data transformation: columns,https://dplyr.tidyverse.org/reference/rename.html,,22,1
+as.character,base,23,Data transformation: advanced,https://rdrr.io/r/base/character.html,,"23, 24",2
+case_when,dplyr,23,Data transformation: advanced,https://dplyr.tidyverse.org/reference/case_when.html,,23,1
+contains,tidyselect,23,Data transformation: advanced,https://tidyselect.r-lib.org/reference/starts_with.html,,"23, 28, 35",3
+ends_with,tidyselect,23,Data transformation: advanced,https://tidyselect.r-lib.org/reference/starts_with.html,,"23, 28",2
+factor,base,23,Data transformation: advanced,https://rdrr.io/r/base/factor.html,,23,1
+fct,forcats,23,Data transformation: advanced,https://forcats.tidyverse.org/reference/fct.html,,23,1
+fct_relevel,forcats,23,Data transformation: advanced,https://forcats.tidyverse.org/reference/fct_relevel.html,,"23, 32, 33, 34, 35",5
+get_summary_stats,rstatix,23,Data transformation: advanced,https://rpkgs.datanovia.com/rstatix/reference/get_summary_stats.html,,"23, 25, 27",3
+gt,gt,23,Data transformation: advanced,https://gt.rstudio.com/reference/gt.html,,"23, 24, 26, 34, 35",5
+levels,base,23,Data transformation: advanced,https://rdrr.io/r/base/levels.html,,23,1
+starts_with,tidyselect,23,Data transformation: advanced,https://tidyselect.r-lib.org/reference/starts_with.html,,"23, 28",2
+tabyl,janitor,23,Data transformation: advanced,https://sfirke.github.io/janitor/reference/tabyl.html,,"23, 24, 26, 35",4
+where,tidyselect,23,Data transformation: advanced,https://tidyselect.r-lib.org/reference/where.html,,23,1
+skim,skimr,24,Data summarization: intro,https://docs.ropensci.org/skimr/reference/skim.html,,"24, 25, 27",3
+tbl_summary,gtsummary,24,Data summarization: intro,https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html,,"24, 26, 27, 30",4
+adorn_ns,janitor,26,Data summarization: tables,https://sfirke.github.io/janitor/reference/adorn_ns.html,,26,1
+adorn_pct_formatting,janitor,26,Data summarization: tables,https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html,,26,1
+adorn_percentages,janitor,26,Data summarization: tables,https://sfirke.github.io/janitor/reference/adorn_percentages.html,,26,1
+adorn_totals,janitor,26,Data summarization: tables,https://sfirke.github.io/janitor/reference/adorn_totals.html,,26,1
+as_gt,gtsummary,26,Data summarization: tables,https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html,,"26, 30",2
+fmt_percent,gt,26,Data summarization: tables,https://gt.rstudio.com/reference/fmt_percent.html,,26,1
+px,gt,26,Data summarization: tables,https://gt.rstudio.com/reference/px.html,,"26, 34, 35",3
+tab_header,gt,26,Data summarization: tables,https://gt.rstudio.com/reference/tab_header.html,,26,1
+tab_options,gt,26,Data summarization: tables,https://gt.rstudio.com/reference/tab_options.html,,"26, 30, 34, 35",4
+summarise,dplyr,27,Data summarization: grouped summaries,https://dplyr.tidyverse.org/reference/summarise.html,,27,1
+pivot_longer,tidyr,28,Lengthening data,https://tidyr.tidyverse.org/reference/pivot_longer.html,,"28, 29",2
+pivot_wider,tidyr,29,Widening data,https://tidyr.tidyverse.org/reference/pivot_wider.html,,29,1
+all_continuous,gtsummary,30,Quarto revisited,https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html,,30,1
+comma,scales,30,Quarto revisited,https://scales.r-lib.org/reference/label_number.html,,30,1
+list,base,30,Quarto revisited,https://rdrr.io/r/base/list.html,,"30, 35",2
+percent,scales,30,Quarto revisited,https://scales.r-lib.org/reference/label_percent.html,,30,1
+aes,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/aes.html,,"31, 32, 33",3
+element_text,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/element.html,,"31, 33, 34",3
+geom_histogram,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/geom_histogram.html,,"31, 32, 33",3
+geom_point,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/geom_point.html,,"31, 32",2
+geom_smooth,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/geom_smooth.html,,"31, 32",2
+ggplot,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/ggplot.html,https://r4ds.hadley.nz/data-visualize,"31, 32, 33",3
+labs,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/labs.html,,"31, 32, 33",3
+theme,ggplot2,31,Data viz: intro to ggplot,https://ggplot2.tidyverse.org/reference/theme.html,,"31, 32, 33, 34",4
+geom_bar,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_bar.html,,32,1
+geom_boxplot,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_boxplot.html,,"32, 33",2
+geom_density,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_density.html,,32,1
+geom_density_ridges,ggridges,32,Data viz: basic plotting,https://wilkelab.org/ggridges/reference/geom_density_ridges.html,,32,1
+geom_dotplot,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_dotplot.html,,32,1
+geom_jitter,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_jitter.html,,"32, 33",2
+geom_line,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/geom_path.html,,32,1
+ylim,ggplot2,32,Data viz: basic plotting,https://ggplot2.tidyverse.org/reference/lims.html,,32,1
+facet_grid,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/facet_grid.html,,33,1
+facet_wrap,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/facet_wrap.html,,33,1
+ggsave,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/ggsave.html,,33,1
+theme_bw,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/ggtheme.html,,"33, 34",2
+theme_classic,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/ggtheme.html,,33,1
+theme_minimal,ggplot2,33,Data viz: design choices,https://ggplot2.tidyverse.org/reference/ggtheme.html,,33,1
+gg_miss_fct,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/gg_miss_fct.html,,34,1
+gg_miss_upset,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/gg_miss_upset.html,,34,1
+miss_var_summary,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/miss_var_summary.html,,"34, 35",2
+n_complete,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/n_complete.html,,34,1
+n_miss,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/n_miss.html,,34,1
+prop_miss,naniar,34,Missing data: summarization & viz,https://naniar.njtierney.com/reference/prop_miss.html,,34,1
+vis_miss,visdat,34,Missing data: summarization & viz,https://docs.ropensci.org/visdat/reference/vis_miss.html,,34,1
+fct_na_value_to_level,forcats,35,Missing data: transformations,https://forcats.tidyverse.org/reference/fct_na_value_to_level.html,,35,1
+is.na,base,35,Missing data: transformations,https://rdrr.io/r/base/NA.html,,35,1
+replace_na,tidyr,35,Missing data: transformations,https://tidyr.tidyverse.org/reference/replace_na.html,,35,1
+replace_with_na,naniar,35,Missing data: transformations,https://naniar.njtierney.com/reference/replace_with_na.html,,35,1
+tail,utils,35,Missing data: transformations,https://rdrr.io/r/utils/head.html,,35,1

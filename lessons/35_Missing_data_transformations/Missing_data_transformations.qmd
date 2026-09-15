@@ -1,0 +1,420 @@
+---
+title: "Missing data: transformations"
+author: "Nicky Wakim, Jessica Minnier, and Meike Niederhausen"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Missing data: transformations"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+pacman::p_load(
+  tidyverse, 
+  here, 
+  rio, 
+  naniar, 
+  janitor,
+  gt
+)
+
+hrs_data <- import(here("data", "hrs_data.rds")) |>
+  mutate(srh = fct_relevel(srh, "Excellent", "Very Good", "Good", "Fair", "Poor"))
+```
+
+# From finding missing data to handling it {visibility="hidden"}
+
+## Before we start
+
+- Install and load the `naniar` package (a play on Narnia) if you haven't already!
+
+![[Artwork by @allison_horst](https://allisonhorst.com/r-packages-functions)](../img_slides/horst_naniar.png){fig-alt="\"Explore missing data in naniar!\" Cute monsters with exploring gear looking around a landscape full of subtle (and not so subtle) NAs, hidden in trees, on mountain tops, as birds, and in flowers. Learn more about naniar."}
+
+
+- We'll be working with only a few variables in the HRS dataset in this lesson!
+  - Mostly to help us view the tables and plots within the slides
+  
+```{r}
+hrs_00 <- hrs_data |>
+  select(ed, race_original, srh, sex, act_vig, height, degree)
+```
+
+
+## What do we do with missing data?
+
+- *Filtering out* missing values with `drop_na()`
+- A common gotcha: how `filter()` silently drops `NA`s
+
+ 
+
+- We will also use `naniar` functions to work with `NA`s in a more flexible way
+  - *Filling in* missing values with `replace_na()` (and `fct_na_value_to_level()` for factors)
+  - *Replacing* a values (numbers or levels) with `NA` using `replace_with_na()`
+  
+ 
+
+- Not covered in this course (but very important in practice): 
+  - Imputation methods for filling in missing values
+  - Weighting methods for adjusting for missingness
+
+
+# Filtering out missing values using `drop_na()` {visibility="hidden"}
+
+## Check missingness rates first before dropping `NA`s
+
+- We may want to remove rows that have missing data, coded as `NA`
+
+- First, summarize and visualize missingness using `naniar`
+
+- We'll take a quick look at the counts
+
+```{r}
+#| code-fold: true
+#| code-summary: "Create missingness sumamry table with `miss_var_summary()`"
+hrs_00 |>
+  miss_var_summary() |>
+  gt() |>
+  tab_options(table.font.size = px(40))
+```
+
+## `drop_na()`: removing missingness from all variables in the dataset
+
+- `drop_na()` removes rows with missing data
+  - You can target specific columns, or drop any row with any missingness
+
+```{r}
+hrs_01_na_rm <- hrs_00 |>
+  drop_na()
+tibble(hrs_01_na_rm)
+```
+
+*Pay attention to the number of rows for each of these results*
+
+## `drop_na()`: removing missingness from all variables in the dataset
+
+- Remove missingness in one or more columns:
+
+```{r}
+hrs_02_race_rm <- hrs_00 |> 
+  drop_na(race_original, ed)
+
+hrs_02_race_rm |> miss_var_summary() |>
+  gt() |>
+  tab_options(table.font.size = px(40))
+```
+  
+
+# A warning about `filter()`: check for `NA` {visibility="hidden"}
+
+## Warning on `filter()`: it can silently drop your `NA`s
+
+- Suppose we want to remove the `"Poor"` category from `srh` (self-reported health)
+
+::: columns
+::: column
+```{r}
+hrs_00 |> tabyl(srh)
+```
+:::
+::: column
+
+
+`srh` has 4 missing values!
+:::
+:::
+
+::: columns
+::: column
+When we try to filter using `!=`, we **lose our `NA`s**!
+
+```{r}
+hrs_03_rm_poor <- hrs_00 |> 
+  filter(srh != "Poor")
+```
+:::
+::: column
+When `R` checks `NA != "Poor"`, it evaluates to `NA`, not `TRUE`, so that row gets dropped
+
+```{r}
+hrs_03_rm_poor |> tabyl(srh)
+```
+:::
+:::
+
+## Use `filter_out()` to keep `NA`s
+
+::: columns
+::: {.column width="60%"}
+
+- We can use `filter_out()` from the `dplyr` package to keep the `NA`s when we want to perform an exclusionary (`!=`) filter
+
+```{r}
+hrs_04_rm_poor <- hrs_00 |>
+  filter_out(srh == "Poor")
+
+hrs_04_rm_poor |> tabyl(srh)
+```
+
+:::
+::: {.column width="40%"}
+
+ 
+
+::: pink
+::: pink-ttl
+Build this habit
+:::
+::: pink-cont
+Whenever you filter on a column that has missing values, stop and check: *how many observations were removed and does that correspond to the number of values I expect (excluding `NA`s?)*
+:::
+:::
+:::
+:::
+
+# Replace missing values with `replace_na()` {visibility="hidden"}
+
+## `replace_na()`: replace missing values with a specific value
+
+- Sometimes we want to fill in missing values with a specific value instead of removing the row
+- We can use the `replace_na()` function *inside `mutate()`* to set `NA`s to a specific value
+- `replace_na()` works on *numeric* and *character* variables, not *factors*
+ 
+
+- Here's the general version of the function:
+
+```{r}
+#| eval: false
+data_filled <- data |>
+  mutate(
+    variable_filled = replace_na( #<1>
+      variable, #<2>
+      value_to_fill_in #<3>
+      )
+  )
+```
+
+1. `replace_na()` swaps out any `NA` in `variable` for the value we provide. It's good practice to assign this to a new variable, like `variable_filled`
+2. `variable` is the column we want to fill in
+3. `value_to_fill_in` is the value we want to use to replace the missing
+
+## Example 1: filling a numeric variable
+
+- Suppose if `height` is missing, we want to replace it with the average `height` across the dataset
+  - This is **not** an advised solution, I just want to show you how the function works!
+
+- Here's how we can use `replace_na()` to fill in the missing values:
+
+```{r}
+hrs_05_height_filled <- hrs_00 |>
+  mutate( #<1>
+    height_filled = replace_na( #<2>
+      height, #<3>
+      mean(height, na.rm = TRUE)) #<4>
+    ) #<1>
+```
+
+1. We need to wrap `replace_na()` in `mutate()` to create a new variable, `height_filled`
+2. `replace_na()` swaps out any `NA` in `height` for the value we provide
+3. `height` is the column we want to fill in.  
+4. We will replace the missing values with the mean of `height`
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Check that the function worked"
+
+hrs_05_height_filled |>
+  select(contains("height")) |>
+  arrange(height) |> tail()
+```
+
+## `fct_na_value_to_level()`: filling a factor variable
+
+- This is the `forcats` version of `replace_na()` for *factor* variables
+
+ 
+
+- We can use the `fct_na_value_to_level()` function *inside `mutate()`* to set `NA`s to a specific value
+- `fct_na_value_to_level()` works on *factors*!!
+
+- General version of the function is similar to `replace_na()`:
+
+```{r}
+#| eval: false
+data_filled <- data |>
+  mutate( #<1>
+    variable_filled = fct_na_value_to_level( #<2>
+      variable, #<3>
+      level = "new level to replace NAs" #<4>
+      )
+  ) #<1>
+```
+
+1. We need to wrap `fct_na_value_to_level()` in `mutate()` to create a new variable, `variable_filled`
+2. `fct_na_value_to_level()` swaps out any `NA` in `variable` for the level we provide
+3. `variable` is the column we want to fill in
+4. `"new level to replace NAs"` is added as a new level, and used to replace the missing values
+
+## Example 2: filling a factor variable
+
+- Suppose if `race_original` is missing, we want to replace it with `Unknown`
+  - This is **not** an advised solution, I just want to show you how the function works!
+
+- Here's how we can use `replace_na()` to fill in the missing values:
+
+```{r}
+hrs_06_race_filled <- hrs_00 |>
+  mutate(
+    race_filled = fct_na_value_to_level( #<1>
+      race_original, #<2>
+      level = "Unknown") #<3>
+    )
+```
+
+1. `fct_na_value_to_level()` swaps out any `NA` in `race_original` for the level we provide
+2. `race_original` is the column we want to fill in
+3. `"Unknown"` is added as a new level, and used to replace the missing values
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Check that the function worked"
+
+hrs_06_race_filled |> tabyl(race_original, race_filled)
+```
+
+# Replacing a factor level with `NA` {visibility="hidden"}
+
+## `replace_with_na()`: replace a factor level with `NA`
+
+- Sometimes there are data values that are not missing, but we want to treat them as missing
+  - Example: you might see a numeric value as `-99` or `"999"` to indicate missingness, but because it's a valid number, R doesn't treat it as `NA`
+- **Note:** there are no good examples of this in the HRS dataset, so I'm going to show you how to use the function with levels and values that **should not be considered missing**
+
+ 
+
+- General version of the function:
+```{r}
+#| eval: false
+
+data_replaced_na <- data |>
+  replace_with_na(replace = list( #<1>
+    numeric_var1 = numeric_val1, #<2>
+    numeric_var2 = c(numeric_val2a, numeric_val2b, numeric_val2c), #<3>
+    factor_var1 = c("factor_level1", "factor_level2")  #<4>
+  ))
+```
+
+1. `replace_with_na()` takes a named list of columns and values to replace with `NA` 
+2. `numeric_var1` is the name of a numeric column, and `numeric_val1` is the value to replace with `NA`
+3. `numeric_var2` is the name of a numeric column, and `numeric_val2a`, `numeric_val2b`, and `numeric_val2c` are the values to replace with `NA`
+4. `factor_var1` is the name of a factor column, and `"factor_level1"` and `"factor_level2"` are the levels to replace with `NA` 
+
+## Example 3: replace certain levels or values with `NA` (1/2)
+
+- We can replace a few values in the `hrs_06_race_filled` dataset with `NA`
+```{r}
+hrs_07_other_na <- hrs_06_race_filled |>
+  mutate( #<1>
+    sex_na = sex, 
+    height_na = height,
+    race_filled_na = race_filled
+  ) |> #<1> 
+  replace_with_na(replace = list( #<2>
+    sex_na = "Male", #<3>
+    height_na = 1.6002, #<4>
+    race_filled_na = c("Other", "Unknown") #<5>
+  ))
+```
+
+1. I often make a new variable to hold the original values, so I can compare before and after
+2. `replace_with_na()` takes a named list of columns and values to replace with `NA`
+3. In the `sex` column, we will replace `"Male"` with `NA`
+4. In the `height` column, we will replace `70` with `NA`
+5. In the `race_filled` column, we will replace `"Other"` and `"Unknown"` with `NA`
+
+
+## Example 3: replace certain levels or values with `NA` (2/2)
+
+- We need to check our data to make sure we replaced the values we wanted to replace with `NA`
+
+::: columns
+::: {.column width="28%"}
+```{r}
+#| code-fold: true
+#| code-summary: "Check `sex_na`"
+
+hrs_07_other_na |> 
+  tabyl(sex, sex_na) |>
+  gt() |>
+  tab_options(table.font.size = px(35))
+```
+:::
+::: {.column width="72%"}
+```{r}
+#| code-fold: true
+#| code-summary: "Check `race_filled_na`"
+
+hrs_07_other_na |> 
+  tabyl(race_filled, race_filled_na) |>
+  gt() |>
+  tab_options(table.font.size = px(35))
+```
+:::
+:::
+
+```{r}
+#| code-fold: true
+#| code-summary: "Check `height_na`"
+
+hrs_07_other_na |> 
+  filter(is.na(height_na)) |>
+  select(height, height_na) |>
+  head()
+```
+
+
+
+# Wrap-up {visibility="hidden"}
+
+## Wrap-up
+
+- We learned a few ways to *handle* missing data, once we know it's there
+
+ 
+
+- `drop_na()` removes rows with missing data — target specific columns, or drop any row with any missingness
+- `filter()` **silently drops `NA` rows** unless you explicitly keep them with `| is.na(...)`; `filter_out()` handles this for you automatically
+- `replace_na()` fills in missing values for **numeric** and **character** columns
+- `fct_na_value_to_level()` fills in missing values for **factor** columns, by adding a new explicit level
+- `replace_with_na()` goes the other direction: turns a specific *value* (or factor level) into `NA`
+  - Always check your work afterward — compare before/after values with `tabyl()`, or compare `miss_var_summary()` before and after
+
+ 
+
+- There is no single "correct" way to handle missing data — the right choice depends on **why** the data is missing and what you're trying to learn from it
+
+## Resources
+
+- [`drop_na()` reference](https://tidyr.tidyverse.org/reference/drop_na.html)
+- [`filter_out()` reference](https://dplyr.tidyverse.org/reference/filter.html)
+- [`replace_na()` reference](https://tidyr.tidyverse.org/reference/replace_na.html)
+- [`fct_na_value_to_level()` reference](https://forcats.tidyverse.org/reference/fct_na_value_to_level.html)
+- [`replace_with_na()` reference](http://naniar.njtierney.com/reference/replace_with_na.html)
+- [Missing values chapter in *R for Data Science (2e)*](https://r4ds.hadley.nz/missing-values.html)
+- [Dealing with missing data in the *Epidemiologist R Handbook*](https://epirhandbook.com/en/missing-data.html)

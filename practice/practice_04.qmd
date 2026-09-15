@@ -1,0 +1,224 @@
+---
+title: "Practice 4"
+subtitle: "PUBH 523/623"
+author: "Your name here"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview
+
+This practice is mostly **hands-on**. You will import the full HRS dataset for the first time, export and re-import it to see how file type affects your data, rewrite nested code as pipes, and use some new operators and functions on the real dataset. You'll get a little more practice with `mean()` and `class()` along the way — but the focus this week is on the new material.
+
+Topics covered (Lessons 16-19):
+
+- Import and Export
+- Piping
+- Key operators and functions
+- Tidy data
+
+::: {.callout-tip appearance="minimal"}
+##### Note on ordering
+
+We're tackling **Import and Export (Lesson 18) first**, even though it comes third in the lesson order, because we need the real HRS dataset loaded before we can practice piping and operators on it.
+:::
+
+## Directions
+
+Download this practice `.qmd` from the course GitHub repository, rename it, and save it in your course folder.
+
+1. [Download `practice_04.qmd` from GitHub.](https://github.com/nwakim/PUBH_523_26Su/blob/main/practice/practice_04.qmd)
+2. Rename the file to `Lastname_Firstinitial_Practice_04.qmd` (or `lastname_firstinitial_practice_04.qmd`), replacing with your actual last name and first initial.
+3. Save it inside your `practice` folder. You may create a `practice_04` subfolder if you prefer.
+
+::: {.callout-tip appearance="minimal"}
+##### How to use this file
+
+- The boxes with the **yellow stripe** explain what to do. Keep these in your submitted file.
+- Do all your work **below and outside** of the yellow-striped boxes. 
+  - *You will need to create code chunks within this document to run your R code.*
+- Please delete the following sections before submitting:
+    - Overview
+    - Directions
+    - Tip boxes (green stripe)
+    - Caution boxes / Needed Steps (orange/red stripe)
+    - Submission checklist
+    - Note on AI usage
+:::
+
+::: {.callout-important appearance="minimal"}
+##### Needed setup
+
+- Download `hrs_data.rds` (link on practice page) and place it in an appropriate folder
+- Install the `rio` and `here` packages if you need to
+:::
+
+## Questions
+
+### Question 1: Import and Export
+
+In Lesson 18, we learned how to import and export data using file-specific functions and the `rio` package.
+
+#### Part A: Import the HRS dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Load the `tidyverse`, `rio`, and `here` packages. Then use `import()` together with `here()` to import `hrs_data.rds` from your `data` folder. Assign it to an object called `hrs_data`. Use `glimpse()` (or `tibble()`) to take a look at its structure.
+:::
+
+
+#### Part B: Export and re-import
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+1. Use `export()` from `rio` to save `hrs_data` as a `.csv` file named `hrs_data_export.csv` in the same folder as the `hrs_data.rds` file. 
+2. Use `import()` from `rio` to read `hrs_data_export.csv` back into R as a new object called `hrs_data_csv`.
+3. Use `class()` to check the class of the `sex` column in **both** `hrs_data` and `hrs_data_csv`. In 1-2 sentences, describe what you notice — is the class the same or different, and why might that be?
+:::
+
+*Write your code and answer here.*
+
+#### Part C: When to use which file type
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1-2 sentences, explain when you would prefer to save a dataset as `.rds` versus `.csv`, based on what we discussed in Lesson 18.
+:::
+
+*Write your answer here.*
+
+### Question 2: Piping
+
+In Lesson 16, we learned that pipes (`|>`) let us write code that reads left to right, passing the output of one step into the next.
+
+#### Part A: Nested to piped
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Here is a chunk of **nested** code:
+
+```{r}
+#| eval: false
+paste0("Mean CESD score: ", round(mean(hrs_data$cesd, na.rm = TRUE), digits = 1))
+```
+
+Rewrite this same calculation using the pipe (`|>`) instead of nesting. You will need the placeholder `_` for at least one step, since `paste0()` does not take the piped input as its first argument. Assign the result to an object called `cesd_summary` and print it.
+:::
+
+#### Part B: Write your own pipe
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$height`, write a pipe that (1) calculates the standard deviation  while handling any missing values, and (2) rounds that standard deviation to 3 decimal places. Assign the result to an object called `height_summary` and print it.
+:::
+
+### Question 3: Key operators and functions
+
+In Lesson 17, we expanded on boolean operators and were introduced to several new functions.
+
+#### Part A: Boolean operators and `%in%`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$sex`, answer the following with R code (don't just eyeball the data frame):
+
+1. Is `"Female"` one of the values in `hrs_data$sex`? Use `%in%`.
+2. Write one logical statement that uses `&` to check whether the **first** respondent (`hrs_data$age_yr[1]`) is over 65 **and** the **first** respondent's `sex` is `"Female"`.
+:::
+
+#### Part B: Statistical functions
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$cesd`, calculate each of the following and print them: the standard deviation (`sd()`), the range (`range()`), and the mean rounded to the nearest whole number using `round()`. (Handle any missing values you find along the way.)
+:::
+
+#### Part C: `seq()`, `rep()`, and `sample()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+1. Use `set.seed(523)` and then `sample()` to randomly draw 5 ids (without replacement) from `hrs_data$id`. Assign this to `sampled_ids` and print it.
+2. In 1 sentence, explain why we use `set.seed()` before `sample()`.
+:::
+
+### Question 4: Tidy data
+
+In Lesson 19, we learned that tidy data follow three rules: each variable has its own column, each observation has its own row, and each value has its own cell.
+
+#### Part A: Is it tidy?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Below is a small dataset showing the same information two different ways. For **each** table, state whether it is tidy or not, and explain why in 1-2 sentences (referencing the three rules above).
+
+**Table 1**
+
+| id | age_yr | cesd |
+|----|--------|------|
+| R1 | 55     | 2    |
+| R2 | 62     | 4    |
+
+**Table 2**
+
+| id | variable | value |
+|----|----------|-------|
+| R1 | age_yr   | 55    |
+| R1 | cesd     | 2     |
+| R2 | age_yr   | 62    |
+| R2 | cesd     | 4     |
+:::
+
+*Write your answers here.*
+
+#### Part B: Is `hrs_data` tidy?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Look at `hrs_data`. In 1-2 sentences, explain whether it is tidy, and identify what one row and one column represent.
+:::
+
+*Write your answer here.*
+
+## Submission Checklist
+
+If having a checklist helps you stay organized, check off each item below as you complete it. You do not need to submit this checklist.
+
+- [ ] `hrs_data` imported from `hrs_data.rds` and glimpsed (Q1 Part A)
+- [ ] `hrs_data_export.csv` exported and re-imported as `hrs_data_csv`, column classes compared (Q1 Part B)
+- [ ] `.rds` vs `.csv` question answered (Q1 Part C)
+- [ ] Nested code rewritten as a pipe with placeholder, `cesd_summary` created (Q2 Part A)
+- [ ] `height_summary` pipe written (Q2 Part B)
+- [ ] `%in%` and `&` statements written (Q3 Part A)
+- [ ] `sd()`, `range()`, and `round()` calculated on `cesd` (Q3 Part B)
+- [ ] `sampled_ids` created with `set.seed()` and `sample()`, with explanation (Q3 Part C)
+- [ ] Tidiness of both example tables explained (Q4 Part A)
+- [ ] Tidiness of `hrs_data` explained (Q4 Part B)
+- [ ] Document renders to HTML with no errors
+- [ ] Files named correctly: `Lastname_Firstinitial_Practice_04.qmd` and `Lastname_Firstinitial_Practice_04.html` (or lowercase versions)
+- [ ] Both `.qmd` and `.html` submitted to Brightspace
+
+## Note on AI usage
+
+I used GenAI (Claude) to help me draft this practice assignment. It helped me brainstorm ideas for the assignment, and I directed it to help you complete the needed tasks that I showed in the lessons.

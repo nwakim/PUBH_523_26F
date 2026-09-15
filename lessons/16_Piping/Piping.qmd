@@ -1,0 +1,253 @@
+---
+title: "Piping"
+author: "Nicky Wakim, Jessica Minnier, Meike Niederhausen"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Piping"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+```{r}
+#| echo: false
+hrs_data <- read_rds(here("./data/hrs_data.rds"))
+hrs_data <- clean_names(hrs_data) |>
+  relocate(age_yr, .after = birthdate) # move age_yr column to be after id column
+```
+
+## What is piping?
+
+- Pipes (and piping) are used to pass the output of one function as input into another function
+- You can think of pipes as "then" statements
+
+::: blue
+::: blue-cont
+I want to find my keys, then start my car, then drive to work, then park my car.
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+**Nested**
+
+```{r eval = FALSE}
+park( #<4>
+  drive( #<3>
+    start_car( #<2>
+      find("keys") #<1>
+      ),  #<2>
+    to = "work"
+    ) #<3>
+  ) #<4>
+```
+
+1. Our first action is embedded the furthest into the nested functions
+2. Then the output of "find keys" in the input of "start car" which is nested as well
+3. We keep working our way out to "drive"
+4. Then we finally park
+:::
+
+::: {.column width="50%"}
+**Piped**
+
+```{r eval = FALSE}
+find("keys") |> #<1>
+  start_car() |> #<2>
+  drive(to = "work") |> #<3>
+  park() #<4>
+```
+
+1. First statement is the first thing we want to do
+2. Output of "find keys" is inputted into "start car"
+3. Then we drive to work
+4. Then we park the car
+
+- Pipes tend to match our sequential thoughts better
+:::
+:::
+
+## Two types of pipes you might see
+
+- Two types: `|>` vs `%>%`
+  - `%>%` is the original pipe in R (requires `magrittr` package within `tidyverse`)
+  - `|>` is a newer pipe (started in 2021 and does not require a package)
+- Both pipes are used to write code from **left to right** 
+    -   by passing the result of one step into the next
+
+::: {.columns}
+                                        
+::: {.column width="50%"}
+
+::: red
+::: red-ttl
+Example using `|>`
+:::
+::: red-cont
+```{r}
+hrs_data |> dim()
+```
+:::
+:::
+
+:::
+                                          
+::: {.column width="50%"}
+::: blue
+::: blue-ttl
+Example using `%>%`
+:::
+::: blue-cont
+```{r}
+hrs_data %>% dim()
+```
+:::
+:::
+:::
+:::
+
+- You can use either! Our notes will use `|>` since it is generally where the field is headed.
+
+## Simple vs complicated input
+
+::: pink2
+::: pink2-cont
+[**Simple:** when the receiving function only has one input argument, we can use:]{style="color:#BF396F;"}
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+```{r}
+hrs_data |> dim() #<1>
+```
+
+1. Just the function name `dim` with parentheses.
+:::
+::: {.column width="50%"}
+```{r}
+hrs_data %>% dim() #<1>
+```
+1. Just the function name `dim` with parentheses.
+
+:::
+:::
+
+ 
+
+::: green
+::: green-cont
+[**Complicated:** when the receiving function has more input arguments, we need to specify **where the piped input goes**. We do this with a placeholder:]{style="color:#459B99;"}
+:::
+:::
+::: columns
+::: {.column width="52%"}
+The placeholder for `|>` is `_`
+```{r}
+#| eval: false
+hrs_data |> #<1>
+  lm(height ~ age_yr, data = _) #<2>
+```
+
+1. We take the `hrs_data` and pipe it into a function
+2. This function `lm` requires multiple inputs. `height ~ age_yr` is one input and `hrs_data` is the other. `hrs_data` is represented by `_` since it is piped through. 
+:::
+::: {.column width="48%"}
+The placeholder for `%>%` is `.`
+```{r}
+#| eval: false
+hrs_data %>% #<1>
+  lm(height ~ age_yr, data = .) #<2>
+```
+
+1. We take the `hrs_data` and pipe it into a function
+2. This function `lm` requires multiple inputs. `height ~ age_yr` is one input and `hrs_data` is the other. `hrs_data` is represented by `.` since it is piped through. 
+:::
+:::
+
+## Notice the code styling
+
+- We can start a new line after every pipe (`|>`)
+  - R reads this as an incomplete line and will continue to read
+
+```{r}
+#| eval: false
+hrs_data |> #<1>
+  lm(height ~ age_yr, data = _) #<2>
+```
+
+1. With the `|>` R will look to the next line for where `hrs_data` is inputted
+2. Then we follow with our desired function
+
+::: columns
+::: column
+- If you have many functions in a row, putting each on a new line makes your code easy to follow!
+
+```{r}
+#| eval: false
+hrs_data |> #<1>
+  select(height, age_yr) |> #<2>
+  lm(height ~ age_yr, data = _) #<3>
+```
+
+1. With the `|>` R will look to the next line for where `hrs_data` is inputted
+2. Then I select certain columns of my dataset
+3. Then I run that through the `lm` function
+:::
+::: column
+- You can further style the functions to make their input readable
+
+```{r}
+#| eval: false
+hrs_data |> #<1>
+  select( #<2>
+    height, 
+    age_yr
+    ) |> #<2>
+  lm( #<3>
+    height ~ age_yr, 
+    data = _
+    ) #<3>
+```
+
+1. With the `|>` R will look to the next line for where `hrs_data` is inputted
+2. `select` is not styled to highlight the input
+3. `lm` is now styled to highlight the input
+:::
+:::
+
+## Resources
+
+- [Tidyverse style guide on pipes](https://style.tidyverse.org/pipes.html)
+- More on the two pipes
+  -   [Differences between the base R and magrittr pipes](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/){target="_blank"} - Tidyverse blog post by Hadley Wickham
+  - [Discussion of differences on Stack Overflow](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-native-pipe-and-the-magrittr-pipe){target="_blank"}
+  - [R 4.1.0 pipe overview](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}
+  -   [Comparing pipes: Base-R |> vs {magrittr} %>%](https://albert-rapp.de/posts/31_pipes_compared/31_pipes_compared){target="_blank"} 
+      -   this resource includes examples and 
+      -   also how to change the "default" pipe in RStudio from `%>%` to `|>` (keyboard shortcut will use `|>`)

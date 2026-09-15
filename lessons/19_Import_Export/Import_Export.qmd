@@ -1,0 +1,217 @@
+---
+title: "Import and Export"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Import and Export"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here, 
+  rio, 
+  readxl
+)
+```
+
+```{r}
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_data <- clean_names(hrs_data_rds)
+```
+
+## Importing data
+
+- We often need to work with a dataset in R
+  - These data need to be brought into our environment so we can work with them!
+
+ 
+
+- We can import data from many file types, including `.csv`, `.txt`, `.xlsx`, `.rds`, `.sas7bdat`, and `.dta`
+
+ 
+
+- Once imported, R typically stores data as **data frames** (or **tibbles**) if using the `{tidyverse}` package
+
+  - Usually use the term **dataset** to generally refer to either a data frame or tibble
+
+## Functions to import different file types
+
+Here are various functions needed to import data from common file types:
+
+| File Type | Extension(s) | Function | Package | Example |
+|-------------|-------------|-------------|-------------|----------------------|
+| CSV | `.csv` | `read.csv()`, `read_csv()` | base R, readr | `read.csv("file.csv")` , `read_csv("file.csv")` |
+| Excel | `.xlsx`, `.xls` | `read_excel()` | readxl | `read_excel("file.xlsx", sheet = 1)` |
+| RDS | `.rds` | `read_rds()` | readr | `read_rds("file.rds")` |
+| SAS | `.sas7bdat` | `read_sas()` | haven | `read_sas("file.sas7bdat")` |
+| Stata | `.dta` | `read_dta()` | haven | `read_dta("file.dta")` |
+| SPSS | `.sav` | `read_sav()` | haven | `read_sav("file.sav")` |
+
+## Let's see an example with our HRS data
+
+- Notice I am using the `here` package to make a relative file path for my data
+
+- If my HRS dataset is a `.rds` file type
+
+  - Note: I prefer `.rds` files when available because it can store factors and other R-specific information
+
+  ```{r}
+  hrs_data_rds <- read_rds(here("./data/hrs_data.rds"))
+  ```
+
+ 
+
+- If my HRS dataset is a `.xlsx` file type
+
+```{r}
+hrs_data_xlsx <- read_excel(here("data", "hrs_data.xlsx"))
+```
+
+## Glimpse at the data frame
+
+::: panel-tabset
+### Data frame imported from `.rds`
+
+```{r}
+tibble(hrs_data_rds) |> print(n = 7)
+```
+
+### Data frame imported from `.xlsx`
+
+```{r}
+tibble(hrs_data_xlsx) |> print(n = 7)
+```
+:::
+
+## `rio` package
+
+- The `rio` package provides a single, universal import/export function that works across many file types
+- Instead of remembering which package and function to use, `import()` detects the file type automatically from the extension
+
+```{r}
+#| eval: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))  #<1>
+hrs_data_xlsx <- import(here("data", "hrs_data.xlsx")) #<2>
+```
+
+1.  This will automatically use `read_rds` to import the dataset
+2.  This will automatically use `read_excel` to import the dataset
+
+- Great for quickly reading in data without worrying about the right package
+
+ 
+
+::: pink
+::: pink-cont
+Note: this is a new package! You will need to install it!
+:::
+:::
+
+## Optional: cleaning names (1/2)
+
+- Variable names in real datasets are often messy: spaces, capital letters, special characters
+- The `clean_names()` function from `janitor` standardizes all column names
+
+```{r}
+names(hrs_data_rds) |> head(10) #<1>
+```
+
+1.  Original names from our imported HRS dataset
+
+```{r}
+hrs_data <- clean_names(hrs_data_rds) #<2>
+names(hrs_data) |> head(10) #<3>
+```
+
+2.  We can use `clean_names()` on the dataset directly
+3.  New, clean names for the HRS dataset
+
+ 
+
+- Spaces are converted to underscores: "Age (years)" to "age_yrs"
+- Upper case letters are converted to lower case: "BIRTHDATE" to "birthdate"
+
+## Optional: cleaning names (2/2)
+
+- Consistent, clean names make coding easier and reduce errors
+
+ 
+
+- Can be piped directly after import:
+
+```{r}
+hrs_data <- import(here("data", "hrs_data.rds")) |> clean_names()
+```
+
+## Exporting data
+
+- After cleaning or modifying data, you may want to save it to a file
+- Use `export()` from `rio` to write data to any common format:
+
+```{r}
+#| eval: false
+export(hrs_data, here("data", "hrs_data_clean.rds"))   #<1>
+export(hrs_data, here("data", "hrs_data_clean.csv"))   #<2>
+export(hrs_data, here("data", "hrs_data_clean.xlsx"))  #<3>
+```
+
+1. Save a `.rds` file in the data folder
+2. Save a `.csv` file in the data folder
+3. Save a `.xlsx` file in the data folder
+
+- Prefer `.rds` for saving R objects between sessions: it preserves variable types exactly
+- Use `.csv` or `.xlsx` when sharing data with others outside of R
+
+## There are also the equivalent export functions
+
+Here are various functions needed to **export** data from common file types:
+
+| File Type | Extension(s)    | Function                          | Package          | Example                                                    |
+|----------------|-----------------|-----------------------------------|------------------|--------------------------------------------------------|
+| CSV       | `.csv`          | `write.csv()`, `write_csv()`      | base R, readr    | `write.csv(df, "file.csv")`, `write_csv(df, "file.csv")`  |
+| Excel     | `.xlsx`         | `write_xlsx()`                    | writexl         | `write.xlsx(df, "file.xlsx")`                              |
+| RDS       | `.rds`          | `write_rds()`                     | readr            | `write_rds(df, "file.rds")`                                |
+| SAS       | `.sas7bdat`     | `write_sas()`                     | haven            | `write_sas(df, "file.sas7bdat")`                           |
+| Stata     | `.dta`          | `write_dta()`                     | haven            | `write_dta(df, "file.dta")`                                |
+| SPSS      | `.sav`          | `write_sav()`                     | haven            | `write_sav(df, "file.sav")`                                |
+
+## Wrap-up
+
+- Today we covered how to **import** and **export** data in R from a variety of file types
+
+ 
+
+- Key takeaways:
+  - Use file-specific functions (`read_csv()`, `read_excel()`, etc.) or `import()` from `rio` for convenience
+  - Always **check variable types** after importing with `glimpse()` or `tibble()`
+  - Use `clean_names()` from `janitor` to standardize column names
+  - Use `export()` or file-specific functions to **save** cleaned data
+
+## Resources
+
+- `readr` cheatsheet
+  - [Website form](https://rstudio.github.io/cheatsheets/html/data-import.html)
+  - [PDF form](https://rstudio.github.io/cheatsheets/data-import.pdf)

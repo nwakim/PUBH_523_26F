@@ -1,0 +1,315 @@
+---
+title: "Folder and file organization"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Folder and file organization"
+    html-math-method: mathjax
+    highlight-style: arrow
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+## Why does file organization matter?
+
+Good organization means you can:
+
+- **Find files** without hunting
+- **Re-run your analysis** months later
+- **Share your work** without thorough explanations
+- **Avoid broken paths** and missing files
+- **Collaborate** without stepping on each other
+
+## Folder organization
+
+Every analysis project should live in **one folder** that contains everything needed to reproduce it.
+
+::: columns
+::: column
+- For an **analysis project**, I typically have the following folders
+
+
+::: {.large-code}
+```
+project_name/ 
+├── admin/
+├── background/
+├── code/
+├── data/
+│   ├── data_info/
+│   ├── data_raw/          
+│   └── data_processed/    
+├── dissemination/
+├── meetings/
+├── output/
+└── README.txt
+```
+:::
+:::
+
+::: column
+-   For **our class**, I suggest making one folder for the course with the following folders in it:
+
+::: {.large-code}
+```
+PUBH_523_26Su/ 
+├── admin/
+├── data_lessons/
+├── data_practice/
+├── data_project/
+│   ├── data_raw/          
+│   └── data_processed/    
+├── lessons/
+├── practice/
+├── project/
+└── README.txt
+```
+:::
+:::
+:::
+
+## Our class folders
+
+::: columns
+::: {.column width="30%"}
+
+ 
+
+::: {.large-code}
+```
+PUBH_523_26Su/ 
+├── admin/
+├── data_lessons/
+├── data_practice/
+├── data_project/
+│   ├── data_raw/  
+│   └── data_processed/    
+├── lessons/
+├── practice/
+├── project/
+└── README.txt
+```
+:::
+:::
+::: {.column width="70%"}
+- `admin`: Contains course materials, syllabus, and other administrative documents
+- `data_lessons`: Contains datasets used in lessons
+- `data_practice`: Contains datasets used in practice assignments
+- `data_project`: Contains datasets used in the final project
+    - `data_raw`: Original data — do not modify this!!
+    - `data_processed`: Cleaned/transformed data from labs
+- `lessons`: Contains lesson materials and code
+- `practice`: Contains practice assignments and code
+- `project`: Contains labs and project code and assignments
+
+:::
+:::
+
+## Folder and file naming
+
+There are a few good practices for naming files and folders for easy tracking:
+
+1. Keep the name **short** and **relevant**
+2. Use **lowercase letters** for file names
+3. Use "_" to separate sections of the name
+    - I also use this to separate words, but some people say you should use "-" to separate words
+    - **Do not use spaces!!**
+4. Use **leading numbers** to help organize sequential items
+    - I can show you my lessons folders as an example 
+5. Use **dates** in the format "YYYY-MM-DD" so that files are in **chronological order**
+6. You can label **different versions** if you would like to 
+
+## Rule 1 & 2: Short, relevant, and lowercase
+
+Keep names **short** and **relevant** — and use **lowercase letters**.
+
+- Too vague 
+  - `script3.R`
+  - `data.csv`
+- Too long
+  - `third_script_for_linear_model_v2.R`
+  - `all_the_survey_data_collected_2024.csv`
+- Just right
+  - `03_wbns_modeling.R`
+  - `wbns_data_2024.csv`
+
+::: pink
+::: pink-cont
+Using uppercase is okay! This is something I do in our class documents. It's just a little more annoying to type.
+:::
+:::
+
+## More on relevant naming
+
+- **Relevant names** are descriptive and help you remember what the file is for
+
+ 
+
+- To avoid issues between projects...
+  - include the **project name** in the file name
+  - include the info on what the file is/does in the file name
+  - include the **date** in the file name
+  - Some like `01_project-name_loading-data.R`
+
+
+## Rule 3: Use `_` to separate words — no spaces!
+
+Use **underscores `_`** to separate parts of a name. **Never use spaces.**
+
+- Good
+  - `clean_data.R`
+  - `clean-data.R`
+  - `01_cleaning-data.qmd`
+  - `survey_responses_2024.csv`
+- Avoid
+  - `clean data.R`
+  - `survey responses 2024.csv`
+
+
+::: pink
+::: pink-cont
+Some people use **hyphens `-`** to separate words and **underscores `_`** to separate larger sections — both are fine, just be consistent!
+:::
+:::
+
+## Rule 4: Leading numbers for sequential items
+
+Use **leading numbers** to keep files in the right order in any file browser.
+
+- `01_import_data.R`
+- `02_clean_data.qmd`
+- `03_exploratory_analysis.qmd`
+- `04_model.qmd`
+- `05_figures.qmd`
+
+
+::: pink
+::: pink-cont
+- This works for folders too — great for organizing lessons, project phases, or any sequential workflow!
+- I also use something like `z_misc` to put a folder or file at the end of the order
+:::
+:::
+
+
+## Rule 5: Dates in `YYYY-MM-DD` format
+
+Including dates keeps files in **chronological order** automatically.
+
+- Sorts correctly
+  - `report_2026-01-15.pdf`
+  - `report_2026-03-02.pdf`
+  - `report_2026-11-20.pdf`
+
+- Sorts incorrectly
+  - `report_15-01-24.pdf`
+  - `report_02-03-24.pdf`
+  - `report_20-11-24.pdf`
+
+
+::: pink
+::: pink-cont
+Starting with the year means alphabetical order = chronological order.
+:::
+:::
+
+
+## Rule 6: Versioning (optional)
+
+You *can* label **different versions** of a file when you need to track changes.
+
+- `analysis_v1.R`
+- `analysis_v2.R`
+- `report_draft_v1.qmd`
+- `report_draft_v2.qmd`
+
+ 
+
+Combine with dates for even more clarity:
+
+- `report_2024-03-15_v1.qmd`
+- `report_2024-03-22_v2.qmd`
+
+::: pink
+::: pink-cont
+Version labels are perfectly reasonable for coursework. For larger projects, clouds like **OneDrive** will save versions
+:::
+:::
+
+
+## Organizing your scripts/quarto docs
+
+Split your analysis into **numbered, single-purpose documents**:
+
+| Script | Does |
+|---|---|
+| `01_import_data.qmd` | Loads raw data, minimal changes |
+| `02_clean_data.qmd` | Filtering, recoding, joining |
+| `03_explore.qmd` | Summary stats, exploratory plots |
+| `04_model.qmd` | Statistical modeling |
+| `05_figures.qmd` | Final publication-ready plots |
+
+::: pink
+::: pink-cont
+- Each script should be **runnable on its own** (given the right inputs exist), and should **save its outputs** to a known location
+- Files and output should only be dependent on files from **earlier scripts** in the sequence
+:::
+:::
+
+## The README File
+
+Every project folder should have a `README.txt` at the top level.
+
+```markdown
+# Survey Analysis — Spring 2024
+
+## What this project does
+Analyzes student survey responses collected in March 2024.
+
+## Data
+- `data/raw/survey_2024.csv` — Original export from Qualtrics
+- `data/processed/survey_clean.csv` — Cleaned version (run 01_clean.R)
+
+## How to run
+1. Open `my_project.Rproj` in RStudio
+2. Run scripts in order: 01 → 02 → 03 → 04
+
+## Dependencies
+R 4.3+, tidyverse, ggplot2
+```
+
+## Wrap-up
+
+::: {.columns}
+::: {.column width="60%"}
+**The key habits:**
+
+1. **One project = one folder** — keep everything together
+2. **Protect raw data** — never overwrite originals
+3. **Names: short, lowercase, no spaces** — use `_` to separate
+4. **Leading numbers** for sequential files and folders
+5. **Dates as `YYYY-MM-DD`** — for chronological order
+:::
+::: {.column width="40%"}
+::: blue
+::: blue-cont
+- Good organization is a gift to your future self.
+- The five minutes you spend now saves hours of confusion later.
+:::
+:::
+:::
+:::
+
+## Note on AI usage
+
+- I used AI (Claude) to help me organize my previous content and make some naming techniques more clear 
+- AI (Claude) also wrote the wrap-up slide

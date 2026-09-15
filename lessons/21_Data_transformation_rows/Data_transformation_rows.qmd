@@ -1,0 +1,351 @@
+---
+title: "Data transformation: Rows"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data transformation: Rows"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message_yr: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio
+)
+```
+
+```{r}
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_data <- clean_names(hrs_data_rds) |>
+  relocate(age_yr, ed, cesd, .after = birthdate) |>
+  select(id, age_yr, ed, cesd, degree, srh)
+```
+
+## Data transformations on rows
+
+- We defined `dplyr` functions as operations that use columns as arguments
+  - This is still true for row transformations
+  - We use columns to define the rows we want to keep, remove, or modify
+
+ 
+
+- There are many functions that can be used to transform rows
+
+ 
+
+::: columns
+::: {.column width="50%"}
+- We will cover the most common ones here: 
+  - `filter()`
+  - `arrange()`
+  - `distinct()`
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="40%"}
+::: pink
+::: pink-cont
+Please note that I reduced the columns in `hrs_data` to make the output easier to read. The functions work the same way with all columns.
+:::
+:::
+:::
+::: 
+  
+# `filter()`
+  
+## `filter()`
+
+- `filter()` allows us to keep rows (aka subset our data) based on conditions we specify (in the columns)
+
+- We input our **data frame as the first argument**, and then we **specify the conditions for filtering in the second argument**
+
+::: columns
+::: {.column width="40%"}
+- We can use the following comparison operators to specify our conditions:
+    -   `>`: greater than
+    -   `<`: less than
+    -   `>=`: greater than or equal to
+    -   `<=`: less than or equal to
+    -   `==`: equal to
+    -   `!=`: not equal to
+:::
+::: {.column width="60%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else){target="_blank"}](../img_slides/horst_dplyr_filter.jpg){fig-align="center"}
+:::
+:::
+
+## Example: filtering `age_yr` 
+
+- Let's filter on a numeric variable, `age_yr`: all rows with `age_yr` values greater than 99
+  - We will expect to return rows with `age_yr` values of 100 and above from `hrs_data`
+
+```{r}
+hrs_data |> # <1>
+  filter( # <2>
+    age_yr > 99 # <3>
+    ) # <2>
+```
+
+1. The first argument is the data frame we want to operate on (in this case, `hrs_data`)
+2. The second argument is the condition we want to apply to filter our data (in this case, `age_yr > 99`)
+3. The condition is specified using a comparison operator (in this case, `>`) and the variable we want to filter on (in this case, `age_yr`)
+
+
+## Example: filtering `age_yr`, now only exact matches
+
+- Let's filter on a numeric variable, `age_yr`: all rows with `age_yr` values equal to 38
+  - We will expect to return rows with `age_yr` values of 38 from `hrs_data`
+
+```{r}
+hrs_data |> 
+  filter(age_yr == 38) # <1>
+```
+
+1. **Notice the change in the operator!!** We are now using `==`. 
+
+## Example: filtering degree
+
+- `degree` is a categorical variable
+- For categorical variables, we can only use `==` or `!=` to filter on exact matches
+- `degree` has the following possible values: `NA`, `None`, `GED`, `High school diploma`, `Associate's degree`, `Bachelor's degree`, and `Master's degree`, `Professional degree (Ph.D./M.D./JD)`
+
+```{r}
+#| output: false
+
+hrs_data |>
+  filter(degree == "Master's degree") # <1> 
+```
+
+1. We must include " " around the value for categorical variables. The exact spelling needs to match. 
+
+
+```{r}
+#| echo: false
+hrs_data |>
+  filter(degree == "Master's degree") |> 
+  head()
+```
+
+## Example: filtering degree but mispelling the value
+
+- What happens if I mispell "Master's degree" as "Masters degree" (without the apostrophe)?
+- **R will not throw an error: we need to check our output!!**
+
+```{r}
+hrs_data |>
+  filter(
+    degree == "Masters degree" # <1> 
+    )
+```
+
+1. I forgot the apostrophe in "Master's degree" and I get 0 rows returned. 
+
+## Example: filtering degree for everything except a Master's
+
+-   If we want everything* except Master's degrees, we use the "not equal" sign (`!=`)
+    - *Everything does not include `NA` values, which we will discuss in the next slide
+
+```{r}
+hrs_data |>
+  filter(degree != "Master's degree")
+```
+
+## `filter_out()`: new companion to `filter()`
+
+-   `filter_out()` requires `{dplyr}` 1.2.0 (or later version)
+- Allows us to filter **out** rows based on conditions we specify (in the columns)
+
+```{r}
+hrs_data |>
+  filter_out(degree == "Master's degree") #<1>
+```
+
+1. We filter out anyone whose degree is a Master's degree. This is the same as using `filter(degree != "Master's degree")` but it keeps the `NA` values in the output.
+
+## WAIT! Did those two operations have different rows?
+
+- It's always good to check your output!
+
+ 
+
+- I did not notice that `filter_out()` and `filter()` with `!=` had different outputs until I checked the number of rows in each output
+
+ 
+
+- `filter_out()` keeps the `NA` values, while `filter()` with `!=` does not keep the `NA` values (because `NA` is not equal to anything, including itself)
+
+::: columns
+::: {.column width="25%"}
+:::
+::: {.column width="50%"}
+::: blue
+::: blue-cont
+When using `!=`, I suggest using `filter_out()`
+:::
+:::
+:::
+::: {.column width="25%"}
+:::
+:::
+
+## Filtering out missing values using `drop_na()`
+
+-   We may want to remove rows that have missing data, which are coded as `NA`.
+
+- If we want to remove rows with missing data in **ANY** of the columns
+  - AKA, we are only keeping complete observations
+
+```{r}
+hrs_data |> drop_na()
+```
+
+## Filtering out missing values in specific columns using `drop_na()`
+
+```{r}
+hrs_data |> drop_na(degree) #<1>
+```
+
+1. This will only drop rows with `NA` values in the `degree` column, and will keep rows with `NA` values in other columns.
+
+# `arrange()`
+
+## **Sorting** datasets using `arrange()`
+
+- `arrange()` changes the order of the rows in a dataset based on the values in one or more columns
+
+ 
+
+- You can arrange by ascending or descending order
+
+ 
+
+- Why use `arrange()`? 
+  - Visual clarity when you look at data (see a variable ordered)
+  - Helpful in conjunction with other functions (like `count()`)
+
+## Example: sort data by ascending birth year
+
+-   By default, `arrage_yr()` sorts in *ascending* order:
+
+```{r}
+hrs_data |> 
+  arrange(age_yr)
+```
+
+## Example: sort data by descending birth year
+
+```{r}
+hrs_data |> 
+  arrange(desc(age_yr)) #<1> 
+```
+
+1. We wrap `birthyr` in `desc()` to sort by descending birth year.
+
+## Sorting datasets by multiple variables
+
+-   You can also arrange by multiple variables.
+    -   The code below sorts by `age_yr` *first*, and then within `age_yr`, we sort by `ed`.
+
+```{r}
+hrs_data |> 
+  arrange(age_yr, ed) #<1>
+```
+
+1. This will sort by `age_yr` first, and then within `age_yr`, it will sort by `ed`.
+
+## Sorting datasets by multiple variables: order matters!
+
+```{r}
+hrs_data |> 
+  arrange(ed, age_yr) #<1>
+```
+
+1. This will sort by `ed` first, and then within `ed`, it will sort by `age_yr`. This is different from the previous code chunk where we sorted by `age_yr` first, and then within `age_yr`, we sorted by `ed`.
+
+# `distinct()`
+
+## `distinct()` keeps unique rows
+
+- `distinct()` allows us to keep only unique rows based on the values in one or more columns
+
+ 
+
+- `distinct()` can run without any arguments: it will return all unique rows in the dataset
+  - This can be helpful if you want to perform a quality check on your dataset to see if there are any duplicate rows
+  
+ 
+
+- `distinct()` can also take specific columns as arguments: it will return unique rows based on the values in those columns
+
+## Example: keep unique rows in dataset
+
+```{r}
+hrs_data |> 
+  distinct()
+```
+
+## Example: keep unique rows based on `degree`
+
+```{r}
+hrs_data |> 
+  distinct(degree) #<1>
+```
+
+1. This will return unique rows based on the values in the `degree` column. The output will only include the `degree` column, and it will return one row for each unique value in the `degree` column.
+
+## Example: keep unique rows based on `degree` *with all columns*
+
+```{r}
+hrs_data |> 
+  distinct(degree, .keep_all = TRUE) #<1>
+```
+
+1. If we want to keep all columns in the output, we can use the argument `.keep_all = TRUE`. This will return all columns for the unique rows based on the specified column(s).
+
+## Example: keep unique rows based on `degree` and `self_health`
+
+```{r}
+hrs_data |> 
+  distinct(degree, srh) #<1>
+```
+
+1. This will return unique rows based on the values in the `degree` and `self_health` columns. This allows us to see unique combinations of `degree` and `self_health` in our dataset.
+
+## Wrap-up
+
+- We learned three functions that allow us to transform rows in our dataset:
+  - `filter()` (and `filter_out()`)
+    - **Keep rows based on conditions** we specify in the columns
+  - `arrange()`
+    - **Sort rows based on the values** in one or more columns
+  - `distinct()`
+    - **Keep only unique rows** based on the values in one or more columns

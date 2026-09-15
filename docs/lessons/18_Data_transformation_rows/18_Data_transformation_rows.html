@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-665ef5c5d77cfb05cd7a07c04fb2ab30.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
+
+  <meta name="author" content="Nicky Wakim">
+  <title>Introduction to R – Data transformation: Rows</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #575f66;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #575f66; } /* Normal */
+    code span.al { color: #f51818; background-color: #faefef; font-weight: bold; } /* Alert */
+    code span.an { color: #e6ba7e; } /* Annotation */
+    code span.at { color: #399ee6; } /* Attribute */
+    code span.bn { color: #ff9940; } /* BaseN */
+    code span.bu { color: #4cbf99; } /* BuiltIn */
+    code span.cf { color: #fa8d3e; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4cbf99; } /* Char */
+    code span.cn { color: #a37acc; } /* Constant */
+    code span.co { color: #607880; font-style: italic; } /* Comment */
+    code span.cv { color: #a37acc; } /* CommentVar */
+    code span.do { color: #607880; } /* Documentation */
+    code span.dt { color: #fa8d3e; } /* DataType */
+    code span.dv { color: #ff9940; } /* DecVal */
+    code span.er { color: #f51818; text-decoration: underline; } /* Error */
+    code span.ex { color: #399ee6; font-weight: bold; } /* Extension */
+    code span.fl { color: #ff9940; } /* Float */
+    code span.fu { color: #f2ae49; } /* Function */
+    code span.im { color: #86b300; } /* Import */
+    code span.in { color: #ff9940; } /* Information */
+    code span.kw { color: #fa8d3e; font-weight: bold; } /* Keyword */
+    code span.op { color: #ed9366; } /* Operator */
+    code span.ot { color: #55b4d4; } /* Other */
+    code span.pp { color: #f07171; } /* Preprocessor */
+    code span.re { color: #399ee6; background-color: #ddecf3; } /* RegionMarker */
+    code span.sc { color: #4cbf99; } /* SpecialChar */
+    code span.ss { color: #4cbf99; } /* SpecialString */
+    code span.st { color: #86b300; } /* String */
+    code span.va { color: #55b4d4; } /* Variable */
+    code span.vs { color: #86b300; } /* VerbatimString */
+    code span.wa { color: #f07171; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-29229577c278b008ccf51c6e44f93f60.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3070BF" class="quarto-title-block center">
+  <h1 class="title">Data transformation: Rows</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Nicky Wakim 
+</div>
+</div>
+</div>
+
+</section>
+<section id="data-transformations-on-rows" class="slide level2">
+<h2>Data transformations on rows</h2>
+<ul>
+<li>We defined <code>dplyr</code> functions as operations that use columns as arguments
+<ul>
+<li>This is still true for row transformations</li>
+<li>We use columns to define the rows we want to keep, remove, or modify</li>
+</ul></li>
+<li>There are many functions that can be used to transform rows</li>
+<li>We will cover the most common ones here:
+<ul>
+<li><code>filter()</code></li>
+<li><code>arrange()</code></li>
+<li><code>distinct()</code></li>
+</ul></li>
+</ul>
+</section>
+<section>
+<section id="filter" class="title-slide slide level1 center">
+<h1><code>filter()</code></h1>
+
+<img data-src="../img_slides/horst_dplyr_filter.jpg" style="width:20.0%" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://allisonhorst.com/everything-else" target="_blank">Artwork by @allison_horst</a></p></section>
+<section id="filter-quantitative-data" class="slide level2">
+<h2><code>filter()</code>: quantitative data</h2>
+<ul>
+<li><p><code>filter()</code> allows us to keep rows (aka subset our data) based on conditions we specify (in the columns)</p></li>
+<li><p>We input our <strong>data frame as the first argument</strong>, and then we <strong>specify the conditions for filtering in the second argument</strong></p></li>
+<li><p>We can use the following comparison operators to specify our conditions:</p>
+<ul>
+<li><code>&gt;</code>: greater than</li>
+<li><code>&lt;</code>: less than</li>
+<li><code>&gt;=</code>: greater than or equal to</li>
+<li><code>&lt;=</code>: less than or equal to</li>
+<li><code>==</code>: equal to</li>
+<li><code>!=</code>: not equal to</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-filtering-age" class="slide level2">
+<h2>Example: filtering age</h2>
+<ul>
+<li>Let’s filter on a numeric variable, <code>age</code>: all rows with <code>age</code> values greater than 99
+<ul>
+<li>We will expect to return rows with <code>age</code> values of 100 and above from <code>hrs_data</code></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1"></a>hrs_data <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a>  <span class="fu">filter</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3"></a>    age <span class="sc">&gt;</span> <span class="dv">99</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">The first argument is the data frame we want to operate on (in this case, <code>hrs_data</code>)</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,4" data-code-annotation="2">The second argument is the condition we want to apply to filter our data (in this case, <code>age &gt; 99</code>)</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="3">The condition is specified using a comparison operator (in this case, <code>&gt;</code>) and the variable we want to filter on (in this case, <code>age</code>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 31
+  hhid   pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+1 559512 010      1928       9    -13653   100    14 Assoc… Resp… No spo… Female
+2 554703 010      1928       5    -13834   100    12 High … Resp… No spo… Female
+3 559512 010      1927       9    -12070   100    14 Assoc… Resp… No spo… Female
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-filtering-age-now-only-exact-matches" class="slide level2">
+<h2>Example: filtering age, now only exact matches</h2>
+<ul>
+<li>Let’s filter on a numeric variable, <code>age</code>: all rows with <code>age</code> values equal to 38
+<ul>
+<li>We will expect to return rows with <code>age</code> values of 38 from <code>hrs_data</code></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a>  <span class="fu">filter</span>( </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3"></a>    age <span class="sc">==</span> <span class="dv">38</span></span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>    ) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="1"><strong>Notice the change in the operator!!</strong> We are now using <code>==</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 31
+  hhid   pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+1 559477 020      1985       2      9327    38    17 Maste… Resp… Marrie… Female
+2 555037 020      1984       3      9115    38    NA &lt;NA&gt;   Resp… Marrie… Female
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filter-categorical-data" class="slide level2">
+<h2><code>filter()</code>: categorical data</h2>
+<ul>
+<li>For categorical variables, we can use the same comparison operators
+<ul>
+<li>But now we need to <strong>filter on specific categories (levels)</strong> of the variable</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-filtering-degree" class="slide level2">
+<h2>Example: filtering degree</h2>
+<ul>
+<li>For <code>degree</code>, the possible values are: <code>NA</code>, <code>None</code>, <code>GED</code>, <code>High school diploma</code>, <code>Associate's degree</code>, <code>Bachelor's degree</code>, and <code>Master's degree</code>, <code>Professional degree (Ph.D./M.D./JD)</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1"></a>hrs_data <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2"></a>  <span class="fu">filter</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3"></a>    degree <span class="sc">==</span> <span class="st">"Master's degree"</span></span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="1">We must include ” ” around the value for categorical variables. The exact spelling needs to match.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 444 × 31
+  hhid   pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+1 557411 010      1970       3      3698    53    16 Maste… Resp… Marrie… Female
+2 557020 020      1969       2      3302    53    16 Maste… Resp… Marrie… Male  
+3 550524 010      1952      12     -2573    69    16 Maste… Resp… No spo… Male  
+4 555572 020      1966       9      2449    57    17 Maste… Resp… Marrie… Female
+5 557909 020      1986      12      9327    35    16 Maste… Resp… Marrie… Female
+# ℹ 439 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-filtering-degree-but-mispelling-the-value" class="slide level2">
+<h2>Example: filtering degree but mispelling the value</h2>
+<ul>
+<li>What happens if I mispell “Master’s degree” as “Masters degree” (without the apostrophe)?</li>
+<li><strong>R will not throw an error: we need to check our output!!</strong></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1"></a>hrs_data <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2"></a>  <span class="fu">filter</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3"></a>    degree <span class="sc">==</span> <span class="st">"Masters degree"</span></span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">I forgot the apostrophe in “Master’s degree” and I get 0 rows returned.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 31
+# ℹ 31 variables: hhid &lt;chr&gt;, pn &lt;chr&gt;, birthyr &lt;dbl&gt;, birthmo &lt;dbl&gt;,
+#   birthdate &lt;dbl&gt;, age &lt;dbl&gt;, ed &lt;dbl&gt;, degree &lt;chr&gt;, proxy &lt;chr&gt;,
+#   coupled &lt;chr&gt;, female &lt;chr&gt;, age_months &lt;dbl&gt;, race_original &lt;chr&gt;,
+#   smokeever &lt;chr&gt;, smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;,
+#   self_health &lt;chr&gt;, high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;,
+#   heart_dis &lt;chr&gt;, strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;,
+#   arthritis &lt;chr&gt;, cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="example-filtering-degree-for-everything-except-a-masters" class="slide level2">
+<h2>Example: filtering degree for everything except a Master’s</h2>
+<ul>
+<li>If we want everything* except Master’s degrees, we use the “not equal” sign (<code>!=</code>)
+<ul>
+<li>*Everything does not include <code>NA</code> values, which we will discuss in the next slide</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>hrs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">filter</span>(</span>
+<span id="cb5-3"><a></a>    degree <span class="sc">!=</span> <span class="st">"Master's degree"</span></span>
+<span id="cb5-4"><a></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,804 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5590… 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+ 2 5548… 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+ 3 5555… 020      1967       7      2752    55    10 None   Resp… Marrie… Female
+ 4 5557… 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+ 5 5521… 010      1965      10      2114    57    15 Assoc… Resp… Marrie… Male  
+ 6 5504… 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+ 7 5517… 010      1969       4      3392    53    17 Profe… Resp… No spo… Female
+ 8 5512… 010      1966      10      2479    57    12 None   Resp… No spo… Male  
+ 9 5533… 010      1970      12      4001    51    12 High … Resp… No spo… Female
+10 5527… 010      1953       8     -2361    69    13 High … Resp… Marrie… Male  
+# ℹ 1,794 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="new-since-feb-2026-filter_out" class="slide level2">
+<h2>New since Feb 2026: <code>filter_out()</code></h2>
+<ul>
+<li><code>filter_out()</code> requires <code>{dplyr}</code> 1.2.0 (or later version)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>hrs_data <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">filter_out</span>(</span>
+<span id="cb7-3"><a></a>    degree <span class="sc">==</span> <span class="st">"Master's degree"</span></span>
+<span id="cb7-4"><a></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,284 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5590… 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+ 2 5548… 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+ 3 5586… 010      1968       3      2996    54    NA &lt;NA&gt;   Resp… No spo… Female
+ 4 5555… 010      1966       4      2296    57    NA &lt;NA&gt;   Resp… No spo… Female
+ 5 5555… 020      1967       7      2752    55    10 None   Resp… Marrie… Female
+ 6 5576… 010      1971       5      4152    51    NA &lt;NA&gt;   Resp… No spo… Female
+ 7 5557… 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+ 8 5521… 010      1965      10      2114    57    15 Assoc… Resp… Marrie… Male  
+ 9 5504… 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+10 5517… 010      1969       4      3392    53    17 Profe… Resp… No spo… Female
+# ℹ 2,274 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="wait-did-those-two-operations-have-different-rows" class="slide level2">
+<h2>WAIT! Did those two operations have different rows?</h2>
+<ul>
+<li>It’s always good to check your output!</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>I did not notice that <code>filter_out()</code> and <code>filter()</code> with <code>!=</code> had different outputs until I checked the number of rows in each output</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li><code>filter_out()</code> keeps the <code>NA</code> values, while <code>filter()</code> with <code>!=</code> does not keep the <code>NA</code> values (because <code>NA</code> is not equal to anything, including itself)</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:25%;">
+
+</div><div class="column" style="width:50%;">
+<div class="blue">
+<div class="blue-cont">
+<p>When using <code>!=</code>, I suggest using <code>filter_out()</code></p>
+</div>
+</div>
+</div><div class="column" style="width:25%;">
+
+</div></div>
+</section>
+<section id="filtering-out-missing-values-using-drop_na" class="slide level2">
+<h2>Filtering out missing values using <code>drop_na()</code></h2>
+<ul>
+<li><p>We may want to remove rows that have missing data, which are coded as <code>NA</code>.</p></li>
+<li><p>If we want to remove rows with missing data in <strong>ANY</strong> of the columns</p>
+<ul>
+<li>AKA, we are only keeping complete observations</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>hrs_data <span class="sc">|&gt;</span> <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,111 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5590… 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+ 2 5555… 020      1967       7      2752    55    10 None   Resp… Marrie… Female
+ 3 5557… 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+ 4 5521… 010      1965      10      2114    57    15 Assoc… Resp… Marrie… Male  
+ 5 5504… 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+ 6 5574… 010      1970       3      3698    53    16 Maste… Resp… Marrie… Female
+ 7 5517… 010      1969       4      3392    53    17 Profe… Resp… No spo… Female
+ 8 5512… 010      1966      10      2479    57    12 None   Resp… No spo… Male  
+ 9 5570… 020      1969       2      3302    53    16 Maste… Resp… Marrie… Male  
+10 5533… 010      1970      12      4001    51    12 High … Resp… No spo… Female
+# ℹ 2,101 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-out-missing-values-in-specific-columns-using-drop_na" class="slide level2">
+<h2>Filtering out missing values in specific columns using <code>drop_na()</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1"></a>hrs_data <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(degree)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">This will only drop rows with <code>NA</code> values in the <code>degree</code> column, and will keep rows with <code>NA</code> values in other columns.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,248 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5590… 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+ 2 5548… 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+ 3 5555… 020      1967       7      2752    55    10 None   Resp… Marrie… Female
+ 4 5557… 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+ 5 5521… 010      1965      10      2114    57    15 Assoc… Resp… Marrie… Male  
+ 6 5504… 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+ 7 5574… 010      1970       3      3698    53    16 Maste… Resp… Marrie… Female
+ 8 5517… 010      1969       4      3392    53    17 Profe… Resp… No spo… Female
+ 9 5512… 010      1966      10      2479    57    12 None   Resp… No spo… Male  
+10 5570… 020      1969       2      3302    53    16 Maste… Resp… Marrie… Male  
+# ℹ 2,238 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="arrange" class="title-slide slide level1 center">
+<h1><code>arrange()</code></h1>
+
+</section>
+<section id="sorting-datasets-using-arrange" class="slide level2">
+<h2><strong>Sorting</strong> datasets using <code>arrange()</code></h2>
+<ul>
+<li><code>arrange()</code> changes the order of the rows in a dataset based on the values in one or more columns</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>You can arrange by ascending or descending order</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Why use <code>arrange()</code>?
+<ul>
+<li>Visual clarity when you look at data (see a variable ordered)</li>
+<li>Helpful in conjunction with other functions (like <code>count()</code>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-sort-data-by-ascending-birth-year" class="slide level2">
+<h2>Example: sort data by ascending birth year</h2>
+<ul>
+<li>By default, <code>arrage()</code> sorts in <em>ascending</em> order:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">arrange</span>(</span>
+<span id="cb12-3"><a></a>    birthyr</span>
+<span id="cb12-4"><a></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,728 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5593… 010      1922      12    -12070    97    12 High … Resp… No spo… Female
+ 2 5593… 010      1922      12    -12314    95    12 High … Resp… No spo… Female
+ 3 5547… 010      1922       4    -12284    97    12 High … Resp… No spo… Female
+ 4 5547… 010      1926       5    -12284    95    12 High … Resp… No spo… Female
+ 5 5595… 010      1927       9    -12070   100    14 Assoc… Resp… No spo… Female
+ 6 5566… 010      1928       5    -10122    93    12 None   Resp… No spo… Male  
+ 7 5595… 010      1928       9    -13653   100    14 Assoc… Resp… No spo… Female
+ 8 5547… 010      1928       5    -13834   100    12 High … Resp… No spo… Female
+ 9 5567… 010      1930      11    -10609    90    11 None   Resp… Marrie… Male  
+10 5527… 010      1931      12    -10122    91    14 Bache… Resp… No spo… Female
+# ℹ 2,718 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-sort-data-by-descending-birth-year" class="slide level2">
+<h2>Example: sort data by descending birth year</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2"></a>  <span class="fu">arrange</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3"></a>    <span class="fu">desc</span>(birthyr)</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="1">We wrap <code>birthyr</code> in <code>desc()</code> to sort by descending birth year.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,728 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5533… 020      1990       7     10057    31    16 Assoc… Resp… Marrie… Female
+ 2 5532… 020      1990       8      8962    34     4 None   Resp… Marrie… Female
+ 3 5532… 020      1988       8      8474    40     3 None   Resp… Marrie… Female
+ 4 5538… 020      1987       9      9115    36    NA &lt;NA&gt;   Resp… Marrie… Female
+ 5 5516… 020      1987       7      9327    35    14 Bache… Resp… Marrie… Female
+ 6 5579… 020      1986      12      9327    35    16 Maste… Resp… Marrie… Female
+ 7 5579… 020      1986      12      9327    34    16 Maste… Resp… Marrie… Female
+ 8 5538… 020      1986      11      9327    31    NA &lt;NA&gt;   Resp… Marrie… Female
+ 9 5532… 020      1986       7      8962    31     5 None   Resp… Marrie… Female
+10 5532… 020      1985       7      8474    39     3 None   Resp… Marrie… Female
+# ℹ 2,718 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="sorting-datasets-by-multiple-variables" class="slide level2">
+<h2>Sorting datasets by multiple variables</h2>
+<ul>
+<li>You can also arrange by multiple variables.
+<ul>
+<li>The code below sorts by <code>age</code> <em>first</em>, and then within <code>age</code>, we sort by <code>pn</code>.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2"></a>  <span class="fu">arrange</span>(age, ed)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="1">This will sort by <code>age</code> first, and then within <code>age</code>, it will sort by <code>ed</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,728 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5532… 020      1986       7      8962    31     5 None   Resp… Marrie… Female
+ 2 5516… 020      1984       6     11215    31    15 Bache… Resp… Marrie… Female
+ 3 5533… 020      1990       7     10057    31    16 Assoc… Resp… Marrie… Female
+ 4 5538… 020      1986      11      9327    31    NA &lt;NA&gt;   Resp… Marrie… Female
+ 5 5532… 020      1990       8      8962    34     4 None   Resp… Marrie… Female
+ 6 5579… 020      1986      12      9327    34    16 Maste… Resp… Marrie… Female
+ 7 5538… 020      1984       9     10332    34    NA &lt;NA&gt;   Resp… Marrie… Female
+ 8 5516… 020      1987       7      9327    35    14 Bache… Resp… Marrie… Female
+ 9 5579… 020      1986      12      9327    35    16 Maste… Resp… Marrie… Female
+10 5579… 020      1985      12      9784    35    16 Maste… Resp… Marrie… Female
+# ℹ 2,718 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="sorting-datasets-by-multiple-variables-order-matters" class="slide level2">
+<h2>Sorting datasets by multiple variables: order matters!</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2"></a>  <span class="fu">arrange</span>(ed, age)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1">This will sort by <code>ed</code> first, and then within <code>ed</code>, it will sort by <code>age</code>. This is different from the previous code chunk where we sorted by <code>age</code> first, and then within <code>age</code>, we sorted by <code>ed</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,728 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5598… 020      1969       4      3392    51     0 None   Resp… Marrie… Male  
+ 2 5598… 010      1964       7      1596    62     0 None   Resp… Marrie… Female
+ 3 5528… 020      1961       9       561    62     0 None   Resp… Marrie… Male  
+ 4 5550… 010      1958       6      -626    65     0 None   Resp… No spo… Male  
+ 5 5548… 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+ 6 5512… 010      1957       5      -930    66     0 None   Resp… No spo… Male  
+ 7 5528… 020      1957       9     -1539    67     0 None   Resp… Marrie… Female
+ 8 5528… 020      1953       9     -2330    69     0 None   Resp… Marrie… Female
+ 9 5516… 010      1952       8     -2695    71     0 None   Resp… No spo… Male  
+10 5524… 010      1947      11     -4430    75     0 None   Resp… No spo… Female
+# ℹ 2,718 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="distinct" class="title-slide slide level1 center">
+<h1><code>distinct()</code></h1>
+
+</section>
+<section id="distinct-keeps-unique-rows" class="slide level2">
+<h2><code>distinct()</code> keeps unique rows</h2>
+<ul>
+<li><code>distinct()</code> allows us to keep only unique rows based on the values in one or more columns</li>
+<li><code>distinct()</code> can run without any arguments: it will return all unique rows in the dataset
+<ul>
+<li>This can be helpful if you have repeat observations in your dataset and you want to keep only one of each</li>
+</ul></li>
+<li><code>distinct()</code> can also take specific columns as arguments: it will return unique rows based on the values in those columns</li>
+</ul>
+</section>
+<section id="example-keep-unique-rows-in-dataset" class="slide level2">
+<h2>Example: keep unique rows in dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,660 × 31
+   hhid  pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+ 1 5590… 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+ 2 5548… 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+ 3 5586… 010      1968       3      2996    54    NA &lt;NA&gt;   Resp… No spo… Female
+ 4 5555… 010      1966       4      2296    57    NA &lt;NA&gt;   Resp… No spo… Female
+ 5 5555… 020      1967       7      2752    55    10 None   Resp… Marrie… Female
+ 6 5576… 010      1971       5      4152    51    NA &lt;NA&gt;   Resp… No spo… Female
+ 7 5557… 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+ 8 5521… 010      1965      10      2114    57    15 Assoc… Resp… Marrie… Male  
+ 9 5504… 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+10 5574… 010      1970       3      3698    53    16 Maste… Resp… Marrie… Female
+# ℹ 2,650 more rows
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-keep-unique-rows-based-on-degree" class="slide level2">
+<h2>Example: keep unique rows based on <code>degree</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-2" class="code-annotation-target"><a href="#annotated-cell-14-2"></a>  <span class="fu">distinct</span>(degree)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="2" data-code-annotation="1">This will return unique rows based on the values in the <code>degree</code> column. The output will only include the <code>degree</code> column, and it will return one row for each unique value in the <code>degree</code> column.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 1
+  degree                             
+  &lt;chr&gt;                              
+1 Associate's degree                 
+2 None                               
+3 &lt;NA&gt;                               
+4 High school diploma                
+5 Bachelor's degree                  
+6 Master's degree                    
+7 Professional degree (Ph.D./M.D./JD)
+8 GED                                </code></pre>
+</div>
+</div>
+</section>
+<section id="example-keep-unique-rows-based-on-degree-with-all-columns" class="slide level2">
+<h2>Example: keep unique rows based on <code>degree</code> <em>with all columns</em></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2"></a>  <span class="fu">distinct</span>(</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3"></a>    degree, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-4" class="code-annotation-target"><a href="#annotated-cell-15-4"></a>    <span class="at">.keep_all =</span> <span class="cn">TRUE</span></span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5"></a>    ) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="4" data-code-annotation="1">If we want to keep all columns in the output, we can use the argument <code>.keep_all = TRUE</code>. This will return all columns for the unique rows based on the specified column(s).</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 31
+  hhid   pn    birthyr birthmo birthdate   age    ed degree proxy coupled female
+  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+1 559011 010      1967      12      2905    54    13 Assoc… Resp… No spo… Female
+2 554887 020      1956       7     -1234    66     0 None   Resp… Marrie… Female
+3 558666 010      1968       3      2996    54    NA &lt;NA&gt;   Resp… No spo… Female
+4 555780 020      1954       6     -1934    68    12 High … Resp… Marrie… Female
+5 550417 010      1969       3      3361    54    14 Bache… Resp… Marrie… Female
+6 557411 010      1970       3      3698    53    16 Maste… Resp… Marrie… Female
+7 551784 010      1969       4      3392    53    17 Profe… Resp… No spo… Female
+8 558936 010      1959       6      -200    63    11 GED    Resp… No spo… Male  
+# ℹ 20 more variables: age_months &lt;dbl&gt;, race_original &lt;chr&gt;, smokeever &lt;chr&gt;,
+#   smoke2now &lt;chr&gt;, drink &lt;chr&gt;, weight &lt;dbl&gt;, self_health &lt;chr&gt;,
+#   high_bp &lt;chr&gt;, diab &lt;chr&gt;, cancer &lt;chr&gt;, lung_dis &lt;chr&gt;, heart_dis &lt;chr&gt;,
+#   strk &lt;chr&gt;, psych_prob &lt;chr&gt;, sleep_prob &lt;chr&gt;, arthritis &lt;chr&gt;,
+#   cond_count &lt;dbl&gt;, r16hosp &lt;dbl&gt;, r16cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="example-keep-unique-rows-based-on-degree-and-self_health" class="slide level2">
+<h2>Example: keep unique rows based on <code>degree</code> and <code>self_health</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1"></a>hrs_data <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2"></a>  <span class="fu">distinct</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-3" class="code-annotation-target"><a href="#annotated-cell-16-3"></a>    degree,</span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4"></a>    self_health</span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="3,4" data-code-annotation="1">This will return unique rows based on the values in the <code>degree</code> and <code>self_health</code> columns. This allows us to see unique combinations of <code>degree</code> and <code>self_health</code> in our dataset.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 42 × 2
+   degree                              self_health
+   &lt;chr&gt;                               &lt;chr&gt;      
+ 1 Associate's degree                  Fair       
+ 2 None                                Fair       
+ 3 &lt;NA&gt;                                Good       
+ 4 None                                Very Good  
+ 5 &lt;NA&gt;                                Fair       
+ 6 High school diploma                 Fair       
+ 7 Associate's degree                  Very Good  
+ 8 Bachelor's degree                   Fair       
+ 9 Master's degree                     Poor       
+10 Professional degree (Ph.D./M.D./JD) Very Good  
+# ℹ 32 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="wrap-up" class="slide level2">
+<h2>Wrap-up</h2>
+<ul>
+<li>We learned three functions that allow us to transform rows in our dataset:
+<ul>
+<li><code>filter()</code> (and <code>filter_out()</code>)
+<ul>
+<li><strong>Keep rows based on conditions</strong> we specify in the columns</li>
+</ul></li>
+<li><code>arrange()</code>
+<ul>
+<li><strong>Sort rows based on the values</strong> in one or more columns</li>
+</ul></li>
+<li><code>distinct()</code>
+<ul>
+<li><strong>Keep only unique rows</strong> based on the values in one or more columns</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Data transformation: Rows</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1955,
+
+        height: 1100,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

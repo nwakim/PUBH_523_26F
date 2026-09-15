@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Introduction to R"
+  navbar:
+    background: primary
+    search: true
+    logo: "images/PUBH_R.png"
+    foreground: "#fff"
+    collapse-below: sm
+    right:
+      - href: schedule.qmd
+        text: Schedule
+      - href: syllabus.qmd
+        text: Syllabus
+      - href: instructors.qmd
+        text: Instructors
+      - href: practice.qmd
+        text: Practice
+      - href: project.qmd
+        text: Project
+      - href: resources.qmd
+        text: Resources   
+        
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme:
+      - sandstone_NW.scss
+    toc: true
+

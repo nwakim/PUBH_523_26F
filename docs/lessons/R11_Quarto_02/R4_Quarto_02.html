@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Meike Niederhausen and Nicky Wakim">
+<meta name="dcterms.date" content="2024-10-14">
+
+<title>R4: Quarto Continued – Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-702b68d2bb46f0b77d76c36fa481b3ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/PUBH523.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/PUBH523.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Introduction to R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.qmd"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../instructors.qmd"> 
+<span class="menu-text">Instructors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../homeworks.qmd"> 
+<span class="menu-text">Homework</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project.qmd"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#recall-our-quarto-document-from-last-class" id="toc-recall-our-quarto-document-from-last-class" class="nav-link active" data-scroll-target="#recall-our-quarto-document-from-last-class">Recall our Quarto document from last class</a></li>
+  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code">Inline code</a></li>
+  <li><a href="#types-of-quarto-content" id="toc-types-of-quarto-content" class="nav-link" data-scroll-target="#types-of-quarto-content">3 types of Quarto content</a>
+  <ul class="collapse">
+  <li><a href="#formatting-text" id="toc-formatting-text" class="nav-link" data-scroll-target="#formatting-text">Formatting text</a></li>
+  <li><a href="#formatting-text-visual-editor" id="toc-formatting-text-visual-editor" class="nav-link" data-scroll-target="#formatting-text-visual-editor">Formatting text: <code>Visual editor</code></a></li>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
+  <li><a href="#formatting-text-markdown" id="toc-formatting-text-markdown" class="nav-link" data-scroll-target="#formatting-text-markdown">Formatting text: <code>Markdown</code></a></li>
+  <li><a href="#headers" id="toc-headers" class="nav-link" data-scroll-target="#headers">Headers</a></li>
+  <li><a href="#rstudio-tip" id="toc-rstudio-tip" class="nav-link" data-scroll-target="#rstudio-tip">RStudio tip</a></li>
+  </ul></li>
+  <li><a href="#types-of-quarto-content-1" id="toc-types-of-quarto-content-1" class="nav-link" data-scroll-target="#types-of-quarto-content-1">3 types of Quarto content</a>
+  <ul class="collapse">
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks">Code chunks</a></li>
+  <li><a href="#create-a-code-chunk" id="toc-create-a-code-chunk" class="nav-link" data-scroll-target="#create-a-code-chunk">Create a code chunk</a></li>
+  <li><a href="#what-does-a-code-chunk-look-like" id="toc-what-does-a-code-chunk-look-like" class="nav-link" data-scroll-target="#what-does-a-code-chunk-look-like">What does a code chunk look like?</a></li>
+  <li><a href="#enter-and-run-code-1n" id="toc-enter-and-run-code-1n" class="nav-link" data-scroll-target="#enter-and-run-code-1n">Enter and run code (1/n)</a></li>
+  <li><a href="#enter-and-run-code-2n" id="toc-enter-and-run-code-2n" class="nav-link" data-scroll-target="#enter-and-run-code-2n">Enter and run code (2/n)</a></li>
+  <li><a href="#useful-keyboard-shortcuts" id="toc-useful-keyboard-shortcuts" class="nav-link" data-scroll-target="#useful-keyboard-shortcuts">Useful keyboard shortcuts</a>
+  <ul class="collapse">
+  <li><a href="#practice-1" id="toc-practice-1" class="nav-link" data-scroll-target="#practice-1">Practice</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#types-of-quarto-content-2" id="toc-types-of-quarto-content-2" class="nav-link" data-scroll-target="#types-of-quarto-content-2">3 types of Quarto content</a>
+  <ul class="collapse">
+  <li><a href="#yaml-metadata" id="toc-yaml-metadata" class="nav-link" data-scroll-target="#yaml-metadata"><code>YAML</code> metadata</a></li>
+  <li><a href="#simple-yaml-example" id="toc-simple-yaml-example" class="nav-link" data-scroll-target="#simple-yaml-example">Simple <code>YAML</code> example</a></li>
+  <li><a href="#change-the-output-file-type" id="toc-change-the-output-file-type" class="nav-link" data-scroll-target="#change-the-output-file-type">Change the output file type</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#you-will-get-frustrated-while-learning-r" id="toc-you-will-get-frustrated-while-learning-r" class="nav-link" data-scroll-target="#you-will-get-frustrated-while-learning-r">You WILL get frustrated while learning R!</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a>
+  <ul class="collapse">
+  <li><a href="#r-packages-1" id="toc-r-packages-1" class="nav-link" data-scroll-target="#r-packages-1">R Packages</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing packages</a></li>
+  <li><a href="#video-on-installing-packages" id="toc-video-on-installing-packages" class="nav-link" data-scroll-target="#video-on-installing-packages">Video on installing packages</a></li>
+  <li><a href="#load-packages-with-library-command" id="toc-load-packages-with-library-command" class="nav-link" data-scroll-target="#load-packages-with-library-command">Load packages with <code>library()</code> command</a></li>
+  <li><a href="#install-the-packages-listed-below-before-day-3" id="toc-install-the-packages-listed-below-before-day-3" class="nav-link" data-scroll-target="#install-the-packages-listed-below-before-day-3">Install the packages listed below <span style="color:darkorange">before Day 3</span></a></li>
+  <li><a href="#directions-for-installing-package-oibiostat" id="toc-directions-for-installing-package-oibiostat" class="nav-link" data-scroll-target="#directions-for-installing-package-oibiostat">Directions for installing package <code>oibiostat</code></a></li>
+  </ul></li>
+  <li><a href="#a-visual-dataset" id="toc-a-visual-dataset" class="nav-link" data-scroll-target="#a-visual-dataset">A visual dataset</a>
+  <ul class="collapse">
+  <li><a href="#useful-keyboard-shortcuts-1" id="toc-useful-keyboard-shortcuts-1" class="nav-link" data-scroll-target="#useful-keyboard-shortcuts-1">Useful keyboard shortcuts</a>
+  <ul class="collapse">
+  <li><a href="#practice-2" id="toc-practice-2" class="nav-link" data-scroll-target="#practice-2">Practice</a></li>
+  </ul></li>
+  <li><a href="#another-resource-for-an-introduction-to-r" id="toc-another-resource-for-an-introduction-to-r" class="nav-link" data-scroll-target="#another-resource-for-an-introduction-to-r">Another resource for an introduction to R</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="R4_Quarto_02.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">R4: Quarto Continued</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Week 1</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Meike Niederhausen and Nicky Wakim </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 14, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="recall-our-quarto-document-from-last-class" class="level2">
+<h2 class="anchored" data-anchor-id="recall-our-quarto-document-from-last-class">Recall our Quarto document from last class</h2>
+</section>
+<section id="inline-code" class="level2">
+<h2 class="anchored" data-anchor-id="inline-code">Inline code</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>With markdown you can also report <strong>R code output inline</strong> with the text instead of using a chunk.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Text in editor:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/screenshot_code_inline_petalwidth.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Output:</p>
+<p>The mean petal width for all 3 species combined is 1.2 (SD = 0.8) cm.</p>
+</div>
+</div>
+<ul>
+<li>Reporting summary statistics this way in a report, makes the numbers computationally reproducible.</li>
+<li>For example, if this were for an abstract and a year later you are wondering where the numbers came from, your R code will tell you exactly which dataset was used to calculate the values.</li>
+</ul>
+</div>
+</section>
+<section id="types-of-quarto-content" class="level1">
+<h1>3 types of Quarto content</h1>
+<ol type="1">
+<li><span style="color:darkorange"><em>Text</em>, lists, images, tables, links</span></li>
+<li>Code chunks</li>
+<li>YAML metadata</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_hedgehog_text_code.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://allisonhorst.com/horst-hill-collaborations">Illustration by Alison Hill and Allison Horst, for RStudio.</a></figcaption>
+</figure>
+</div>
+<section id="formatting-text" class="level2">
+<h2 class="anchored" data-anchor-id="formatting-text">Formatting text</h2>
+<ul>
+<li><p><strong>bold</strong>, <em>italics</em>, super<sup>scripts</sup> &amp; sub<sub>scripts</sub>, <del>strikethrough</del>, <code>verbatim</code>, etc.<br>
+<br>
+</p></li>
+<li><p>Text is formatted through a markup language called <code>Markdown</code> (<a href="https://en.wikipedia.org/wiki/Markdown">Wikipedia</a>)</p>
+<ul>
+<li>Other markup languages include html (webapges) and LaTeX (math)</li>
+<li>All text formatting is specified via <em>code</em></li>
+<li>“Markdown is a plain text format that is designed to be easy to write, and, even more importantly, easy to read” <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+</ul></li>
+<li><p>Newer versions of RStudio include a <code>Visual editor</code> as well that makes formatting text similar to using a word processor.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/visual_editor_quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="formatting-text-visual-editor" class="level2">
+<h2 class="anchored" data-anchor-id="formatting-text-visual-editor">Formatting text: <code>Visual editor</code></h2>
+<ul>
+<li>Using the <code>Visual editor</code> is similar to using a wordprocessor, such as Word</li>
+<li>Keyboard shortcuts usually work as well (<em>shown for Mac below</em>)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/visual_editor_options_expanded_quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="practice" class="level2">
+<h2 class="anchored" data-anchor-id="practice">Practice</h2>
+<ol type="1">
+<li>Part 1
+<ol type="1">
+<li>Using the visual editor, practice formatting text in your qmd file, such as making text <strong>bold</strong>, <em>italicized</em>, and in <code>code</code> format.</li>
+<li>Add 1<sup>st</sup>, 2<sup>nd</sup>, and 3<sup>rd</sup> level headers</li>
+<li>Add a list with a
+<ul>
+<li>sub-list (bullet and/or numbered)</li>
+</ul></li>
+<li>Add a table</li>
+<li>Add whatever else you are interested in!</li>
+</ol></li>
+<li>Part 2
+<ol type="1">
+<li>Switch back to the <code>Source</code> editor and examine the markdown code that was used for the formatting.</li>
+</ol></li>
+</ol>
+<p><strong>Questions</strong>:</p>
+<ol type="1">
+<li>What went smoothly?</li>
+<li>What hurdles did you encounter?</li>
+</ol>
+</section>
+<section id="formatting-text-markdown" class="level2">
+<h2 class="anchored" data-anchor-id="formatting-text-markdown">Formatting text: <code>Markdown</code></h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Markdown:</th>
+<th>Output:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><pre><code>*This text is in italics*, but _so is this text_.</code></pre></td>
+<td><em>This text is in italics</em>, but <em>so is this text</em>.</td>
+</tr>
+<tr class="even">
+<td><pre><code>**Bold** also has __2 options__</code></pre></td>
+<td><strong>Bold</strong> also has <strong>2 options</strong></td>
+</tr>
+<tr class="odd">
+<td><pre><code>~~Should this be deleted?~~</code></pre></td>
+<td><del>Should this be deleted?</del></td>
+</tr>
+<tr class="even">
+<td><pre><code>Need^super^ or~sub~ scripts?</code></pre></td>
+<td>Need<sup>super</sup> or<sub>sub</sub> scripts?</td>
+</tr>
+<tr class="odd">
+<td><pre><code>`Code is often formatted as verbatim`</code></pre></td>
+<td><code>Code is often formatted as verbatim</code></td>
+</tr>
+<tr class="even">
+<td><pre><code>&gt;This is a block quote.</code></pre></td>
+<td><blockquote class="blockquote">
+<p>This is a block quote.</p>
+</blockquote></td>
+</tr>
+</tbody>
+</table>
+<!-- : {tbl-colwidths="\[50,50\]"} -->
+</section>
+<section id="headers" class="level2">
+<h2 class="anchored" data-anchor-id="headers">Headers</h2>
+<ul>
+<li>Organize your documents using headers to create sections and subsections</li>
+<li>Use <code>#</code> at the beginning of the line to create headers</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Text in editor:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/screenshot_headers.png" class="quarto-figure quarto-figure-center figure-img" height="320"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Output:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/screenshot_headers_out.png" class="quarto-figure quarto-figure-center figure-img" height="320"></p>
+</figure>
+</div>
+<!-- # Header 1 -->
+<!-- ## Header 2 -->
+<!-- ### Header 3 -->
+<!-- #### Header 4 -->
+<!-- ##### Header 5 -->
+<!-- ###### Header 6 -->
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure there is no space before the <code>#</code>, and there IS a space after the <code>#</code> in order for the header to work properly.</p>
+</div>
+</div>
+</section>
+<section id="rstudio-tip" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-tip">RStudio tip</h2>
+<p>You can easily navigate through your .qmd file if you use headers to outline your text</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/default_quarto_html_outline.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="types-of-quarto-content-1" class="level1">
+<h1>3 types of Quarto content</h1>
+<ol type="1">
+<li>Text, lists, images, tables, links</li>
+<li><span style="color:darkorange"><em>Code chunks</em></span></li>
+<li>YAML metadata</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_hedgehog_text_code.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://allisonhorst.com/horst-hill-collaborations">Illustration by Alison Hill and Allison Horst, for RStudio.</a></figcaption>
+</figure>
+</div>
+<section id="code-chunks" class="level2">
+<h2 class="anchored" data-anchor-id="code-chunks">Code chunks</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>.qmd file <img src="../img_slides/01_qmd_screenshot.png" class="img-fluid quarto-figure quarto-figure-center"></p>
+</div><div class="column" style="width:50%;">
+<p>html output<br>
+<img src="../img_slides/default_quarto_html.png" class="img-fluid quarto-figure quarto-figure-center"></p>
+</div>
+</div>
+</section>
+<section id="create-a-code-chunk" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-code-chunk">Create a code chunk</h2>
+<p>3 options to create a code chunk</p>
+<ol type="1">
+<li><p>Click on <img src="../img_slides/code_chunk_insert_icon.png" class="img-fluid"> at top right of the editor window, or</p></li>
+<li><p><span style="color:darkorange"><strong>Keyboard shortcut</strong></span></p></li>
+</ol>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Mac</td>
+<td><em>Command + Option + I</em></td>
+</tr>
+<tr class="even">
+<td>PC</td>
+<td><em>Ctrl + Alt + I</em></td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
+<li><code>Visual editor</code>: Select <code>Insert</code> -&gt; <code>Executable Cell</code> -&gt; <code>R</code></li>
+</ol>
+<p><img src="../img_slides/code_chunk_insert_visual.png" class="img-fluid"></p>
+</section>
+<section id="what-does-a-code-chunk-look-like" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-a-code-chunk-look-like">What does a code chunk look like?</h2>
+<p>An empty code chunk looks like this:</p>
+<p><code>Visual editor</code></p>
+<p><img src="../img_slides/01_qmd_chunk_empty_visual.png" class="img-fluid"></p>
+<p><code>Source editor</code></p>
+<p><img src="../img_slides/01_qmd_chunk_empty_source.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that a code chunks start with <code>```{r}</code> and ends with <code>```</code>. Make sure there is no space before <code>```</code>.</p>
+</div>
+</div>
+</section>
+<section id="enter-and-run-code-1n" class="level2">
+<h2 class="anchored" data-anchor-id="enter-and-run-code-1n">Enter and run code (1/n)</h2>
+<ul>
+<li><strong>Type R code</strong> inside code chunks</li>
+<li><strong>Select code</strong> you want to run, by
+<ul>
+<li>placing the cursor in the line of code you want to run,</li>
+<li><strong><em>or</em></strong> highlighting the code you want to run</li>
+</ul></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><strong>Run selected code</strong> by
+<ul>
+<li>clicking on the <img src="../img_slides/01_Script_Run.png" class="img-fluid"> button in the top right corner of the scripting window and choosing <code>Run Selected Line(s)</code>,</li>
+<li>or typing one of the following key combinations:</li>
+</ul></li>
+</ul>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Mac</td>
+<td><strong>ctrl + return</strong></td>
+</tr>
+<tr class="even">
+<td>PC</td>
+<td><strong>command + return</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><em>Where does the output appear?</em></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/01_qmd_coding1a.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="enter-and-run-code-2n" class="level2">
+<h2 class="anchored" data-anchor-id="enter-and-run-code-2n">Enter and run code (2/n)</h2>
+<div style="font-size: 80%;">
+<ul>
+<li><strong>Run all code</strong> in a chunk by
+<ul>
+<li>by clicking the play button in the top right corner of the chunk</li>
+</ul></li>
+<li>The code output appears below the code chunk</li>
+</ul>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/01_qmd_coding2.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The output should also appear in the Console.</li>
+<li>Settings can be changed so that the output appears only in the Console and not below the code chunk:
+<ul>
+<li>Select {{&lt; fa solid gear &gt;}} (to right of Render button) and then <em>Chunk Output in Console</em>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="useful-keyboard-shortcuts" class="level2">
+<h2 class="anchored" data-anchor-id="useful-keyboard-shortcuts">Useful keyboard shortcuts</h2>
+<p><a href="https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts">Full list of keyboard shortcuts</a><br>
+&nbsp;</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 25%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>action</th>
+<th>mac</th>
+<th>windows/linux</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Run code in qmd (or script)</td>
+<td>cmd + enter</td>
+<td>ctrl + enter</td>
+</tr>
+<tr class="even">
+<td><code>&lt;-</code></td>
+<td>option + -</td>
+<td>alt + -</td>
+</tr>
+<tr class="odd">
+<td>interrupt currently running command</td>
+<td>esc</td>
+<td>esc</td>
+</tr>
+<tr class="even">
+<td>in console, retrieve previously run code</td>
+<td>up/down</td>
+<td>up/down</td>
+</tr>
+<tr class="odd">
+<td>keyboard shortcut help</td>
+<td>option + shift + k</td>
+<td>alt + shift + k</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<section id="practice-1" class="level3">
+<h3 class="anchored" data-anchor-id="practice-1">Practice</h3>
+<p>Try typing code below in your qmd (with shortcut) and evaluating it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+</section>
+<section id="types-of-quarto-content-2" class="level1">
+<h1>3 types of Quarto content</h1>
+<ol type="1">
+<li>Text, lists, images, tables, links</li>
+<li>Code chunks</li>
+<li><span style="color:darkorange"><em>YAML metadata</em></span></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_hedgehog_text_code.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://allisonhorst.com/horst-hill-collaborations">Illustration by Alison Hill and Allison Horst, for RStudio.</a></figcaption>
+</figure>
+</div>
+<section id="yaml-metadata" class="level2">
+<h2 class="anchored" data-anchor-id="yaml-metadata"><code>YAML</code> metadata</h2>
+<p>Many output options can be set in the <strong>YAML metadata</strong>, which is the <em>first set of code in the file starting and ending with</em> <code>---</code>.</p>
+<ul>
+<li>It sets the configuration specifications for the output file</li>
+<li>YAML is an acronym for
+<ul>
+<li><em>yet another markup language</em>, or</li>
+<li><em>YAML ain’t markup language</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="simple-yaml-example" class="level2">
+<h2 class="anchored" data-anchor-id="simple-yaml-example">Simple <code>YAML</code> example</h2>
+<div style="font-size: 70%;">
+<ul>
+<li>The default YAML includes a <strong>title</strong> and <strong>author</strong> that appear at the top of the output file. In the example below, I also added in a <strong>date</strong> option</li>
+</ul>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>YAML:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"My first Quarto file"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">"Meike"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">"9/25/2023"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> html</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>editor<span class="sc">:</span> visual</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Output:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/yaml_simple_output.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The YAML <strong>must</strong> start and end with 3 dashes <code>---</code>.</li>
+<li>The first set of <code>---</code> <strong>must</strong> be on the very first line.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="change-the-output-file-type" class="level2">
+<h2 class="anchored" data-anchor-id="change-the-output-file-type">Change the output file type</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<ul>
+<li>The YAML specifies the format of the output file:
+<ul>
+<li>html, Word, pdf, slides, website, book, etc.</li>
+</ul></li>
+<li>This is done by changing the <code>format:</code> option</li>
+</ul>
+</div><div class="column" style="width:65%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_hedgehog_output_types.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://allisonhorst.com/horst-hill-collaborations">Illustration by Alison Hill and Allison Horst, for RStudio.</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"My first Quarto file"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">"Meike"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">"9/25/2023"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> html</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>editor<span class="sc">:</span> visual</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:60%;">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output format</th>
+<th>YAML</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>html</td>
+<td><code>format: html</code></td>
+</tr>
+<tr class="even">
+<td>Word</td>
+<td><code>format: docx</code></td>
+</tr>
+<tr class="odd">
+<td>pdf<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></td>
+<td><code>format: pdf</code></td>
+</tr>
+<tr class="even">
+<td>html slides</td>
+<td><code>format: revealjs</code></td>
+</tr>
+<tr class="odd">
+<td>PPT slides</td>
+<td><code>format: pptx</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_r_first_then.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://allisonhorst.com/">Artwork by <span class="citation" data-cites="allison_horst">@allison_horst</span></a></figcaption>
+</figure>
+</div>
+</section>
+<section id="you-will-get-frustrated-while-learning-r" class="level2">
+<h2 class="anchored" data-anchor-id="you-will-get-frustrated-while-learning-r">You WILL get frustrated while learning R!</h2>
+<p>From Garrett Grolemund’s Prologue of his book <em>Hands-On Programming with R</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
+<blockquote class="blockquote">
+<p>As you learn to program, you are going to get frustrated. You are learning a new language, and it will take time to become fluent. But frustration is not just natural, it’s actually a positive sign that you should watch for. Frustration is your brain’s way of being lazy; it’s trying to get you to quit and go do something easy or fun. If you want to get physically fitter, you need to push your body even though it complains. If you want to get better at programming, you’ll need to push your brain. Recognize when you get frustrated and see it as a good thing: you’re now stretching yourself. Push yourself a little further every day, and you’ll soon be a confident programmer.</p>
+</blockquote>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li><a href="https://quarto.org/docs/guide/">Official Quarto guide:</a> https://quarto.org/docs/guide/
+<ul>
+<li><a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown basics:</a> https://quarto.org/docs/authoring/markdown-basics.html
+<ul>
+<li>Text formatting, headings, linnks, images, lists, tables, equations, diagrams, page breaks, keyboard shortcuts, and more!</li>
+</ul></li>
+<li><a href="https://quarto.org/docs/computations/r.html#code-blocks">Code blocks:</a> https://quarto.org/docs/computations/r.html#code-blocks
+<ul>
+<li><a href="https://quarto.org/docs/computations/r.html#chunk-options">Chunk options:</a> https://quarto.org/docs/computations/r.html#chunk-options</li>
+</ul></li>
+</ul></li>
+<li>Mine Çetinkaya-Rundel’s <a href="https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/">Quarto tip a day:</a> https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/<br>
+</li>
+<li>Hadley Wickham’s <a href="https://r4ds.hadley.nz/">R for Data Science:</a> https://r4ds.hadley.nz/ _ See Chapter 29 for Quarto</li>
+</ul>
+</section>
+</section>
+<section id="r-packages" class="level1">
+<h1>R Packages</h1>
+<!-- background-image: url(img/tidyverse_celestial.jpg) -->
+<!-- background-size: cover -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/tidyverse_celestial.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<section id="r-packages-1" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages-1">R Packages</h2>
+<p>A good analogy for R packages is that they<br>
+are like apps you can download onto a mobile phone:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/R_vs_R_packages.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://moderndive.netlify.com/1-getting-started.html#packages">ModernDive Figure 1.4</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="installing-packages" class="level2">
+<h2 class="anchored" data-anchor-id="installing-packages">Installing packages</h2>
+<div style="font-size: 80%;">
+<ul>
+<li>Packages contain additional functions and data</li>
+</ul>
+<p>Two options to install packages:</p>
+<ol type="1">
+<li><code>install.packages()</code> <em>or</em></li>
+<li>The “Packages” tab in Files/Plots/Packages/Help/Viewer window</li>
+</ol>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)   <span class="co"># only do this ONCE, use quotes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="font-size: 80%;">
+<ul>
+<li><strong>Only install packages once</strong> <em>(unless you want to update them)</em></li>
+<li>Installed from <a href="https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a> = package mothership</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/screenshot_packages_window.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="video-on-installing-packages" class="level2">
+<h2 class="anchored" data-anchor-id="video-on-installing-packages">Video on installing packages</h2>
+<ul>
+<li>Danielle Navarro’s YouTube video on <strong><em>Installing and loading R packages</em></strong>: <a href="https://www.youtube.com/watch?v=kpHZVyDvEhQ">https://www.youtube.com/watch?v=kpHZVyDvEhQ</a></li>
+</ul>
+</section>
+<section id="load-packages-with-library-command" class="level2">
+<h2 class="anchored" data-anchor-id="load-packages-with-library-command">Load packages with <code>library()</code> command</h2>
+<div style="font-size: 80%;">
+<ul>
+<li>Tip: at the top of your Rmd file, create a chunk that loads all of the R packages you want to use in that file.</li>
+<li>Use the <code>library()</code> command to load each required package.</li>
+<li>Packages need to be reloaded <em>every</em> time you open Rstudio.</li>
+</ul>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)    <span class="co"># run this every time you open Rstudio</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<div style="font-size: 80%;">
+<ul>
+<li>You can use a function without loading the package with <code>PackageName::CommandName</code></li>
+</ul>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">arrange</span>(iris, Petal.Width)   <span class="co"># what does arrange do?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1            4.9         3.1          1.5         0.1     setosa
+2            4.8         3.0          1.4         0.1     setosa
+3            4.3         3.0          1.1         0.1     setosa
+4            5.2         4.1          1.5         0.1     setosa
+5            4.9         3.6          1.4         0.1     setosa
+6            5.1         3.5          1.4         0.2     setosa
+7            4.9         3.0          1.4         0.2     setosa
+8            4.7         3.2          1.3         0.2     setosa
+9            4.6         3.1          1.5         0.2     setosa
+10           5.0         3.6          1.4         0.2     setosa
+11           5.0         3.4          1.5         0.2     setosa
+12           4.4         2.9          1.4         0.2     setosa
+13           5.4         3.7          1.5         0.2     setosa
+14           4.8         3.4          1.6         0.2     setosa
+15           5.8         4.0          1.2         0.2     setosa
+16           5.4         3.4          1.7         0.2     setosa
+17           4.6         3.6          1.0         0.2     setosa
+18           4.8         3.4          1.9         0.2     setosa
+19           5.0         3.0          1.6         0.2     setosa
+20           5.2         3.5          1.5         0.2     setosa
+21           5.2         3.4          1.4         0.2     setosa
+22           4.7         3.2          1.6         0.2     setosa
+23           4.8         3.1          1.6         0.2     setosa
+24           5.5         4.2          1.4         0.2     setosa
+25           4.9         3.1          1.5         0.2     setosa
+26           5.0         3.2          1.2         0.2     setosa
+27           5.5         3.5          1.3         0.2     setosa
+28           4.4         3.0          1.3         0.2     setosa
+29           5.1         3.4          1.5         0.2     setosa
+30           4.4         3.2          1.3         0.2     setosa
+31           5.1         3.8          1.6         0.2     setosa
+32           4.6         3.2          1.4         0.2     setosa
+33           5.3         3.7          1.5         0.2     setosa
+34           5.0         3.3          1.4         0.2     setosa
+35           4.6         3.4          1.4         0.3     setosa
+36           5.1         3.5          1.4         0.3     setosa
+37           5.7         3.8          1.7         0.3     setosa
+38           5.1         3.8          1.5         0.3     setosa
+39           5.0         3.5          1.3         0.3     setosa
+40           4.5         2.3          1.3         0.3     setosa
+41           4.8         3.0          1.4         0.3     setosa
+42           5.4         3.9          1.7         0.4     setosa
+43           5.7         4.4          1.5         0.4     setosa
+44           5.4         3.9          1.3         0.4     setosa
+45           5.1         3.7          1.5         0.4     setosa
+46           5.0         3.4          1.6         0.4     setosa
+47           5.4         3.4          1.5         0.4     setosa
+48           5.1         3.8          1.9         0.4     setosa
+49           5.1         3.3          1.7         0.5     setosa
+50           5.0         3.5          1.6         0.6     setosa
+51           4.9         2.4          3.3         1.0 versicolor
+52           5.0         2.0          3.5         1.0 versicolor
+53           6.0         2.2          4.0         1.0 versicolor
+54           5.8         2.7          4.1         1.0 versicolor
+55           5.7         2.6          3.5         1.0 versicolor
+56           5.5         2.4          3.7         1.0 versicolor
+57           5.0         2.3          3.3         1.0 versicolor
+58           5.6         2.5          3.9         1.1 versicolor
+59           5.5         2.4          3.8         1.1 versicolor
+60           5.1         2.5          3.0         1.1 versicolor
+61           6.1         2.8          4.7         1.2 versicolor
+62           5.8         2.7          3.9         1.2 versicolor
+63           5.5         2.6          4.4         1.2 versicolor
+64           5.8         2.6          4.0         1.2 versicolor
+65           5.7         3.0          4.2         1.2 versicolor
+66           5.5         2.3          4.0         1.3 versicolor
+67           5.7         2.8          4.5         1.3 versicolor
+68           6.6         2.9          4.6         1.3 versicolor
+69           5.6         2.9          3.6         1.3 versicolor
+70           6.1         2.8          4.0         1.3 versicolor
+71           6.4         2.9          4.3         1.3 versicolor
+72           6.3         2.3          4.4         1.3 versicolor
+73           5.6         3.0          4.1         1.3 versicolor
+74           5.5         2.5          4.0         1.3 versicolor
+75           5.6         2.7          4.2         1.3 versicolor
+76           5.7         2.9          4.2         1.3 versicolor
+77           6.2         2.9          4.3         1.3 versicolor
+78           5.7         2.8          4.1         1.3 versicolor
+79           7.0         3.2          4.7         1.4 versicolor
+80           5.2         2.7          3.9         1.4 versicolor
+81           6.1         2.9          4.7         1.4 versicolor
+82           6.7         3.1          4.4         1.4 versicolor
+83           6.6         3.0          4.4         1.4 versicolor
+84           6.8         2.8          4.8         1.4 versicolor
+85           6.1         3.0          4.6         1.4 versicolor
+86           6.1         2.6          5.6         1.4  virginica
+87           6.4         3.2          4.5         1.5 versicolor
+88           6.9         3.1          4.9         1.5 versicolor
+89           6.5         2.8          4.6         1.5 versicolor
+90           5.9         3.0          4.2         1.5 versicolor
+91           5.6         3.0          4.5         1.5 versicolor
+92           6.2         2.2          4.5         1.5 versicolor
+93           6.3         2.5          4.9         1.5 versicolor
+94           6.0         2.9          4.5         1.5 versicolor
+95           5.4         3.0          4.5         1.5 versicolor
+96           6.7         3.1          4.7         1.5 versicolor
+97           6.0         2.2          5.0         1.5  virginica
+98           6.3         2.8          5.1         1.5  virginica
+99           6.3         3.3          4.7         1.6 versicolor
+100          6.0         2.7          5.1         1.6 versicolor
+101          6.0         3.4          4.5         1.6 versicolor
+102          7.2         3.0          5.8         1.6  virginica
+103          6.7         3.0          5.0         1.7 versicolor
+104          4.9         2.5          4.5         1.7  virginica
+105          5.9         3.2          4.8         1.8 versicolor
+106          6.3         2.9          5.6         1.8  virginica
+107          7.3         2.9          6.3         1.8  virginica
+108          6.7         2.5          5.8         1.8  virginica
+109          6.5         3.0          5.5         1.8  virginica
+110          6.3         2.7          4.9         1.8  virginica
+111          7.2         3.2          6.0         1.8  virginica
+112          6.2         2.8          4.8         1.8  virginica
+113          6.1         3.0          4.9         1.8  virginica
+114          6.4         3.1          5.5         1.8  virginica
+115          6.0         3.0          4.8         1.8  virginica
+116          5.9         3.0          5.1         1.8  virginica
+117          5.8         2.7          5.1         1.9  virginica
+118          6.4         2.7          5.3         1.9  virginica
+119          7.4         2.8          6.1         1.9  virginica
+120          5.8         2.7          5.1         1.9  virginica
+121          6.3         2.5          5.0         1.9  virginica
+122          6.5         3.2          5.1         2.0  virginica
+123          5.7         2.5          5.0         2.0  virginica
+124          5.6         2.8          4.9         2.0  virginica
+125          7.7         2.8          6.7         2.0  virginica
+126          7.9         3.8          6.4         2.0  virginica
+127          6.5         3.0          5.2         2.0  virginica
+128          7.1         3.0          5.9         2.1  virginica
+129          7.6         3.0          6.6         2.1  virginica
+130          6.8         3.0          5.5         2.1  virginica
+131          6.7         3.3          5.7         2.1  virginica
+132          6.4         2.8          5.6         2.1  virginica
+133          6.9         3.1          5.4         2.1  virginica
+134          6.5         3.0          5.8         2.2  virginica
+135          7.7         3.8          6.7         2.2  virginica
+136          6.4         2.8          5.6         2.2  virginica
+137          6.4         3.2          5.3         2.3  virginica
+138          7.7         2.6          6.9         2.3  virginica
+139          6.9         3.2          5.7         2.3  virginica
+140          7.7         3.0          6.1         2.3  virginica
+141          6.9         3.1          5.1         2.3  virginica
+142          6.8         3.2          5.9         2.3  virginica
+143          6.7         3.0          5.2         2.3  virginica
+144          6.2         3.4          5.4         2.3  virginica
+145          5.8         2.8          5.1         2.4  virginica
+146          6.3         3.4          5.6         2.4  virginica
+147          6.7         3.1          5.6         2.4  virginica
+148          6.3         3.3          6.0         2.5  virginica
+149          7.2         3.6          6.1         2.5  virginica
+150          6.7         3.3          5.7         2.5  virginica</code></pre>
+</div>
+</div>
+</section>
+<section id="install-the-packages-listed-below-before-day-3" class="level2">
+<h2 class="anchored" data-anchor-id="install-the-packages-listed-below-before-day-3">Install the packages listed below <span style="color:darkorange">before Day 3</span></h2>
+<ul>
+<li><code>knitr</code>
+<ul>
+<li>this might actually already be installed</li>
+<li>check your packages list</li>
+</ul></li>
+<li><code>tidyverse</code>
+<ul>
+<li>this is actually a bundle of packages</li>
+<li><em>Warning: it will take a while to install!!!</em></li>
+<li>see more info at <a href="https://tidyverse.tidyverse.org/">https://tidyverse.tidyverse.org/</a></li>
+</ul></li>
+<li><code>rstatix</code>
+<ul>
+<li>for summary statistics of a dataset</li>
+</ul></li>
+<li><code>janitor</code>
+<ul>
+<li>for cleaning and exploring data</li>
+</ul></li>
+<li><code>ggridges</code>
+<ul>
+<li>for creating ridgeline plots</li>
+</ul></li>
+<li><code>devtools</code>
+<ul>
+<li>used to create R packages</li>
+<li>for our purposes, needed to install some packages</li>
+</ul></li>
+<li><code>oi_biostat_data</code>
+<ul>
+<li>this package is on github</li>
+<li><strong>see the next slide for directions on how to install <code>oi_biostat_data</code></strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="directions-for-installing-package-oibiostat" class="level2">
+<h2 class="anchored" data-anchor-id="directions-for-installing-package-oibiostat">Directions for installing package <code>oibiostat</code></h2>
+<div style="font-size: 70%;">
+<ul>
+<li>The textbook’s datasets are in the R package <code>oibiostat</code></li>
+<li>Explanation of code below
+<ul>
+<li>Installation of <code>oibiostat</code> package requires first installing <code>devtools</code> package</li>
+<li>The code <code>devtools::install_github()</code> tells R to use the command <code>install_github()</code> from the <code>devtools</code> package without loading the entire package and all of its commands (which <code>library(devtools)</code> would do).</li>
+</ul></li>
+</ul>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"OI-Biostat/oi_biostat_data"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div style="font-size: 70%;">
+<ul>
+<li>After running the code above, put <code>#</code> in front of the commands so that RStudio doesn’t evaluate them when rendering.</li>
+<li>Now load the <code>oibiostat</code> package
+<ul>
+<li><span style="color:darkorange">the code below needs to be run <em>every time</em> you restart R or knit an Rmd file</span></li>
+</ul></li>
+</ul>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(oibiostat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="a-visual-dataset" class="level1">
+<h1>A visual dataset</h1>
+<p>Compare water sources across the world by country and family income</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/gapminder_dollarstreet_getwater.jpg" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.gapminder.org/dollar-street?topic=get-water">Gapminder Dollarstreet</a></figcaption>
+</figure>
+</div>
+<p>Check out Gapminder’s Dollar Street for many more examples: <a href="https://www.gapminder.org/dollar-street">https://www.gapminder.org/dollar-street</a></p>
+<section id="useful-keyboard-shortcuts-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="useful-keyboard-shortcuts-1">Useful keyboard shortcuts</h2>
+<p><a href="https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts">Full list of keyboard shortcuts</a><br>
+&nbsp;</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 25%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>action</th>
+<th>mac</th>
+<th>windows/linux</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Run code in qmd (or script)</td>
+<td>cmd + enter</td>
+<td>ctrl + enter</td>
+</tr>
+<tr class="even">
+<td><code>&lt;-</code></td>
+<td>option + -</td>
+<td>alt + -</td>
+</tr>
+<tr class="odd">
+<td>interrupt currently running command</td>
+<td>esc</td>
+<td>esc</td>
+</tr>
+<tr class="even">
+<td>in console, retrieve previously run code</td>
+<td>up/down</td>
+<td>up/down</td>
+</tr>
+<tr class="odd">
+<td>keyboard shortcut help</td>
+<td>option + shift + k</td>
+<td>alt + shift + k</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<section id="practice-2" class="level3">
+<h3 class="anchored" data-anchor-id="practice-2">Practice</h3>
+<p>Try typing code below in your qmd (with shortcut) and evaluating it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="another-resource-for-an-introduction-to-r" class="level2">
+<h2 class="anchored" data-anchor-id="another-resource-for-an-introduction-to-r">Another resource for an introduction to R</h2>
+<ul>
+<li><p>If you would like another perspective on what we covered the first week, you might find <strong>Danielle Navarro’s</strong> online book <strong><em>Learning Statistics with R</em></strong> to be helpful.</p></li>
+<li><p>Download free pdf: <a href="https://learningstatisticswithr.com/">https://learningstatisticswithr.com/</a></p></li>
+<li><p>See Sections 3.1-3.7.1 for some of the topics we covered on first day</p></li>
+</ul>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>From Quarto’s Markdown Basics webpage, https://quarto.org/docs/authoring/markdown-basics.html<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>requires LaTeX installation<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Grolemund, Garrett. 2014. Hands-on Programming with R. O’Reilly. <a href="https://rstudio-education.github.io/hopr/">https://rstudio-education.github.io/hopr/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

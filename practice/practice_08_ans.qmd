@@ -1,0 +1,386 @@
+---
+title: "Practice 8 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse,
+  here,
+  rio
+)
+
+hrs_data <- import(here("data", "hrs_data.rds"))
+```
+
+## Questions
+
+### Question 1: Grammar of `ggplot2`
+
+In Lesson 31, we saw that every `ggplot2` plot is built from the same basic grammar: **data**, a **mapping**, and a **layer**.
+
+#### Part A: The three required pieces
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Fill in the table below with what each of the **data**, **mapping**, and **layer** contribute to a plot, and which function we use to supply each one.
+:::
+
+::: blue
+**Answer:**
+
+Example for one row, fill in the rest yourself following this style:
+
+| Component | Contribution | Function supplied |
+|----|----|----|
+| Data |  |  |
+| Mapping |  |  |
+| Layer | Determines how the mapped data actually gets drawn: as points, bars, boxplots, and so on | a `geom_*()` (or `stat_*()`) function, added with `+` |
+:::
+
+#### Part B: Start with just the data
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Call `ggplot()` with just `hrs_data` as the data (don't add a mapping or a layer yet). Assign the result to `hrs_01_plot_data` and display it. What do you see in the plot area?
+:::
+
+::: blue
+**Answer:**
+
+Here's an example to show you the pattern: the rest of your answers should follow this same style, with code chunks and `#| ...` chunk options as needed.
+
+```{r}
+hrs_01_plot_data <- ggplot(hrs_data)
+
+hrs_01_plot_data
+```
+:::
+
+#### Part C: Add a mapping
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now rebuild the plot, this time adding a mapping: `aes(x = height)`. Assign the result to `hrs_02_plot_mapped` and display it. Compare it to `hrs_01_plot_data`. What showed up this time, and what is still missing?
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part D: Add a layer
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Finally, add a layer to `hrs_02_plot_mapped` by adding `geom_histogram()`. Assign the complete plot to `hrs_03_plot_hist` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Your plot should look like this:
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(hrs_data, aes(x = height)) +
+  geom_histogram()
+```
+:::
+
+#### Part E: Same plot, different code style
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Recreate `hrs_03_plot_hist` again, but this time move `aes(x = height)` out of `ggplot()` and into `geom_histogram()` instead. Assign the result to `hrs_04_plot_aes_in_geom`. Confirm it looks identical to `hrs_03_plot_hist`.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+### Question 2: Basic plotting and aesthetics
+
+In Lesson 32, we covered different `geom_*()` functions and how to set or map aesthetics like color, size, and transparency.
+
+#### Part A: A density plot
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data`, create a plot of `income` and add `geom_density()` to show its distribution. Assign the plot to `hrs_05_plot_density` and display the plot.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part B: A boxplot of the same variable
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now make the same plot of `income`, but use `geom_boxplot()` instead of `geom_density()`. Assign the plot to `hrs_06_plot_boxplot`.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part C: A scatterplot of two continuous variables
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create a plot of `ed` (years of education, x-axis) vs. `income` (y-axis) from `hrs_data` using `geom_point()`. Assign it to `hrs_07_plot_scatter` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Your plot should look like this:
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(hrs_data, aes(x = ed, y = income)) +
+  geom_point()
+```
+:::
+
+#### Part D: A line plot of the same two variables
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now make the same plot of `ed` vs. `income`, but use `geom_smooth()` instead of `geom_point()` to show the overall trend as a line. Assign the plot to `hrs_08_plot_smooth` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part E: A boxplot of a categorical and a continuous variable
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create a plot of `act_vig` (vigorous physical activity frequency, x-axis) vs. `income` (y-axis) from `hrs_data` using `geom_boxplot()`. Assign it to `hrs_09_plot_box`.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+hrs_09_plot_box <- ggplot(hrs_data, aes(x = ______, y = ______)) +
+  geom_boxplot()
+```
+:::
+
+#### Part F: Layer jitter on top
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Starting from the same mapping, add a `geom_jitter()` layer on top of the boxplot layer so you can see the individual data points as well. Set `alpha = 0.2` inside `geom_jitter()` so the points don't overwhelm the boxplot. Assign the result to `hrs_10_plot_box_jitter`.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part G: Setting an aesthetic
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create a plot of `cond_count` (x-axis) vs. `act_vig` (y-axis) using `geom_jitter()`, and set the color of the points to `"darkblue"` (this goes *outside* of `aes()`). Also set `alpha` lower so the individual dots show up better where they overlap. Assign the plot to `hrs_11_plot_color_set`.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+hrs_11_plot_color_set <- ggplot(hrs_data, aes(x = _______, y = ______)) +
+  geom_jitter(color = ______, alpha = ______)
+```
+:::
+
+#### Part H: Mapping an aesthetic
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now recreate the same plot, but this time map `color` to the `smoke_ever` variable *inside* `aes()` instead of setting a fixed color. Also set `alpha` lower so the dots show up better. Assign the plot to `hrs_12_plot_color_map`.
+
+In 1-2 sentences, explain the difference between setting an aesthetic outside `aes()` and mapping it inside `aes()`.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+### Question 3: Design choices for labels, facets, and themes
+
+In Lesson 33, we covered how to polish a plot using `labs()`, `facet_wrap()`/`facet_grid()`, `theme()`, and how to save a finished plot with `ggsave()`.
+
+#### Part A: Labels
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Starting from `hrs_10_plot_box_jitter` (Question 2 Part F), add a `labs()` layer with an x-axis label, a y-axis label, and a title of your choice. Assign the result to `hrs_13_plot_labs` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part B: Facets
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data`, create a histogram of `age_yr`, faceted by `sex` with `facet_wrap()`. Assign the result to `hrs_14_plot_facet`.
+
+Looking at the faceted plot, does the age distribution appear to differ between males and females?
+:::
+
+::: blue
+**Answer:**
+
+Your plot should look like this:
+
+```{r}
+#| echo: false
+#| warning: false
+ggplot(hrs_data, aes(x = age_yr)) +
+  geom_histogram() +
+  facet_wrap(~ sex)
+```
+:::
+
+#### Part C: Color
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Recreate the same distribution as `hrs_14_plot_facet` (a histogram of `age_yr`), but this time show the comparison by mapping `fill` to `sex` instead of faceting. Assign the result to `hrs_15_plot_fill` and display it.
+
+Which approach, facet or fill, feels more appropriate for comparing the age distributions of males and females here? Why?
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part D: Themes
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take `hrs_13_plot_labs` from Part A and add a complete theme of your choice (e.g., `theme_minimal()`, `theme_bw()`, or `theme_classic()`). Then, use `theme()` to additionally increase the size of the plot title to `16`. Assign the final plot to `hrs_16_plot_final` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::
+
+#### Part E: Saving your plot
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `ggsave()` to save `hrs_16_plot_final` as a `.png` file into your `images` folder (use `here()` to build the file path). Set the width to `6` inches, the height to `4` inches, and the `dpi` to `200`.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+ggsave(
+  filename = here(______, ______),
+  plot = ______,
+  width = ______,
+  height = ______,
+  units = "in",
+  dpi = ______
+)
+```
+:::
+
+#### Part F: Insert your saved plot
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In a text section of your document (not a code chunk), insert the image you just saved in Part E using Markdown image syntax.
+:::
+
+::: blue
+**Answer:**
+
+Not given.
+:::

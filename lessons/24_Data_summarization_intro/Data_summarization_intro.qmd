@@ -1,0 +1,94 @@
+---
+title: "Data Summarization: Intro"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data Summarization: Intro"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio
+)
+```
+
+```{r}
+#| label: "import data" 
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(diab, degree, .after = id)
+hrs_degree_chr = hrs_00 |>
+  mutate(degree = as.character(degree))
+  # select(id, age_yr, ed, cesd, degree, srh)
+```
+
+## Data Summarization
+
+- There are **many ways to summarize data** in R
+  - Each function can be useful in different scenarios!
+
+ 
+  
+- We may need **different tools based on the type of measurement** (categorical vs. numeric)
+  - Categorical data (represented as factors in R) will focus on frequencies and counts
+  - Numeric data (represented as numbers in R) will focus on summary metrics like mean, median, standard deviation, etc.
+
+## Summary functions we will cover
+
+| Package | Function | Categorical or Numeric? | Type | What it does |
+|--------|-----------|-----------|-----------------|---------------------|
+| built-in | `summary()` | Both | Quick browsing | Base R's simple way to get a quick stats of each variable |
+| `skimr` | `skim()` | Both | Quick browsing, Grouped summaries | Overview of every variable in your dataset at once |
+| `rstatix` | `get_summary` `_stats()` | Numeric | Quick browsing, Grouped summaries | Automatically generates common numeric summary statistics |
+| `dplyr` | `summarize()` | Both | Pointed summaries, Grouped summaries | Calculates custom summary statistics you specify yourself |
+| `janitor` | `tabyl()` | Categorical | Quick browsing | Builds frequency tables for one or more categorical variables |
+| `gtsummary` | `tbl_summary()` | Both | Presentations, Grouped summaries | Creates a polished, publication-ready summary table |
+
+## Helper functions we will cover
+
+| Package | Function | Type | What it does |
+|-----------|-----------|---------------|----------------------|
+| `dplyr` | `group_by()` | Grouped summaries | Splits your data into groups so later functions operate *per group* |
+| `gt` | `gt()` | Presentation | Creates a polished, publication-ready table |
+
+## Make sure you have the following packages installed
+
+- Remember, you can use `pacman::p_load()` to install and load packages in one step
+
+- Needed packages:
+
+  - `dplyr`
+  - `skimr`
+  - `rstatix`
+  - `janitor`
+  - `gtsummary`
+  - `gt`

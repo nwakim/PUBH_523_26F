@@ -1,0 +1,115 @@
+---
+title: "Course logistics"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Course logistics"
+    html-math-method: mathjax
+    highlight-style: arrow
+execute:
+  echo: true
+  freeze: auto
+---
+
+## Important note
+
+- I will NOT be in the country from 7/2-7/22
+- I will be present on our Slack from 7/13-7/17, but otherwise I am on vacation
+  - I can potentially take meetings during 7/13-7/17, but I'm in a flipped time zone eek!
+- I've asked my colleagues, Meike and Jessica, to manage our Slack page while I'm gone
+
+## Some good things to know for this class!
+
+- Copying code: the copy option on all code!
+```{r}
+#| eval: false
+I can hit the copy button and paste it!
+```
+
+ 
+
+- Accessing the source code for this site via GitHub
+
+ 
+
+- A video *might* reference something you haven't covered yet
+  - For example: I mention an "object" in the lesson on functions, but we don't cover objects until the next lesson
+  - I will always try to group videos that mention new material in a week together
+
+## Each week
+
+- A "new" week starts on Monday
+- You will need to watch the videos set in the week
+- At the end of the week, there is a practice due Sunday night at 11pm
+  - This will cover the videos for that week!
+- Some weeks will also have labs due on Sunday night at 11pm
+  - Labs will cover material from previous week(s)
+  - Labs will not cover that week's material
+
+## Communication
+
+- Slack will be the BEST place for asking questions!
+  - This way your peers can help you and you can help your peers!
+  - I will also answer questions on Slack!
+- I usually take up to 24 hours to respond (during M-F)
+  - I don't work on the weekends!
+
+## Some important tasks
+
+- [Join the Slack page!](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg)
+
+- Star the class website: <https://nwakim.github.io/PUBH_523_26Su/> 
+
+- Complete the [When2meet](https://www.when2meet.com/?37173220-5IzYW) for office hours
+  - You don't need to put your name, just a unique identifier
+
+- Complete Practice 1 due this week (Sunday at 11pm)
+
+- Highly suggest that you make an appointment with a learning specialist through [Student Academic Success Center](https://www.ohsu.edu/education/academic-success-center)!
+
+# Let's visit our website
+
+## Syllabus
+
+- Course learning objectives
+- Textbooks online
+- Assessments and grade breakdowns
+- Homeworks
+- Feedback: in the form of exit tickets, group evals, midterm feedback, and final course
+- How to succeed in this course: resources and assignments explained
+- Late work policy / Attendance policy
+- ChatGPT and other AI technology
+- Course expectations: a few ways that I will show you respect and commitment to you as students
+  - And a few ways I expect from you!
+- Communicating with me: give me 24 hours to reply M-F
+
+## Schedule
+
+- Weeks, class info, due dates
+
+|  |  |  |
+|---------------------------|-----------------|----------------------------|
+|  | Theme | Each lesson fits into a different theme for the class |
+| [[{{< iconify mdi video size=90px >}}](mothing)]{style="color:#f8f5f0;"} | Lesson video | I record our classes. This will be a link to the OneDrive folder containing this recording. |
+| [[{{< iconify ri slideshow-fill size=80px >}}](lessons/17_Negative_binomial_rv/17_Negative_binomial_rv.qmd)]{style="color:#f8f5f0;"} | Slides | These are the basic slides that will open in your browser. |
+|  | Textbooks | There are two textbooks that will be helpful. They are not necessary, but it might be nice to learn from a different voice. |
+|  | Due dates | At the end of each week, there are highlighted assignments with their due dates |
+
+## Other parts of the site
+
+- Search
+- Homework
+- Project
+- Resources
+
+## More tips!
+
+- Print a pdf of the slides

@@ -1,0 +1,403 @@
+---
+title: "Quarto and `.qmd`'s: Revisited"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Quarto and `.qmd`'s: Revisited"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  palmerpenguins,
+  gt, 
+  knitr,
+  scales, 
+  rio, 
+  here, 
+  janitor, 
+  gtsummary
+)
+
+theme_set(theme_grey(base_size = 24)) 
+```
+
+```{r}
+#| label: "import data" 
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(diab, degree, .after = id)
+```
+
+## Recap and today's goals
+
+- **Last time** (and what we've been using), we covered the building blocks of a `.qmd`:
+
+  - YAML metadata, text, and code chunks
+  - Creating, editing, saving, and rendering a file
+
+ 
+
+- **Today**, we'll level up with tools that are especially useful when writing and styling reports:
+
+  - Inline code
+  - LaTeX math
+  - Code chunks: cross-references and code folding
+  - Fenced divs: callouts and tabsets
+
+## Inline code: mixing R results into text
+
+- Inline code is helpful for reports and updates: your write-up **automatically updates** if your data or code change!!
+- Instead of typing a number by hand, you can pull it **directly from your code** using inline code
+
+::: blue 
+::: blue-cont 
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+The HRS dataset has `r knitr::inline_expr("nrow(hrs_00)")` rows and `r knitr::inline_expr("n_distinct(hrs_00$hhid)")` 
+households.
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+The HRS dataset has `r nrow(hrs_00)` rows and `r n_distinct(hrs_00$hhid)` households.
+:::
+:::
+
+ 
+
+::: pink
+::: pink-cont
+Inline code uses single backticks with a lowercase `r` right after the first backtick (no curly braces, unlike a chunk)
+:::
+:::
+
+## Inline code: helpful pairings
+
+- `round()`:control decimal places
+- `comma()`: format big numbers with commas (in `scales` package)
+- `percent()`: format proportions as `%` (in `scales` package)
+
+**Code it in R and assign to objects:**
+```{r}
+mean_income <- mean(hrs_00$income, na.rm = T) |> round(1) |> comma()
+perc_sleep <- mean(hrs_00$sleep == "Yes", na.rm = T) |> percent(accuracy = 0.1)
+```
+
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+```` markdown
+The mean income in the HRS dataset is $`r knitr::inline_expr("mean_income")` and the percent 
+of responders who have trouble sleeping is `r knitr::inline_expr("perc_sleep")`. 
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+The mean income in the HRS dataset is $`r mean_income` and the percent of responders who have trouble sleeping is `r perc_sleep`.
+:::
+:::
+
+
+## LaTeX math: writing equations
+
+Quarto renders **LaTeX math** using MathJax — no extra setup needed
+
+- **Inline math**: wrap with single dollar signs — `$...$`
+- **Display math**: wrap with double dollar signs — `$$...$$`
+
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+The slope $\beta_1$ describes the change in $Y$ for a one-unit change in $X$.
+
+$$
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
+$$
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+The slope $\beta_1$ describes the change in $Y$ for a one-unit change in $X$.
+
+$$
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
+$$
+:::
+:::
+
+## LaTeX math: a worked example
+
+We can use LaTeX math to write equations for the mean and proportion of a variable in our dataset
+
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+$$
+\overline{\text{income}} = \frac{1}{n}\sum_{i=1}^{n} \text{income}_i
+$$
+
+$\overline{\text{income}} = \text{$} `r knitr::inline_expr("mean_income")`$
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+$$
+\overline{\text{income}} = \frac{1}{n}\sum_{i=1}^{n} \text{income}_i
+$$
+
+$\overline{\text{income}} = \text{\$}`r mean_income`$
+:::
+:::
+
+## Previously: code chunk options
+
+You can control how a chunk behaves with `#|` options at the top of the chunk:
+
+| Option | What it does |
+|--------|--------------|
+| `echo: false` | Hides the code in output (results still show) |
+| `warning: false` | Hides warnings from the output |
+| `include: false` | Hides both code and results (still runs) |
+| `eval: false` | Don't run the code (no output) |
+
+```{{r}}
+#| echo: false #<1>
+#| warning: false 
+#| eval: false #<2>
+```
+
+1. This is helpful if you do not want to show your code
+2. This is helpful if your `qmd` file has code that doesn't work or takes a long time to run, but you still want to render the document
+
+## More code chunk options: code folding
+
+- **Code folding** lets readers choose whether to see your code
+- Keeps reports cleaner 
+
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+```{{r}}
+#| code-fold: true
+#| code-summary: "Calculating mean income and percent trouble sleeping"
+
+mean_income <- mean(hrs_00$income, na.rm = T) |> round(1) |> comma()
+perc_sleep <- mean(hrs_00$sleep == "Yes", na.rm = T) |> percent(accuracy = 0.1)
+```
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+```{r}
+#| code-fold: true
+#| code-summary: "Calculating mean income and percent trouble sleeping"
+
+mean_income <- mean(hrs_00$income, na.rm = T) |> round(1) |> comma()
+perc_sleep <- mean(hrs_00$sleep == "Yes", na.rm = T) |> percent(accuracy = 0.1)
+```
+:::
+:::
+
+## More code chunk options: cross referencing
+
+- You can **label** a code chunk with a figure or table, then reference it anywhere with `@`
+- Labels must start with a **prefix**: `fig-`, `tbl-`, `eq-`, or `sec-`
+- Quarto auto-numbers them and updates the numbers if you reorder slides
+
+ 
+
+- We format our code chunk with a label and a figure caption (caption is "Plot of _____")
+```` markdown
+```{{r}}
+#| label: fig-summ-stats
+#| fig-cap: "Plot of _____"
+
+# Code for plot goes here!
+```
+
+Then we reference inline with @fig-summ-stats
+````
+
+## More code chunk options: Example for cross referencing {.scrollable}
+
+If we want to create a table of summary statistics, we can use the label to reference it later in the text:
+
+::: {.panel-tabset}
+### [Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+```{{r}}
+#| label: tbl-summ-stats
+#| fig-cap: "Summary statistics for income and trouble sleeping"
+
+hrs_00 |> 
+  select(income, sleep) |>
+  tbl_summary(
+    statistic = list(all_continuous() ~ "{mean} ({sd})")
+  )
+```
+
+In @tbl-summ-stats, we see the mean and standard deviation for income and 
+the proportion of respondents who report trouble sleeping.
+````
+ 
+
+### [Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+```{r}
+#| label: tbl-summ-stats
+#| fig-cap: "Summary statistics for income and trouble sleeping"
+
+hrs_00 |> 
+  select(income, sleep) |>
+  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})")) |>
+  as_gt() |>
+  tab_options(table.font.size = "40px")
+```
+
+In @tbl-summ-stats, we see the mean and standard deviation for income and the proportion of respondents who report trouble sleeping.
+:::
+
+## Callout blocks: highlight key info
+
+- **Callouts** are a "fenced div" that draws the reader's eye to important notes, warnings, or tips
+- There are five types of callouts: `note`, `tip`, `warning`, `important`, and `caution`
+- You also have options for the appearance type: `default`, `minimal`, and `simple`
+
+ 
+
+- We use `:::` and `{.callout-<type>}` to create a callout block, then close it with `:::` at the end
+
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+::: {.callout-note appearance="minimal"}
+This is a neutral, informational note.
+:::
+````
+:::
+:::
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+::: {.callout-note appearance="minimal"}
+This is a neutral, informational note.
+:::
+:::
+:::
+
+## Tabsets 
+
+- **Tabsets** are a "fenced div" that organizes multiple views with clickable tabs
+- We use `::: {.panel-tabset}` to create a tabset, then close it with `:::` at the end
+  - Each tab is created with a header (e.g., `### Plot` or `### Table`) and the content for that tab goes below the header
+
+::: columns
+::: {.column width="37%"}
+::: blue
+::: blue-cont
+[Written in `qmd`:]{style="color: #5BAFF8; font-weight: bold;"}
+
+```` markdown
+::: {.panel-tabset}
+### Plot
+Your ggplot code here
+
+### Table
+Your gt table here
+:::
+````
+:::
+:::
+:::
+
+::: {.column width="3%"}
+:::
+
+::: {.column width="60%"}
+
+::: red
+::: red-cont
+[Which renders as:]{style="color: #C83532; font-weight: bold;"}
+
+::: {.panel-tabset}
+### Plot
+Your ggplot code here
+
+### Table
+Your gt table here
+:::
+:::
+:::
+:::
+:::
+
+## Wrap-up
+
+- We covered a few more tools for writing reports in Quarto!
+
+ 
+
+- **Inline code** keeps numbers in your prose synced with your analysis
+- **LaTeX math** lets you write clean equations, inline or on their own line
+- **Cross-references and code folding** are code chunk options that help readers navigate your work
+- **Callouts and tabsets** are fenced divs that help you write clear, well-organized reports
+
+## Resources
+
+- [Quarto: Cross-references](https://quarto.org/docs/authoring/cross-references.html)
+- [Quarto: Callout blocks](https://quarto.org/docs/authoring/callouts.html)
+- [Quarto: Tabsets](https://quarto.org/docs/presentations/revealjs/index.html#tabsets)
+- [Quarto: The Practical Guide](https://quarto-tdg.org/) by Mine Çetinkaya-Rundel and Charlotte Wickham
+  - The section on [Mastering Quarto: Markdown](https://quarto-tdg.org/authoring.html) is especially helpful for reprots

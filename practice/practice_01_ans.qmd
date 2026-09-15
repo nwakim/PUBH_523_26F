@@ -1,0 +1,268 @@
+---
+title: "Practice 1 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+### Purpose
+
+This homework is meant to introduce yourself to me and your peers and make sure we can access RStudio on our computers.
+
+### Grading
+
+Grading will be done as a check/no check for turning in your work.
+
+## Course Logistics Questions
+
+For Questions 1-5, you do not need to turn in answers to Brightspace. These questions are meant to help you get set up for the course.
+
+### Question 1
+
+Join our [Slack workspace](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg).
+
+::: blue
+No answer given, for completion only.
+:::
+
+### Question 2
+
+Edit your Slack profile with the following changes:
+
+- Please upload a picture of yourself. **Make sure your face is visible in this picture.** It will help me identify you. [Here is a video with instructions.](https://www.youtube.com/watch?v=TeXWkNz81jU)
+- Provide a pronunciation of your name. [Here is a video with instructions.](https://www.youtube.com/watch?v=eJJYArMr2-A)
+- If you are comfortable sharing your pronouns, please edit your name to include them at the end. For example, my profile says "Nicky Wakim (she/her)"
+
+::: blue
+No answer given, for completion only.
+:::
+
+### Question 3
+
+Please complete the [following when2meet poll](https://www.when2meet.com/?37037592-Wdcqx) so that we can schedule office hours. Please use a unique identifier (does not have to be your name), so that I can make sure each student can attend at least one office hour.
+
+::: blue
+No answer given, for completion only.
+:::
+
+### Question 4
+
+In Slack, send a direct message to me with a screenshot of your Rstudio window open. This is to make sure you have access to Rstudio and can use it for our class. **If you have any issues with Rstudio, please let me know ASAP and we can troubleshoot together.**
+
+::: blue
+No answer given, for completion only.
+:::
+
+### Question 5 (OPTIONAL)
+
+Completion of this question is only necessary if you have accommodations. If you have any learning accommodations, please email me about your needs. I should receive a direct email from the Office of Student Access, but it is important that we discuss how accommodations will translate to our class. If you plan to seek accommodations, but do not have the formal document yet, please let me know!
+
+I highly suggest that you make an appointment with a learning specialist through [Student Academic Support Services](https://www.ohsu.edu/education/academic-success-center)! If you often need more time on a test, struggle to focus in class, or noticed a difference between your learning style and typical styles offered in school, **talk to academic support services and see if you qualify for accommodations!** Most professors should be working towards an inclusive classroom, but this is the best way to insure you get the learning environment you need!
+
+::: blue
+No answer given, for completion only.
+:::
+
+## Practice Questions
+
+For Questions 6–10, complete your work in an R script and submit the R script into Brightspace. Your R script should be titled `LastName_FirstInitial_Practice_01.R`
+
+Please be sure to use comments to label each question and part. Each question below tells you what to do in the script. You can use AI to get you started if you'd like. Here's [a chat I had with Claude](https://claude.ai/share/d10c311f-d3ed-4208-928c-fa824f99e1ed) to make a template R script. 
+
+::: callout-note
+Note that this is not a math or statistics class, so don't worry about units or interpreting calculation results in a real-world context. I only care about whether you can use R to do the calculations and whether you can write meaningful comments about what you are doing. If a problem asks for an interpretation, I mean something more like translating your written code into human speak. 
+:::
+
+### Question 6
+
+In your R script, use R as a calculator to complete the following. Make sure each calculation has a comment above it describing what you are doing.
+
+#### Part A
+
+Calculate the following expression:
+
+$$\frac{(15 + 9)^2}{3}$$
+
+**Answer:**
+
+::: blue
+192
+:::
+
+#### Part B
+
+A public health researcher recorded blood pressure readings (in mmHg) from three patients: 118, 132, and 126. Calculate their average blood pressure.
+
+**Answer:**
+
+::: blue
+125.3333
+:::
+
+#### Part C
+
+Calculate the square root of 144.
+
+**Answer:**
+
+::: blue
+12
+:::
+
+### Question 7
+
+In your R script, use relational operators to answer the following.
+
+#### Part A
+
+Is 7 times 8 greater than or equal to 60? Write the R code and run it.
+
+**Answer:**
+
+::: blue
+TRUE
+:::
+
+#### Part B
+
+What does the `TRUE` or `FALSE` output from Part A tell you? Write your answer as a comment in the script.
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+#### Part C
+
+Before running the code, predict what each of the following expressions will return (`TRUE` or `FALSE`). Write your prediction as a comment next to each line, then run them to check.
+
+```
+100 / 4 == 25
+17 != 17
+3^2 <= 8
+(5 + 3) > (4 * 2)
+```
+
+**Answer:**
+
+::: blue
+| Expression | Prediction |
+|---|---|
+| `100 / 4 == 25` | TRUE |
+| `17 != 17` | FALSE |
+| `3^2 <= 8` | FALSE |
+| `(5 + 3) > (4 * 2)` | FALSE |
+:::
+
+### Question 8
+
+Answer the following questions about R Scripts as comments in your R script.
+
+#### Part A
+
+What is the difference between running code in the **Console** versus running it in an **R Script**? Why is using a script generally better for your work?
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+#### Part B
+
+List **two ways** you can run a line of code from an R Script in RStudio (keyboard shortcuts count!).
+
+**Answer:**
+
+::: blue
+One way: Command/Cntrl + Enter
+:::
+
+### Question 9
+
+Multnomah County's public health department tracks chlamydia cases across neighborhoods in Portland as part of routine STI surveillance. Chlamydia is the most commonly reported STI in Multnomah County, and monitoring its spread at the neighborhood level helps the health department decide where to direct testing and outreach resources.
+
+A health analyst has written the following code to calculate the chlamydia case rate for a neighborhood cluster in Northeast Portland. The four numbers being added represent chlamydia case counts reported from four zip codes (97211, 97212, 97213, and 97218) in 2023. The population of 50,000 reflects the combined resident population across those zip codes. The rate is calculated per 10,000 residents — a common scaling choice in public health that makes rates easier to interpret and compare across areas of different sizes.
+
+The code works correctly, but has no comments. In your R script, copy this code and add meaningful comments to explain *what* each line is doing and *why* it matters in this public health context. Do not change the code itself — only add comments.
+
+```
+total_cases <- 520 + 310 + 480 + 275
+
+population <- 50000
+
+rate_per_10k <- (total_cases / population) * 10000
+
+rate_per_10k
+```
+
+**Answer:**
+
+::: blue
+Only one comment below as an example. Yours should have more.
+
+```
+# Adding cases across four zip codes to get total cases in NE Portland
+total_cases <- 520 + 310 + 480 + 275
+
+population <- 50000
+
+rate_per_10k <- (total_cases / population) * 10000
+
+rate_per_10k
+```
+
+:::
+
+### Question 10
+
+A county health department reports the following weekly flu case counts over 4 weeks: **42, 67, 55, and 38**. In your R script, complete the following. Each calculation should have a comment explaining what you are doing.
+
+#### Part A
+
+Calculate the **total** number of flu cases across all 4 weeks.
+
+**Answer:**
+
+::: blue
+202
+:::
+
+#### Part B
+
+Calculate the **average** weekly case count.
+
+**Answer:**
+
+::: blue
+50.5
+:::
+
+#### Part C
+
+Use a relational operator to check whether the average weekly case count is greater than 50. Write a comment interpreting what the result tells you.
+
+**Answer:**
+
+::: blue
+TRUE
+:::
+
+

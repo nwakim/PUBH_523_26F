@@ -1,0 +1,19 @@
+{
+  "hash": "e6d7a72804c2b498edcd21bf6db2be16",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Data Summarization: Grouped summaries\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: \"Data Summarization: Grouped summaries\"\n    html-math-method: mathjax\n    highlight-style: ayu\n    code-annotations: hover\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n\n::: {.cell}\n\n:::\n\n\n## Grouped summaries\n\n## Two main functions for flexible summaries of numeric data\n\n- `get_summary_stats()` in `rstatix` and `summarise()` in `dplyr`\n- When do we use one or the other?\n  - `get_summary_stats()`:\n    - Quick and easy to use\n    - Can be used for grouped summaries\n  - `summarise()`: \n    - More flexible, but requires more coding\n    - Can be used for grouped summaries\n\n## Group by a variable in `get_summary_stats()`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nhrs_00 |>\n  group_by(sex) |>\n  get_summary_stats(\n    age_yr, cesd, income, \n    type = \"common\"\n    )\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n# A tibble: 6 × 11\n  sex    variable     n   min    max median    iqr   mean     sd      se      ci\n  <fct>  <fct>    <dbl> <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>   <dbl>   <dbl>\n1 Female age_yr    1568    34 1   e2    55  1.3 e1 5.90e1 1.03e1 2.6 e-1 5.11e-1\n2 Female cesd      1564     0 8   e0     1  3   e0 1.92e0 2.20e0 5.6 e-2 1.09e-1\n3 Female income    1568     0 9.90e5 47326  8.46e4 8.22e4 1.06e5 2.69e+3 5.27e+3\n4 Male   age_yr    1160    40 9.2 e1    56  1.1 e1 5.86e1 8.28e0 2.43e-1 4.77e-1\n5 Male   cesd      1157     0 8   e0     1  2   e0 1.61e0 2.02e0 5.9 e-2 1.17e-1\n6 Male   income    1160     0 1.80e6 58735. 1.05e5 1.05e5 1.53e5 4.48e+3 8.79e+3\n```\n\n\n:::\n:::\n\n\n## `summarise()` in `dplyr`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nhrs_00 |>\n  summarise(\n    mean_age = mean(age_yr, na.rm = TRUE),\n    median_age = median(age_yr, na.rm = TRUE),\n    sd_age = sd(age_yr, na.rm = TRUE),\n    min_age = min(age_yr, na.rm = TRUE),\n    max_age = max(age_yr, na.rm = TRUE)\n  )\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n  mean_age median_age   sd_age min_age max_age\n1 58.82075         55 9.499722      34     100\n```\n\n\n:::\n:::\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

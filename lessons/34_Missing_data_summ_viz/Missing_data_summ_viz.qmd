@@ -1,0 +1,364 @@
+---
+title: "Missing data: summarization and visualization"
+author: "Nicky Wakim, Jessica Minnier, and Meike Niederhausen"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Missing data: summarization and visualization"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+pacman::p_load(
+  tidyverse, 
+  here, 
+  rio, 
+  naniar, 
+  gt
+)
+
+hrs_data <- import(here("data", "hrs_data.rds")) |>
+  mutate(srh = fct_relevel(srh, "Excellent", "Very Good", "Good", "Fair", "Poor"))
+
+theme_set(theme_grey(base_size = 50)) 
+```
+
+# Missing data summary and visualization {visibility="hidden"}
+
+## Before we start
+
+- Install and load the `naniar` package (a play on Narnia) if you haven't already!
+
+![[Artwork by @allison_horst](https://allisonhorst.com/r-packages-functions)](../img_slides/horst_naniar.png){fig-alt="\"Explore missing data in naniar!\" Cute monsters with exploring gear looking around a landscape full of subtle (and not so subtle) NAs, hidden in trees, on mountain tops, as birds, and in flowers. Learn more about naniar."}
+
+
+- We'll be working with only a few variables in the HRS dataset in this lesson!
+  - Mostly to help us view the tables and plots within the slides
+  
+```{r}
+hrs_00 <- hrs_data |>
+  select(ed, race_original, srh, sex, act_vig, height)
+```
+
+ 
+
+## Why summarize and visualize missingness before doing anything else?
+
+- Before you transform, model, or plot a variable, you need to know **how much of it is actually there**
+
+ 
+
+::: columns
+::: column
+::: blue
+::: blue-ttl
+Missing data can be a problem for many reasons
+:::
+::: blue-cont
+- It can *reduce your sample size* (and therefor your ability to make conclusions)
+- It can *bias your results* if there's a pattern to missingness
+- It can *make your plots look weird* or misleading
+:::
+:::
+:::
+
+::: column
+::: pink
+::: pink-ttl
+A quick missingness check can reveal
+:::
+::: pink-cont
+- Which *variables have the most missing data*
+- Whether *missingness is scattered or clustered*
+- Whether *missingness looks related to another variable* (which matters for how you handle it later)
+:::
+:::
+:::
+:::
+
+# Missingness statistics {visibility="hidden"}
+
+## Missing values in a dataset
+
+- `n_miss()` from `naniar` counts the total number of missing values **across an entire dataset**
+
+```{r}
+n_miss(hrs_00)
+```
+
+- This is the total count of `NA` cells across *every* column combined
+- `n_complete()` is the complement of `n_miss()`
+    - It counts the total number of non-missing values across the dataset
+
+
+ 
+
+- `prop_miss()` gives the proportion of all cells in the dataset that are missing
+
+```{r}
+prop_miss(hrs_00)
+```
+
+- Useful as a single, high-level number to report on the overall proportion missingness of your dataset
+
+## Missing values in a single variable
+
+- We can use `n_miss()` to count the number of missing values in a single variable
+
+```{r}
+n_miss(hrs_00$srh)
+```
+
+- This is the count of `NA` cells in self-reported health
+
+
+ 
+
+- We can also use `prop_miss()` to get the proportion of missing values in a single variable
+
+```{r}
+prop_miss(hrs_00$srh)
+```
+
+- This is the proportion of `NA` cells in self-reported health
+
+
+
+
+## Missingness by each variable, for every variable
+
+- `miss_var_summary()` gives one row per variable, with the count and percent missing
+- Piping the result into `gt()` makes it a nicer table to read
+
+```{r}
+hrs_00 |>
+  miss_var_summary() |>
+  gt() |>
+  tab_options(table.font.size = px(40))
+```
+
+- The output is sorted from most to least missing, which makes it easy to spot the variables with the most missing data
+
+# Visualizing missing data {visibility="hidden"}
+
+## `vis_miss()`: visualizing missing data across the dataset
+
+- This plot helps identify whether:
+  - There are **variables** with a lot of missing values (in columns of plot)
+  - **Observations** with a lot of missing values (in rows of plot)
+
+::: columns
+::: {.column width="40%"}
+
+ 
+
+```{r}
+#| eval: false
+hrs_00 |>
+  vis_miss() + #<1> 
+  theme(axis.text.x = element_text(angle = 20, hjust = 0)) #<2>
+```
+
+1. `vis_miss()` is a function with a lot of built-in defaults that will produce a plot showing the missingness of the dataset
+2. I made some changes to the `theme()` to make the variable names easier to read
+:::
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| fig-width: 11
+#| fig-height: 7
+
+hrs_00 |>
+  vis_miss() +
+  theme_bw(base_size = 30) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 0))
+```
+:::
+:::
+
+## `gg_miss_fct()`: missingness heatmap by group
+
+- This plot is useful for comparing missingness rates **stratified by a variable**
+  - Potentially detect patterns in missingness
+- Specify the variable to stratify by in the `fct =` option of `gg_miss_fct()`
+  - Each **column** (x-axis) is a **different level of the stratifying variable**
+  - Each **row** (y-axis) is a **different variable in the dataset**
+
+::: columns
+::: {.column width="40%"}
+
+::: blue
+::: blue-cont
+**Example:** percent missingness stratified by `srh` (self-reported health)
+:::
+:::
+
+```{r}
+#| eval: false
+
+hrs_00 |>
+  gg_miss_fct(fct = srh) + #<1>
+  theme_bw(base_size = 28) + #<2>
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) #<3>
+```
+
+1. `gg_miss_fct()` is a function that produces a heatmap of missingness stratified by a factor variable. We are stratifying by self-reported health (`srh`) in this example
+2. I'm changing the background and font size to make the plot easier to read
+3. I'm rotating the x-axis labels to make them easier to read
+:::
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| fig-width: 12
+#| fig-height: 6
+
+hrs_00 |>
+  gg_miss_fct(fct = srh) +
+  theme_bw(base_size = 28) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+:::
+:::
+
+## `gg_miss_upset()`: missingness intersections (1/2)
+
+- `gg_miss_upset()` shows the most common combinations (sets) of missing variables
+
+::: columns
+::: {.column width="30%"}
+```{r}
+#| eval: false
+
+hrs_00 |>
+  gg_miss_upset( #<1>
+    nsets = 10, #<2>
+    text.scale = 3 #<3>
+    ) #<1> 
+```
+
+1. `gg_miss_upset()` is a function that produces an UpSet plot of missingness intersections
+2. `nsets = 10` limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable
+3. `text.scale = 3` increases the size of the text in the plot, which makes it easier to read
+
+:::
+::: {.column width="70%"}
+```{r}
+#| echo: false
+#| fig-width: 15
+#| fig-height: 9
+
+hrs_00 |>
+  gg_miss_upset(
+    nsets = 10, 
+    text.scale = 3
+    ) 
+```
+:::
+:::
+
+
+
+## `gg_miss_upset()`: missingness intersections (2/2)
+
+- `gg_miss_upset()` shows the most common combinations (sets) of missing variables
+
+::: columns
+::: {.column width="30%"}
+```{r}
+#| eval: false
+
+hrs_00 |>
+  gg_miss_upset( #<1>
+    nsets = 10, #<2>
+    text.scale = 3 #<3>
+    ) #<1> 
+```
+
+1. `gg_miss_upset()` is a function that produces an UpSet plot of missingness intersections
+2. `nsets = 10` limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable
+3. `text.scale = 3` increases the size of the text in the plot, which makes it easier to read
+
+- [**Main bar plot:**]{style="color: #5BAFF8;"} ordered by the number of observations with specific set of missing variables
+- [**Bottom dots with lines:**]{style="color: #459B99;"} combination of variables missing
+- [**Bottom, sideways barplot:**]{style="color: #C83532;"} number of observations missing for each variable, regardless of combination
+:::
+::: {.column width="70%"}
+```{r}
+#| echo: false
+#| fig-width: 15
+#| fig-height: 9
+
+hrs_00 |>
+  gg_miss_upset(
+    nsets = 10, 
+    text.scale = 3
+    ) 
+```
+:::
+:::
+
+
+## `gg_miss_upset()`: What am I taking away from this plot?
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| fig-width: 15
+#| fig-height: 10
+
+hrs_00 |>
+  gg_miss_upset(
+    nsets = 10, 
+    text.scale = 3
+    ) 
+```
+:::
+::: {.column width="40%"}
+- The most common combination of missing variables is `race_original` and `ed` with 465 observations
+  - There are not many observations that have one of these missing without the other
+  - There's 36 (34 + 2) observations that have `ed` missing but not `race_original`
+  - There's 15 (12 + 3) observations that have `race_original` missing but not `ed`
+  
+- Height seems to be mostly missing on its own
+  - 46 out of the 55 observations with height missing have no other variables missing
+:::
+:::
+
+# Wrap-up {visibility="hidden"}
+
+## Wrap-up
+
+- We learned a few functions within `naniar` that help us summarize and visualize missingness in a dataset
+
+ 
+
+- `n_miss()` and `prop_miss()` give quick, high-level counts of missingness across a whole dataset
+- `miss_var_summary()` gives a tidy, sortable summary of missingness by variable
+- `vis_miss()` gives a bird's-eye view of missingness across every row and column
+- `gg_miss_fct()` compares missingness rates across groups
+- `gg_miss_upset()` reveals which variables tend to be missing *together*
+
+
+## Resources
+
+- [Exploring missing values in `naniar`: interactive tutorial](https://allisonhorst.shinyapps.io/missingexplorer/)
+- [`{naniar}` package website](http://naniar.njtierney.com/)
+- [Missing values chapter in *R for Data Science (2e)*](https://r4ds.hadley.nz/missing-values.html)
+- [Dealing with missing data in the *Epidemiologist R Handbook*](https://epirhandbook.com/en/missing-data.html)
+

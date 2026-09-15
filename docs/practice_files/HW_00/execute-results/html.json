@@ -1,0 +1,15 @@
+{
+  "hash": "b3030548a0349d04809729efcc0dbf94",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Homework 0\"\nsubtitle: \"PUBH 523/623\"\ndescription: \"Due: 06/28\"\ndate-modified: \"today\"\nformat: \n  html:\n    link-external-newwindow: true\n    toc: true\n  pdf: default \neditor_options: \n  chunk_output_type: console\n---\n\n\n\n::: {.callout-note appearance=\"minimal\"}\n**This homework does not need to be turned in on Brightspace.**\n:::\n\n### Purpose\n\nThis homework is meant to introduce yourself to me and your peers and make sure we can access RStudio on our computers.\n\n### Grading\n\nGrading will be done as a check/no check for turning in your work.\n\n## Questions\n\n### Question 1\n\nJoin our [Slack workspace](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg).\n\n### Question 2\n\nEdit your Slack profile with the following changes:\n\n- Please upload a picture of yourself. **Make sure your face is visible in this picture.** It will help me identify you. [Here is a video with instructions.](https://www.youtube.com/watch?v=TeXWkNz81jU)\n- Provide a pronunciation of your name. [Here is a video with instructions.](https://www.youtube.com/watch?v=eJJYArMr2-A)\n- If you are comfortable sharing your pronouns, please edit your name to include them at the end. For example, my profile says \"Nicky Wakim (she/her)\"\n\n### Question 3\n\nPlease complete the [following when2meet poll](https://www.when2meet.com/?37037592-Wdcqx) so that we can schedule office hours. Please use a unique identifier (does not have to be your name), so that I can make sure each student can attend at least one office hour.\n\n### Question 4\n\nIn Slack, send a direct message to me with a screenshot of your Rstudio window open. This is to make sure you have access to Rstudio and can use it for our class. **If you have any issues with Rstudio, please let me know ASAP and we can troubleshoot together.**\n\n### Question 5 (OPTIONAL)\n\nCompletion of this question is only necessary if you have accommodations. If you have any learning accommodations, please email me about your needs. I should receive a direct email from the Office of Student Access, but it is important that we discuss how accommodations will translate to our class. If you plan to seek accommodations, but do not have the formal document yet, please let me know!\n\nI highly suggest that you make an appointment with a learning specialist through [Student Academic Support Services](https://Brightspace.ohsu.edu/portal/site/Student_Support)! If you often need more time on a test, struggle to focus in class, or noticed a difference between your learning style and typical styles offered in school, **talk to academic support services and see if you qualify for accommodations!** Most professors should be working towards an inclusive classroom, but this is the best way to insure you get the learning environment you need!\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

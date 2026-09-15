@@ -1,0 +1,84 @@
+---
+title: "Instructors"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Instructor: Nicole (Nicky) Wakim, PhD
+
+:::::: columns
+::: {.column width="68%"}
+- **Email:** [wakim\@ohsu.edu](mailto:wakim@ohsu.edu)
+
+- **Office:** VPT 622A
+
+**Pronouns:** she/her/hers
+
+*You are welcome to address me as Nicky (pronounced "nik-EE"), Dr. Wakim
+(pronounced "wah-KEEM"), Dr. W, Dr. Nicky, Professor, Professor Wakim,
+or any combination of the prior.*
+
+**Best method to contact:** Office hours or Slack for most things or E-mail for private communication.
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="30%"}
+![](images/N_Wakim.jpg){fig-align="right" width="256"}
+:::
+::::::
+
+**Brief professor statement:** As a professor, my main goal is to
+instill a growth mindset into my students. Growth mindset means we are
+NOT stuck in our abilities or knowledge, and that we all can and will
+grow! This course aims to be as transparent as possible. I want you to
+understand my motivation for assessments, questions, and lessons. I also
+want those assessments to be clear, so please ask for clarification
+whenever needed.
+
+### Office Hours
+
+Running from 7/23-8/31
+
+::: columns
+::: {.column width="30%"}
+[Nicky's Webex](https://ohsu.webex.com/meet/wakim)
+:::
+::: {.column width="70%"}
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} M 3-3:30pm
+
+
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} Th 2-2:30pm
+:::
+:::
+
+::: callout-warning
+**I am out of town from July 2 to July 22**
+
+- I can answer questions via Slack/email from July 13-17
+  - *Maybe* take some meetings during that time, but I'm in a flipped time zone eek!
+- **I will not have access to my computer from July 2-12 and July
+  18-22**
+:::
+
+## My scope of practice
+
+If you are interested in what I consider my Scope of Practice, here is
+an adapted table from Dr. Costa's [An Educator’s Scope of
+Practice](http://dx.doi.org/10.1007/978-3-030-92705-9_15):
+
+| What I do | What I do not do |
+|------------------------------------|------------------------------------|
+| Create positive learning conditions for all learners | Police my students’ attention |
+| Create assessments that accommodate all students' learning styles | Focus on eliminating any opportunity for cheating |
+| Consistently maintain expertise in my subject matter area | Ignore recent updates in my subject matter area |
+| Know and apply work in pedagogy and learning sciences | Focus only on subject matter expertise |
+| Empathy | Counseling |
+| Work to dismantle racism, sexism, and oppression in all forms, apply DEI principles | Ignore equity concerns |
+| Recognize the probability of trauma in my classroom | Try to assess individual trauma histories |
+| Develop self-awareness and cultural humility | Overly focus on behaviors or culture of others |
+| Recognize and respond to impact of trauma on learning | Rigidity or over-reliance on what worked for me (or others in past) as a learner |
+| Refer you to resources in school, city, local government | Ignore your concerns nor tell you it's “not my problem” |
+| Scaffold work in the course to gradually build knowledge | Eliminate all struggle while learning |

@@ -1,0 +1,391 @@
+---
+title: "Data transformation: Columns"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data transformation: Columns"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio
+)
+```
+
+```{r}
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(race_original, sex, .after = degree) |>
+  relocate(age_yr, ed, cesd, .after = birthdate)
+```
+
+## Data transformations on columns
+
+- We can use columns to create new variables, subset features, and reorganize a dataset
+- There are many functions that can be used to transform columns
+- We will cover the most column functions:
+  - `select()`
+  - `relocate()`
+  - `mutate()`
+  - `rename()`
+
+## Some notes before we get into it
+
+::: pink
+::: pink-ttl
+Note 1: Assigning new objects
+:::
+::: pink-cont
+My code in this lesson is a mix of assigning new objects and not assigning new objects. I do not assign new objects show you the output of the function without extra steps. 
+
+- **For most of your work, you will want to assign your output to a new object.**
+:::
+:::
+
+::: orange
+::: orange-ttl
+Note 2: Naming conventions
+:::
+::: orange-cont
+- I use `hrs_00`, `hrs_01`, etc. to indicate the order of my transformations
+- I use descriptive names for actions I take 
+  - Example: `hrs_01_vars_subset` indicates that this is the 1st saved object I make and the action I take is subsetting variables (columns)
+:::
+:::
+
+# `select()`
+
+## Subsetting columns using `select()`
+
+- The `select()` function allows us to isolate specific variables or columns from our dataset
+
+ 
+
+- Why use `select()`?
+  - Drops unneeded information to **maximize processing speed and visual clarity**
+  - Isolates specific blocks of data for focused modeling or visualization
+  
+ 
+
+::: pink
+::: pink-cont
+Note: I will use `select()` in this lesson to make the output easier to read (with less columns)
+:::
+:::
+
+## Example: selecting specific columns
+
+- Let's keep only the following columns from `hrs_00`: `id`, `age_mo`, `income`, `diab`, `lung`, `drink`, `race_original`, and `sex`
+  - Column names do NOT need quotes in `select()`
+
+```{r}
+hrs_01_vars_subset = hrs_00 |> 
+  select(id, age_mo, income, diab, lung, drink, race_original, sex) # <1>
+```
+
+1.  We provide the exact column names we want to keep, separated by commas. All other columns will be dropped from the output.
+
+::: columns
+::: {.column width="48%"}
+[Original dataset:]{style="color:#C83532"}
+
+```{r}
+tibble(hrs_00)
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+[Dataset with selected columns:]{style="color:#459B99"}
+```{r}
+tibble(hrs_01_vars_subset)
+```
+:::
+:::
+
+## Example: breaking code into multiple lines
+
+- If code passes the vertical line in your editor pane, you can break it into multiple lines for readability
+
+::: columns
+::: column
+```{r}
+#| eval: false
+hrs_01_vars_subset = hrs_00 |> 
+  select(id, age_mo, income, 
+         diab, lung, drink, 
+         race_original, sex)
+```
+:::
+::: column
+```{r}
+#| eval: false
+hrs_01_vars_subset = hrs_00 |> 
+  select(
+    id, 
+    age_mo, 
+    income, 
+    diab, 
+    lung, 
+    drink, 
+    race_original, 
+    sex
+    )
+```
+:::
+:::
+
+## Example: removing specific columns
+
+- If we want to keep everything **except** a few specified variables, we use a minus sign (`-`)
+
+```{r}
+hrs_01_vars_subset |> select(-drink, -lung) # <1>
+```
+
+1.  Placing `-` in front of `drink` and `lung` explicitly drops them, while retaining every other original variable.
+
+## Example: selecting consecutive columns
+
+- We can select a continuous block of columns using the `:` operator
+
+```{r}
+hrs_01_vars_subset |> select(age_mo:drink) # <1>
+```
+
+1.  This keeps `age_yrs`, `drink`, and every single column positioned between them in the data frame. **Make sure you know your column order before using this!**
+
+## Distinguishing `filter()` vs `select()`
+
+- Both `filter()` and `select()` are used to subset data, but they operate on different dimensions of the dataset
+
+ 
+
+- `filter()` is used to subset [**rows**]{style="color: #5BAFF8;"} based on specific conditions
+  - Think of this as filtering the dataset to keep only certain observations (e.g., only people who are 65+ years old)
+  - We use this if we need a target population for analysis
+
+ 
+
+- `select()` is used to subset [**columns**]{style="color: #E75B5C;"} based on specific names or positions
+  - Think of this as selecting only the variables we need for analysis (e.g., only the variables we need to calculate a new variable)
+  - We use this if we want to reduce the number of variables in our dataset for clarity or speed
+  
+# `relocate()`
+
+## Reordering columns using `relocate()`
+
+- `relocate()` moves columns to a different horizontal position in your dataset
+- By default, variables sent into `relocate()` move directly to the **very front** of the dataset
+
+```{r}
+hrs_02_reloc <- hrs_01_vars_subset |> relocate(lung, sex) # <1>
+```
+
+1.  Moves `lung` and `sex` to the very front of the dataset, before all other columns.
+
+ 
+
+::: columns
+::: {.column width="48%"}
+[Original subsetted dataset:]{style="color:#C83532"}
+
+```{r}
+hrs_01_vars_subset
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+[Dataset with `lung` and `sex` relocated to the front:]{style="color:#459B99"}
+```{r}
+hrs_02_reloc
+```
+:::
+:::
+
+## `relocate()` + specify location
+
+- You can also specify where you want to move the column(s) using `.before` or `.after` arguments
+
+```{r}
+hrs_03_reloc <- hrs_01_vars_subset |> relocate(income, .after = id)       # <1>
+hrs_04_reloc <- hrs_01_vars_subset |> relocate(income, .before = lung)        # <2>
+```
+
+1.  Moves `income` to place it directly after the `id` column.
+2.  Moves `income` to place it right before the `lung`` column.
+
+ 
+
+::: columns
+::: {.column width="48%"}
+[Original dataset:]{style="color:#C83532"}
+
+```{r}
+hrs_01_vars_subset
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+[Dataset with `income` relocated after `id`:]{style="color:#459B99"}
+```{r}
+hrs_03_reloc
+```
+:::
+:::
+
+# `mutate()`
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else){target="_blank"}](../img_slides/horst_mutate.jpg){fig-align="center"}
+
+
+## `mutate()`: transform and create variables
+
+- `mutate()` allows us to transform existing columns and/or add new columns to the dataset
+
+ 
+
+- Think of this like adding a formula in Excel to calculate the value of a new column based on previous columns
+
+ 
+
+- `mutate()` is useful for:
+  - Converting the units of one column to new units (e.g., months to years)
+  - Performing arithmetic using multiple columns
+  - Changing variable types or recoding categories
+
+## Example: calculating a new variable
+
+- Let's convert `age_mo` into years by dividing it by 12
+- We will name this new variable `age_yrs`
+
+```{r}
+hrs_04_reloc |> 
+  mutate(age_yrs = age_mo / 12) |> # <1>
+  relocate(age_yrs, .after = age_mo) # <2>
+```
+
+1.  **Notice we use a single `=` inside mutate**, not `==` or `<-`. This sets our new column name equal to the mathematical operation.
+2.  We use `relocate()` to move the new column `age_yrs` to a more logical position in the dataset, right after `age_mo`. (And also so I can show you the change made.)
+
+## Example: calculating multiple columns
+
+- We can create multiple new columns within a single `mutate()` function by separating them with a comma
+
+```{r}
+hrs_05_mutate <- hrs_04_reloc |> # <1>
+  mutate(
+    age_yrs = age_mo / 12, # <2>
+    age_decades = age_yrs / 10,  # <3>
+    income_rounded = round(income, 0) # <4>
+  )
+```
+
+1.  We use the assignment operator `<-` to save the output into a brand new data frame called `hrs_05_mutate`. I've already used up to `hrs_04_reloc` in the previous examples. 
+2.  First, we create the `age_yrs` column.
+3.  Second, we create `age_decades` using the `age_yrs` variable we *just* defined in the step right above it!
+4. Third, we create `income_rounded` by rounding the `income` variable to the nearest whole dollar.
+
+
+::: columns
+::: {.column width="48%"}
+[Original dataset:]{style="color:#C83532"}
+
+```{r}
+#| echo: false
+
+hrs_01_vars_subset
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+```{r}
+#| code-fold: true
+#| code-summary: "Dataset with new variables:"
+
+hrs_05_mutate |> 
+  relocate(age_yrs, age_decades, .after = age_mo) |>
+  relocate(income_rounded, .after = income)
+```
+:::
+:::
+
+# `rename()`
+
+## Renaming with `rename()`
+
+-   You can rename columns with `select()` but it's a bit easier to do this with the `rename()` function.
+
+-   You just need to remember `new_name = old_name` ordering.
+
+-   For example, I want to highlight to myself the limited representation in the `race_original` and `sex` variables
+    - I'll rename them to `race_3` and `sex_2` to indicate that they are limited to 3 and 2 categories, respectively
+
+```{r}
+hrs_06_rename <- hrs_05_mutate |> 
+  rename(
+    race_3 = race_original, #<1> 
+    sex_2 = sex
+    )
+names(hrs_06_rename)
+```
+
+1.  The new name is on the left, and the old name is on the right. 
+
+::: red
+::: red-cont
+If our variable names were something like "Age (years)", we would need to write `age_yrs = 'Age (years)'` with single quotes around the old name because of the spaces and parentheses.
+:::
+:::
+
+## Wrap-up
+
+- We learned three functions that allow us to transform columns in our dataset:
+  - `relocate()`
+    - Reorder columns to a different spot in the dataset
+  - `select()`
+    - Subset specific columns to keep or drop
+  - `mutate()`
+    - Transform existing columns and/or create new columns
+  - `rename()`
+    - Rename columns with new names

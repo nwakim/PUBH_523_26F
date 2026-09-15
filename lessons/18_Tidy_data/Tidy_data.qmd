@@ -1,0 +1,135 @@
+---
+title: "Tidy data"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Tidy data"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here, 
+  rio, 
+  readxl
+)
+```
+
+```{r}
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_data <- clean_names(hrs_data_rds)
+```
+
+## Tidy data[^1]
+
+[^1]: Source: R for Data Science. Grolemund and Wickham.
+
+![](../img_slides/tidy-data-frame.png)
+
+1.  Each variable must have its own column
+
+2.  Each observation must have its own row
+
+3.  Each value must have its own cell
+
+## Excel data are often *not* tidy
+
+- We might be used to seeing data in "human readability" form
+- R cannot read this!
+
+![[From The Epidemiologist R Handbook, Section 4.1](https://epirhandbook.com/en/new_pages/transition_to_R.html#tidy-data)](../img_slides/Excel_not_tidy.png)
+
+## Let's look at an example[^2] of data represented in different ways
+
+[^2]: Source: R for Data Science. Grolemund and Wickham. [Example pulled from Section 5.2](https://r4ds.hadley.nz/data-tidy.html#sec-tidy-data)
+
+We will look at a dataset measuring tuberculosis (TB) cases for different countries. We have information on the country, year, population, and number of TB cases: 
+
+::: columns
+::: {.column width="30%"}
+[**Each column is one piece of information:**]{style="color:#EF85B3;"}
+
+::: {style="font-size: 70%;"}
+```{r}
+#| echo: false
+table1
+```
+:::
+:::
+::: {.column width="38%"}
+[**Population and cases are "types" of counts:**]{style="color:#5BAFF8;"}
+
+::: {style="font-size: 70%;"}
+```{r}
+#| echo: false
+table2
+```
+:::
+:::
+::: {.column width="30%"}
+[**We look at the rate of TB cases:**]{style="color:#F39C12;"}
+
+::: {style="font-size: 70%;"}
+```{r}
+#| echo: false
+table3
+```
+:::
+:::
+:::
+
+## Tidy data works best with R functions
+
+- Tidy data allow us to transform, summarize, and plot our data very easily! 
+
+::: columns
+::: column
+- **Example:** If we want to calculate the rate of TB for each country and year, we will be able to simply instruct R to calculate $$ \text{rate} = \dfrac{\text{cases}}{\text{population}}$$
+:::
+::: column
+[**Each column is one piece of information:**]{style="color:#EF85B3;"}
+
+```{r}
+#| echo: false
+table1
+```
+:::
+:::
+
+## Our HRS data are in tidy form
+
+- Each column is a piece of information for an individual in the dataset
+
+```{r}
+tibble(hrs_data) |> print(n = 8)
+```
+
+## Wrap-up
+
+- Tidy data are especially useful in R!
+- We will see more of its advantages in later lessons
+
+## Resources
+

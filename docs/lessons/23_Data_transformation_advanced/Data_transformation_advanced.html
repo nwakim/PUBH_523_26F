@@ -1,0 +1,4285 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2baf9616dcd62a487e8517e630363ef5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Nicky Wakim">
+  <title>Introduction to R – Data transformation: Advanced</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #575f66;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #575f66; } /* Normal */
+    code span.al { color: #f51818; background-color: #faefef; font-weight: bold; } /* Alert */
+    code span.an { color: #e6ba7e; } /* Annotation */
+    code span.at { color: #399ee6; } /* Attribute */
+    code span.bn { color: #ff9940; } /* BaseN */
+    code span.bu { color: #4cbf99; } /* BuiltIn */
+    code span.cf { color: #fa8d3e; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4cbf99; } /* Char */
+    code span.cn { color: #a37acc; } /* Constant */
+    code span.co { color: #607880; font-style: italic; } /* Comment */
+    code span.cv { color: #a37acc; } /* CommentVar */
+    code span.do { color: #607880; } /* Documentation */
+    code span.dt { color: #fa8d3e; } /* DataType */
+    code span.dv { color: #ff9940; } /* DecVal */
+    code span.er { color: #f51818; text-decoration: underline; } /* Error */
+    code span.ex { color: #399ee6; font-weight: bold; } /* Extension */
+    code span.fl { color: #ff9940; } /* Float */
+    code span.fu { color: #f2ae49; } /* Function */
+    code span.im { color: #86b300; } /* Import */
+    code span.in { color: #ff9940; } /* Information */
+    code span.kw { color: #fa8d3e; font-weight: bold; } /* Keyword */
+    code span.op { color: #ed9366; } /* Operator */
+    code span.ot { color: #55b4d4; } /* Other */
+    code span.pp { color: #f07171; } /* Preprocessor */
+    code span.re { color: #399ee6; background-color: #ddecf3; } /* RegionMarker */
+    code span.sc { color: #4cbf99; } /* SpecialChar */
+    code span.ss { color: #4cbf99; } /* SpecialString */
+    code span.st { color: #86b300; } /* String */
+    code span.va { color: #55b4d4; } /* Variable */
+    code span.vs { color: #86b300; } /* VerbatimString */
+    code span.wa { color: #f07171; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9e6b66dd654051dec486914fbb48eb8b.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3070BF" class="quarto-title-block center">
+  <h1 class="title">Data transformation: <em>Advanced</em></h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Nicky Wakim 
+</div>
+</div>
+</div>
+
+</section>
+<section id="more-advanced-data-transformations" class="slide level2">
+<h2>More advanced data transformations</h2>
+<ul>
+<li>We’ve learned some important functions for transforming data for row-wise and column-wise operations:
+<ul>
+<li><code>filter()</code> to filter rows</li>
+<li><code>select()</code> to select columns</li>
+<li><code>mutate()</code> to create new variables</li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>This lesson will cover some more advanced techniques for transforming rows and columns:
+<ul>
+<li>Combining conditions with <code>&amp;</code>, <code>|</code>, and <code>%in%</code></li>
+<li>Checking your work with <code>arrange()</code> and <code>count()</code></li>
+<li>Working with factors</li>
+<li>Create new variables based on conditions</li>
+<li>Select columns by name pattern or data type</li>
+</ul></li>
+</ul>
+</section>
+<section>
+<section id="combining-conditions-with-and-in" class="title-slide slide level1 center">
+<h1>Combining conditions with <code>&amp;</code>, <code>|</code>, and <code>%in%</code></h1>
+
+</section>
+<section id="applying-relational-operators-to-filter-rows" class="slide level2">
+<h2>Applying relational operators to filter rows</h2>
+<ul>
+<li><p>Recall the infographic from the previous lesson (Key operators and functions): <img data-src="../img_slides/boolean.png" alt="Adapted from this R for Data Science"></p></li>
+<li><p>We can use these logical operators to filter rows based on multiple criteria</p></li>
+</ul>
+</section>
+<section id="a-quick-example" class="slide level2">
+<h2>A quick example</h2>
+<ul>
+<li>If we wanted to return participants who identified as <strong>diabetic but DO NOT have a Master’s degree</strong>
+<ul>
+<li>We would use an <code>&amp;</code> to chain these criteria together:</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a>hrs_01_filter_diab_nMS <span class="ot">=</span> hrs_00 <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a>  <span class="fu">filter</span>(diab <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> degree <span class="sc">!=</span> <span class="st">"Master's degree"</span>)</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a><span class="fu">tibble</span>(hrs_01_filter_diab_nMS)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1">Think about which Venn Diagram this would represent (<code>x &amp; !y</code>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 567 × 32
+   hhid   pn    id    diab  degree birthyr birthmo birthdate proxy coupled sex  
+   &lt;fct&gt;  &lt;fct&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;
+ 1 551018 010   5510… Yes   Profe…    1970       1      3667 Resp… Not a … Fema…
+ 2 554874 010   5548… Yes   None      1963       5      1230 Resp… Couple… Male 
+ 3 550622 010   5506… Yes   Profe…    1969       5      3422 Resp… Not a … Fema…
+ 4 551973 010   5519… Yes   High …    1966      11      2510 Resp… Couple… Male 
+ 5 556364 010   5563… Yes   Assoc…    1944       4     -5770 Resp… Not a … Male 
+ 6 552323 010   5523… Yes   None      1951       1     -3153 Resp… Couple… Male 
+ 7 554006 010   5540… Yes   Assoc…    1949       2     -4003 Resp… Not a … Fema…
+ 8 555463 010   5554… Yes   None      1938       9     -7748 Resp… Couple… Fema…
+ 9 551767 010   5517… Yes   Assoc…    1969      10      3575 Resp… Not a … Fema…
+10 551191 010   5511… Yes   Assoc…    1940      10     -7170 Resp… Not a … Fema…
+# ℹ 557 more rows
+# ℹ 21 more variables: age_mo &lt;dbl&gt;, age_yr &lt;dbl&gt;, ed &lt;dbl&gt;,
+#   race_original &lt;fct&gt;, smoke_ever &lt;fct&gt;, smoke_now &lt;fct&gt;, drink &lt;fct&gt;,
+#   height &lt;dbl&gt;, srh &lt;fct&gt;, act_vig &lt;fct&gt;, bp &lt;fct&gt;, cancer &lt;fct&gt;, lung &lt;fct&gt;,
+#   hrt &lt;fct&gt;, strk &lt;fct&gt;, psych &lt;fct&gt;, sleep &lt;fct&gt;, arth &lt;fct&gt;,
+#   cond_count &lt;dbl&gt;, cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-with-and-criteria-12" class="slide level2">
+<h2>Filtering with <code>&amp;</code> (AND) criteria (1/2)</h2>
+<div class="pink2">
+<div class="pink2-cont">
+<p>This relational operator <code>&amp;</code> is used to filter rows that meet <strong>both</strong> criteria</p>
+</div>
+</div>
+<p>If we want to filter for participants who identify as <strong>diabetic AND have a Master’s degree</strong>, we would use:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>hrs_02_filter_diab_MS <span class="ot">=</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a></a>  <span class="fu">filter</span>(diab <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> degree <span class="sc">==</span> <span class="st">"Master's degree"</span>)</span>
+<span id="cb2-3"><a></a><span class="fu">tibble</span>(hrs_02_filter_diab_MS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 102 × 32
+   hhid   pn    id    diab  degree birthyr birthmo birthdate proxy coupled sex  
+   &lt;fct&gt;  &lt;fct&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;
+ 1 554789 020   5547… Yes   Maste…    1950       7     -3153 Resp… Couple… Male 
+ 2 557423 010   5574… Yes   Maste…    1966       4      2296 Resp… Couple… Male 
+ 3 553480 010   5534… Yes   Maste…    1968      10      3210 Resp… Not a … Male 
+ 4 553443 020   5534… Yes   Maste…    1961       7       531 Resp… Couple… Fema…
+ 5 556536 010   5565… Yes   Maste…    1970       1      3667 Resp… Not a … Fema…
+ 6 555022 010   5550… Yes   Maste…    1971       4      4122 Resp… Not a … Fema…
+ 7 555951 010   5559… Yes   Maste…    1954      11     -1873 Resp… Not a … Fema…
+ 8 558663 010   5586… Yes   Maste…    1966      10      2479 Resp… Not a … Fema…
+ 9 553031 010   5530… Yes   Maste…    1970       4      3757 Resp… Not a … Fema…
+10 553970 010   5539… Yes   Maste…    1967      12      2905 Resp… Couple… Male 
+# ℹ 92 more rows
+# ℹ 21 more variables: age_mo &lt;dbl&gt;, age_yr &lt;dbl&gt;, ed &lt;dbl&gt;,
+#   race_original &lt;fct&gt;, smoke_ever &lt;fct&gt;, smoke_now &lt;fct&gt;, drink &lt;fct&gt;,
+#   height &lt;dbl&gt;, srh &lt;fct&gt;, act_vig &lt;fct&gt;, bp &lt;fct&gt;, cancer &lt;fct&gt;, lung &lt;fct&gt;,
+#   hrt &lt;fct&gt;, strk &lt;fct&gt;, psych &lt;fct&gt;, sleep &lt;fct&gt;, arth &lt;fct&gt;,
+#   cond_count &lt;dbl&gt;, cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-with-and-criteria-22" class="slide level2">
+<h2>Filtering with <code>&amp;</code> (AND) criteria (2/2)</h2>
+<ul>
+<li>Note that we could also use the comma in this case:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1"></a>hrs_02_filter_diab_MS <span class="ot">=</span> hrs_00 <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2"></a>  <span class="fu">filter</span>(diab <span class="sc">==</span> <span class="st">"Yes"</span>,</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3"></a>         degree <span class="sc">==</span> <span class="st">"Master's degree"</span>)</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4"></a><span class="fu">tibble</span>(hrs_02_filter_diab_MS)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="1">Comma is equivalent to “&amp;” within <code>filter()</code></span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 102 × 32
+   hhid   pn    id    diab  degree birthyr birthmo birthdate proxy coupled sex  
+   &lt;fct&gt;  &lt;fct&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;
+ 1 554789 020   5547… Yes   Maste…    1950       7     -3153 Resp… Couple… Male 
+ 2 557423 010   5574… Yes   Maste…    1966       4      2296 Resp… Couple… Male 
+ 3 553480 010   5534… Yes   Maste…    1968      10      3210 Resp… Not a … Male 
+ 4 553443 020   5534… Yes   Maste…    1961       7       531 Resp… Couple… Fema…
+ 5 556536 010   5565… Yes   Maste…    1970       1      3667 Resp… Not a … Fema…
+ 6 555022 010   5550… Yes   Maste…    1971       4      4122 Resp… Not a … Fema…
+ 7 555951 010   5559… Yes   Maste…    1954      11     -1873 Resp… Not a … Fema…
+ 8 558663 010   5586… Yes   Maste…    1966      10      2479 Resp… Not a … Fema…
+ 9 553031 010   5530… Yes   Maste…    1970       4      3757 Resp… Not a … Fema…
+10 553970 010   5539… Yes   Maste…    1967      12      2905 Resp… Couple… Male 
+# ℹ 92 more rows
+# ℹ 21 more variables: age_mo &lt;dbl&gt;, age_yr &lt;dbl&gt;, ed &lt;dbl&gt;,
+#   race_original &lt;fct&gt;, smoke_ever &lt;fct&gt;, smoke_now &lt;fct&gt;, drink &lt;fct&gt;,
+#   height &lt;dbl&gt;, srh &lt;fct&gt;, act_vig &lt;fct&gt;, bp &lt;fct&gt;, cancer &lt;fct&gt;, lung &lt;fct&gt;,
+#   hrt &lt;fct&gt;, strk &lt;fct&gt;, psych &lt;fct&gt;, sleep &lt;fct&gt;, arth &lt;fct&gt;,
+#   cond_count &lt;dbl&gt;, cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-with-or-criteria" class="slide level2">
+<h2>Filtering with <code>|</code> (OR) criteria</h2>
+<div class="green">
+<div class="green-cont">
+<p>This relational operator <code>|</code> is used to filter rows that meet <strong>either</strong> criteria</p>
+</div>
+</div>
+<p>If we want to filter for participants who identify as <strong>diabetic OR have a Master’s degree</strong>, we would use:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>hrs_03_filter_diab_or_MS <span class="ot">=</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">filter</span>(diab <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">|</span> degree <span class="sc">==</span> <span class="st">"Master's degree"</span>)</span>
+<span id="cb5-3"><a></a><span class="fu">tibble</span>(hrs_03_filter_diab_or_MS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,120 × 32
+   hhid   pn    id    diab  degree birthyr birthmo birthdate proxy coupled sex  
+   &lt;fct&gt;  &lt;fct&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;
+ 1 558143 020   5581… No    Maste…    1973      10      5036 Resp… Couple… Male 
+ 2 554789 020   5547… Yes   Maste…    1950       7     -3153 Resp… Couple… Male 
+ 3 551018 010   5510… Yes   Profe…    1970       1      3667 Resp… Not a … Fema…
+ 4 556288 020   5562… No    Maste…    1952       9     -2664 Resp… Couple… Male 
+ 5 554874 010   5548… Yes   None      1963       5      1230 Resp… Couple… Male 
+ 6 551108 020   5511… No    Maste…    1970       7      3848 Resp… Couple… Male 
+ 7 556018 020   5560… No    Maste…    1969      12      3545 Resp… Couple… Male 
+ 8 559002 010   5590… No    Maste…    1969      10      3575 Resp… Not a … Fema…
+ 9 557423 010   5574… Yes   Maste…    1966       4      2296 Resp… Couple… Male 
+10 553087 020   5530… Yes   &lt;NA&gt;      1957       2     -1050 Resp… Couple… Fema…
+# ℹ 1,110 more rows
+# ℹ 21 more variables: age_mo &lt;dbl&gt;, age_yr &lt;dbl&gt;, ed &lt;dbl&gt;,
+#   race_original &lt;fct&gt;, smoke_ever &lt;fct&gt;, smoke_now &lt;fct&gt;, drink &lt;fct&gt;,
+#   height &lt;dbl&gt;, srh &lt;fct&gt;, act_vig &lt;fct&gt;, bp &lt;fct&gt;, cancer &lt;fct&gt;, lung &lt;fct&gt;,
+#   hrt &lt;fct&gt;, strk &lt;fct&gt;, psych &lt;fct&gt;, sleep &lt;fct&gt;, arth &lt;fct&gt;,
+#   cond_count &lt;dbl&gt;, cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-with-in-12" class="slide level2">
+<h2>Filtering with <code>%in%</code> (1/2)</h2>
+<ul>
+<li><p>If we want to filter for multiple specific values in one column, we can use <code>%in%</code> instead of chaining several <code>|</code> conditions</p></li>
+<li><p>Example: if we wanted participants whose <code>degree</code> was “GED”, “High school diploma”, or “None”, we could use:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1"></a>hrs_04_filter_degree <span class="ot">=</span> hrs_00 <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2"></a>  <span class="fu">filter</span>(degree <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"GED"</span>, <span class="st">"High school diploma"</span>, <span class="st">"None"</span>))</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3"></a><span class="fu">tibble</span>(hrs_04_filter_degree)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="2" data-code-annotation="1"><code>%in%</code> checks whether the value in <code>degree</code> matches <em>any</em> value in the vector we provide.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,014 × 32
+   hhid   pn    id    diab  degree birthyr birthmo birthdate proxy coupled sex  
+   &lt;fct&gt;  &lt;fct&gt; &lt;chr&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;
+ 1 555339 020   5553… No    High …    1966       7      2387 Resp… Couple… Fema…
+ 2 550516 010   5505… No    None      1960       1        14 Resp… Not a … Male 
+ 3 551238 010   5512… No    High …    1969      12      3636 Resp… Couple… Male 
+ 4 554874 010   5548… Yes   None      1963       5      1230 Resp… Couple… Male 
+ 5 551179 010   5511… No    None      1965       2      1931 Resp… Couple… Male 
+ 6 555578 020   5555… No    None      1967       8      2783 Resp… Couple… Fema…
+ 7 554670 020   5546… No    GED       1947      10     -4522 Resp… Couple… Fema…
+ 8 551973 010   5519… Yes   High …    1966      11      2510 Resp… Couple… Male 
+ 9 557680 020   5576… No    High …    1956       1     -1265 Resp… Couple… Male 
+10 552323 010   5523… Yes   None      1951       1     -3153 Resp… Couple… Male 
+# ℹ 1,004 more rows
+# ℹ 21 more variables: age_mo &lt;dbl&gt;, age_yr &lt;dbl&gt;, ed &lt;dbl&gt;,
+#   race_original &lt;fct&gt;, smoke_ever &lt;fct&gt;, smoke_now &lt;fct&gt;, drink &lt;fct&gt;,
+#   height &lt;dbl&gt;, srh &lt;fct&gt;, act_vig &lt;fct&gt;, bp &lt;fct&gt;, cancer &lt;fct&gt;, lung &lt;fct&gt;,
+#   hrt &lt;fct&gt;, strk &lt;fct&gt;, psych &lt;fct&gt;, sleep &lt;fct&gt;, arth &lt;fct&gt;,
+#   cond_count &lt;dbl&gt;, cesd &lt;dbl&gt;, income &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="filtering-with-in-22" class="slide level2">
+<h2>Filtering with <code>%in%</code> (2/2)</h2>
+<ul>
+<li><p>The following code blocks are equivalent, but the first one is more concise and easier to read</p></li>
+<li><p>With <code>%in%</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">filter</span>(degree <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"GED"</span>, <span class="st">"High school diploma"</span>, <span class="st">"None"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>With <code>|</code> (OR):</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a></a>  <span class="fu">filter</span>(degree <span class="sc">==</span> <span class="st">"GED"</span> <span class="sc">|</span> degree <span class="sc">==</span> <span class="st">"High school diploma"</span> <span class="sc">|</span> degree <span class="sc">==</span> <span class="st">"None"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="orange">
+<div class="orange-cont">
+<p><code>%in%</code> is especially useful when you have many values to check within a single column</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="checking-your-work-with-arrange-and-count" class="title-slide slide level1 center">
+<h1>Checking your work with <code>arrange()</code> and <code>count()</code></h1>
+
+</section>
+<section id="a-good-check-that-you-are-filtering-correctly" class="slide level2">
+<h2>A good check that you are filtering correctly</h2>
+<div class="blue">
+<div class="blue-cont">
+<p>Think about the number result you expect: Which of the AND vs.&nbsp;OR code blocks will return a larger number of participants?</p>
+</div>
+</div>
+<p>You can check your work by using <code>count()</code> to see how many participants meet each criteria:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">count</span>(diab, degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   diab                              degree   n
+1    No                 High school diploma 354
+2    No                     Master's degree 385
+3    No Professional degree (Ph.D./M.D./JD) 157
+4    No                                None 223
+5    No                  Associate's degree 289
+6    No                                 GED  85
+7    No                   Bachelor's degree  96
+8    No                                &lt;NA&gt; 404
+9   Yes                 High school diploma 158
+10  Yes                     Master's degree 102
+11  Yes Professional degree (Ph.D./M.D./JD)  37
+12  Yes                                None 161
+13  Yes                  Associate's degree 122
+14  Yes                                 GED  33
+15  Yes                   Bachelor's degree  56
+16  Yes                                &lt;NA&gt;  66</code></pre>
+</div>
+</div>
+</section>
+<section id="arrange-after-count-ing-categorical-data" class="slide level2">
+<h2><code>arrange()</code> after <code>count()</code>-ing categorical data</h2>
+<ul>
+<li>Sometimes it helps to arrange by that category if you have many categories to view</li>
+<li>This can also alert us if there are categorical coding mistakes (such as misspellings) in our data</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">count</span>(degree) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">arrange</span>(n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               degree   n
+1                                 GED 118
+2                   Bachelor's degree 152
+3 Professional degree (Ph.D./M.D./JD) 194
+4                                None 384
+5                  Associate's degree 411
+6                                &lt;NA&gt; 470
+7                     Master's degree 487
+8                 High school diploma 512</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="working-with-categorical-data-and-factors" class="title-slide slide level1 center">
+<h1>Working with categorical data and factors</h1>
+
+</section>
+<section id="what-are-factors" class="slide level2">
+<h2>What are factors?</h2>
+<ul>
+<li>Factors are how R represents <strong>levels</strong> of <em>categorical data</em></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>For the most part, you can use <code>character</code> and <code>factors</code> interchangeably for categorical data
+<ul>
+<li>Characters are just strings of text, while factors are a special data type that R uses to store categorical data</li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>However, there are two main differences:
+<ul>
+<li>Factors define the <em>permissible</em> values in a vector with an argument called <code>levels</code></li>
+<li>The levels define the order in which the permissible values are displayed, such as in a table or figure</li>
+<li>The default order of levels (values) is in <strong>alphanumeric</strong> order</li>
+</ul></li>
+</ul>
+<div class="blue">
+<div class="blue-cont">
+<p>Factors are the most useful data type for categorical data <strong>when you want to display your data!</strong></p>
+</div>
+</div>
+</section>
+<section id="lets-say-degree-is-a-character-variable" class="slide level2">
+<h2>Let’s say degree is a character variable</h2>
+<ul>
+<li>I’ve created an alternate dataset where <code>degree</code> is a <code>character</code> variable instead of a <code>factor</code> variable, called <code>hrs_degree_chr</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1"></a><span class="fu">class</span>(hrs_degree_chr<span class="sc">$</span>degree)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">I’ll double check the data type of <code>degree</code> in this dataset</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>hrs_degree_chr <span class="sc">|&gt;</span> <span class="fu">distinct</span>(degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               degree
+1                                &lt;NA&gt;
+2                 High school diploma
+3                     Master's degree
+4 Professional degree (Ph.D./M.D./JD)
+5                                None
+6                  Associate's degree
+7                                 GED
+8                   Bachelor's degree</code></pre>
+</div>
+</div>
+<ul>
+<li>The distinct values of <code>degree</code> are the same as in the original dataset, but they are <strong>not</strong> stored as a factor variable</li>
+</ul>
+</section>
+<section id="i-can-make-degree-a-factor-variable" class="slide level2">
+<h2>I can make degree a factor variable</h2>
+<ul>
+<li><code>forcats</code> is a package that has many useful functions for working with factors, including <code>fct()</code> to make a factor from a character variable</li>
+<li>Below we use the <code>fct()</code> function within a <code>mutate()</code> to transform <code>degree</code> from a <code>character</code> variable into a <code>factor</code> variable</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1"></a>hrs_degree_fct <span class="ot">&lt;-</span> hrs_degree_chr <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2"></a>  <span class="fu">mutate</span>(<span class="at">degree_fct1 =</span> <span class="fu">fct</span>(degree))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1">I typically name the new variable with a <code>_fct</code> suffix to indicate that it is a factor version of the original variable</span>
+</dd>
+</dl>
+</div>
+</div>
+<ul>
+<li>Check the result:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1"></a><span class="fu">class</span>(hrs_degree_fct<span class="sc">$</span>degree_fct1)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="1" data-code-annotation="2">What’s the data type of degree_fct1?</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="3">3</button><span id="annotated-cell-14-1" class="code-annotation-target"><a href="#annotated-cell-14-1"></a><span class="fu">levels</span>(hrs_degree_fct<span class="sc">$</span>degree_fct1)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="1" data-code-annotation="3">What are its levels?</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "High school diploma"                 "Master's degree"                    
+[3] "Professional degree (Ph.D./M.D./JD)" "None"                               
+[5] "Associate's degree"                  "GED"                                
+[7] "Bachelor's degree"                  </code></pre>
+</div>
+</div>
+</section>
+<section id="change-order-of-levels-12" class="slide level2">
+<h2>Change order of levels (1/2)</h2>
+<ul>
+<li><code>forcats</code> is a package that has many useful functions for working with factors, including <code>fct_relevel()</code> to reorder factor levels</li>
+</ul>
+<p>Example: Create <code>degree_fct2</code> variable as a factor version of degree with degrees in “correct” order:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1"></a>hrs_degree_fct_01_relevel <span class="ot">&lt;-</span> hrs_degree_fct <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2"></a>  <span class="fu">mutate</span>(<span class="at">degree_fct2 =</span> <span class="fu">fct_relevel</span>(</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3"></a>    degree_fct1, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2">2</button><span id="annotated-cell-15-4" class="code-annotation-target"><a href="#annotated-cell-15-4"></a>    <span class="st">"None"</span>,</span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5"></a>    <span class="st">"GED"</span>, </span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6"></a>    <span class="st">"High school diploma"</span>, </span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7"></a>    <span class="st">"Associate's degree"</span>, </span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8"></a>    <span class="st">"Bachelor's degree"</span>, </span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9"></a>    <span class="st">"Master's degree"</span>, </span>
+<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10"></a>    <span class="st">"Professional degree (Ph.D./M.D./JD)"</span></span>
+<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11"></a>    ))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="2,11" data-code-annotation="1">We are using <code>fct_relevel()</code> to reorder the levels of <code>degree_fct1</code> into a new variable called <code>degree_fct2</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="4,10" data-code-annotation="2">We specify the order of the levels in the order we want them to appear</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="change-order-of-levels-22" class="slide level2">
+<h2>Change order of levels (2/2)</h2>
+<ul>
+<li>Check the result:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-1" class="code-annotation-target"><a href="#annotated-cell-16-1"></a><span class="fu">class</span>(hrs_degree_fct_01_relevel<span class="sc">$</span>degree_fct2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="1" data-code-annotation="1">What’s the data type of <code>degree_fct2</code>?</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<ul>
+<li>Then I want to check the levels of the new factor variable
+<ul>
+<li>They should appear in the new order I set</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="2">2</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1"></a><span class="fu">levels</span>(hrs_degree_fct_01_relevel<span class="sc">$</span>degree_fct2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="2">What are its levels?</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "None"                                "GED"                                
+[3] "High school diploma"                 "Associate's degree"                 
+[5] "Bachelor's degree"                   "Master's degree"                    
+[7] "Professional degree (Ph.D./M.D./JD)"</code></pre>
+</div>
+</div>
+</section>
+<section id="be-careful-spellingspacing-is-important-12" class="slide level2">
+<h2>Be careful: spelling/spacing is important (1/2)</h2>
+<ul>
+<li>If we try to use a factor level that doesn’t exist (“Associate degree” vs “Associate’s degree”), R will not throw an error, but it will silently drop that level from the factor variable</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1"></a>hrs_degree_fct_02_relevel <span class="ot">&lt;-</span> hrs_degree_fct <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-18-2"><a href="#annotated-cell-18-2"></a>  <span class="fu">mutate</span>(<span class="at">degree_fct2 =</span> <span class="fu">fct_relevel</span>( </span>
+<span id="annotated-cell-18-3"><a href="#annotated-cell-18-3"></a>    degree_fct1, </span>
+<span id="annotated-cell-18-4"><a href="#annotated-cell-18-4"></a>    <span class="st">"None"</span>, </span>
+<span id="annotated-cell-18-5"><a href="#annotated-cell-18-5"></a>    <span class="st">"GED"</span>, </span>
+<span id="annotated-cell-18-6"><a href="#annotated-cell-18-6"></a>    <span class="st">"High school diploma"</span>, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1">1</button><span id="annotated-cell-18-7" class="code-annotation-target"><a href="#annotated-cell-18-7"></a>    <span class="st">"Associates degree"</span>,</span>
+<span id="annotated-cell-18-8"><a href="#annotated-cell-18-8"></a>    <span class="st">"Bachelor's degree"</span>, </span>
+<span id="annotated-cell-18-9"><a href="#annotated-cell-18-9"></a>    <span class="st">"Master's degree"</span>, </span>
+<span id="annotated-cell-18-10"><a href="#annotated-cell-18-10"></a>    <span class="st">"Professional degree (Ph.D./M.D./JD)"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="2">2</button><span id="annotated-cell-18-11" class="code-annotation-target"><a href="#annotated-cell-18-11"></a>    ))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-18" data-code-lines="7" data-code-annotation="1">Notice that I misspelled “Associate’s degree” as “Associates degree” (no apostrophe). This will cause R skip it in the releveling</span>
+</dd>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-18" data-code-lines="11" data-code-annotation="2">However, there is a warning that R shows in the console!</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="be-careful-spellingspacing-is-important-22" class="slide level2">
+<h2>Be careful: spelling/spacing is important (2/2)</h2>
+<ul>
+<li>We can check the levels of the new factor variable to see the order “Associate’s degree” is missing</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">levels</span>(hrs_degree_fct_02_relevel<span class="sc">$</span>degree_fct2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "None"                                "GED"                                
+[3] "High school diploma"                 "Bachelor's degree"                  
+[5] "Master's degree"                     "Professional degree (Ph.D./M.D./JD)"
+[7] "Associate's degree"                 </code></pre>
+</div>
+</div>
+<ul>
+<li>Notice that “Associate’s degree” is at the end of the list of levels of <code>degree_fct2</code> because it was misspelled in the <code>fct_relevel()</code> function</li>
+</ul>
+</section></section>
+<section>
+<section id="make-variables-with-case_when" class="title-slide slide level1 center">
+<h1>Make variables with <code>case_when()</code></h1>
+
+<img data-src="../img_slides/dplyr_case_when.png" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://allisonhorst.com/everything-else" target="_blank">Artwork by @allison_horst</a></p></section>
+<section id="what-does-case_when-do" class="slide level2">
+<h2>What does <code>case_when()</code> do?</h2>
+<ul>
+<li><code>case_when()</code> is a function that allows us to create new variables <strong>based on conditions</strong></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Examples of what we might want to do with <code>case_when()</code>:
+<ul>
+<li>Categorize a continuous variable like income</li>
+<li>Combine categories of a variable like degree</li>
+<li>Convert categories to numeric</li>
+</ul></li>
+</ul>
+</section>
+<section id="using-case_when-to-create-a-new-variables" class="slide level2">
+<h2>Using <code>case_when()</code> to create a new variables</h2>
+<ul>
+<li>The code follows a <strong>basic pattern</strong> for each category inside <code>case_when()</code>:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1"></a>new_data_frame <span class="ot">&lt;-</span> old_data_frame <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-2" class="code-annotation-target"><a href="#annotated-cell-20-2"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="2">2</button><span id="annotated-cell-20-3" class="code-annotation-target"><a href="#annotated-cell-20-3"></a>    <span class="at">new_variable =</span> <span class="fu">case_when</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="3">3</button><span id="annotated-cell-20-4" class="code-annotation-target"><a href="#annotated-cell-20-4"></a>      condition1 <span class="sc">~</span> <span class="st">"category1"</span>,</span>
+<span id="annotated-cell-20-5"><a href="#annotated-cell-20-5"></a>      condition2 <span class="sc">~</span> <span class="st">"category2"</span>, </span>
+<span id="annotated-cell-20-6"><a href="#annotated-cell-20-6"></a>      condition3 <span class="sc">~</span> <span class="st">"category3"</span></span>
+<span id="annotated-cell-20-7"><a href="#annotated-cell-20-7"></a>      )</span>
+<span id="annotated-cell-20-8"><a href="#annotated-cell-20-8"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="2" data-code-annotation="1">We are using <code>mutate()</code> to create a new variable called <code>new_variable</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-20" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="3" data-code-annotation="2">We are using <code>case_when()</code> to define the conditions for each category of the new variable</span>
+</dd>
+<dt data-target-cell="annotated-cell-20" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="4,6" data-code-annotation="3">Each condition is followed by a <code>~</code> and the name of the category that we want to assign to that condition. Each condition-category pair is separated by a comma.</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="categorize-income-into-levels" class="slide level2">
+<h2>Categorize income into levels</h2>
+<ul>
+<li>Categorize the numeric variable <code>income</code> into two categories with $30,000 as the cutoff</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1"></a>hrs_05_income_fct <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-21-2"><a href="#annotated-cell-21-2"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-3" class="code-annotation-target"><a href="#annotated-cell-21-3"></a>    <span class="at">income30 =</span> <span class="fu">case_when</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="2">2</button><span id="annotated-cell-21-4" class="code-annotation-target"><a href="#annotated-cell-21-4"></a>      income <span class="sc">&lt;</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"&lt;$30,000"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="3">3</button><span id="annotated-cell-21-5" class="code-annotation-target"><a href="#annotated-cell-21-5"></a>      income <span class="sc">&gt;=</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"$30,000+"</span></span>
+<span id="annotated-cell-21-6"><a href="#annotated-cell-21-6"></a>      ) </span>
+<span id="annotated-cell-21-7"><a href="#annotated-cell-21-7"></a>  ) </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-21" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="3" data-code-annotation="1">We are using <code>case_when()</code> to create a new variable called <code>income30</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-21" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="4" data-code-annotation="2">If <code>income</code> is less than $30,000, we assign the category “&lt;$30,000” to <code>income30</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-21" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="5" data-code-annotation="3">If <code>income</code> is greater than or equal to $30,000, we assign the category “$30,000+” to <code>income30</code></span>
+</dd>
+</dl>
+</div>
+</div>
+<ul>
+<li>We can check the result by counting the number of participants in each category:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>hrs_05_income_fct <span class="sc">|&gt;</span> <span class="fu">count</span>(income30)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  income30    n
+1 $30,000+ 1771
+2 &lt;$30,000  957</code></pre>
+</div>
+</div>
+</section>
+
+</section>
+<section>
+<section id="select-columns-by-name-pattern-or-data-type" class="title-slide slide level1 center">
+<h1>Select columns by name pattern or data type</h1>
+
+</section>
+<section id="tidyselect-functions-to-select-columns-by-name-pattern-or-data-type" class="slide level2">
+<h2><code>tidyselect</code> functions to select columns by name pattern or data type</h2>
+<ul>
+<li>You may want to select multiple columns that have a similar name pattern, or select all columns of a certain data type (e.g., numeric, character, factor)</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>There are ways to select columns by “searching” for them</li>
+<li>These are called <code>{tidyselect}</code> helpers</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>We’ll go over:
+<ul>
+<li><code>contains()</code></li>
+<li><code>starts_with()</code></li>
+<li><code>ends_with()</code></li>
+<li><code>where()</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="contains" class="slide level2">
+<h2><code>contains()</code></h2>
+<ul>
+<li><code>contains()</code> selects all columns that contain a certain string in their name</li>
+<li>For instance, you can see how this might be useful, where we select all columns where the column name includes the word “race”:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"race"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              race_original
+1                      &lt;NA&gt;
+2           White/Caucasian
+3                      &lt;NA&gt;
+4           White/Caucasian
+5    Black/African American
+6           White/Caucasian
+7    Black/African American
+8    Black/African American
+9           White/Caucasian
+10                     &lt;NA&gt;
+11                     &lt;NA&gt;
+12                     &lt;NA&gt;
+13          White/Caucasian
+14   Black/African American
+15   Black/African American
+16          White/Caucasian
+17                     &lt;NA&gt;
+18          White/Caucasian
+19   Black/African American
+20   Black/African American
+21          White/Caucasian
+22                     &lt;NA&gt;
+23                     &lt;NA&gt;
+24          White/Caucasian
+25                    Other
+26          White/Caucasian
+27   Black/African American
+28          White/Caucasian
+29          White/Caucasian
+30                     &lt;NA&gt;
+31   Black/African American
+32   Black/African American
+33          White/Caucasian
+34          White/Caucasian
+35   Black/African American
+36   Black/African American
+37                    Other
+38          White/Caucasian
+39          White/Caucasian
+40                    Other
+41          White/Caucasian
+42          White/Caucasian
+43   Black/African American
+44                    Other
+45          White/Caucasian
+46          White/Caucasian
+47                     &lt;NA&gt;
+48                    Other
+49                     &lt;NA&gt;
+50          White/Caucasian
+51   Black/African American
+52   Black/African American
+53          White/Caucasian
+54                    Other
+55   Black/African American
+56          White/Caucasian
+57   Black/African American
+58                     &lt;NA&gt;
+59   Black/African American
+60          White/Caucasian
+61          White/Caucasian
+62          White/Caucasian
+63                     &lt;NA&gt;
+64          White/Caucasian
+65   Black/African American
+66   Black/African American
+67   Black/African American
+68   Black/African American
+69   Black/African American
+70   Black/African American
+71   Black/African American
+72                     &lt;NA&gt;
+73          White/Caucasian
+74          White/Caucasian
+75          White/Caucasian
+76   Black/African American
+77          White/Caucasian
+78   Black/African American
+79                     &lt;NA&gt;
+80   Black/African American
+81                     &lt;NA&gt;
+82          White/Caucasian
+83   Black/African American
+84                    Other
+85   Black/African American
+86                     &lt;NA&gt;
+87   Black/African American
+88          White/Caucasian
+89   Black/African American
+90          White/Caucasian
+91          White/Caucasian
+92                     &lt;NA&gt;
+93   Black/African American
+94   Black/African American
+95   Black/African American
+96   Black/African American
+97   Black/African American
+98   Black/African American
+99   Black/African American
+100         White/Caucasian
+101  Black/African American
+102                    &lt;NA&gt;
+103                    &lt;NA&gt;
+104  Black/African American
+105  Black/African American
+106  Black/African American
+107                    &lt;NA&gt;
+108  Black/African American
+109                    &lt;NA&gt;
+110  Black/African American
+111         White/Caucasian
+112         White/Caucasian
+113         White/Caucasian
+114                    &lt;NA&gt;
+115  Black/African American
+116         White/Caucasian
+117  Black/African American
+118  Black/African American
+119  Black/African American
+120                    &lt;NA&gt;
+121                    &lt;NA&gt;
+122  Black/African American
+123                    &lt;NA&gt;
+124         White/Caucasian
+125                   Other
+126                    &lt;NA&gt;
+127                   Other
+128                    &lt;NA&gt;
+129  Black/African American
+130         White/Caucasian
+131  Black/African American
+132         White/Caucasian
+133  Black/African American
+134         White/Caucasian
+135         White/Caucasian
+136  Black/African American
+137                   Other
+138         White/Caucasian
+139         White/Caucasian
+140         White/Caucasian
+141         White/Caucasian
+142  Black/African American
+143         White/Caucasian
+144  Black/African American
+145  Black/African American
+146         White/Caucasian
+147  Black/African American
+148                    &lt;NA&gt;
+149                    &lt;NA&gt;
+150  Black/African American
+151  Black/African American
+152  Black/African American
+153         White/Caucasian
+154  Black/African American
+155  Black/African American
+156         White/Caucasian
+157         White/Caucasian
+158         White/Caucasian
+159         White/Caucasian
+160  Black/African American
+161         White/Caucasian
+162         White/Caucasian
+163         White/Caucasian
+164  Black/African American
+165         White/Caucasian
+166         White/Caucasian
+167         White/Caucasian
+168         White/Caucasian
+169  Black/African American
+170         White/Caucasian
+171         White/Caucasian
+172                    &lt;NA&gt;
+173                    &lt;NA&gt;
+174         White/Caucasian
+175         White/Caucasian
+176                    &lt;NA&gt;
+177         White/Caucasian
+178         White/Caucasian
+179                   Other
+180         White/Caucasian
+181  Black/African American
+182         White/Caucasian
+183         White/Caucasian
+184  Black/African American
+185  Black/African American
+186  Black/African American
+187                   Other
+188                    &lt;NA&gt;
+189  Black/African American
+190         White/Caucasian
+191         White/Caucasian
+192         White/Caucasian
+193         White/Caucasian
+194         White/Caucasian
+195  Black/African American
+196  Black/African American
+197  Black/African American
+198                    &lt;NA&gt;
+199                    &lt;NA&gt;
+200  Black/African American
+201                    &lt;NA&gt;
+202         White/Caucasian
+203  Black/African American
+204         White/Caucasian
+205                   Other
+206  Black/African American
+207         White/Caucasian
+208                    &lt;NA&gt;
+209         White/Caucasian
+210  Black/African American
+211         White/Caucasian
+212         White/Caucasian
+213         White/Caucasian
+214  Black/African American
+215                   Other
+216                    &lt;NA&gt;
+217         White/Caucasian
+218         White/Caucasian
+219  Black/African American
+220         White/Caucasian
+221                   Other
+222         White/Caucasian
+223         White/Caucasian
+224  Black/African American
+225                   Other
+226  Black/African American
+227  Black/African American
+228                    &lt;NA&gt;
+229  Black/African American
+230         White/Caucasian
+231  Black/African American
+232  Black/African American
+233  Black/African American
+234  Black/African American
+235         White/Caucasian
+236                    &lt;NA&gt;
+237         White/Caucasian
+238                    &lt;NA&gt;
+239                   Other
+240         White/Caucasian
+241  Black/African American
+242  Black/African American
+243  Black/African American
+244         White/Caucasian
+245  Black/African American
+246         White/Caucasian
+247  Black/African American
+248         White/Caucasian
+249                    &lt;NA&gt;
+250                   Other
+251  Black/African American
+252  Black/African American
+253  Black/African American
+254         White/Caucasian
+255                   Other
+256  Black/African American
+257  Black/African American
+258         White/Caucasian
+259         White/Caucasian
+260  Black/African American
+261                   Other
+262  Black/African American
+263         White/Caucasian
+264         White/Caucasian
+265                    &lt;NA&gt;
+266                    &lt;NA&gt;
+267                    &lt;NA&gt;
+268         White/Caucasian
+269  Black/African American
+270         White/Caucasian
+271  Black/African American
+272                   Other
+273                   Other
+274                    &lt;NA&gt;
+275         White/Caucasian
+276                   Other
+277  Black/African American
+278                    &lt;NA&gt;
+279                    &lt;NA&gt;
+280  Black/African American
+281  Black/African American
+282         White/Caucasian
+283         White/Caucasian
+284  Black/African American
+285                   Other
+286         White/Caucasian
+287                    &lt;NA&gt;
+288  Black/African American
+289                   Other
+290                   Other
+291                   Other
+292                    &lt;NA&gt;
+293  Black/African American
+294  Black/African American
+295                    &lt;NA&gt;
+296                   Other
+297         White/Caucasian
+298  Black/African American
+299  Black/African American
+300  Black/African American
+301         White/Caucasian
+302  Black/African American
+303  Black/African American
+304  Black/African American
+305                   Other
+306  Black/African American
+307                   Other
+308  Black/African American
+309         White/Caucasian
+310                   Other
+311  Black/African American
+312                   Other
+313  Black/African American
+314                    &lt;NA&gt;
+315         White/Caucasian
+316  Black/African American
+317  Black/African American
+318                    &lt;NA&gt;
+319         White/Caucasian
+320         White/Caucasian
+321  Black/African American
+322  Black/African American
+323                   Other
+324                    &lt;NA&gt;
+325         White/Caucasian
+326                    &lt;NA&gt;
+327  Black/African American
+328         White/Caucasian
+329         White/Caucasian
+330  Black/African American
+331                    &lt;NA&gt;
+332  Black/African American
+333         White/Caucasian
+334         White/Caucasian
+335         White/Caucasian
+336  Black/African American
+337  Black/African American
+338  Black/African American
+339         White/Caucasian
+340  Black/African American
+341                   Other
+342  Black/African American
+343  Black/African American
+344                    &lt;NA&gt;
+345  Black/African American
+346         White/Caucasian
+347  Black/African American
+348                    &lt;NA&gt;
+349         White/Caucasian
+350                   Other
+351         White/Caucasian
+352  Black/African American
+353         White/Caucasian
+354                    &lt;NA&gt;
+355  Black/African American
+356         White/Caucasian
+357  Black/African American
+358                    &lt;NA&gt;
+359  Black/African American
+360         White/Caucasian
+361  Black/African American
+362         White/Caucasian
+363         White/Caucasian
+364  Black/African American
+365  Black/African American
+366                   Other
+367                    &lt;NA&gt;
+368         White/Caucasian
+369         White/Caucasian
+370  Black/African American
+371         White/Caucasian
+372  Black/African American
+373         White/Caucasian
+374  Black/African American
+375                   Other
+376         White/Caucasian
+377                   Other
+378         White/Caucasian
+379         White/Caucasian
+380  Black/African American
+381                    &lt;NA&gt;
+382  Black/African American
+383         White/Caucasian
+384                   Other
+385                   Other
+386         White/Caucasian
+387         White/Caucasian
+388                    &lt;NA&gt;
+389                   Other
+390         White/Caucasian
+391         White/Caucasian
+392  Black/African American
+393                   Other
+394         White/Caucasian
+395                   Other
+396                   Other
+397  Black/African American
+398                    &lt;NA&gt;
+399                    &lt;NA&gt;
+400         White/Caucasian
+401                   Other
+402  Black/African American
+403         White/Caucasian
+404                    &lt;NA&gt;
+405  Black/African American
+406  Black/African American
+407                   Other
+408                   Other
+409                    &lt;NA&gt;
+410                   Other
+411                   Other
+412  Black/African American
+413                   Other
+414         White/Caucasian
+415                    &lt;NA&gt;
+416  Black/African American
+417  Black/African American
+418         White/Caucasian
+419         White/Caucasian
+420         White/Caucasian
+421         White/Caucasian
+422         White/Caucasian
+423         White/Caucasian
+424         White/Caucasian
+425                    &lt;NA&gt;
+426         White/Caucasian
+427                    &lt;NA&gt;
+428         White/Caucasian
+429                   Other
+430         White/Caucasian
+431  Black/African American
+432  Black/African American
+433  Black/African American
+434         White/Caucasian
+435         White/Caucasian
+436                   Other
+437  Black/African American
+438                   Other
+439         White/Caucasian
+440                   Other
+441                   Other
+442                    &lt;NA&gt;
+443                    &lt;NA&gt;
+444  Black/African American
+445  Black/African American
+446  Black/African American
+447  Black/African American
+448                   Other
+449         White/Caucasian
+450         White/Caucasian
+451         White/Caucasian
+452         White/Caucasian
+453  Black/African American
+454                   Other
+455  Black/African American
+456                   Other
+457  Black/African American
+458  Black/African American
+459         White/Caucasian
+460         White/Caucasian
+461                    &lt;NA&gt;
+462  Black/African American
+463         White/Caucasian
+464  Black/African American
+465  Black/African American
+466         White/Caucasian
+467         White/Caucasian
+468         White/Caucasian
+469         White/Caucasian
+470                   Other
+471  Black/African American
+472         White/Caucasian
+473         White/Caucasian
+474  Black/African American
+475                   Other
+476         White/Caucasian
+477                   Other
+478                   Other
+479  Black/African American
+480         White/Caucasian
+481         White/Caucasian
+482                    &lt;NA&gt;
+483         White/Caucasian
+484  Black/African American
+485  Black/African American
+486         White/Caucasian
+487  Black/African American
+488                    &lt;NA&gt;
+489  Black/African American
+490  Black/African American
+491         White/Caucasian
+492                   Other
+493         White/Caucasian
+494  Black/African American
+495  Black/African American
+496                    &lt;NA&gt;
+497         White/Caucasian
+498  Black/African American
+499                   Other
+500  Black/African American
+501  Black/African American
+502                   Other
+503  Black/African American
+504         White/Caucasian
+505  Black/African American
+506                    &lt;NA&gt;
+507                   Other
+508                   Other
+509                   Other
+510  Black/African American
+511                    &lt;NA&gt;
+512                    &lt;NA&gt;
+513  Black/African American
+514  Black/African American
+515                   Other
+516  Black/African American
+517  Black/African American
+518         White/Caucasian
+519         White/Caucasian
+520                   Other
+521  Black/African American
+522                   Other
+523  Black/African American
+524         White/Caucasian
+525  Black/African American
+526         White/Caucasian
+527                    &lt;NA&gt;
+528         White/Caucasian
+529         White/Caucasian
+530         White/Caucasian
+531         White/Caucasian
+532         White/Caucasian
+533  Black/African American
+534         White/Caucasian
+535         White/Caucasian
+536         White/Caucasian
+537                   Other
+538                   Other
+539         White/Caucasian
+540         White/Caucasian
+541                    &lt;NA&gt;
+542  Black/African American
+543         White/Caucasian
+544                    &lt;NA&gt;
+545                    &lt;NA&gt;
+546         White/Caucasian
+547                   Other
+548                    &lt;NA&gt;
+549  Black/African American
+550                    &lt;NA&gt;
+551         White/Caucasian
+552  Black/African American
+553                   Other
+554                    &lt;NA&gt;
+555  Black/African American
+556                   Other
+557         White/Caucasian
+558  Black/African American
+559         White/Caucasian
+560         White/Caucasian
+561  Black/African American
+562  Black/African American
+563         White/Caucasian
+564         White/Caucasian
+565  Black/African American
+566  Black/African American
+567                    &lt;NA&gt;
+568                   Other
+569                   Other
+570         White/Caucasian
+571                    &lt;NA&gt;
+572         White/Caucasian
+573         White/Caucasian
+574         White/Caucasian
+575         White/Caucasian
+576                   Other
+577                    &lt;NA&gt;
+578         White/Caucasian
+579         White/Caucasian
+580         White/Caucasian
+581  Black/African American
+582  Black/African American
+583         White/Caucasian
+584  Black/African American
+585  Black/African American
+586         White/Caucasian
+587                   Other
+588                    &lt;NA&gt;
+589  Black/African American
+590         White/Caucasian
+591  Black/African American
+592         White/Caucasian
+593         White/Caucasian
+594  Black/African American
+595                   Other
+596         White/Caucasian
+597  Black/African American
+598  Black/African American
+599         White/Caucasian
+600         White/Caucasian
+601                    &lt;NA&gt;
+602  Black/African American
+603         White/Caucasian
+604  Black/African American
+605         White/Caucasian
+606         White/Caucasian
+607  Black/African American
+608  Black/African American
+609                    &lt;NA&gt;
+610         White/Caucasian
+611  Black/African American
+612  Black/African American
+613         White/Caucasian
+614  Black/African American
+615                    &lt;NA&gt;
+616                    &lt;NA&gt;
+617  Black/African American
+618         White/Caucasian
+619  Black/African American
+620         White/Caucasian
+621  Black/African American
+622         White/Caucasian
+623  Black/African American
+624                    &lt;NA&gt;
+625         White/Caucasian
+626         White/Caucasian
+627  Black/African American
+628                   Other
+629                    &lt;NA&gt;
+630                    &lt;NA&gt;
+631  Black/African American
+632                    &lt;NA&gt;
+633         White/Caucasian
+634         White/Caucasian
+635         White/Caucasian
+636  Black/African American
+637         White/Caucasian
+638         White/Caucasian
+639  Black/African American
+640  Black/African American
+641         White/Caucasian
+642         White/Caucasian
+643  Black/African American
+644  Black/African American
+645                   Other
+646         White/Caucasian
+647                   Other
+648         White/Caucasian
+649  Black/African American
+650         White/Caucasian
+651  Black/African American
+652         White/Caucasian
+653         White/Caucasian
+654                   Other
+655                    &lt;NA&gt;
+656  Black/African American
+657         White/Caucasian
+658         White/Caucasian
+659                   Other
+660  Black/African American
+661  Black/African American
+662                    &lt;NA&gt;
+663         White/Caucasian
+664         White/Caucasian
+665  Black/African American
+666         White/Caucasian
+667         White/Caucasian
+668  Black/African American
+669                   Other
+670  Black/African American
+671                   Other
+672  Black/African American
+673                   Other
+674         White/Caucasian
+675  Black/African American
+676  Black/African American
+677                   Other
+678         White/Caucasian
+679  Black/African American
+680                    &lt;NA&gt;
+681         White/Caucasian
+682  Black/African American
+683  Black/African American
+684                   Other
+685         White/Caucasian
+686                    &lt;NA&gt;
+687  Black/African American
+688                   Other
+689         White/Caucasian
+690         White/Caucasian
+691  Black/African American
+692         White/Caucasian
+693         White/Caucasian
+694         White/Caucasian
+695         White/Caucasian
+696         White/Caucasian
+697  Black/African American
+698                   Other
+699  Black/African American
+700  Black/African American
+701  Black/African American
+702                   Other
+703                   Other
+704         White/Caucasian
+705                    &lt;NA&gt;
+706         White/Caucasian
+707         White/Caucasian
+708  Black/African American
+709         White/Caucasian
+710  Black/African American
+711         White/Caucasian
+712                   Other
+713                    &lt;NA&gt;
+714         White/Caucasian
+715                    &lt;NA&gt;
+716                    &lt;NA&gt;
+717  Black/African American
+718         White/Caucasian
+719         White/Caucasian
+720  Black/African American
+721         White/Caucasian
+722         White/Caucasian
+723                    &lt;NA&gt;
+724  Black/African American
+725                    &lt;NA&gt;
+726                   Other
+727  Black/African American
+728         White/Caucasian
+729         White/Caucasian
+730         White/Caucasian
+731         White/Caucasian
+732  Black/African American
+733                    &lt;NA&gt;
+734  Black/African American
+735                   Other
+736         White/Caucasian
+737                    &lt;NA&gt;
+738                   Other
+739         White/Caucasian
+740  Black/African American
+741                    &lt;NA&gt;
+742                    &lt;NA&gt;
+743         White/Caucasian
+744                    &lt;NA&gt;
+745  Black/African American
+746         White/Caucasian
+747         White/Caucasian
+748  Black/African American
+749                    &lt;NA&gt;
+750         White/Caucasian
+751                    &lt;NA&gt;
+752         White/Caucasian
+753  Black/African American
+754  Black/African American
+755         White/Caucasian
+756  Black/African American
+757         White/Caucasian
+758  Black/African American
+759         White/Caucasian
+760  Black/African American
+761                    &lt;NA&gt;
+762         White/Caucasian
+763         White/Caucasian
+764  Black/African American
+765         White/Caucasian
+766                   Other
+767                    &lt;NA&gt;
+768  Black/African American
+769  Black/African American
+770                    &lt;NA&gt;
+771  Black/African American
+772                    &lt;NA&gt;
+773                    &lt;NA&gt;
+774                    &lt;NA&gt;
+775                    &lt;NA&gt;
+776         White/Caucasian
+777                   Other
+778                    &lt;NA&gt;
+779  Black/African American
+780                    &lt;NA&gt;
+781         White/Caucasian
+782                   Other
+783  Black/African American
+784                    &lt;NA&gt;
+785         White/Caucasian
+786  Black/African American
+787         White/Caucasian
+788         White/Caucasian
+789  Black/African American
+790  Black/African American
+791         White/Caucasian
+792  Black/African American
+793         White/Caucasian
+794                    &lt;NA&gt;
+795         White/Caucasian
+796         White/Caucasian
+797         White/Caucasian
+798  Black/African American
+799         White/Caucasian
+800                    &lt;NA&gt;
+801         White/Caucasian
+802  Black/African American
+803                    &lt;NA&gt;
+804  Black/African American
+805         White/Caucasian
+806                    &lt;NA&gt;
+807         White/Caucasian
+808         White/Caucasian
+809                   Other
+810         White/Caucasian
+811         White/Caucasian
+812                    &lt;NA&gt;
+813                    &lt;NA&gt;
+814         White/Caucasian
+815                   Other
+816         White/Caucasian
+817                    &lt;NA&gt;
+818  Black/African American
+819         White/Caucasian
+820                   Other
+821  Black/African American
+822         White/Caucasian
+823                   Other
+824                   Other
+825  Black/African American
+826                    &lt;NA&gt;
+827                   Other
+828         White/Caucasian
+829         White/Caucasian
+830         White/Caucasian
+831         White/Caucasian
+832                    &lt;NA&gt;
+833                    &lt;NA&gt;
+834         White/Caucasian
+835  Black/African American
+836         White/Caucasian
+837         White/Caucasian
+838  Black/African American
+839  Black/African American
+840         White/Caucasian
+841  Black/African American
+842  Black/African American
+843         White/Caucasian
+844                   Other
+845                    &lt;NA&gt;
+846         White/Caucasian
+847  Black/African American
+848                   Other
+849                    &lt;NA&gt;
+850                   Other
+851         White/Caucasian
+852                   Other
+853  Black/African American
+854                    &lt;NA&gt;
+855                   Other
+856                   Other
+857                    &lt;NA&gt;
+858  Black/African American
+859         White/Caucasian
+860         White/Caucasian
+861                   Other
+862  Black/African American
+863                   Other
+864         White/Caucasian
+865                   Other
+866         White/Caucasian
+867                   Other
+868                   Other
+869                    &lt;NA&gt;
+870         White/Caucasian
+871         White/Caucasian
+872                    &lt;NA&gt;
+873                   Other
+874  Black/African American
+875  Black/African American
+876                    &lt;NA&gt;
+877                    &lt;NA&gt;
+878         White/Caucasian
+879  Black/African American
+880         White/Caucasian
+881                    &lt;NA&gt;
+882  Black/African American
+883         White/Caucasian
+884                   Other
+885                   Other
+886  Black/African American
+887         White/Caucasian
+888  Black/African American
+889         White/Caucasian
+890         White/Caucasian
+891                   Other
+892         White/Caucasian
+893  Black/African American
+894         White/Caucasian
+895                    &lt;NA&gt;
+896  Black/African American
+897                   Other
+898  Black/African American
+899                   Other
+900  Black/African American
+901                    &lt;NA&gt;
+902                    &lt;NA&gt;
+903         White/Caucasian
+904         White/Caucasian
+905                   Other
+906         White/Caucasian
+907                   Other
+908  Black/African American
+909                    &lt;NA&gt;
+910                    &lt;NA&gt;
+911         White/Caucasian
+912  Black/African American
+913         White/Caucasian
+914                   Other
+915                    &lt;NA&gt;
+916  Black/African American
+917  Black/African American
+918  Black/African American
+919         White/Caucasian
+920                   Other
+921  Black/African American
+922                    &lt;NA&gt;
+923         White/Caucasian
+924  Black/African American
+925                    &lt;NA&gt;
+926         White/Caucasian
+927                    &lt;NA&gt;
+928         White/Caucasian
+929  Black/African American
+930         White/Caucasian
+931         White/Caucasian
+932  Black/African American
+933         White/Caucasian
+934         White/Caucasian
+935         White/Caucasian
+936  Black/African American
+937         White/Caucasian
+938                    &lt;NA&gt;
+939         White/Caucasian
+940  Black/African American
+941  Black/African American
+942         White/Caucasian
+943         White/Caucasian
+944         White/Caucasian
+945         White/Caucasian
+946         White/Caucasian
+947         White/Caucasian
+948  Black/African American
+949         White/Caucasian
+950  Black/African American
+951                   Other
+952                    &lt;NA&gt;
+953  Black/African American
+954         White/Caucasian
+955         White/Caucasian
+956  Black/African American
+957  Black/African American
+958  Black/African American
+959  Black/African American
+960                    &lt;NA&gt;
+961                    &lt;NA&gt;
+962         White/Caucasian
+963         White/Caucasian
+964  Black/African American
+965         White/Caucasian
+966         White/Caucasian
+967                    &lt;NA&gt;
+968         White/Caucasian
+969                   Other
+970         White/Caucasian
+971                    &lt;NA&gt;
+972                    &lt;NA&gt;
+973         White/Caucasian
+974  Black/African American
+975  Black/African American
+976                    &lt;NA&gt;
+977  Black/African American
+978  Black/African American
+979                   Other
+980         White/Caucasian
+981  Black/African American
+982                    &lt;NA&gt;
+983                    &lt;NA&gt;
+984         White/Caucasian
+985         White/Caucasian
+986         White/Caucasian
+987                    &lt;NA&gt;
+988         White/Caucasian
+989  Black/African American
+990         White/Caucasian
+991  Black/African American
+992  Black/African American
+993         White/Caucasian
+994         White/Caucasian
+995                   Other
+996                    &lt;NA&gt;
+997  Black/African American
+998         White/Caucasian
+999         White/Caucasian
+1000 Black/African American
+1001 Black/African American
+1002        White/Caucasian
+1003 Black/African American
+1004                  Other
+1005 Black/African American
+1006        White/Caucasian
+1007        White/Caucasian
+1008 Black/African American
+1009        White/Caucasian
+1010                  Other
+1011 Black/African American
+1012                  Other
+1013        White/Caucasian
+1014                   &lt;NA&gt;
+1015        White/Caucasian
+1016                  Other
+1017        White/Caucasian
+1018 Black/African American
+1019 Black/African American
+1020                   &lt;NA&gt;
+1021                  Other
+1022        White/Caucasian
+1023                   &lt;NA&gt;
+1024 Black/African American
+1025                   &lt;NA&gt;
+1026 Black/African American
+1027                   &lt;NA&gt;
+1028 Black/African American
+1029                  Other
+1030 Black/African American
+1031        White/Caucasian
+1032        White/Caucasian
+1033                   &lt;NA&gt;
+1034 Black/African American
+1035                  Other
+1036 Black/African American
+1037 Black/African American
+1038 Black/African American
+1039        White/Caucasian
+1040                   &lt;NA&gt;
+1041        White/Caucasian
+1042                  Other
+1043                   &lt;NA&gt;
+1044                  Other
+1045        White/Caucasian
+1046 Black/African American
+1047 Black/African American
+1048        White/Caucasian
+1049        White/Caucasian
+1050        White/Caucasian
+1051        White/Caucasian
+1052        White/Caucasian
+1053                  Other
+1054        White/Caucasian
+1055        White/Caucasian
+1056        White/Caucasian
+1057 Black/African American
+1058        White/Caucasian
+1059        White/Caucasian
+1060 Black/African American
+1061        White/Caucasian
+1062 Black/African American
+1063 Black/African American
+1064        White/Caucasian
+1065                   &lt;NA&gt;
+1066                  Other
+1067        White/Caucasian
+1068 Black/African American
+1069                   &lt;NA&gt;
+1070        White/Caucasian
+1071        White/Caucasian
+1072                   &lt;NA&gt;
+1073 Black/African American
+1074        White/Caucasian
+1075                  Other
+1076 Black/African American
+1077        White/Caucasian
+1078 Black/African American
+1079 Black/African American
+1080 Black/African American
+1081                  Other
+1082 Black/African American
+1083 Black/African American
+1084                  Other
+1085 Black/African American
+1086        White/Caucasian
+1087 Black/African American
+1088        White/Caucasian
+1089 Black/African American
+1090                  Other
+1091        White/Caucasian
+1092        White/Caucasian
+1093                   &lt;NA&gt;
+1094 Black/African American
+1095        White/Caucasian
+1096        White/Caucasian
+1097        White/Caucasian
+1098 Black/African American
+1099        White/Caucasian
+1100        White/Caucasian
+1101        White/Caucasian
+1102        White/Caucasian
+1103        White/Caucasian
+1104                  Other
+1105 Black/African American
+1106                   &lt;NA&gt;
+1107                   &lt;NA&gt;
+1108        White/Caucasian
+1109                   &lt;NA&gt;
+1110        White/Caucasian
+1111 Black/African American
+1112        White/Caucasian
+1113                  Other
+1114        White/Caucasian
+1115        White/Caucasian
+1116                   &lt;NA&gt;
+1117        White/Caucasian
+1118                  Other
+1119        White/Caucasian
+1120        White/Caucasian
+1121        White/Caucasian
+1122                   &lt;NA&gt;
+1123        White/Caucasian
+1124        White/Caucasian
+1125                   &lt;NA&gt;
+1126 Black/African American
+1127        White/Caucasian
+1128        White/Caucasian
+1129                   &lt;NA&gt;
+1130                  Other
+1131        White/Caucasian
+1132        White/Caucasian
+1133        White/Caucasian
+1134        White/Caucasian
+1135        White/Caucasian
+1136        White/Caucasian
+1137                   &lt;NA&gt;
+1138                  Other
+1139                   &lt;NA&gt;
+1140                   &lt;NA&gt;
+1141 Black/African American
+1142 Black/African American
+1143        White/Caucasian
+1144 Black/African American
+1145                   &lt;NA&gt;
+1146        White/Caucasian
+1147        White/Caucasian
+1148        White/Caucasian
+1149                   &lt;NA&gt;
+1150                   &lt;NA&gt;
+1151        White/Caucasian
+1152 Black/African American
+1153 Black/African American
+1154        White/Caucasian
+1155 Black/African American
+1156 Black/African American
+1157 Black/African American
+1158 Black/African American
+1159 Black/African American
+1160        White/Caucasian
+1161 Black/African American
+1162                   &lt;NA&gt;
+1163                  Other
+1164 Black/African American
+1165        White/Caucasian
+1166        White/Caucasian
+1167        White/Caucasian
+1168        White/Caucasian
+1169        White/Caucasian
+1170        White/Caucasian
+1171                   &lt;NA&gt;
+1172                  Other
+1173                   &lt;NA&gt;
+1174 Black/African American
+1175        White/Caucasian
+1176 Black/African American
+1177        White/Caucasian
+1178        White/Caucasian
+1179                   &lt;NA&gt;
+1180        White/Caucasian
+1181                   &lt;NA&gt;
+1182 Black/African American
+1183 Black/African American
+1184                   &lt;NA&gt;
+1185                   &lt;NA&gt;
+1186 Black/African American
+1187        White/Caucasian
+1188        White/Caucasian
+1189        White/Caucasian
+1190                   &lt;NA&gt;
+1191                  Other
+1192 Black/African American
+1193 Black/African American
+1194 Black/African American
+1195        White/Caucasian
+1196 Black/African American
+1197                   &lt;NA&gt;
+1198        White/Caucasian
+1199 Black/African American
+1200        White/Caucasian
+1201 Black/African American
+1202        White/Caucasian
+1203        White/Caucasian
+1204 Black/African American
+1205                   &lt;NA&gt;
+1206                   &lt;NA&gt;
+1207 Black/African American
+1208                   &lt;NA&gt;
+1209        White/Caucasian
+1210        White/Caucasian
+1211 Black/African American
+1212 Black/African American
+1213        White/Caucasian
+1214                   &lt;NA&gt;
+1215 Black/African American
+1216 Black/African American
+1217                  Other
+1218 Black/African American
+1219                   &lt;NA&gt;
+1220        White/Caucasian
+1221                   &lt;NA&gt;
+1222                   &lt;NA&gt;
+1223        White/Caucasian
+1224                   &lt;NA&gt;
+1225 Black/African American
+1226                  Other
+1227        White/Caucasian
+1228 Black/African American
+1229        White/Caucasian
+1230        White/Caucasian
+1231 Black/African American
+1232 Black/African American
+1233 Black/African American
+1234                  Other
+1235 Black/African American
+1236        White/Caucasian
+1237                  Other
+1238                   &lt;NA&gt;
+1239        White/Caucasian
+1240        White/Caucasian
+1241        White/Caucasian
+1242 Black/African American
+1243 Black/African American
+1244        White/Caucasian
+1245        White/Caucasian
+1246 Black/African American
+1247 Black/African American
+1248        White/Caucasian
+1249                  Other
+1250                   &lt;NA&gt;
+1251        White/Caucasian
+1252        White/Caucasian
+1253                   &lt;NA&gt;
+1254 Black/African American
+1255                   &lt;NA&gt;
+1256 Black/African American
+1257        White/Caucasian
+1258 Black/African American
+1259        White/Caucasian
+1260        White/Caucasian
+1261 Black/African American
+1262                  Other
+1263                  Other
+1264                   &lt;NA&gt;
+1265 Black/African American
+1266                   &lt;NA&gt;
+1267        White/Caucasian
+1268        White/Caucasian
+1269                  Other
+1270        White/Caucasian
+1271                   &lt;NA&gt;
+1272                   &lt;NA&gt;
+1273                  Other
+1274 Black/African American
+1275 Black/African American
+1276                   &lt;NA&gt;
+1277                   &lt;NA&gt;
+1278 Black/African American
+1279 Black/African American
+1280 Black/African American
+1281        White/Caucasian
+1282        White/Caucasian
+1283        White/Caucasian
+1284                   &lt;NA&gt;
+1285                   &lt;NA&gt;
+1286 Black/African American
+1287        White/Caucasian
+1288 Black/African American
+1289 Black/African American
+1290                  Other
+1291        White/Caucasian
+1292                   &lt;NA&gt;
+1293 Black/African American
+1294        White/Caucasian
+1295 Black/African American
+1296        White/Caucasian
+1297 Black/African American
+1298        White/Caucasian
+1299        White/Caucasian
+1300                  Other
+1301 Black/African American
+1302                  Other
+1303 Black/African American
+1304        White/Caucasian
+1305                  Other
+1306                   &lt;NA&gt;
+1307        White/Caucasian
+1308        White/Caucasian
+1309                   &lt;NA&gt;
+1310        White/Caucasian
+1311                   &lt;NA&gt;
+1312 Black/African American
+1313 Black/African American
+1314                  Other
+1315        White/Caucasian
+1316        White/Caucasian
+1317 Black/African American
+1318 Black/African American
+1319                  Other
+1320 Black/African American
+1321                  Other
+1322 Black/African American
+1323                   &lt;NA&gt;
+1324        White/Caucasian
+1325                   &lt;NA&gt;
+1326        White/Caucasian
+1327        White/Caucasian
+1328                  Other
+1329        White/Caucasian
+1330 Black/African American
+1331                  Other
+1332        White/Caucasian
+1333        White/Caucasian
+1334 Black/African American
+1335                   &lt;NA&gt;
+1336                   &lt;NA&gt;
+1337 Black/African American
+1338        White/Caucasian
+1339                  Other
+1340 Black/African American
+1341        White/Caucasian
+1342        White/Caucasian
+1343                   &lt;NA&gt;
+1344 Black/African American
+1345 Black/African American
+1346 Black/African American
+1347 Black/African American
+1348                   &lt;NA&gt;
+1349 Black/African American
+1350        White/Caucasian
+1351                   &lt;NA&gt;
+1352                   &lt;NA&gt;
+1353        White/Caucasian
+1354                  Other
+1355 Black/African American
+1356 Black/African American
+1357        White/Caucasian
+1358 Black/African American
+1359                  Other
+1360 Black/African American
+1361        White/Caucasian
+1362 Black/African American
+1363        White/Caucasian
+1364                  Other
+1365                   &lt;NA&gt;
+1366        White/Caucasian
+1367 Black/African American
+1368        White/Caucasian
+1369 Black/African American
+1370                   &lt;NA&gt;
+1371                   &lt;NA&gt;
+1372        White/Caucasian
+1373                   &lt;NA&gt;
+1374                  Other
+1375                   &lt;NA&gt;
+1376 Black/African American
+1377 Black/African American
+1378 Black/African American
+1379                   &lt;NA&gt;
+1380                   &lt;NA&gt;
+1381        White/Caucasian
+1382 Black/African American
+1383        White/Caucasian
+1384        White/Caucasian
+1385                   &lt;NA&gt;
+1386                  Other
+1387        White/Caucasian
+1388 Black/African American
+1389                  Other
+1390        White/Caucasian
+1391 Black/African American
+1392                   &lt;NA&gt;
+1393                   &lt;NA&gt;
+1394 Black/African American
+1395 Black/African American
+1396        White/Caucasian
+1397        White/Caucasian
+1398        White/Caucasian
+1399        White/Caucasian
+1400        White/Caucasian
+1401        White/Caucasian
+1402 Black/African American
+1403        White/Caucasian
+1404        White/Caucasian
+1405                  Other
+1406                   &lt;NA&gt;
+1407                   &lt;NA&gt;
+1408        White/Caucasian
+1409        White/Caucasian
+1410                   &lt;NA&gt;
+1411                   &lt;NA&gt;
+1412 Black/African American
+1413                  Other
+1414                  Other
+1415                  Other
+1416        White/Caucasian
+1417 Black/African American
+1418                  Other
+1419        White/Caucasian
+1420                  Other
+1421        White/Caucasian
+1422                   &lt;NA&gt;
+1423        White/Caucasian
+1424 Black/African American
+1425        White/Caucasian
+1426                   &lt;NA&gt;
+1427                  Other
+1428 Black/African American
+1429 Black/African American
+1430        White/Caucasian
+1431        White/Caucasian
+1432                  Other
+1433        White/Caucasian
+1434        White/Caucasian
+1435 Black/African American
+1436        White/Caucasian
+1437        White/Caucasian
+1438        White/Caucasian
+1439 Black/African American
+1440 Black/African American
+1441                   &lt;NA&gt;
+1442        White/Caucasian
+1443 Black/African American
+1444        White/Caucasian
+1445 Black/African American
+1446        White/Caucasian
+1447        White/Caucasian
+1448                   &lt;NA&gt;
+1449        White/Caucasian
+1450        White/Caucasian
+1451                   &lt;NA&gt;
+1452                   &lt;NA&gt;
+1453                  Other
+1454 Black/African American
+1455        White/Caucasian
+1456 Black/African American
+1457        White/Caucasian
+1458        White/Caucasian
+1459        White/Caucasian
+1460                   &lt;NA&gt;
+1461        White/Caucasian
+1462 Black/African American
+1463 Black/African American
+1464                   &lt;NA&gt;
+1465                   &lt;NA&gt;
+1466 Black/African American
+1467                   &lt;NA&gt;
+1468        White/Caucasian
+1469        White/Caucasian
+1470                  Other
+1471        White/Caucasian
+1472 Black/African American
+1473 Black/African American
+1474                   &lt;NA&gt;
+1475 Black/African American
+1476 Black/African American
+1477                   &lt;NA&gt;
+1478                  Other
+1479 Black/African American
+1480                   &lt;NA&gt;
+1481                   &lt;NA&gt;
+1482 Black/African American
+1483                   &lt;NA&gt;
+1484 Black/African American
+1485                  Other
+1486                   &lt;NA&gt;
+1487                   &lt;NA&gt;
+1488        White/Caucasian
+1489                   &lt;NA&gt;
+1490                   &lt;NA&gt;
+1491        White/Caucasian
+1492                  Other
+1493        White/Caucasian
+1494 Black/African American
+1495 Black/African American
+1496 Black/African American
+1497                   &lt;NA&gt;
+1498                   &lt;NA&gt;
+1499                   &lt;NA&gt;
+1500                   &lt;NA&gt;
+1501 Black/African American
+1502        White/Caucasian
+1503        White/Caucasian
+1504        White/Caucasian
+1505 Black/African American
+1506 Black/African American
+1507                  Other
+1508        White/Caucasian
+1509                   &lt;NA&gt;
+1510        White/Caucasian
+1511 Black/African American
+1512        White/Caucasian
+1513 Black/African American
+1514        White/Caucasian
+1515 Black/African American
+1516                   &lt;NA&gt;
+1517                  Other
+1518                   &lt;NA&gt;
+1519                  Other
+1520 Black/African American
+1521 Black/African American
+1522 Black/African American
+1523 Black/African American
+1524 Black/African American
+1525                   &lt;NA&gt;
+1526 Black/African American
+1527 Black/African American
+1528 Black/African American
+1529        White/Caucasian
+1530        White/Caucasian
+1531        White/Caucasian
+1532 Black/African American
+1533 Black/African American
+1534                   &lt;NA&gt;
+1535 Black/African American
+1536                  Other
+1537        White/Caucasian
+1538                   &lt;NA&gt;
+1539 Black/African American
+1540                  Other
+1541        White/Caucasian
+1542        White/Caucasian
+1543        White/Caucasian
+1544        White/Caucasian
+1545        White/Caucasian
+1546        White/Caucasian
+1547 Black/African American
+1548 Black/African American
+1549        White/Caucasian
+1550                   &lt;NA&gt;
+1551                  Other
+1552 Black/African American
+1553                  Other
+1554        White/Caucasian
+1555                   &lt;NA&gt;
+1556        White/Caucasian
+1557                   &lt;NA&gt;
+1558                   &lt;NA&gt;
+1559        White/Caucasian
+1560 Black/African American
+1561        White/Caucasian
+1562 Black/African American
+1563 Black/African American
+1564 Black/African American
+1565 Black/African American
+1566                  Other
+1567                  Other
+1568        White/Caucasian
+1569        White/Caucasian
+1570        White/Caucasian
+1571                   &lt;NA&gt;
+1572        White/Caucasian
+1573        White/Caucasian
+1574                   &lt;NA&gt;
+1575                   &lt;NA&gt;
+1576 Black/African American
+1577 Black/African American
+1578                   &lt;NA&gt;
+1579        White/Caucasian
+1580 Black/African American
+1581        White/Caucasian
+1582 Black/African American
+1583        White/Caucasian
+1584 Black/African American
+1585        White/Caucasian
+1586        White/Caucasian
+1587        White/Caucasian
+1588                   &lt;NA&gt;
+1589        White/Caucasian
+1590        White/Caucasian
+1591 Black/African American
+1592        White/Caucasian
+1593                   &lt;NA&gt;
+1594 Black/African American
+1595 Black/African American
+1596                  Other
+1597        White/Caucasian
+1598        White/Caucasian
+1599        White/Caucasian
+1600 Black/African American
+1601                  Other
+1602 Black/African American
+1603        White/Caucasian
+1604        White/Caucasian
+1605        White/Caucasian
+1606 Black/African American
+1607 Black/African American
+1608                   &lt;NA&gt;
+1609        White/Caucasian
+1610                  Other
+1611        White/Caucasian
+1612        White/Caucasian
+1613                  Other
+1614                   &lt;NA&gt;
+1615                   &lt;NA&gt;
+1616                   &lt;NA&gt;
+1617        White/Caucasian
+1618                   &lt;NA&gt;
+1619        White/Caucasian
+1620                   &lt;NA&gt;
+1621        White/Caucasian
+1622 Black/African American
+1623                   &lt;NA&gt;
+1624        White/Caucasian
+1625 Black/African American
+1626        White/Caucasian
+1627 Black/African American
+1628        White/Caucasian
+1629                  Other
+1630 Black/African American
+1631        White/Caucasian
+1632        White/Caucasian
+1633                   &lt;NA&gt;
+1634 Black/African American
+1635 Black/African American
+1636                   &lt;NA&gt;
+1637 Black/African American
+1638        White/Caucasian
+1639                   &lt;NA&gt;
+1640                  Other
+1641 Black/African American
+1642 Black/African American
+1643 Black/African American
+1644                  Other
+1645                   &lt;NA&gt;
+1646        White/Caucasian
+1647 Black/African American
+1648        White/Caucasian
+1649                   &lt;NA&gt;
+1650                   &lt;NA&gt;
+1651        White/Caucasian
+1652 Black/African American
+1653                   &lt;NA&gt;
+1654 Black/African American
+1655 Black/African American
+1656        White/Caucasian
+1657                  Other
+1658                   &lt;NA&gt;
+1659        White/Caucasian
+1660        White/Caucasian
+1661        White/Caucasian
+1662        White/Caucasian
+1663                   &lt;NA&gt;
+1664                   &lt;NA&gt;
+1665 Black/African American
+1666        White/Caucasian
+1667 Black/African American
+1668        White/Caucasian
+1669                  Other
+1670                   &lt;NA&gt;
+1671                  Other
+1672                  Other
+1673                   &lt;NA&gt;
+1674 Black/African American
+1675                   &lt;NA&gt;
+1676                  Other
+1677 Black/African American
+1678                   &lt;NA&gt;
+1679        White/Caucasian
+1680 Black/African American
+1681        White/Caucasian
+1682        White/Caucasian
+1683                  Other
+1684                   &lt;NA&gt;
+1685 Black/African American
+1686                   &lt;NA&gt;
+1687                   &lt;NA&gt;
+1688                  Other
+1689                   &lt;NA&gt;
+1690 Black/African American
+1691                   &lt;NA&gt;
+1692 Black/African American
+1693        White/Caucasian
+1694        White/Caucasian
+1695                   &lt;NA&gt;
+1696                  Other
+1697        White/Caucasian
+1698                   &lt;NA&gt;
+1699 Black/African American
+1700        White/Caucasian
+1701                   &lt;NA&gt;
+1702                   &lt;NA&gt;
+1703 Black/African American
+1704        White/Caucasian
+1705                  Other
+1706                  Other
+1707 Black/African American
+1708        White/Caucasian
+1709        White/Caucasian
+1710        White/Caucasian
+1711        White/Caucasian
+1712                  Other
+1713 Black/African American
+1714 Black/African American
+1715        White/Caucasian
+1716                  Other
+1717 Black/African American
+1718 Black/African American
+1719        White/Caucasian
+1720        White/Caucasian
+1721        White/Caucasian
+1722        White/Caucasian
+1723 Black/African American
+1724        White/Caucasian
+1725        White/Caucasian
+1726 Black/African American
+1727        White/Caucasian
+1728                  Other
+1729 Black/African American
+1730 Black/African American
+1731 Black/African American
+1732        White/Caucasian
+1733        White/Caucasian
+1734        White/Caucasian
+1735                  Other
+1736 Black/African American
+1737                   &lt;NA&gt;
+1738 Black/African American
+1739        White/Caucasian
+1740                  Other
+1741 Black/African American
+1742        White/Caucasian
+1743        White/Caucasian
+1744        White/Caucasian
+1745        White/Caucasian
+1746 Black/African American
+1747        White/Caucasian
+1748 Black/African American
+1749        White/Caucasian
+1750 Black/African American
+1751                   &lt;NA&gt;
+1752        White/Caucasian
+1753        White/Caucasian
+1754                  Other
+1755                   &lt;NA&gt;
+1756        White/Caucasian
+1757        White/Caucasian
+1758        White/Caucasian
+1759        White/Caucasian
+1760 Black/African American
+1761        White/Caucasian
+1762 Black/African American
+1763        White/Caucasian
+1764        White/Caucasian
+1765 Black/African American
+1766 Black/African American
+1767                   &lt;NA&gt;
+1768        White/Caucasian
+1769                  Other
+1770 Black/African American
+1771        White/Caucasian
+1772 Black/African American
+1773 Black/African American
+1774 Black/African American
+1775        White/Caucasian
+1776                   &lt;NA&gt;
+1777                  Other
+1778 Black/African American
+1779        White/Caucasian
+1780        White/Caucasian
+1781                  Other
+1782        White/Caucasian
+1783 Black/African American
+1784        White/Caucasian
+1785 Black/African American
+1786                   &lt;NA&gt;
+1787 Black/African American
+1788 Black/African American
+1789 Black/African American
+1790                  Other
+1791        White/Caucasian
+1792                   &lt;NA&gt;
+1793 Black/African American
+1794 Black/African American
+1795        White/Caucasian
+1796                   &lt;NA&gt;
+1797                  Other
+1798                   &lt;NA&gt;
+1799 Black/African American
+1800        White/Caucasian
+1801                   &lt;NA&gt;
+1802        White/Caucasian
+1803 Black/African American
+1804                  Other
+1805        White/Caucasian
+1806        White/Caucasian
+1807 Black/African American
+1808 Black/African American
+1809 Black/African American
+1810                   &lt;NA&gt;
+1811        White/Caucasian
+1812 Black/African American
+1813                  Other
+1814                   &lt;NA&gt;
+1815 Black/African American
+1816        White/Caucasian
+1817        White/Caucasian
+1818 Black/African American
+1819                   &lt;NA&gt;
+1820                  Other
+1821        White/Caucasian
+1822 Black/African American
+1823        White/Caucasian
+1824                  Other
+1825        White/Caucasian
+1826        White/Caucasian
+1827                   &lt;NA&gt;
+1828                   &lt;NA&gt;
+1829        White/Caucasian
+1830 Black/African American
+1831                   &lt;NA&gt;
+1832        White/Caucasian
+1833        White/Caucasian
+1834                   &lt;NA&gt;
+1835 Black/African American
+1836                   &lt;NA&gt;
+1837 Black/African American
+1838 Black/African American
+1839                   &lt;NA&gt;
+1840        White/Caucasian
+1841        White/Caucasian
+1842 Black/African American
+1843        White/Caucasian
+1844 Black/African American
+1845        White/Caucasian
+1846        White/Caucasian
+1847 Black/African American
+1848        White/Caucasian
+1849                   &lt;NA&gt;
+1850                   &lt;NA&gt;
+1851        White/Caucasian
+1852                   &lt;NA&gt;
+1853        White/Caucasian
+1854 Black/African American
+1855        White/Caucasian
+1856 Black/African American
+1857 Black/African American
+1858        White/Caucasian
+1859        White/Caucasian
+1860                  Other
+1861                  Other
+1862        White/Caucasian
+1863                   &lt;NA&gt;
+1864                  Other
+1865 Black/African American
+1866        White/Caucasian
+1867 Black/African American
+1868        White/Caucasian
+1869                  Other
+1870 Black/African American
+1871                  Other
+1872                   &lt;NA&gt;
+1873        White/Caucasian
+1874        White/Caucasian
+1875                  Other
+1876                   &lt;NA&gt;
+1877        White/Caucasian
+1878                  Other
+1879 Black/African American
+1880                   &lt;NA&gt;
+1881 Black/African American
+1882 Black/African American
+1883 Black/African American
+1884        White/Caucasian
+1885 Black/African American
+1886        White/Caucasian
+1887                   &lt;NA&gt;
+1888 Black/African American
+1889                   &lt;NA&gt;
+1890 Black/African American
+1891        White/Caucasian
+1892 Black/African American
+1893                   &lt;NA&gt;
+1894 Black/African American
+1895        White/Caucasian
+1896        White/Caucasian
+1897        White/Caucasian
+1898 Black/African American
+1899        White/Caucasian
+1900 Black/African American
+1901        White/Caucasian
+1902 Black/African American
+1903 Black/African American
+1904 Black/African American
+1905        White/Caucasian
+1906        White/Caucasian
+1907        White/Caucasian
+1908                   &lt;NA&gt;
+1909        White/Caucasian
+1910        White/Caucasian
+1911                  Other
+1912        White/Caucasian
+1913        White/Caucasian
+1914                   &lt;NA&gt;
+1915        White/Caucasian
+1916                  Other
+1917 Black/African American
+1918        White/Caucasian
+1919        White/Caucasian
+1920 Black/African American
+1921                   &lt;NA&gt;
+1922                   &lt;NA&gt;
+1923 Black/African American
+1924        White/Caucasian
+1925        White/Caucasian
+1926                   &lt;NA&gt;
+1927        White/Caucasian
+1928        White/Caucasian
+1929        White/Caucasian
+1930                  Other
+1931        White/Caucasian
+1932                   &lt;NA&gt;
+1933        White/Caucasian
+1934        White/Caucasian
+1935                   &lt;NA&gt;
+1936 Black/African American
+1937 Black/African American
+1938 Black/African American
+1939 Black/African American
+1940                   &lt;NA&gt;
+1941                  Other
+1942        White/Caucasian
+1943 Black/African American
+1944        White/Caucasian
+1945                   &lt;NA&gt;
+1946 Black/African American
+1947                   &lt;NA&gt;
+1948                  Other
+1949        White/Caucasian
+1950                   &lt;NA&gt;
+1951        White/Caucasian
+1952        White/Caucasian
+1953 Black/African American
+1954                  Other
+1955        White/Caucasian
+1956 Black/African American
+1957                  Other
+1958 Black/African American
+1959 Black/African American
+1960        White/Caucasian
+1961 Black/African American
+1962        White/Caucasian
+1963        White/Caucasian
+1964        White/Caucasian
+1965 Black/African American
+1966 Black/African American
+1967                   &lt;NA&gt;
+1968 Black/African American
+1969 Black/African American
+1970        White/Caucasian
+1971 Black/African American
+1972 Black/African American
+1973                  Other
+1974 Black/African American
+1975 Black/African American
+1976        White/Caucasian
+1977        White/Caucasian
+1978                   &lt;NA&gt;
+1979        White/Caucasian
+1980        White/Caucasian
+1981 Black/African American
+1982        White/Caucasian
+1983 Black/African American
+1984        White/Caucasian
+1985        White/Caucasian
+1986        White/Caucasian
+1987        White/Caucasian
+1988 Black/African American
+1989                  Other
+1990        White/Caucasian
+1991 Black/African American
+1992        White/Caucasian
+1993 Black/African American
+1994                   &lt;NA&gt;
+1995                   &lt;NA&gt;
+1996        White/Caucasian
+1997 Black/African American
+1998        White/Caucasian
+1999                  Other
+2000        White/Caucasian
+2001                   &lt;NA&gt;
+2002 Black/African American
+2003        White/Caucasian
+2004        White/Caucasian
+2005 Black/African American
+2006 Black/African American
+2007 Black/African American
+2008                  Other
+2009 Black/African American
+2010        White/Caucasian
+2011                  Other
+2012        White/Caucasian
+2013        White/Caucasian
+2014        White/Caucasian
+2015                  Other
+2016                  Other
+2017 Black/African American
+2018                   &lt;NA&gt;
+2019                  Other
+2020                  Other
+2021        White/Caucasian
+2022 Black/African American
+2023                  Other
+2024                  Other
+2025        White/Caucasian
+2026        White/Caucasian
+2027                   &lt;NA&gt;
+2028                   &lt;NA&gt;
+2029                  Other
+2030        White/Caucasian
+2031        White/Caucasian
+2032        White/Caucasian
+2033 Black/African American
+2034 Black/African American
+2035        White/Caucasian
+2036                   &lt;NA&gt;
+2037                  Other
+2038                  Other
+2039 Black/African American
+2040 Black/African American
+2041 Black/African American
+2042 Black/African American
+2043        White/Caucasian
+2044 Black/African American
+2045        White/Caucasian
+2046 Black/African American
+2047        White/Caucasian
+2048        White/Caucasian
+2049        White/Caucasian
+2050        White/Caucasian
+2051        White/Caucasian
+2052 Black/African American
+2053        White/Caucasian
+2054                   &lt;NA&gt;
+2055                  Other
+2056        White/Caucasian
+2057                  Other
+2058 Black/African American
+2059 Black/African American
+2060        White/Caucasian
+2061        White/Caucasian
+2062                   &lt;NA&gt;
+2063                   &lt;NA&gt;
+2064                   &lt;NA&gt;
+2065                  Other
+2066        White/Caucasian
+2067 Black/African American
+2068                  Other
+2069 Black/African American
+2070 Black/African American
+2071                  Other
+2072        White/Caucasian
+2073 Black/African American
+2074                  Other
+2075        White/Caucasian
+2076                  Other
+2077        White/Caucasian
+2078        White/Caucasian
+2079                  Other
+2080 Black/African American
+2081        White/Caucasian
+2082        White/Caucasian
+2083                   &lt;NA&gt;
+2084        White/Caucasian
+2085 Black/African American
+2086 Black/African American
+2087 Black/African American
+2088        White/Caucasian
+2089                   &lt;NA&gt;
+2090        White/Caucasian
+2091 Black/African American
+2092 Black/African American
+2093                  Other
+2094 Black/African American
+2095        White/Caucasian
+2096 Black/African American
+2097        White/Caucasian
+2098 Black/African American
+2099                   &lt;NA&gt;
+2100                   &lt;NA&gt;
+2101        White/Caucasian
+2102        White/Caucasian
+2103 Black/African American
+2104        White/Caucasian
+2105                   &lt;NA&gt;
+2106 Black/African American
+2107                   &lt;NA&gt;
+2108                  Other
+2109        White/Caucasian
+2110 Black/African American
+2111                  Other
+2112                  Other
+2113        White/Caucasian
+2114 Black/African American
+2115                  Other
+2116                   &lt;NA&gt;
+2117                   &lt;NA&gt;
+2118        White/Caucasian
+2119                   &lt;NA&gt;
+2120 Black/African American
+2121        White/Caucasian
+2122 Black/African American
+2123 Black/African American
+2124 Black/African American
+2125                   &lt;NA&gt;
+2126        White/Caucasian
+2127        White/Caucasian
+2128 Black/African American
+2129        White/Caucasian
+2130        White/Caucasian
+2131        White/Caucasian
+2132 Black/African American
+2133        White/Caucasian
+2134 Black/African American
+2135 Black/African American
+2136 Black/African American
+2137        White/Caucasian
+2138 Black/African American
+2139        White/Caucasian
+2140                  Other
+2141                  Other
+2142 Black/African American
+2143                   &lt;NA&gt;
+2144        White/Caucasian
+2145 Black/African American
+2146                  Other
+2147 Black/African American
+2148        White/Caucasian
+2149 Black/African American
+2150 Black/African American
+2151        White/Caucasian
+2152                  Other
+2153 Black/African American
+2154                   &lt;NA&gt;
+2155                  Other
+2156        White/Caucasian
+2157 Black/African American
+2158        White/Caucasian
+2159 Black/African American
+2160                  Other
+2161 Black/African American
+2162        White/Caucasian
+2163                  Other
+2164 Black/African American
+2165        White/Caucasian
+2166                   &lt;NA&gt;
+2167                   &lt;NA&gt;
+2168 Black/African American
+2169                  Other
+2170 Black/African American
+2171                  Other
+2172        White/Caucasian
+2173        White/Caucasian
+2174 Black/African American
+2175                  Other
+2176        White/Caucasian
+2177 Black/African American
+2178 Black/African American
+2179 Black/African American
+2180        White/Caucasian
+2181                  Other
+2182        White/Caucasian
+2183        White/Caucasian
+2184 Black/African American
+2185                   &lt;NA&gt;
+2186        White/Caucasian
+2187                   &lt;NA&gt;
+2188        White/Caucasian
+2189                   &lt;NA&gt;
+2190                  Other
+2191                   &lt;NA&gt;
+2192 Black/African American
+2193        White/Caucasian
+2194 Black/African American
+2195 Black/African American
+2196        White/Caucasian
+2197                   &lt;NA&gt;
+2198                  Other
+2199                  Other
+2200                  Other
+2201        White/Caucasian
+2202                   &lt;NA&gt;
+2203 Black/African American
+2204        White/Caucasian
+2205 Black/African American
+2206                  Other
+2207        White/Caucasian
+2208                   &lt;NA&gt;
+2209                   &lt;NA&gt;
+2210 Black/African American
+2211                  Other
+2212 Black/African American
+2213                   &lt;NA&gt;
+2214        White/Caucasian
+2215 Black/African American
+2216        White/Caucasian
+2217 Black/African American
+2218                   &lt;NA&gt;
+2219        White/Caucasian
+2220        White/Caucasian
+2221                   &lt;NA&gt;
+2222                   &lt;NA&gt;
+2223        White/Caucasian
+2224        White/Caucasian
+2225                   &lt;NA&gt;
+2226 Black/African American
+2227        White/Caucasian
+2228        White/Caucasian
+2229 Black/African American
+2230 Black/African American
+2231        White/Caucasian
+2232 Black/African American
+2233        White/Caucasian
+2234        White/Caucasian
+2235                   &lt;NA&gt;
+2236        White/Caucasian
+2237        White/Caucasian
+2238                  Other
+2239        White/Caucasian
+2240                  Other
+2241                   &lt;NA&gt;
+2242 Black/African American
+2243        White/Caucasian
+2244                   &lt;NA&gt;
+2245                  Other
+2246        White/Caucasian
+2247                  Other
+2248                   &lt;NA&gt;
+2249        White/Caucasian
+2250                  Other
+2251        White/Caucasian
+2252 Black/African American
+2253                  Other
+2254 Black/African American
+2255 Black/African American
+2256 Black/African American
+2257        White/Caucasian
+2258 Black/African American
+2259                  Other
+2260        White/Caucasian
+2261 Black/African American
+2262        White/Caucasian
+2263                  Other
+2264 Black/African American
+2265                   &lt;NA&gt;
+2266                  Other
+2267 Black/African American
+2268        White/Caucasian
+2269                  Other
+2270                   &lt;NA&gt;
+2271 Black/African American
+2272 Black/African American
+2273        White/Caucasian
+2274        White/Caucasian
+2275 Black/African American
+2276 Black/African American
+2277        White/Caucasian
+2278        White/Caucasian
+2279 Black/African American
+2280        White/Caucasian
+2281        White/Caucasian
+2282 Black/African American
+2283 Black/African American
+2284                   &lt;NA&gt;
+2285        White/Caucasian
+2286 Black/African American
+2287                  Other
+2288                  Other
+2289                  Other
+2290                  Other
+2291        White/Caucasian
+2292        White/Caucasian
+2293 Black/African American
+2294 Black/African American
+2295 Black/African American
+2296                  Other
+2297 Black/African American
+2298                   &lt;NA&gt;
+2299                   &lt;NA&gt;
+2300                   &lt;NA&gt;
+2301                   &lt;NA&gt;
+2302                   &lt;NA&gt;
+2303 Black/African American
+2304                   &lt;NA&gt;
+2305 Black/African American
+2306                   &lt;NA&gt;
+2307                  Other
+2308                   &lt;NA&gt;
+2309                  Other
+2310        White/Caucasian
+2311 Black/African American
+2312 Black/African American
+2313 Black/African American
+2314                  Other
+2315        White/Caucasian
+2316        White/Caucasian
+2317 Black/African American
+2318                   &lt;NA&gt;
+2319        White/Caucasian
+2320        White/Caucasian
+2321                   &lt;NA&gt;
+2322 Black/African American
+2323                   &lt;NA&gt;
+2324 Black/African American
+2325 Black/African American
+2326                  Other
+2327        White/Caucasian
+2328 Black/African American
+2329        White/Caucasian
+2330                   &lt;NA&gt;
+2331 Black/African American
+2332        White/Caucasian
+2333        White/Caucasian
+2334        White/Caucasian
+2335 Black/African American
+2336        White/Caucasian
+2337 Black/African American
+2338 Black/African American
+2339 Black/African American
+2340 Black/African American
+2341 Black/African American
+2342 Black/African American
+2343                   &lt;NA&gt;
+2344                   &lt;NA&gt;
+2345                   &lt;NA&gt;
+2346 Black/African American
+2347        White/Caucasian
+2348        White/Caucasian
+2349                   &lt;NA&gt;
+2350                   &lt;NA&gt;
+2351        White/Caucasian
+2352 Black/African American
+2353 Black/African American
+2354 Black/African American
+2355        White/Caucasian
+2356        White/Caucasian
+2357        White/Caucasian
+2358                  Other
+2359                   &lt;NA&gt;
+2360 Black/African American
+2361        White/Caucasian
+2362 Black/African American
+2363        White/Caucasian
+2364                   &lt;NA&gt;
+2365                   &lt;NA&gt;
+2366 Black/African American
+2367        White/Caucasian
+2368        White/Caucasian
+2369 Black/African American
+2370 Black/African American
+2371 Black/African American
+2372                   &lt;NA&gt;
+2373                   &lt;NA&gt;
+2374                  Other
+2375 Black/African American
+2376                   &lt;NA&gt;
+2377                   &lt;NA&gt;
+2378        White/Caucasian
+2379                   &lt;NA&gt;
+2380                   &lt;NA&gt;
+2381 Black/African American
+2382        White/Caucasian
+2383 Black/African American
+2384        White/Caucasian
+2385        White/Caucasian
+2386                  Other
+2387        White/Caucasian
+2388        White/Caucasian
+2389                   &lt;NA&gt;
+2390                  Other
+2391        White/Caucasian
+2392        White/Caucasian
+2393 Black/African American
+2394                   &lt;NA&gt;
+2395        White/Caucasian
+2396                   &lt;NA&gt;
+2397 Black/African American
+2398 Black/African American
+2399 Black/African American
+2400        White/Caucasian
+2401        White/Caucasian
+2402        White/Caucasian
+2403        White/Caucasian
+2404        White/Caucasian
+2405 Black/African American
+2406        White/Caucasian
+2407 Black/African American
+2408                   &lt;NA&gt;
+2409 Black/African American
+2410        White/Caucasian
+2411 Black/African American
+2412        White/Caucasian
+2413                   &lt;NA&gt;
+2414        White/Caucasian
+2415 Black/African American
+2416        White/Caucasian
+2417        White/Caucasian
+2418                  Other
+2419 Black/African American
+2420 Black/African American
+2421        White/Caucasian
+2422 Black/African American
+2423        White/Caucasian
+2424        White/Caucasian
+2425 Black/African American
+2426 Black/African American
+2427                  Other
+2428        White/Caucasian
+2429 Black/African American
+2430        White/Caucasian
+2431        White/Caucasian
+2432        White/Caucasian
+2433                  Other
+2434        White/Caucasian
+2435                  Other
+2436 Black/African American
+2437 Black/African American
+2438        White/Caucasian
+2439        White/Caucasian
+2440                   &lt;NA&gt;
+2441 Black/African American
+2442                   &lt;NA&gt;
+2443 Black/African American
+2444                  Other
+2445        White/Caucasian
+2446                   &lt;NA&gt;
+2447 Black/African American
+2448        White/Caucasian
+2449                  Other
+2450 Black/African American
+2451 Black/African American
+2452 Black/African American
+2453 Black/African American
+2454        White/Caucasian
+2455 Black/African American
+2456                  Other
+2457                  Other
+2458 Black/African American
+2459 Black/African American
+2460                  Other
+2461                   &lt;NA&gt;
+2462 Black/African American
+2463        White/Caucasian
+2464                  Other
+2465                   &lt;NA&gt;
+2466        White/Caucasian
+2467        White/Caucasian
+2468 Black/African American
+2469        White/Caucasian
+2470        White/Caucasian
+2471 Black/African American
+2472                  Other
+2473        White/Caucasian
+2474                  Other
+2475 Black/African American
+2476        White/Caucasian
+2477                   &lt;NA&gt;
+2478        White/Caucasian
+2479        White/Caucasian
+2480                   &lt;NA&gt;
+2481        White/Caucasian
+2482 Black/African American
+2483 Black/African American
+2484 Black/African American
+2485 Black/African American
+2486        White/Caucasian
+2487 Black/African American
+2488                  Other
+2489 Black/African American
+2490        White/Caucasian
+2491 Black/African American
+2492 Black/African American
+2493        White/Caucasian
+2494        White/Caucasian
+2495                   &lt;NA&gt;
+2496 Black/African American
+2497                  Other
+2498                   &lt;NA&gt;
+2499        White/Caucasian
+2500        White/Caucasian
+2501        White/Caucasian
+2502                   &lt;NA&gt;
+2503                   &lt;NA&gt;
+2504        White/Caucasian
+2505                   &lt;NA&gt;
+2506                  Other
+2507        White/Caucasian
+2508        White/Caucasian
+2509 Black/African American
+2510                   &lt;NA&gt;
+2511        White/Caucasian
+2512 Black/African American
+2513 Black/African American
+2514                   &lt;NA&gt;
+2515        White/Caucasian
+2516                   &lt;NA&gt;
+2517 Black/African American
+2518        White/Caucasian
+2519                   &lt;NA&gt;
+2520                  Other
+2521 Black/African American
+2522                   &lt;NA&gt;
+2523 Black/African American
+2524                   &lt;NA&gt;
+2525        White/Caucasian
+2526 Black/African American
+2527        White/Caucasian
+2528 Black/African American
+2529        White/Caucasian
+2530                   &lt;NA&gt;
+2531                   &lt;NA&gt;
+2532                  Other
+2533 Black/African American
+2534 Black/African American
+2535        White/Caucasian
+2536 Black/African American
+2537        White/Caucasian
+2538 Black/African American
+2539 Black/African American
+2540        White/Caucasian
+2541                  Other
+2542 Black/African American
+2543        White/Caucasian
+2544        White/Caucasian
+2545                   &lt;NA&gt;
+2546 Black/African American
+2547                   &lt;NA&gt;
+2548                  Other
+2549 Black/African American
+2550 Black/African American
+2551 Black/African American
+2552 Black/African American
+2553 Black/African American
+2554                   &lt;NA&gt;
+2555        White/Caucasian
+2556        White/Caucasian
+2557 Black/African American
+2558 Black/African American
+2559                   &lt;NA&gt;
+2560        White/Caucasian
+2561 Black/African American
+2562        White/Caucasian
+2563        White/Caucasian
+2564 Black/African American
+2565        White/Caucasian
+2566        White/Caucasian
+2567        White/Caucasian
+2568        White/Caucasian
+2569        White/Caucasian
+2570        White/Caucasian
+2571        White/Caucasian
+2572                  Other
+2573 Black/African American
+2574 Black/African American
+2575                  Other
+2576 Black/African American
+2577 Black/African American
+2578                   &lt;NA&gt;
+2579                  Other
+2580                  Other
+2581        White/Caucasian
+2582        White/Caucasian
+2583                  Other
+2584 Black/African American
+2585                   &lt;NA&gt;
+2586        White/Caucasian
+2587                  Other
+2588                   &lt;NA&gt;
+2589                  Other
+2590                   &lt;NA&gt;
+2591 Black/African American
+2592        White/Caucasian
+2593        White/Caucasian
+2594 Black/African American
+2595 Black/African American
+2596                   &lt;NA&gt;
+2597        White/Caucasian
+2598 Black/African American
+2599 Black/African American
+2600                  Other
+2601 Black/African American
+2602 Black/African American
+2603 Black/African American
+2604                  Other
+2605                   &lt;NA&gt;
+2606                  Other
+2607                   &lt;NA&gt;
+2608        White/Caucasian
+2609 Black/African American
+2610 Black/African American
+2611                  Other
+2612 Black/African American
+2613                   &lt;NA&gt;
+2614        White/Caucasian
+2615                   &lt;NA&gt;
+2616        White/Caucasian
+2617                   &lt;NA&gt;
+2618                  Other
+2619 Black/African American
+2620 Black/African American
+2621        White/Caucasian
+2622 Black/African American
+2623 Black/African American
+2624 Black/African American
+2625        White/Caucasian
+2626 Black/African American
+2627                   &lt;NA&gt;
+2628                  Other
+2629                  Other
+2630        White/Caucasian
+2631        White/Caucasian
+2632 Black/African American
+2633                  Other
+2634        White/Caucasian
+2635        White/Caucasian
+2636 Black/African American
+2637 Black/African American
+2638        White/Caucasian
+2639        White/Caucasian
+2640                   &lt;NA&gt;
+2641 Black/African American
+2642        White/Caucasian
+2643        White/Caucasian
+2644 Black/African American
+2645 Black/African American
+2646        White/Caucasian
+2647        White/Caucasian
+2648 Black/African American
+2649                  Other
+2650 Black/African American
+2651        White/Caucasian
+2652 Black/African American
+2653        White/Caucasian
+2654        White/Caucasian
+2655        White/Caucasian
+2656                  Other
+2657                  Other
+2658        White/Caucasian
+2659                   &lt;NA&gt;
+2660        White/Caucasian
+2661                   &lt;NA&gt;
+2662        White/Caucasian
+2663                   &lt;NA&gt;
+2664 Black/African American
+2665        White/Caucasian
+2666 Black/African American
+2667        White/Caucasian
+2668        White/Caucasian
+2669 Black/African American
+2670                   &lt;NA&gt;
+2671 Black/African American
+2672                   &lt;NA&gt;
+2673        White/Caucasian
+2674        White/Caucasian
+2675 Black/African American
+2676                  Other
+2677 Black/African American
+2678        White/Caucasian
+2679 Black/African American
+2680        White/Caucasian
+2681 Black/African American
+2682 Black/African American
+2683                   &lt;NA&gt;
+2684 Black/African American
+2685 Black/African American
+2686 Black/African American
+2687                   &lt;NA&gt;
+2688        White/Caucasian
+2689                   &lt;NA&gt;
+2690        White/Caucasian
+2691 Black/African American
+2692        White/Caucasian
+2693 Black/African American
+2694 Black/African American
+2695 Black/African American
+2696                   &lt;NA&gt;
+2697        White/Caucasian
+2698                  Other
+2699                   &lt;NA&gt;
+2700 Black/African American
+2701 Black/African American
+2702                   &lt;NA&gt;
+2703        White/Caucasian
+2704                   &lt;NA&gt;
+2705        White/Caucasian
+2706        White/Caucasian
+2707        White/Caucasian
+2708 Black/African American
+2709                   &lt;NA&gt;
+2710        White/Caucasian
+2711                   &lt;NA&gt;
+2712                  Other
+2713 Black/African American
+2714        White/Caucasian
+2715        White/Caucasian
+2716 Black/African American
+2717        White/Caucasian
+2718                   &lt;NA&gt;
+2719        White/Caucasian
+2720        White/Caucasian
+2721        White/Caucasian
+2722        White/Caucasian
+2723 Black/African American
+2724                  Other
+2725                   &lt;NA&gt;
+2726                  Other
+2727 Black/African American
+2728                   &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="starts_with-ends_with" class="slide level2">
+<h2><code>starts_with</code>, <code>ends_with</code></h2>
+<ul>
+<li>Select all columns starting with “birth”:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"birth"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a></a>  <span class="fu">names</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "birthyr"   "birthmo"   "birthdate"</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<ul>
+<li>Select all columns ending with “e”:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a></a>  <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">"e"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a></a>  <span class="fu">names</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "degree"    "birthdate" "income"   </code></pre>
+</div>
+</div>
+</section>
+<section id="select-columns-by-data-type" class="slide level2">
+<h2>Select columns by data type</h2>
+<ul>
+<li>We can also select variables based on data types</li>
+<li><code>where()</code> is a helper function that returns columns where the inside function is <code>TRUE</code>,
+<ul>
+<li>We can use <code>is.numeric</code>, <code>is.character</code>, or <code>is.factor</code> to select columns of a certain data type</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy"><code class="sourceCode r"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1"></a>hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-30-2"><a href="#annotated-cell-30-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.factor)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-30-3"><a href="#annotated-cell-30-3"></a>  <span class="fu">names</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "hhid"          "pn"            "diab"          "degree"       
+ [5] "proxy"         "coupled"       "sex"           "race_original"
+ [9] "smoke_ever"    "smoke_now"     "drink"         "srh"          
+[13] "act_vig"       "bp"            "cancer"        "lung"         
+[17] "hrt"           "strk"          "psych"         "sleep"        
+[21] "arth"          "income3cat"   </code></pre>
+</div>
+</div>
+</section>
+<section id="wrap-up" class="slide level2">
+<h2>Wrap-up</h2>
+<ul>
+<li>We learned several more advanced techniques for transforming rows and columns:
+<ul>
+<li>Combining conditions with <code>&amp;</code>, <code>|</code>, and <code>%in%</code></li>
+<li>Checking your work with <code>arrange()</code> and <code>count()</code></li>
+<li>Working with factors</li>
+<li>Create new variables based on conditions</li>
+<li>Select columns by name pattern or data type</li>
+</ul></li>
+</ul>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><p>See <a href="https://jminnier-berd-r-courses.netlify.app/02-data-wrangling-tidyverse/02_data_wrangling_slides_part1.html#27" target="_blank">this slide</a> from a previous BERD workshop.</p></li>
+<li><p>Also read the <a href="https://r4ds.hadley.nz/data-transform.html#rows" target="_blank">filter section</a> in the “Data Transformation” chapter from <em>R for Data Science (2e)</em></p></li>
+<li><p>Click <a href="https://www.datamentor.io/r-programming/operator/" target="_blank">here</a> for a useful reference for all the different operators (both logical and comparison) that you can use.</p></li>
+<li><p>See more examples from the <a href="https://tidyselect.r-lib.org/reference/language.html" target="_blank">{tidyselect} webpage</a>.</p></li>
+</ul>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Data transformation: <em>Advanced</em></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1955,
+
+        height: 1100,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+            let selectedAnnoteEl;
+            const selectorForAnnotation = ( cell, annotation) => {
+              let cellAttr = 'data-code-cell="' + cell + '"';
+              let lineAttr = 'data-code-annotation="' +  annotation + '"';
+              const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+              return selector;
+            }
+            const selectCodeLines = (annoteEl) => {
+              const doc = window.document;
+              const targetCell = annoteEl.getAttribute("data-target-cell");
+              const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+              const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+              const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+              const lineIds = lines.map((line) => {
+                return targetCell + "-" + line;
+              })
+              let top = null;
+              let height = null;
+              let parent = null;
+              if (lineIds.length > 0) {
+                  //compute the position of the single el (top and bottom and make a div)
+                  const el = window.document.getElementById(lineIds[0]);
+                  top = el.offsetTop;
+                  height = el.offsetHeight;
+                  parent = el.parentElement.parentElement;
+                if (lineIds.length > 1) {
+                  const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+                  const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+                  height = bottom - top;
+                }
+                if (top !== null && height !== null && parent !== null) {
+                  // cook up a div (if necessary) and position it 
+                  let div = window.document.getElementById("code-annotation-line-highlight");
+                  if (div === null) {
+                    div = window.document.createElement("div");
+                    div.setAttribute("id", "code-annotation-line-highlight");
+                    div.style.position = 'absolute';
+                    parent.appendChild(div);
+                  }
+                  div.style.top = top - 2 + "px";
+                  div.style.height = height + 4 + "px";
+                  div.style.left = 0;
+                  let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+                  if (gutterDiv === null) {
+                    gutterDiv = window.document.createElement("div");
+                    gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                    gutterDiv.style.position = 'absolute';
+                    const codeCell = window.document.getElementById(targetCell);
+                    const gutter = codeCell.querySelector('.code-annotation-gutter');
+                    gutter.appendChild(gutterDiv);
+                  }
+                  gutterDiv.style.top = top - 2 + "px";
+                  gutterDiv.style.height = height + 4 + "px";
+                }
+                selectedAnnoteEl = annoteEl;
+              }
+            };
+            const unselectCodeLines = () => {
+              const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+              elementsIds.forEach((elId) => {
+                const div = window.document.getElementById(elId);
+                if (div) {
+                  div.remove();
+                }
+              });
+              selectedAnnoteEl = undefined;
+            };
+              // Handle positioning of the toggle
+          window.addEventListener(
+            "resize",
+            throttle(() => {
+              elRect = undefined;
+              if (selectedAnnoteEl) {
+                selectCodeLines(selectedAnnoteEl);
+              }
+            }, 10)
+          );
+          function throttle(fn, ms) {
+          let throttle = false;
+          let timer;
+            return (...args) => {
+              if(!throttle) { // first call gets through
+                  fn.apply(this, args);
+                  throttle = true;
+              } else { // all the others get throttled
+                  if(timer) clearTimeout(timer); // cancel #2
+                  timer = setTimeout(() => {
+                    fn.apply(this, args);
+                    timer = throttle = false;
+                  }, ms);
+              }
+            };
+          }
+            const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+            for (let i=0; i<annoteTargets.length; i++) {
+              const annoteTarget = annoteTargets[i];
+              const targetCell = annoteTarget.getAttribute("data-target-cell");
+              const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+              const contentFn = () => {
+                const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+                if (content) {
+                  const tipContent = content.cloneNode(true);
+                  tipContent.classList.add("code-annotation-tip-content");
+                  return tipContent.outerHTML;
+                }
+              }
+              const config = {
+                allowHTML: true,
+                content: contentFn,
+                onShow: (instance) => {
+                  selectCodeLines(instance.reference);
+                  instance.reference.classList.add('code-annotation-active');
+                  window.tippy.hideAll();
+                },
+                onHide: (instance) => {
+                  unselectCodeLines();
+                  instance.reference.classList.remove('code-annotation-active');
+                },
+                maxWidth: 300,
+                delay: [50, 0],
+                duration: [200, 0],
+                offset: [5, 10],
+                arrow: true,
+                appendTo: function(el) {
+                  return el.parentElement.parentElement.parentElement;
+                },
+                interactive: true,
+                interactiveBorder: 10,
+                theme: 'light-border',
+                placement: 'right',
+                popperOptions: {
+                  modifiers: [
+                  {
+                    name: 'flip',
+                    options: {
+                      flipVariations: false, // true by default
+                      allowedAutoPlacements: ['right'],
+                      fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                    },
+                  },
+                  {
+                    name: 'preventOverflow',
+                    options: {
+                      mainAxis: false,
+                      altAxis: false
+                    }
+                  }
+                  ]        
+                }      
+              };
+              window.tippy(annoteTarget, config); 
+            }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

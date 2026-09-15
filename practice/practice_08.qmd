@@ -1,0 +1,261 @@
+---
+title: "Practice 8"
+subtitle: "PUBH 523/623"
+author: "Your name here"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview
+
+This practice shifts from *describing* the HRS dataset to *visualizing* it. You will build a `ggplot2` plot from its basic grammar components, try out different geometric objects (`geom_*()`), control aesthetics like color and transparency, and then polish plots with labels, facets, and themes so they're ready to share. Along the way you'll get a little more practice with `select()` and the pipe (`|>`) from previous weeks, but the focus this week is on `ggplot2`.
+
+Topics covered (Lessons 31-33):
+
+- Data visualization: Intro to `ggplot2`
+- Data visualization: Basic plotting
+- Data visualization: Design choices
+
+## Directions
+
+Download this practice `.qmd` from the course GitHub repository, rename it, and save it in your course folder.
+
+- Download `practice_08.qmd` from GitHub.
+- Rename the file to `Lastname_Firstinitial_Practice_08.qmd` (or `lastname_firstinitial_practice_08.qmd`), replacing with your actual last name and first initial.
+- Save it inside your `practice` folder. You may create a `practice_08` subfolder if you prefer.
+
+:::{.callout-tip title="How to use this file"}
+The boxes with the yellow stripe explain what to do. Keep these in your submitted file. Do all your work below and outside of the yellow-striped boxes. You will need to create code chunks within this document to run your R code.
+
+Please delete the following sections before submitting:
+
+- Overview
+- Directions
+- Tip boxes (green stripe)
+- Caution boxes / Needed Steps (orange/red stripe)
+- Submission checklist
+- Note on AI usage
+:::
+
+:::{.callout-important title="Needed setup"}
+You should already have `hrs_data.rds` from Practice 4 (link on the practice page). Place it in your `data` folder if you haven't already. You can check out the codebook [here](https://github.com/nwakim/PUBH_523_26Su/blob/main/synthetic_HRS_codebook.docx).
+
+Load the `tidyverse` and `here` packages. `ggplot2` is part of the `tidyverse`, so you don't need any new packages this week!
+:::
+
+## Questions
+
+### Question 1: Grammar of `ggplot2`
+
+In Lesson 31, we saw that every `ggplot2` plot is built from the same basic grammar: **data**, a **mapping**, and a **layer**.
+
+#### Part A: The three required pieces
+
+:::{.callout-warning title="Task"}
+Fill in the table below with what each of the **data**, **mapping**, and **layer** contribute to a plot, and which function we use to supply each one.
+
+| Component | Contribution | Function supplied |
+|----|----|----|
+| Data |  |  |
+| Mapping |  |  |
+| Layer |  |  |
+:::
+
+#### Part B: Start with just the data
+
+:::{.callout-warning title="Task"}
+Call `ggplot()` with just `hrs_data` as the data (don't add a mapping or a layer yet). Assign the result to `hrs_01_plot_data` and display it. What do you see in the plot area?
+:::
+
+*Write your answer here.*
+
+:::{.callout-tip title="Tip"}
+To display a plot (or any R object), you don't need `print()`. Just type the object's name by itself on its own line in a code chunk and run it.
+:::
+
+#### Part C: Add a mapping
+
+:::{.callout-warning title="Task"}
+Now rebuild the plot, this time adding a mapping: `aes(x = height)`. Assign the result to `hrs_02_plot_mapped` and display it. Compare it to `hrs_01_plot_data`. What showed up this time, and what is still missing?
+:::
+
+*Write your answer here.*
+
+#### Part D: Add a layer
+
+:::{.callout-warning title="Task"}
+Finally, add a layer to `hrs_02_plot_mapped` by adding `geom_histogram()`. Assign the complete plot to `hrs_03_plot_hist` and display it.
+:::
+
+:::{.callout-tip title="Tip"}
+You don't have to rebuild a plot from scratch every time. You can start from an existing `ggplot` object (like `hrs_02_plot_mapped`) and use `+` to add more layers to it.
+:::
+
+#### Part E: Same plot, different code style
+
+:::{.callout-warning title="Task"}
+Recreate `hrs_03_plot_hist` again, but this time move `aes(x = height)` out of `ggplot()` and into `geom_histogram()` instead. Assign the result to `hrs_04_plot_aes_in_geom`. Confirm it looks identical to `hrs_03_plot_hist`.
+:::
+
+### Question 2: Basic plotting and aesthetics
+
+In Lesson 32, we covered different `geom_*()` functions and how to set or map aesthetics like color, size, and transparency.
+
+#### Part A: A density plot
+
+:::{.callout-warning title="Task"}
+Using `hrs_data`, create a plot of `income` and add `geom_density()` to show its distribution. Assign the plot to `hrs_05_plot_density` and display the plot.
+:::
+
+#### Part B: A boxplot of the same variable
+
+:::{.callout-warning title="Task"}
+Now make the same plot of `income`, but use `geom_boxplot()` instead of `geom_density()`. Assign the plot to `hrs_06_plot_boxplot`.
+:::
+
+#### Part C: A scatterplot of two continuous variables
+
+:::{.callout-warning title="Task"}
+Create a plot of `ed` (years of education, x-axis) vs. `income` (y-axis) from `hrs_data` using `geom_point()`. Assign it to `hrs_07_plot_scatter` and display it.
+:::
+
+#### Part D: A line plot of the same two variables
+
+:::{.callout-warning title="Task"}
+Now make the same plot of `ed` vs. `income`, but use `geom_smooth()` instead of `geom_point()` to show the overall trend as a line. Assign the plot to `hrs_08_plot_smooth` and display it.
+:::
+
+#### Part E: A boxplot of a categorical and a continuous variable
+
+:::{.callout-warning title="Task"}
+Create a plot of `act_vig` (vigorous physical activity frequency, x-axis) vs. `income` (y-axis) from `hrs_data` using `geom_boxplot()`. Assign it to `hrs_09_plot_box`.
+:::
+
+#### Part F: Layer jitter on top
+
+:::{.callout-warning title="Task"}
+Starting from the same mapping, add a `geom_jitter()` layer on top of the boxplot layer so you can see the individual data points as well. Set `alpha = 0.2` inside `geom_jitter()` so the points don't overwhelm the boxplot. Assign the result to `hrs_10_plot_box_jitter`.
+:::
+
+:::{.callout-tip title="Tip"}
+Since both `geom_boxplot()` and `geom_jitter()` use the same `x` and `y` mapping, you can put `aes()` inside `ggplot()` once instead of repeating it in each `geom_*()`.
+:::
+
+#### Part G: Setting an aesthetic
+
+:::{.callout-warning title="Task"}
+Create a plot of `cond_count` (x-axis) vs. `act_vig` (y-axis) using `geom_jitter()`, and set the color of the points to `"darkblue"` (this goes *outside* of `aes()`). Also set `alpha` lower so the individual dots show up better where they overlap. Assign the plot to `hrs_11_plot_color_set`.
+:::
+
+#### Part H: Mapping an aesthetic
+
+:::{.callout-warning title="Task"}
+Now recreate the same plot, but this time map `color` to the `smoke_ever` variable *inside* `aes()` instead of setting a fixed color. Also set `alpha` lower so the dots show up better. Assign the plot to `hrs_12_plot_color_map`.
+
+In 1-2 sentences, explain the difference between setting an aesthetic outside `aes()` and mapping it inside `aes()`.
+:::
+
+*Write your answer here.*
+
+### Question 3: Design choices for labels, facets, and themes
+
+In Lesson 33, we covered how to polish a plot using `labs()`, `facet_wrap()`/`facet_grid()`, `theme()`, and how to save a finished plot with `ggsave()`.
+
+#### Part A: Labels
+
+:::{.callout-warning title="Task"}
+Starting from `hrs_10_plot_box_jitter` (Question 2 Part F), add a `labs()` layer with an x-axis label, a y-axis label, and a title of your choice. Assign the result to `hrs_13_plot_labs` and display it.
+:::
+
+#### Part B: Facets
+
+:::{.callout-warning title="Task"}
+Using `hrs_data`, create a histogram of `age_yr`, faceted by `sex` with `facet_wrap()`. Assign the result to `hrs_14_plot_facet`.
+
+Looking at the faceted plot, does the age distribution appear to differ between males and females?
+:::
+
+*Write your answer here.*
+
+:::{.callout-tip title="Tip"}
+If you want to facet by two variables instead of one (e.g., `sex` and `diab`), use `facet_grid(var1 ~ var2)` instead of `facet_wrap()`.
+:::
+
+#### Part C: Color
+
+:::{.callout-warning title="Task"}
+Recreate the same distribution as `hrs_14_plot_facet` (a histogram of `age_yr`), but this time show the comparison by mapping `fill` to `sex` instead of faceting. Assign the result to `hrs_15_plot_fill` and display it.
+
+Which approach, facet or fill, feels more appropriate for comparing the age distributions of males and females here? Why?
+:::
+
+*Write your answer here.*
+
+#### Part D: Themes
+
+:::{.callout-warning title="Task"}
+Take `hrs_13_plot_labs` from Part A and add a complete theme of your choice (e.g., `theme_minimal()`, `theme_bw()`, or `theme_classic()`). Then, use `theme()` to additionally increase the size of the plot title to `16`. Assign the final plot to `hrs_16_plot_final` and display it.
+:::
+
+:::{.callout-tip title="Tip"}
+Order matters here! Add the complete theme (like `theme_minimal()`) *before* your `theme()` call that tweaks individual elements, not after.
+:::
+
+#### Part E: Saving your plot
+
+:::{.callout-warning title="Task"}
+Use `ggsave()` to save `hrs_16_plot_final` as a `.png` file into your `images` folder (use `here()` to build the file path). Set the width to `6` inches, the height to `4` inches, and the `dpi` to `200`.
+:::
+
+#### Part F: Insert your saved plot
+
+:::{.callout-warning title="Task"}
+In a text section of your document (not a code chunk), insert the image you just saved in Part E using Markdown image syntax.
+:::
+
+:::{.callout-tip title="Tip"}
+Markdown image paths are relative to where *your `.qmd` file* is saved, not resolved through `here()`. If your file lives in `practice/`, and your `images` folder is one level up from that, your path would look like `../images/your_file_name.png`. Adjust the path to match where you actually saved your file.
+:::
+
+## Submission Checklist
+
+If having a checklist helps you stay organized, check off each item below as you complete it. You do not need to submit this checklist.
+
+- [ ] Three grammar components (data, mapping, layer) filled into the table (Q1 Part A)
+- [ ] `hrs_01_plot_data` created and displayed, with question answered (Q1 Part B)
+- [ ] `hrs_02_plot_mapped` created and displayed, with question answered (Q1 Part C)
+- [ ] `hrs_03_plot_hist` created and displayed (Q1 Part D)
+- [ ] `hrs_04_plot_aes_in_geom` recreated with `aes()` moved into `geom_histogram()` (Q1 Part E)
+- [ ] `hrs_05_plot_density` created for `income` (Q2 Part A)
+- [ ] `hrs_06_plot_boxplot` created for `income` (Q2 Part B)
+- [ ] `hrs_07_plot_scatter` created for `ed` vs. `income` (Q2 Part C)
+- [ ] `hrs_08_plot_smooth` created for `ed` vs. `income` (Q2 Part D)
+- [ ] `hrs_09_plot_box` created for `act_vig` vs. `income` (Q2 Part E)
+- [ ] `hrs_10_plot_box_jitter` created by layering `geom_jitter()` (Q2 Part F)
+- [ ] `hrs_11_plot_color_set` created (Q2 Part G)
+- [ ] `hrs_12_plot_color_map` created, with question answered (Q2 Part H)
+- [ ] `hrs_13_plot_labs` created with `labs()` (Q3 Part A)
+- [ ] `hrs_14_plot_facet` created with `facet_wrap()`, with question answered (Q3 Part B)
+- [ ] `hrs_15_plot_fill` created with `fill`, with question answered (Q3 Part C)
+- [ ] `hrs_16_plot_final` created with a theme and customized title size (Q3 Part D)
+- [ ] Final plot saved with `ggsave()` (Q3 Part E)
+- [ ] Saved plot inserted into the document with Markdown image syntax (Q3 Part F)
+- [ ] Document renders to HTML with no errors
+- [ ] Files named correctly: `Lastname_Firstinitial_Practice_08.qmd` and `Lastname_Firstinitial_Practice_08.html` (or lowercase versions)
+- [ ] Both `.qmd` and `.html` submitted to Brightspace
+
+## Note on AI usage
+
+I used GenAI (Claude) to help me draft this practice assignment. It helped me brainstorm ideas for the assignment, and I directed it to help you complete the needed tasks that I showed in the lessons.

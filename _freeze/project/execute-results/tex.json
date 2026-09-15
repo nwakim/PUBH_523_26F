@@ -1,0 +1,17 @@
+{
+  "hash": "c522182023eee2dede53a20430e7d647",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Project Central\"\ndate-modified: \"today\"\ncategories: [\"\"]\nformat: \n  html:\n    link-external-newwindow: true\n    toc: true\n  pdf: default\neditor_options: \n  chunk_output_type: console\n---\n\n\n::: {.cell}\n\n:::\n\n\n\n\n## Labs\n\nThe labs are meant to scaffold and build the work needed to complete the final project. This will help us complete the work over the quarter instead of all at the end! If you receive feedback on something in a lab, it is expected to be fixed for the next lab and final project.\n\n| Lab Instructions | Points | Editing file | Rubric | Due Date | Topics |\n|----|----|----|----|----|----|\n| [Lab 1](/project/Lab_01_instructions.qmd) | 21 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/project/lastname_firstinit_lab_01.qmd)]{style=\"color:#f8f5f0;\"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_01_rubric.xlsx)]{style=\"color:#f8f5f0;\"} | 07/19 | Learn about WBNS + prepare your folders + download data |\n| [Lab 2](/project/Lab_02_instructions.qmd) | 28 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/project/lastname_firstinit_lab_02.qmd)]{style=\"color:#f8f5f0;\"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_02_rubric.xlsx)]{style=\"color:#f8f5f0;\"} | 08/09 | Filtering data + creating variables |\n| [Lab 3](/project/Lab_03_instructions.qmd) | 21 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/project/lastname_firstinit_lab_03.qmd)]{style=\"color:#f8f5f0;\"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_03_rubric.xlsx)]{style=\"color:#f8f5f0;\"} | 08/16 | Summarize your data |\n| [Lab 4](/project/Lab_04_instructions.qmd) | 23 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/project/lastname_firstinit_lab_04.qmd)]{style=\"color:#f8f5f0;\"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_04_rubric.xlsx)]{style=\"color:#f8f5f0;\"} | 08/30 | Visualize your data |\n\n## Final Project: Information Sheet\n\n::: callout-important\nThe project instructions, rubric, and template are read for you! (Nicky 8/28/2026)\n:::\n\n**The final project is due 09/06.**\n\nWe are going to create an information sheet using the Well-Being and Basic Needs Survey. The following links will give you the needed instructions, rubric, and template to complete the final project.\n\n[{{< iconify fa6-solid sheet-plastic size=30px >}} Final Project Instructions](/project/Final_Project_instructions.qmd)\n\n[{{< iconify material-symbols rubric-rounded size=30px >}} Final Project Rubric](/project/Final_project_rubric.xlsx)\n\n[{{< iconify mdi edit-box size=30px >}} Final Project Template](/project/Final_Project_template.pptx)\n",
+    "supporting": [
+      "project_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

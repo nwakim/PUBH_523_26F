@@ -1,0 +1,282 @@
+---
+title: "R projects and working directories"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "R projects and working directories"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+## Why do we need R Projects and the `here` package?
+
+:::::::: columns
+::: {.column width="35%"}
+:::
+
+::::: {.column width="30%"}
+:::: pink
+::: pink-cont
+**Answer:** Reproducibility!
+:::
+::::
+:::::
+
+::: {.column width="35%"}
+:::
+::::::::
+
+- Research data and code can reach the same results regardless of who is running the code
+
+  - This can also refer to future or past you!
+
+- We want to set up our work so the entire folder can be moved around and work in its new location
+
+## What is a working directory?
+
+::::: blue
+::: blue-ttl
+Working directory
+:::
+
+::: blue-cont
+The **working directory** is the folder R is currently "looking at." When you want to locate a file, it is the starting point for all file paths in your session.
+:::
+:::::
+
+- The following will show me my current working directory
+
+```{r}
+getwd() #<1>
+```
+
+1.  Function to look at the current working directory, which is where my `.qmd` file lives
+
+- Any **relative path** starts from the current working directory
+
+```{r}
+#| eval: false
+
+read_rds("../data_lessons/hrs_data.rds") #<1>
+```
+
+1.  If I want to go up a folder, I can use `..` to go up one level, and then I can access the `data_lessons` folder and the `hrs_data.rds` file.
+
+- Note that the **absolute file path** is `/Users/wakim/Library/CloudStorage/OneDrive-OregonHealth&ScienceUniversity/Teaching/Classes/PUBH_523_26Su/PUBH_523_26Su_site/lessons/` `data_lessons/hrs_data.rds`
+
+## The problem with working directories
+
+- You *can* set the working directory by hand, but you should NOT!
+
+- When you set a `wd` manually, it will break if you move the folder or if you are on a different computer
+
+```{r}
+#| eval: false
+
+setwd("/Users/jane/Desktop/my_project") #<1>
+
+setwd("C:/Users/jane/Documents/school/BIOL401/my_project") #<2>
+```
+
+1.  Breaks on any other computer
+2.  Also breaks if you move the folder
+
+- When you use `qmd`s, running code in the console and rendering result in two different working directories
+  - Let's walk through an example!
+
+:::: pink
+::: pink-cont
+R projects and the `here` package can help **fix both of these issues**!
+:::
+::::
+
+## What is an R Project?
+
+::::: blue
+::: blue-ttl
+R Project
+:::
+
+::: blue-cont
+An **R Project** is a file (`.Rproj`) that sits in a folder and tells RStudio: "This is where I want my working directory to be set automatically."
+:::
+:::::
+
+:::::::::::: columns
+::::: {.column width="30%"}
+:::: pink
+::: pink-cont
+I can add an R Project to my `PUBH_523_26Su` folder. The R project will show up as `PUBH_523_26Su.Rproj`.
+:::
+::::
+:::::
+
+::: {.column width="5%"}
+:::
+
+:::: {.column width="35%"}
+::: large-code
+```         
+PUBH_523_26Su/ 
+├── PUBH_523_26Su.Rproj
+├── admin/
+├── data_lessons/
+├── data_practice/
+├── data_project/
+│   ├── data_raw/  
+│   └── data_processed/    
+├── lessons/
+├── practice/
+├── project/
+└── README.txt
+```
+:::
+::::
+
+::::: {.column width="30%"}
+:::: green
+::: green-cont
+When you open the `.Rproj` file, RStudio sets the working directory to that folder — every time, on any computer.
+:::
+::::
+:::::
+::::::::::::
+
+## Let's create an R Project!
+
+- You can create a [*new project and folder*]{style="color:#C83532"}
+  - **File → New Project → New Directory → New Project**
+  - Give the project a name, choose where to save it, and click **Create Project**
+
+ 
+
+- You can also create a project from an [*existing folder*]{style="color:#459B99"}
+  - **File → New Project → Existing Directory**
+  - Then you'll browse for the folder you want to create the project in
+
+ 
+
+Let's see an example!
+
+## Opening and using an R Project
+
+- When working with files in an R Project, you want to open and work within the R project
+
+ 
+
+- You can open an R project two ways:
+  - Click on the `.Rproj` file in your folder
+  - Open RStudio and select the project from the **top-right corner** of the window
+
+ 
+
+- Once a project is open, we can work in our files and do not need to set a working directory manually
+  - R Studio will automatically set the working directory to the project folder
+
+:::: red
+::: red-cont
+Opening a script/qmd directly (by double-clicking it) does **not** activate the project or set the working directory
+:::
+::::
+
+## We still run into some issues with R Projects
+
+We haven't fixed this issue yet:
+
+> - When you use `qmd`s, running code in the console and rendering result in two different working directories
+>   - Let's walk through an example!
+
+:::: pink
+::: pink-cont
+We need the `here` package to fix this issue!
+:::
+::::
+
+## The `here` package
+
+- For scripts in subfolders, use `here()` to build paths from the project root
+
+- The `here()` function makes your code start at the R project folder whether we are working in the console or rendering a `qmd` document
+
+  - Output for `here()` returns same thing in console and on render
+
+  ```{r}
+  pacman::p_load(here) #<1>
+  here() #<2>
+  ```
+
+  1.  Need to load the `here` package to use the `here()` function
+  2.  The `here()` function returns the path to the project root folder, regardless of where the script lives
+
+## Now we can navigate to our files in a robust way
+
+- We can use `here()` to navigate to files in our project folder
+- We only need to specify the relative path from the project root folder
+- We can input the relative path two different ways:
+  - Using a comma to separate the folder/file names (*better practice bc it is platform agnostic*)
+  - Using a forward (or backward on Windows) slash to separate the folder/file names
+
+```{r}
+here("lessons", "01_Welcome")
+
+here("images", "PUBH_R.png")
+here("images/PUBH_R.png")
+```
+
+## Wrap-up
+
+::::::: columns
+::: {.column width="55%"}
+- Create **one R Project** per analysis
+
+ 
+
+- Open work by clicking the **`.Rproj` file** or opening in R Studio
+
+ 
+
+- Use **relative paths**: no `setwd()`, ever
+
+ 
+
+- Use **`here()`** to make relative file paths
+:::
+
+::::: {.column width="45%"}
+:::: pink
+::: pink-cont
+R Projects $+$ `here()` $+$ good folder structure
+
+$$=$$
+
+analysis that runs reliably anywhere, for anyone
+:::
+::::
+:::::
+:::::::

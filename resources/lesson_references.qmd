@@ -1,0 +1,57 @@
+---
+title: "External Resources in Lessons"
+description: "All resources presented at the end of each lesson are put in an easy-to-navigate table with the lesson and links to external resources."
+date: "today"
+format: 
+  html:
+    page-layout: full
+    link-external-newwindow: true
+    toc: true
+    highlight-style: ayu
+---
+
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Lesson \# | Lesson/Theme Name                 | Resources                                                                                                                                                                                        |
++===========+===================================+==================================================================================================================================================================================================+
+| 7         | Health and Retirement Study (HRS) | - [Check out the codebook I made for us!](./resources/HRS_codebook.qmd)                                                                                                                          |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 9         | Objects                           | - There is an additional textbook: [Hands-On Programming with R by Garrett Grolemund](https://www.rstudio.com/resources/books/hands-on-programming-with-r/)                                      |
+|           |                                   |   - [Here is the chapter on objects](https://rstudio-education.github.io/hopr/r-objects.html)                                                                                                    |
+|           |                                   | - [Page on tibble package](https://tibble.tidyverse.org/)                                                                                                                                        |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 10        | Packages                          | - Danielle Navarro’s YouTube video on ***Installing and loading R packages***: <https://www.youtube.com/watch?v=kpHZVyDvEhQ>                                                                     |
+|           |                                   |   - If you want to get more information on packages                                                                                                                                              |
+|           |                                   | - [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/) = package mothership                                                                                                     |
+|           |                                   | - There is an additional textbook: [Hands-On Programming with R by Garrett Grolemund](https://www.rstudio.com/resources/books/hands-on-programming-with-r/)                                      |
+|           |                                   |   - [Here is the chapter on packages](https://rstudio-education.github.io/hopr/packages.html#getting-help-with-help-pages)                                                                       |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 13        | Quarto documents                  | - To learn more about working with Quarto, check out our BERD workshop: [*Creating Professional Presentations and Websites using R/Quarto*](https://ohsu-octri-berd.github.io/Quarto_BERD_2025/) |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 16        | Piping                            | - [Tidyverse style guide on pipes](https://style.tidyverse.org/pipes.html)                                                                                                                       |
+|           |                                   | - More on the two pipes                                                                                                                                                                          |
+|           |                                   |   - [Differences between the base R and magrittr pipes](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/){target="_blank"} - Tidyverse blog post by Hadley Wickham                      |
+|           |                                   |   - [Discussion of differences on Stack Overflow](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-native-pipe-and-the-magrittr-pipe){target="_blank"}           |
+|           |                                   |   - [R 4.1.0 pipe overview](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}                                                                     |
+|           |                                   |   - [Comparing pipes: Base-R \|\> vs {magrittr} %\>%](https://albert-rapp.de/posts/31_pipes_compared/31_pipes_compared){target="_blank"}                                                         |
+|           |                                   |     - this resource includes examples and                                                                                                                                                        |
+|           |                                   |     - also how to change the "default" pipe in RStudio from `%>%` to `|>` (keyboard shortcut will use `|>`)                                                                                      |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 20-23     | Data transformations              | - `dplyr` [cheat sheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html)                                                                                                     |
+|           |                                   | - See [this slide](https://jminnier-berd-r-courses.netlify.app/02-data-wrangling-tidyverse/02_data_wrangling_slides_part1.html#27){target="_blank"} from a previous BERD workshop.               |
+|           |                                   | - Also read the [filter section](https://r4ds.hadley.nz/data-transform.html#rows){target="_blank"} in the "Data Transformation" chapter from *R for Data Science (2e)*                           |
+|           |                                   | - Click [here](https://www.datamentor.io/r-programming/operator/){target="_blank"} for a useful reference for all the different operators (both logical and comparison) that you can use.        |
+|           |                                   | - See more examples from the [{tidyselect} webpage](https://tidyselect.r-lib.org/reference/language.html){target="_blank"}.                                                                      |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 24-27     | Data summarization                |                                                                                                                                                                                                  |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 31-33     | Data visualization (`ggplot2`)    | - [`ggplot2` Cheatsheet in html form](https://rstudio.github.io/cheatsheets/html/data-visualization.html)                                                                                        |
+|           |                                   | - [`ggplot2` Cheatsheet in pdf form](https://rstudio.github.io/cheatsheets/data-visualization.pdf)                                                                                               |
+|           |                                   | - [List of complete themes](https://ggplot2.tidyverse.org/reference/ggtheme.html)                                                                                                                |
+|           |                                   | - [Modify components of a theme](https://ggplot2.tidyverse.org/reference/theme.html)                                                                                                             |
+|           |                                   | - [Page on `ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)                                                                                                                      |
+|           |                                   | - Online textbook for `ggplot2`: <https://ggplot2-book.org/>                                                                                                                                     |
+|           |                                   | - Another online resource for data visualization with `ggplot2`: <https://socviz.co/index.html#preface>                                                                                          |
+|           |                                   | - [Advanced Data Viz Class at Duke](https://vizdata.org/)                                                                                                                                        |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|           |                                   | More to be added as course progresses!                                                                                                                                                           |
++-----------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

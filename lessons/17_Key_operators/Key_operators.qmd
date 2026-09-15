@@ -1,0 +1,217 @@
+---
+title: "Key operators and functions"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Key operators and functions"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here, 
+  rio
+)
+```
+
+```{r}
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_data <- clean_names(hrs_data_rds)
+```
+
+
+## Note
+
+- This lesson is **heavily** borrowed from [Section 8.2 in The Epidemiologist R Handbook](https://epirhandbook.com/en/new_pages/basics.html#operators)
+
+## Let's expand on some basic operators
+
+We went over some operators in our lesson on Basics
+
+::::: columns
+::: {.column width="50%"}
+Basic math operators:
+
+| Operation      | Written                   | In R                   |
+|----------------|---------------------------|------------------------|
+| Addition       | $1+1$                     | `1+1`                  |
+| Subtraction    | $2-1$                     | `2-1`                  |
+| Multiplication | $3\times 2$ or $3\cdot 2$ | `3*2`                  |
+| Division       | $3 / 2$ or $\dfrac{3}{2}$ | `3/2`                  |
+| Exponential    | $4^2$                     | `4^2`                  |
+| Square root    | $\sqrt{4}$ or $4^{1/2}$   | `4^(1/2)` or `sqrt(4)` |
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="45%"}
+Basic relational operators:
+
+| Operation                | In R   |
+|--------------------------|--------|
+| Less than                | `1<1`  |
+| Greater than             | `1>1`  |
+| Less than or equal to    | `1<=1` |
+| Greater than or equal to | `1>=1` |
+| Equal to                 | `1==1` |
+| Not equal to             | `1!=1` |
+:::
+:::::
+
+## We can further expand the relational operators
+
+- If we want combine two logical vectors, we need to use boolean algebra
+
++----------------+----------+----------------------+---------------------------------------------------------------------------------+
+| Operation      | In R     | Example in R         | Example in plain language                                                       |
++================+==========+======================+=================================================================================+
+| Group criteria | `( )`    | `(1 == 1)`           | We are grouping this statement to make it easier to read                        |
++----------------+----------+----------------------+---------------------------------------------------------------------------------+
+| And            | `&`      | `(1 == 1) & (3 > 2)` | Is 1 equal to 1 AND 3 greater than 2? (If BOTH are true, returns true)          |
++----------------+----------+----------------------+---------------------------------------------------------------------------------+
+| Or             | `|`      | `(1 == 1) | (1 > 2)` | Is 1 equal to 1 OR is 1 greater than 2? (If one of them are true, returns TRUE) |
++----------------+----------+----------------------+---------------------------------------------------------------------------------+
+| Not            | `!`      | `!(1 > 2)`           | Is 1 NOT greater than 2?                                                        |
++----------------+----------+----------------------+---------------------------------------------------------------------------------+
+
+![Adapted from this [R for Data Science](https://r4ds.hadley.nz/logicals.html#fig-bool-ops)](../img_slides/boolean.png)
+
+## Is something in something else?
+
+- The `%in%` operator is helpful when you want to check if one thing is **in a list of other things**
+
+- Let's say I have a vector
+
+```{r}
+my_vector <- c("a", "b", "c", "d") #<1>
+```
+
+1.  We create a vector with letters a-d
+
+- I want to ask: "Is "a" in my vector?"
+
+```{r}
+"a" %in% my_vector #<2>
+```
+
+2.  I want to see if `"a"` is in the vector
+
+```{r}
+"m" %in% my_vector #<3>
+```
+
+3.  Then I want to see if `"n"` is in the vector
+
+```{r}
+"m" %in% my_vector | "a" %in% my_vector #<4>
+```
+
+4.  We can combine operators as well! I'm asking: "Is "m" in my vector or "a" in my vector?"
+
+```{r}
+"A" %in% my_vector #<5>
+```
+
+5.  It is also case sensitive
+
+## Some good functions to know
+
++--------------------+-----------------------------------------+-------------------------------------------+
+| Purpose            | Function                                | Example                                   |
++====================+=========================================+===========================================+
+| rounding           | `round(x, digits = n)`                  | `round(3.5, digits = 0)`                  |
+|                    |                                         |                                           |
+|                    |                                         | `round(4.5, digits = 0)`                  |
++--------------------+-----------------------------------------+-------------------------------------------+
+| rounding           | `janitor::round_half_up(x, digits = n)` | `janitor::round_half_up(3.5, digits = 0)` |
++--------------------+-----------------------------------------+-------------------------------------------+
+| ceiling (round up) | `ceiling(x)`                            | `ceiling(3.1234)`                         |
++--------------------+-----------------------------------------+-------------------------------------------+
+| floor (round down) | `floor(x)`                              | `floor(3.1234)`                           |
++--------------------+-----------------------------------------+-------------------------------------------+
+| absolute value     | `abs(x)`                                | `abs(3.1234)`                             |
++--------------------+-----------------------------------------+-------------------------------------------+
+| square root        | `sqrt(x)`                               | `sqrt(3.1234)`                            |
++--------------------+-----------------------------------------+-------------------------------------------+
+| exponent           | `exponent(x)`                           | `exponent(3.1234)`                        |
++--------------------+-----------------------------------------+-------------------------------------------+
+| natural logarithm  | `log(x)`                                | `log(3.1234)`                             |
++--------------------+-----------------------------------------+-------------------------------------------+
+| log base 10        | `log10(x)`                              | `log10(3.1234)`                           |
++--------------------+-----------------------------------------+-------------------------------------------+
+| log base 2         | `log2(x)`                               | `log2(3.1234)`                            |
++--------------------+-----------------------------------------+-------------------------------------------+
+
+## Useful statistical functions
+
+- If `x` is a vector of numeric values, then we can perform several statistical functions on it
+
+| Objective               | Function             |
+|-------------------------|----------------------|
+| mean (average)          | `mean(x, na.rm=T)`   |
+| median                  | `median(x, na.rm=T)` |
+| standard deviation      | `sd(x, na.rm=T)`     |
+| quantiles\*             | `quantile(x, probs)` |
+| sum                     | `sum(x, na.rm=T)`    |
+| minimum value           | `min(x, na.rm=T)`    |
+| maximum value           | `max(x, na.rm=T)`    |
+| range of numeric values | `range(x, na.rm=T)`  |
+| summary\*\*             | `summary(x)`         |
+
+***CAUTION:*** The functions above will by default include missing values in calculations. Missing values will result in an output of `NA`, unless the argument `na.rm = TRUE` is specified. This can be written shorthand as `na.rm = T`.
+
+## Other useful functions
+
++----------------------+---------------------+---------------------------------------------+
+| Objective            | Function            | Example                                     |
++======================+=====================+=============================================+
+| create a sequence    | `seq(from, to, by)` | `seq(1, 10, 2)`                             |
++----------------------+---------------------+---------------------------------------------+
+| repeat x, n times    | `rep(x, ntimes)`    | `rep(1:3, 2)` or `rep(c("a", "b", "c"), 3)` |
++----------------------+---------------------+---------------------------------------------+
+| take a random sample | `sample(x, size)`   | `sample(1:15, size = 5, replace = TRUE)`    |
++----------------------+---------------------+---------------------------------------------+
+
+::: blue
+::: blue-cont
+Extra note: we will "set a seed" for `sample()` because the process is random, and the output will change everytime. `set.seed()` will anchor us in a specific instance of the random number generator.
+:::
+:::
+
+## Wrap-up
+
+- We learned some boolean operators to expand our true/false logical work
+- We learned *many* new functions
+  - We'll get to practice them in our practice assignment!
+  
+ 
+
+- Main goal was to gain recognition of functions
+- Hopefully, we can use what we learned in the lesson on getting help in R to investigate the functions more!
+
+## Resources
+
+- [This lesson's R script with the examples](./Key_operators_examples.R)

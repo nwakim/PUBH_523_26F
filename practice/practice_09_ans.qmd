@@ -1,0 +1,416 @@
+---
+title: "Practice 9 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+pacman::p_load(
+  tidyverse, 
+  here, 
+  rio,
+  naniar,
+  janitor,
+  gt
+)
+```
+
+## Questions
+
+### Question 1: Missingness statistics
+
+In Lesson 34, we saw how to get quick, high-level counts of missingness before doing anything else with a dataset.
+
+#### Part A: Import dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Import `hrs_data.rds` and assign it to `hrs_data`.
+:::
+
+::: blue
+**Answer:**
+
+Here's an example to show you the pattern — the rest of your answers should follow this same style, with code chunks and a `#| ...` chunk options as needed.
+
+```{r}
+hrs_data <- import(here("data", "hrs_data.rds"))
+
+glimpse(hrs_data)
+```
+:::
+
+#### Part B: Total missingness in the dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `n_miss()` on `hrs_data` to find the total number of missing cells across the entire dataset.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Proportion of missingness in the dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `prop_miss()` on `hrs_data` to find the proportion of all cells in the dataset that are missing.
+:::
+
+::: blue
+**Answer:**
+
+```{r}
+prop_miss(hrs_data)
+```
+:::
+
+#### Part D: Missingness in a single variable
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `n_miss()` on just the `srh` column of `hrs_data` to find how many values are missing for self-reported health.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+You can pull out a single column with `$`, e.g. `hrs_data$srh`.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part E: Missingness summary table
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `miss_var_summary()` on `hrs_data` to get one row per variable with its count and percent missing. Pipe the result into `gt()` to make it a nicer table. Assign the table to `hrs_01_summary_table` and display it.
+
+Which variable has the most missing values? Which has the least?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 2: Visualizing missingness
+
+In Lesson 34, we also covered a few plotting functions from `naniar` that help us see *where* and *how* data is missing.
+
+#### Part A: A bird's-eye view with `vis_miss()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `vis_miss()` on `hrs_data` to visualize missingness across the whole dataset. Assign the plot to `hrs_02_plot_vis_miss` and display it.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_02_plot_vis_miss <- hrs_data |> 
+  ______()
+```
+:::
+
+#### Part B: Customize the plot
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+`vis_miss()` returns a `ggplot2` object, so you can add layers to it just like the plots you built last week. Take `hrs_02_plot_vis_miss` and add a `theme()` layer that rotates the x-axis text labels by 20 degrees (`angle = 20`) so they're easier to read. Assign the result to `hrs_03_plot_vis_miss_clean` and display it.
+
+Looking at your plot, is missingness concentrated in a few variables, spread across many observations, or both?
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+`theme(axis.text.x = element_text(angle = 20, hjust = 0))` adjusts the angle and alignment of the x-axis text.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Missingness by group with `gg_miss_fct()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `gg_miss_fct()` on `hrs_data`, stratifying by `degree` (set `fct = degree`). Assign the plot to `hrs_04_plot_fct` and display it.
+
+Does missingness look similar across `degree`, or does one group have noticeably more missing data for certain variables?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part D: Missingness intersections with `gg_miss_upset()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `gg_miss_upset()` on `hrs_data`, setting `nsets = 10` and `text.scale = 2`. Assign the plot to `hrs_05_plot_upset` and display it.
+
+Which combination of variables is missing together most often? Is there a variable that tends to be missing mostly on its own?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 3: Filtering out missing values
+
+In Lesson 35, we covered how to remove rows with missing data, and a common gotcha when using `filter()` on a column with `NA`s.
+
+#### Part A: Check missingness before you drop anything
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Before dropping any rows, pipe `hrs_data` into `miss_var_summary()` and then `gt()` again, just like Question 1 Part E, so you have a "before" table to compare to later. Assign it to `hrs_06_summary_before`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Getting in the habit of checking missingness *before* and *after* you drop or fill in values helps you catch mistakes, like accidentally dropping more rows than you meant to.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part B: Drop rows missing anything
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `drop_na()` on `hrs_data` (with no arguments) to remove any row that has *any* missing value. Assign the result to `hrs_07_dropna_all`. How many rows are left compared to `hrs_data`?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Drop rows missing specific columns
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now use `drop_na()` on `hrs_data` again, but this time only target the `act_vig` and `bp` columns, so rows are only dropped if one of *those two* columns is missing. Assign the result to `hrs_08_dropna_cols`. How does the number of rows compare to `hrs_07_dropna_all`?
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_08_dropna_cols <- hrs_data |> 
+  drop_na(______, ______)
+```
+:::
+
+#### Part D: The `filter()` gotcha
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `tabyl()` (from `janitor`) on `hrs_data$smoke_ever` to see how many missing values `smoke_ever` has and confirm its categories.
+
+Then, use `filter()` on `hrs_data` to keep only rows where `smoke_ever != "No"`. Assign the result to `hrs_09_filter_gotcha`. Use `tabyl()` on the `smoke_ever` column of `hrs_09_filter_gotcha` to check what happened to the missing values.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part E: Fixing the gotcha with `filter_out()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Redo Part D, but use `filter_out()` instead of `filter()` to exclude `smoke_ever == "No"` while keeping the `NA`s. Assign the result to `hrs_10_filter_out_fixed`. Confirm with `tabyl()` that the missing values are still there this time.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 4: Filling in and recoding missing values
+
+In Lesson 35, we also covered how to fill in missing values instead of dropping them, and how to turn a specific value into `NA` when needed.
+
+#### Part A: Fill in a numeric variable
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `mutate()` and `replace_na()` to create a new column, `cesd_filled`, in `hrs_data` that replaces any missing `cesd` (depression symptom score) with the mean `cesd` (use `na.rm = TRUE` inside `mean()`). Assign the result to `hrs_11_cesd_filled`.
+
+Is filling in a missing value with the overall mean always a good idea? Why or why not?
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_11_cesd_filled <- hrs_data |> 
+  mutate(
+    cesd_filled = replace_na(______, ______)
+  )
+```
+:::
+
+#### Part B: Fill in a factor variable
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Starting from `hrs_11_cesd_filled`, use `mutate()` and `fct_na_value_to_level()` to create a new column, `degree_filled`, that replaces any missing `degree` with a new level called `"Unknown"`. Assign the result to `hrs_12_degree_filled`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+`replace_na()` does not work on factor columns. Use `fct_na_value_to_level()` instead whenever the column you're filling in is a factor.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_12_degree_filled <- hrs_11_cesd_filled |> 
+  mutate(
+    degree_filled = fct_na_value_to_level(______, level = ______)
+  )
+```
+:::
+
+#### Part C: Check your work
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `tabyl()` to compare `degree` and `degree_filled` in `hrs_12_degree_filled` (hint: `tabyl()` can take two column names to cross-tabulate them). Confirm that every row that was `NA` in `degree` now shows `"Unknown"` in `degree_filled`.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part D: Turn a valid value into `NA`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Suppose, just for practice, we wanted to treat everyone who answered `"No"` to `drink` (whether they drink alcohol) as missing instead (this is **not** something you'd actually want to do with real data, but it shows how the function works). First, use `mutate()` to make a copy of the column called `drink_na`. Then use `replace_with_na()` to replace `"No"` with `NA` in the `drink_na` column. Assign the result to `hrs_13_replace_with_na`.
+
+Use `tabyl()` to compare the original `drink` column to your new `drink_na` column and confirm the replacement worked as expected.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_13_replace_with_na <- hrs_12_degree_filled |> 
+  mutate(drink_na = drink) |> 
+  replace_with_na(replace = list(
+    ______ = ______
+  ))
+```
+:::
+
+#### Part E: Summarize your final, cleaned dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take `hrs_12_degree_filled` (from Part B, before Part D's practice-only recoding) and run `miss_var_summary()` and `gt()` on it one more time. Assign it to `hrs_14_summary_after`. Compare it to `hrs_06_summary_before` from Question 3 Part A. Which variables now show less missingness, and why?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::

@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PUBH 523/623 Syllabus – Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-702b68d2bb46f0b77d76c36fa481b3ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/PUBH_R.png" alt="" class="navbar-logo light-content">
+    <img src="./images/PUBH_R.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introduction to R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./instructors.html"> 
+<span class="menu-text">Instructors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./practice.html"> 
+<span class="menu-text">Practice</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./project.html"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a>
+  <ul class="collapse">
+  <li><a href="#course-learning-objectives" id="toc-course-learning-objectives" class="nav-link" data-scroll-target="#course-learning-objectives">Course Learning Objectives</a></li>
+  </ul></li>
+  <li><a href="#instructors" id="toc-instructors" class="nav-link" data-scroll-target="#instructors">Instructors</a></li>
+  <li><a href="#meeting-times" id="toc-meeting-times" class="nav-link" data-scroll-target="#meeting-times">Meeting Times</a></li>
+  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a>
+  <ul class="collapse">
+  <li><a href="#textbooks" id="toc-textbooks" class="nav-link" data-scroll-target="#textbooks">Textbooks</a></li>
+  <li><a href="#brightspace" id="toc-brightspace" class="nav-link" data-scroll-target="#brightspace">Brightspace</a></li>
+  <li><a href="#webexzoom" id="toc-webexzoom" class="nav-link" data-scroll-target="#webexzoom">Webex/Zoom</a></li>
+  <li><a href="#slack" id="toc-slack" class="nav-link" data-scroll-target="#slack">Slack</a></li>
+  <li><a href="#r-statistical-computing-software" id="toc-r-statistical-computing-software" class="nav-link" data-scroll-target="#r-statistical-computing-software">R: Statistical Computing Software</a></li>
+  </ul></li>
+  <li><a href="#course-structure" id="toc-course-structure" class="nav-link" data-scroll-target="#course-structure">Course structure</a></li>
+  <li><a href="#assessment-breakdown" id="toc-assessment-breakdown" class="nav-link" data-scroll-target="#assessment-breakdown">Assessment Breakdown</a>
+  <ul class="collapse">
+  <li><a href="#grading-requirements" id="toc-grading-requirements" class="nav-link" data-scroll-target="#grading-requirements">Grading &amp; Requirements</a></li>
+  <li><a href="#practice-assignment-grading" id="toc-practice-assignment-grading" class="nav-link" data-scroll-target="#practice-assignment-grading">Practice assignment grading</a></li>
+  <li><a href="#viewing-grades-in-brightspace" id="toc-viewing-grades-in-brightspace" class="nav-link" data-scroll-target="#viewing-grades-in-brightspace">Viewing Grades in Brightspace</a></li>
+  </ul></li>
+  <li><a href="#course-instructor-evaluations" id="toc-course-instructor-evaluations" class="nav-link" data-scroll-target="#course-instructor-evaluations">Course &amp; Instructor Evaluations</a>
+  <ul class="collapse">
+  <li><a href="#ongoing-course-feedback" id="toc-ongoing-course-feedback" class="nav-link" data-scroll-target="#ongoing-course-feedback">Ongoing Course Feedback</a></li>
+  <li><a href="#final-course-feedback" id="toc-final-course-feedback" class="nav-link" data-scroll-target="#final-course-feedback">Final Course Feedback</a></li>
+  </ul></li>
+  <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
+  <li><a href="#course-policies-and-resources" id="toc-course-policies-and-resources" class="nav-link" data-scroll-target="#course-policies-and-resources">Course Policies and Resources</a>
+  <ul class="collapse">
+  <li><a href="#late-work-policy" id="toc-late-work-policy" class="nav-link" data-scroll-target="#late-work-policy">Late Work Policy</a></li>
+  <li><a href="#regrade-policy" id="toc-regrade-policy" class="nav-link" data-scroll-target="#regrade-policy">Regrade Policy</a></li>
+  <li><a href="#plagiarism-and-attribution" id="toc-plagiarism-and-attribution" class="nav-link" data-scroll-target="#plagiarism-and-attribution">Plagiarism and Attribution</a></li>
+  </ul></li>
+  <li><a href="#how-to-succeed-in-this-course" id="toc-how-to-succeed-in-this-course" class="nav-link" data-scroll-target="#how-to-succeed-in-this-course">How to succeed in this course</a>
+  <ul class="collapse">
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
+  </ul></li>
+  <li><a href="#course-expectations" id="toc-course-expectations" class="nav-link" data-scroll-target="#course-expectations">Course Expectations</a>
+  <ul class="collapse">
+  <li><a href="#instructor-expectations" id="toc-instructor-expectations" class="nav-link" data-scroll-target="#instructor-expectations">Instructor Expectations</a></li>
+  <li><a href="#student-expectations-and-resources" id="toc-student-expectations-and-resources" class="nav-link" data-scroll-target="#student-expectations-and-resources">Student Expectations and Resources</a></li>
+  </ul></li>
+  <li><a href="#course-communications" id="toc-course-communications" class="nav-link" data-scroll-target="#course-communications">Course Communications</a>
+  <ul class="collapse">
+  <li><a href="#brightspace-announcements" id="toc-brightspace-announcements" class="nav-link" data-scroll-target="#brightspace-announcements">Brightspace announcements</a></li>
+  <li><a href="#e-mail" id="toc-e-mail" class="nav-link" data-scroll-target="#e-mail">E-mail</a></li>
+  </ul></li>
+  <li><a href="#further-student-resources" id="toc-further-student-resources" class="nav-link" data-scroll-target="#further-student-resources">Further Student Resources</a>
+  <ul class="collapse">
+  <li><a href="#sph-writing-lab" id="toc-sph-writing-lab" class="nav-link" data-scroll-target="#sph-writing-lab">SPH Writing Lab</a></li>
+  <li><a href="#grammarly-subscription" id="toc-grammarly-subscription" class="nav-link" data-scroll-target="#grammarly-subscription">Grammarly Subscription</a></li>
+  <li><a href="#student-wellness" id="toc-student-wellness" class="nav-link" data-scroll-target="#student-wellness">Student Wellness</a></li>
+  <li><a href="#support-for-food-insecurity" id="toc-support-for-food-insecurity" class="nav-link" data-scroll-target="#support-for-food-insecurity">Support for Food Insecurity</a></li>
+  <li><a href="#support-for-students-with-children" id="toc-support-for-students-with-children" class="nav-link" data-scroll-target="#support-for-students-with-children">Support for Students with Children</a></li>
+  </ul></li>
+  <li><a href="#see-brightspace-for-sph-and-ohsu-policies" id="toc-see-brightspace-for-sph-and-ohsu-policies" class="nav-link" data-scroll-target="#see-brightspace-for-sph-and-ohsu-policies">See Brightspace for SPH and OHSU policies</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="syllabus.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PUBH 523/623 Syllabus</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">August 28, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<style type="text/css">
+.title{
+  font-size: 30px;
+  color: #3070BF;
+  background-color: #fff;
+  padding: 0px;
+}
+
+.blue{
+  margin: 1em 0;
+  border: 3px solid #5BAFF8;
+  border-radius: 10px;
+}
+.blue-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #5BAFF8;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.blue-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+</style>
+</div>
+<div class="blue">
+<div class="blue-ttl">
+<p>Key Course Info</p>
+</div>
+<div class="blue-cont">
+<ul>
+<li>If an assignment on Brightspace is closed or you are submitting late work, <strong>please email me your work</strong> (see <a href="./instructors.html">instructor page</a> for all email addresses)</li>
+<li>If you are emailing for an extension, please email me (see <a href="./instructors.html">instructor page</a> for all email addresses)</li>
+<li>Latework policy
+<ul>
+<li><strong>For practice:</strong> can be turned in any time before course ends, but you will not receive feedback on late work</li>
+<li><strong>For labs:</strong> one “no questions asked”, 3-day extension
+<ul>
+<li>After that, 1 point deducted per day late</li>
+</ul></li>
+</ul></li>
+<li><strong>No attendance policy:</strong> Your grade will not be linked to watching instructional videos, but you will be responsible for content in the videos.</li>
+<li>The class will end on August 31, 2026. <strong>All coursework MUST be completed by September 05, 2026</strong></li>
+<li>Feel free to fill out the <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u">Ongoing Course Feedback</a> with any concerns or questions.</li>
+</ul>
+</div>
+</div>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>Welcome to PUBH 523/623! This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables. By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. No prior statistical or coding experience is expected or required.</p>
+<section id="course-learning-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="course-learning-objectives">Course Learning Objectives</h3>
+<p>At the end of this course, students should be able to…</p>
+<ol type="1">
+<li><p>Set up and manage project-based folders to build reproducible workflows.</p></li>
+<li><p>Clean, filter, restructure, and summarize datasets using standard R toolkits.</p></li>
+<li><p>Create clear, publication-quality data visualizations and figures to represent trends and summaries.</p></li>
+<li><p>Launch a data exploration project on a new dataset, preparing it for advanced statistical analysis.</p></li>
+</ol>
+</section>
+</section>
+<section id="instructors" class="level2">
+<h2 class="anchored" data-anchor-id="instructors">Instructors</h2>
+<p><a href="./instructors.html">Here is the instructor page.</a> This also has office hours!</p>
+</section>
+<section id="meeting-times" class="level2">
+<h2 class="anchored" data-anchor-id="meeting-times">Meeting Times</h2>
+<p>This class is asynhronous, meaning we will not have set class times. However, I will set up recurring office hours.</p>
+</section>
+<section id="materials" class="level2">
+<h2 class="anchored" data-anchor-id="materials">Materials</h2>
+<section id="textbooks" class="level3">
+<h3 class="anchored" data-anchor-id="textbooks">Textbooks</h3>
+<ul>
+<li><p><a href="https://r4ds.hadley.nz/"><strong>R for Data Science</strong></a> by Hadley Wickham , Mine Çetinkaya-Rundel, Garrett Grolemund</p></li>
+<li><p><a href="https://epirhandbook.com/en/"><strong>The Epidemiologist R Handbook</strong></a> by Neale Batra (Editor)</p></li>
+</ul>
+<section id="other-helpful-textbook" class="level4">
+<h4 class="anchored" data-anchor-id="other-helpful-textbook">Other helpful textbook</h4>
+<ul>
+<li><a href="https://rstudio-education.github.io/hopr/">Hands-On Programming with R</a> by Garrett Grolemund</li>
+</ul>
+</section>
+</section>
+<section id="brightspace" class="level3">
+<h3 class="anchored" data-anchor-id="brightspace">Brightspace</h3>
+<p>While most course materials will be delivered online through this website, assignments will be turned in through <a href="https://ohsu.brightspace.com/">Brightspace</a>, OHSU’s course management system.</p>
+</section>
+<section id="webexzoom" class="level3">
+<h3 class="anchored" data-anchor-id="webexzoom">Webex/Zoom</h3>
+<p>Webex or Zoom software will be used for virtual office hours. To give everyone the best possible experience with Webex/Zoom, I recommend the following best practices:</p>
+<ul>
+<li>Please stay muted until you want to participate</li>
+<li>During office hours, please send a message in chat with your question or with a statement like “I have a question.” This makes sure I or the TA can address everyone’s questions in order.&nbsp;</li>
+<li>I encourage you to attend office hours with your video on. This helps me recognize you, and keep mental notes on what techniques/concepts I emphasize to facilitate your specific understanding.&nbsp;</li>
+</ul>
+</section>
+<section id="slack" class="level3">
+<h3 class="anchored" data-anchor-id="slack">Slack</h3>
+<p>We will use Slack as our main form of communication for the class. If you are unsure how to do a homework problem or have other questions, please ask me by posting your question(s) on Slack. Please know that Slack is not guarded by the OSHU firewall, so if you have a question about accommodations or any sensitive topics, you may wish to message me via email. You can still message me regarding sensitive information on Slack, but I will not initiate those conversations on Slack.</p>
+<p><a href="https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg">**Please use this invitation link for our Slack workspace!**</a></p>
+</section>
+<section id="r-statistical-computing-software" class="level3">
+<h3 class="anchored" data-anchor-id="r-statistical-computing-software">R: Statistical Computing Software</h3>
+<p>Students will use statistical software to complete homework assignments. Students are required to use R/RStudio for this course. R can be freely downloaded. <a href="https://rstudio-education.github.io/hopr/starting.html">Helpful documentation</a> on installing R is available. <strong>I encourage you to install R prior to attending our first lecture.</strong> Please email me if you need help installing R or RStudio.</p>
+<p>You will need to download the following three things:</p>
+<ol type="1">
+<li><p>R <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a></p></li>
+<li><p>Rstudio <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></p></li>
+<li><p>Quarto <a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a></p></li>
+</ol>
+</section>
+</section>
+<section id="course-structure" class="level2">
+<h2 class="anchored" data-anchor-id="course-structure">Course structure</h2>
+<p>The course is structured around the following four components:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 45%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Component</strong></td>
+<td style="text-align: center;"><strong>Modality</strong></td>
+<td style="text-align: center;"><strong>Frequency</strong></td>
+<td style="text-align: left;"><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Video lessons</td>
+<td style="text-align: center;">Online</td>
+<td style="text-align: center;">Twice, Weekly</td>
+<td style="text-align: left;">Course content is provided through pre-recorded videos. Videos will consist of didactic lessons, interactive examples, and demonstrations.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Practice</td>
+<td style="text-align: center;">Online</td>
+<td style="text-align: center;">Weekly</td>
+<td style="text-align: left;">The course includes 9 practice assignments. They are an opportunity for you to engage with important concepts and practice coding. Practice assignments should be submitted online, and will be graded by me. Students are encouraged to work in groups for practice assignments, but each person should do their own summary and hand in their work.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Project (Labs and Poster)</td>
+<td style="text-align: center;">Online</td>
+<td style="text-align: center;">4 labs, 1 final poster</td>
+<td style="text-align: left;">The project will be a combination of submitted labs that will span the quarter and one final assignment due at the end of the quarter. This is meant to translate the R tools learned in the course to an information sheet using data. Labs will guide you through the needed coding and deliverables.</td>
+</tr>
+</tbody>
+</table>
+<section id="types-of-assessments" class="level4">
+<h4 class="anchored" data-anchor-id="types-of-assessments">Types of assessments</h4>
+<p>This class will use a combination of formative and summative assessments to build and test our knowledge. Below I define each of these types of assessments:</p>
+<ul>
+<li><p><strong>Formative assessment:</strong> Activity or work meant to help students learn and practice. Feedback on these assessments are meant to help the instructor and student identify gaps in knowledge and highlight accomplishments.</p></li>
+<li><p><strong>Summative assessment:</strong> Work meant to test how well students have achieved learning objectives. Grading of these assessments are meant to gauge how well a student grasps the learning objectives and will be able to use their knowledge outside of the classroom.</p></li>
+</ul>
+</section>
+</section>
+<section id="assessment-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-breakdown">Assessment Breakdown</h2>
+<section id="grading-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="grading-requirements">Grading &amp; Requirements</h3>
+<p>Letter grades will be assigned roughly according to the following scheme: A (&gt;=93%), A- (90-92%), B+ (88-89%), B(83-87%), B- (82-80%), C+(78-79%), C(73-77%), C- (70-72%), D (60 – 69%), F(&lt;60%).</p>
+<p>Grades will be based on homework assignments, midterm exam, class “attendance”, and final exam, as follows:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Course activity</strong></td>
+<td style="text-align: left;"><strong>Type of Assessment</strong></td>
+<td style="text-align: left;"><strong>Due Date</strong></td>
+<td style="text-align: left;"><strong>Percentage of final grade (PUBH 523)</strong></td>
+<td style="text-align: left;"><strong>Percentage of final grade (PUBH 623)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Practice</td>
+<td style="text-align: left;">Formative</td>
+<td style="text-align: left;">Every 1-2 weeks</td>
+<td style="text-align: left;">40%</td>
+<td style="text-align: left;">40%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Project Labs</td>
+<td style="text-align: left;">Formative/Summative</td>
+<td style="text-align: left;">Every 2-3 weeks</td>
+<td style="text-align: left;">40%</td>
+<td style="text-align: left;">40%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Project Poster</td>
+<td style="text-align: left;">Summative</td>
+<td style="text-align: left;">08/31</td>
+<td style="text-align: left;">20%</td>
+<td style="text-align: left;">20%</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="practice-assignment-grading" class="level3">
+<h3 class="anchored" data-anchor-id="practice-assignment-grading">Practice assignment grading</h3>
+<p>No student has the same amount of time available to dedicate to homework. This class may not be a priority to you, you may be taking several other courses, or you may need to dedicate time to other activities. Practice assignments are <strong>formative assessments</strong>, meaning its purpose is to help you learn and practice (heh). To reduce the pressure on you to have perfect or complete practice assignments, I have a very simple grading policy: <strong>Your practice assignment will be given a check mark if you turn in 75% of the questions parts completed (whether the 75% is correct or wrong).</strong> I highly encourage you to stay up-to-date with the practice and put in as much effort as you can. This will be the most helpful work in this class!</p>
+<p>If you turn in the practice on time, I will give you feedback (on one or more complete problems). <strong>There is no grade penalty for turning in the practice late, but you will not get feedback on your work.</strong> Please make sure to check the solutions or go to office hours to assess your work.</p>
+</section>
+<section id="viewing-grades-in-brightspace" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-grades-in-brightspace">Viewing Grades in Brightspace</h3>
+<p>Points you receive for graded activities will be posted to the Bightspace Gradebook. Click on the Gradebook link on the left navigation to view your points.</p>
+</section>
+</section>
+<section id="course-instructor-evaluations" class="level2">
+<h2 class="anchored" data-anchor-id="course-instructor-evaluations">Course &amp; Instructor Evaluations</h2>
+<section id="ongoing-course-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="ongoing-course-feedback">Ongoing Course Feedback</h3>
+<p>Throughout the duration of the course, you are also welcome to informally and anonymously submit your feedback through this <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u">Microsoft Form</a>. Students can submit feedback at any time and this form will be reviewed regularly by me. Your responses will be anonymous unless you elect to leave your email address. If I have done anything to make you feel uncomfortable, please give me feedback so I can change my behavior. <strong>Ultimately, this class is for you, and my individual social identity/behavior should not inhibit your learning.</strong> Thank you for your help making PUBH 523/623 a more successful class! Examples of ongoing feedback are:</p>
+<ul>
+<li><p>Nicky talks a little fast during lecture time. May you speak slower?</p></li>
+<li><p>During Office Hours, Dr.&nbsp;Wakim made a face when I asked a question. This face made me feel self-conscious about my question.</p></li>
+<li><p>Dr.&nbsp;W asked me a question about my experience that made me feel like a monolith. Please do not assume I can speak on behalf of my social identity groups.</p></li>
+<li><p>The in-class examples do not make me more interested in the material.</p></li>
+</ul>
+</section>
+<section id="final-course-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="final-course-feedback">Final Course Feedback</h3>
+<p>At the conclusion of the course, you will be asked to complete a formal online review of the course and the instructor. <strong>Your feedback on this University evaluation is critical to improving future student learning in this course as well as providing metrics relevant to the instructor’s career advancement (or lack of).</strong> Since our class is on the smaller side, everyone’s participation is needed for feedback to be released.</p>
+</section>
+</section>
+<section id="schedule" class="level2">
+<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
+<p><a href="./schedule.html">Please refer to the Schedule page.</a> I will make changes to this schedule if we need more or less time on a concept. You do not need to read the corresponding chapters in the textbook for each class.</p>
+</section>
+<section id="course-policies-and-resources" class="level2">
+<h2 class="anchored" data-anchor-id="course-policies-and-resources">Course Policies and Resources</h2>
+<section id="late-work-policy" class="level3">
+<h3 class="anchored" data-anchor-id="late-work-policy">Late Work Policy</h3>
+<p>I encourage you to make your best effort to submit all assignments on time, but I understand circumstances arise that are beyond our control. Please see this <a href="https://myuni.swansea.ac.uk/academic-life/extenuating-circumstances/#how-can-the-university-support-me-and-what-should-i-do=is-expanded&amp;what-are-extenuating-circumstances=is-expanded&amp;what-isnt-an-extenuating-circumstance=is-expanded&amp;what-supporting-evidence-is-required=is-expanded&amp;who-should-i-contact-to-make-an-extenuating-circumstances-application=is-expanded&amp;who-will-make-a-decision-on-my-application=is-expanded">Swansea University’s page on extenuating circumstances</a> for some examples. Not all circumstances are covered here, so please reach out if you have questions.&nbsp;</p>
+<ul>
+<li><p>The class will end on August 31, 2026. <strong>All coursework MUST be completed by September 05, 2026</strong> If you have <em>extenuating circumstances</em>, and need additional time to complete class assignments, please contact me. Together, we will come up with a plan for completion and to sort out registrar logistics.</p></li>
+<li><p>If you have extenuating circumstances that may jeopardize your ability to do work for several weeks, please contact me. We will come up with a plan to keep you on track in the course and prevent any delay in your education.</p></li>
+<li><p>For <strong>practice</strong>, there is a due date posted, but you may turn in the assignment any time before the class ends. I will give you the check regardless of when you submit the assignment. <strong>However, if you would like feedback on the homework, you must turn it in on time OR email me asking for feedback for your late homework.</strong></p></li>
+<li><p>For <strong>the final project</strong>, I ask you to email me directly. You can explain your circumstances and may ask me for an extension, but I won’t necessarily grant one.</p></li>
+<li><p>For <strong>labs</strong>, you will have <strong>ONE no-questions-asked, 3-day extension</strong>. Please use this wisely! You just need to send me a quick email saying “I am using my no-questions-asked extension for Lab __.”</p>
+<ul>
+<li>After you have used the one no-questions-asked extension, you will need to explain your circumstances and ask me for an extension.</li>
+<li><strong>Otherwise, 1 point will be deducted for each day that the lab is late</strong></li>
+</ul></li>
+<li><p>If you have a emergency involving your self, family, pet, friend, classmate, or anything/one deemed important to you, please do not worry about immediately contacting me. We can work something out after your emergency. If I contact you during an emergency, it is only because I am worried, and you do NOT need to respond until you are able.&nbsp;</p></li>
+</ul>
+</section>
+<section id="regrade-policy" class="level3">
+<h3 class="anchored" data-anchor-id="regrade-policy">Regrade Policy</h3>
+<p>If you think a question/assignment was incorrectly graded, first compare your answer to the solutions. If you believe a re-grade would be appropriate, write an email to me containing the question and a short explanation as to why the question(s) was/were incorrectly graded. Deadline: One week after assignments were returned to class (late requests will not be considered).</p>
+</section>
+<section id="plagiarism-and-attribution" class="level3">
+<h3 class="anchored" data-anchor-id="plagiarism-and-attribution">Plagiarism and Attribution</h3>
+<p>Please note that this section has been motivated by <a href="https://dmice.ohsu.edu/bedricks/courses/bmi525/policies.html">Dr.&nbsp;Steven Bedrick’s Course Policies and Grading site</a> for BMI 525. (Note that this is a good example of informal attribution of someone else’s work.)</p>
+<p>In this class, it is easy to use generative AI tools to solve your homework for you. Many problems follow a basic structure that is especially easy for generative AI to solve. In this class, you may use generative AI to help with your homework. You may even ask for direct answers. However, there are a few things I do not want you to do:</p>
+<ul>
+<li><p><strong>Do not copy generative AI’s answer directly into your practice or labs.</strong> Your practice is graded for full credit if you turn it in, in any state, so turning in generative AI’s answers is unacceptable. I rather see half-written answers that show what you’re thinking than see a correct answer from generative AI.</p></li>
+<li><p><strong>Do not stop once generative AI answered a question.</strong> If it gives an explanation, interact with it! Make sure you understand the thought process of generative AI. Try writing out the process to help cement it in your head. Check the answer with what we learn in class.</p></li>
+</ul>
+<p>At the end of the day, generative AI is a resource that will be available to you in a job and outside of school. Thus, we should use it as a tool in school as well! Let me know if generative AI helped you understand something! I would love to incorporate it into future classes!</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can think of this class as assembling a toolbox. When a handyperson starts working for the first time, they need to buy their tools. For their first few jobs, they might need help finding their tools, or remembering which tool is best used for what action. Eventually, they get to know their tools well, and using them appropriately becomes second nature.</p>
+<p><strong>For now, generative AI can help us find and use our tools, but we need to work towards using them as second nature!</strong></p>
+</div>
+</div>
+</section>
+</section>
+<section id="how-to-succeed-in-this-course" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-succeed-in-this-course">How to succeed in this course</h2>
+<p>Every professor has different expectations when assigning certain work or providing certain resources. I want to walk through each class resource and assignment so that you know what you can do to succeed in <em>this class</em>. For resources, I want you to optimize the opportunities to learn. For assignments, I want you to know the strategies that students can use to learn the most and prepare for future exams.</p>
+<section id="resources" class="level3">
+<h3 class="anchored" data-anchor-id="resources">Resources</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 37%">
+<col style="width: 40%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Resource</strong></td>
+<td style="text-align: left;"><strong>What is it?</strong></td>
+<td style="text-align: left;"><strong>How do I use it?</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Office Hours</td>
+<td style="text-align: left;">Blocks of time a professor or TA dedicates for questions. The teaching staff will be located in a specific room. Several students may enter the space at a time and will ask specific or broad questions. If many students attend office hours, a queue will be created so that students can be served equally.</td>
+<td style="text-align: left;">The main use of office hours is to ask questions about an assignment or lesson notes. You are welcome to sit and work through your assignments in office hours. OH are also an informal way of meeting fellow students to collaborate with.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Lessons and recordings</td>
+<td style="text-align: left;">Time shared between the professor and students where the professor conveys important class material. Material discussed in lectures include concepts, calculations, code, and examples. Lectures are a mix of presentation of information and working through examples together.</td>
+<td style="text-align: left;">Students should watch all lesson videos. You should attempt to understand new material presented by following the presentation slides, taking notes on additional details that may conveyed verbally, and working through examples with the professor. Students are encouraged to ask questions when you don’t understand the material at any point in the lesson.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Textbooks</td>
+<td style="text-align: left;">Written and published material that explains concepts, steps through calculations, provides examples, and provides practice problems. The listed textbooks is the basis for this course. While I am to cover all topics in class, the textbook provides alternative explanations and additional examples.</td>
+<td style="text-align: left;">I do not expect students to read the textbooks. I see the textbook as a good resource if you are struggling with a specific topic, in need of an example while working on homework, or want additional practice.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Website</td>
+<td style="text-align: left;">The course website is designed by me so that you have access to all the course materials in a more organized and flexible way. All resources delivered from me to you will be available on the website. Any assignments turned in will be through Brightspace.</td>
+<td style="text-align: left;">You can navigate through different course resources and information using the left-side tabs or top navigation bar. Course materials, like lecture notes, practice, data examples, and recordings, can be found on the site. Please explore the tabs and get a sense of the organization.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Brightspace</td>
+<td style="text-align: left;">Brightspace is a learning management system for higher ed.&nbsp;This is the university sanctioned LMS where we will submit assignments.</td>
+<td style="text-align: left;">You will turn in assignments through Brightspace under the “Assignments” tab. You can also view your grades under “Grades.”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assignments" class="level3">
+<h3 class="anchored" data-anchor-id="assignments">Assignments</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 31%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>Assignment</strong></th>
+<th style="text-align: center;"><strong>Type of assessment</strong></th>
+<th style="text-align: left;"><strong>Before you submit/take it</strong></th>
+<th style="text-align: left;"><strong>After it is graded</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Practice</td>
+<td style="text-align: center;">Formative</td>
+<td style="text-align: left;">• Work out each problem on your own as much as you can<br>• Talk through problems with a peer<br>• Go to Office Hours for help<br>• Ask questions on Slack<br>• Write down work that shows your thought process<br>• Search your issue on Stack Exchange/Stack Overflow</td>
+<td style="text-align: left;">• Review the solutions<br>• Review your mistakes<br>• For solutions that involve writing sentences, check with me or a TA if your answer fits the solution<br>• Go to Office Hours to ask about your solutions</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Project Labs and Information sheet</td>
+<td style="text-align: center;">Formative and Summative</td>
+<td style="text-align: left;">• Start the lab as early as possible<br>• Work on R coding and check with classmates on work<br>• Come to Office Hours for help with specific R work<br>• For the report, compile your work from the labs, and decide what is important in the analysis.</td>
+<td style="text-align: left;">• Review feedback on labs and integrate into future labs and final project.<br>• The project final will be graded at the end of the quarter, so you will not have a chance to interact with my feedback as much<br>• If you have questions about your grade, you may email me<br>• Keep the information sheet for future reference<br>• You can add this project to your resume!</td>
+</tr>
+</tbody>
+</table>
+<p>If you would like any other course resources explained in this format, please request it through the <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u">Ongoing Course Feedback</a>.&nbsp;</p>
+</section>
+</section>
+<section id="course-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="course-expectations">Course Expectations</h2>
+<section id="instructor-expectations" class="level3">
+<h3 class="anchored" data-anchor-id="instructor-expectations">Instructor Expectations</h3>
+<section id="commitment-to-your-learning-and-your-success" class="level4">
+<h4 class="anchored" data-anchor-id="commitment-to-your-learning-and-your-success">Commitment to your learning and your success</h4>
+<p>I believe that everyone has the ability to be successful in this course and I have put a lot of effort into designing the course in a way that maximizes your learning to ensure your success. Please talk to me before or after class or stop by my office if there is anything you want to discuss or about which you are unclear. I want to be supportive of your learning and growth.</p>
+</section>
+<section id="inclusive-supportive-learning-community" class="level4">
+<h4 class="anchored" data-anchor-id="inclusive-supportive-learning-community">Inclusive &amp; supportive learning community</h4>
+<p>I believe that learning happens best when we all learn together, as a community. This means creating a space characterized by generous listening, civility, humility, patience, and hospitality. I will attempt to promote a safe climate where we examine content from multiple cultural perspectives, and I will strive to create and maintain a classroom atmosphere in which you feel free to both listen to others and express your views and ask questions to increase your learning.</p>
+</section>
+<section id="openness-to-feedback" class="level4">
+<h4 class="anchored" data-anchor-id="openness-to-feedback">Openness to feedback</h4>
+<p>I appreciate straightforward feedback from you regarding how well the class is meeting your needs. Let me know if material is not clear or when its relevance to the student learning outcomes for the course is not apparent. In particular, let me know if you identify bias or stereotyping in my teaching materials as I will seek to continuously improve. Please also let me know if there’s an aspect of the class you find particularly interesting, helpful, or enjoyable!</p>
+</section>
+<section id="responsiveness" class="level4">
+<h4 class="anchored" data-anchor-id="responsiveness">Responsiveness</h4>
+<p>I will monitor email as well as the discussion board daily and try respond to all messages within 24 hours Monday-Friday.</p>
+</section>
+<section id="clear-guidelines-and-prompt-feedback-on-assignments" class="level4">
+<h4 class="anchored" data-anchor-id="clear-guidelines-and-prompt-feedback-on-assignments">Clear guidelines and prompt feedback on assignments</h4>
+<p>I will provide clear instructions for all assignments, and a grading rubric when applicable. I will provide detailed feedback on your submissions and will update grades promptly in Brightspace.</p>
+</section>
+</section>
+<section id="student-expectations-and-resources" class="level3">
+<h3 class="anchored" data-anchor-id="student-expectations-and-resources">Student Expectations and Resources</h3>
+<section id="watch-lessons" class="level4">
+<h4 class="anchored" data-anchor-id="watch-lessons">Watch lessons</h4>
+<p>You are expected to watch all lesson videos following the schedule.</p>
+</section>
+<section id="participate" class="level4">
+<h4 class="anchored" data-anchor-id="participate">Participate</h4>
+<p>I encourage you to participate actively in class and online discussions. I will expect all students, and all instructors, to be respectful of each other’s contributions, whether I agree with them or not. Professional interactions are expected.</p>
+</section>
+<section id="build-rapport" class="level4">
+<h4 class="anchored" data-anchor-id="build-rapport">Build rapport</h4>
+<p>If you find that you have any trouble keeping up with assignments or other aspects of the course, make sure you let me know as early as possible. As you will find, building rapport and effective relationships are key to becoming an effective professional. Make sure that you are proactive in informing me when difficulties arise during the quarter so that I can help you find a solution.</p>
+</section>
+<section id="complete-assignments" class="level4">
+<h4 class="anchored" data-anchor-id="complete-assignments">Complete assignments</h4>
+<p>All assignments for this course will be submitted electronically through Brightspace unless otherwise instructed. I encourage you to make your best effort to submit all assignments on time, but I understand that sometimes circumstances arise that are beyond our control. If you need an extension, please contact me in congruence with the Late Policy.</p>
+</section>
+<section id="seek-help-if-you-need-it" class="level4">
+<h4 class="anchored" data-anchor-id="seek-help-if-you-need-it">Seek help if you need it</h4>
+<p>I believe it is important to support the physical and emotional well‐being of my students. If you are experiencing physical or mental health issues, I encourage you to use the resources on campus such as those listed below. If you have a health issue that is affecting your performance or participation in the course, and/or if you need help connecting with these resources, please contact me.</p>
+<ul>
+<li><p>Student Health and Wellness Center (SHW), <a href="https://www.ohsu.edu/education/student-health-and-wellness">Website</a>, 503-494-8665 (OHSU Students only)</p></li>
+<li><p>Student Health and Counseling (SHAC), <a href="https://www.pdx.edu/health-counseling/">Website</a>, 503-725-2800</p></li>
+</ul>
+</section>
+<section id="inform-your-instructor-of-any-accommodations-needed" class="level4">
+<h4 class="anchored" data-anchor-id="inform-your-instructor-of-any-accommodations-needed">Inform your instructor of any accommodations needed</h4>
+<p>You should speak with or email me before or during the first week of classes regarding any special needs. Students seeking academic accommodations should register with the appropriate service under the School policies below.</p>
+<p>Some religious holidays may occur on regularly scheduled class days. Because available class hours are so limited in number, we will have to hold class on all such days. Class video recordings will be available and you are encouraged to engage with the material outside of the regular class time. You are also encouraged to come to office hours with questions from the session.</p>
+</section>
+<section id="commit-to-integrity" class="level4">
+<h4 class="anchored" data-anchor-id="commit-to-integrity">Commit to integrity</h4>
+<p>As a student in this course (and at PSU or OHSU) you are expected to maintain high degrees of professionalism, commitment to active learning and participation in this class and also integrity in your behavior in and out of the classroom.</p>
+<p>Cheating and other forms of academic misconduct will not be tolerated in this course and will be dealt with firmly. Student academic misconduct refers to behavior that includes plagiarism, cheating on assignments, fabrication of data, falsification of records or official documents, intentional misuse of equipment or materials (including library materials), or aiding and abetting the perpetration of such acts. Preparation of exams, assigned on an individual basis, must represent each student’s own individual effort. When used, resource materials should be cited in conventional reference format.</p>
+</section>
+</section>
+</section>
+<section id="course-communications" class="level2">
+<h2 class="anchored" data-anchor-id="course-communications">Course Communications</h2>
+<section id="brightspace-announcements" class="level3">
+<h3 class="anchored" data-anchor-id="brightspace-announcements">Brightspace announcements</h3>
+<p>For important/urgent matters, I will communicate with you using announcements via Brightspace that will be delivered to your OHSU Email account as well as displayed in the Brightspace course site Announcements section.</p>
+<p>I will copy these announcements over to Slack if it does not contain sensitive information.</p>
+</section>
+<section id="e-mail" class="level3">
+<h3 class="anchored" data-anchor-id="e-mail">E-mail</h3>
+<p>E-mail should be used only for messages that are private in nature. Please send private messages to my OHSU email address (wakim@ohsu.edu). <strong>Messages sent through Brightspace Inbox will not be answered.</strong></p>
+</section>
+</section>
+<section id="further-student-resources" class="level2">
+<h2 class="anchored" data-anchor-id="further-student-resources">Further Student Resources</h2>
+<section id="sph-writing-lab" class="level3">
+<h3 class="anchored" data-anchor-id="sph-writing-lab">SPH Writing Lab</h3>
+<p>The School of Public Health Writing Support serves graduate students (master’s and PhD) in SPH, offering help on all professional writing tasks, including class papers, dissertations, job application documents, personal statements, and grant applications, to name a few. Leslie Bienen, MFA, DVM offers one-on-one writing support and other workshops. Appointments are virtual for the time being. You can make an appointment by contacting <a href="mailto:writingsupportsph@pdx.edu">writingsupportsph@pdx.edu</a> or making an appointment through <a href="https://calendly.com/writingsupportsph/writing-meeting">Calendly</a>.</p>
+</section>
+<section id="grammarly-subscription" class="level3">
+<h3 class="anchored" data-anchor-id="grammarly-subscription">Grammarly Subscription</h3>
+<p>The School of Public Health students have access to a subscription version of Grammarly. While Grammarly cannot improve the argument and flow of your work, it can help with spelling, grammar, and sentence structure. If you are interested in this tool, please add your name to this email <a href="https://docs.google.com/forms/d/1IQWFsARrTJlasK2a5JTonR4ygr8MxqIzbh_bAxKmWWI/edit?ts=614ce07a">form</a> and they will get you added to the subscription. Be sure to use your PSU login credentials to access the form.</p>
+</section>
+<section id="student-wellness" class="level3">
+<h3 class="anchored" data-anchor-id="student-wellness">Student Wellness</h3>
+<p>I am committed to supporting the physical and emotional well-being of my students. Both PSU and OHSU have designated centers for student health. For OHSU, students can visit the <a href="https://www.ohsu.edu/education/behavioral-health">Behavioral Health site</a>, where you can find more information including the number to make an appointment. <strong>All student visits are free.</strong> OHSU students also have access to PSU’s <a href="https://www.pdx.edu/health-counseling/counseling">Counseling Services</a> through the school’s Student Health &amp; Counseling.&nbsp;Information on additional student resources for OHSU students are available on the OHSU <a href="https://ohsu-psu-sph.org/health_and_wellness/">Health and Wellness Resource page</a>.&nbsp;</p>
+</section>
+<section id="support-for-food-insecurity" class="level3">
+<h3 class="anchored" data-anchor-id="support-for-food-insecurity">Support for Food Insecurity</h3>
+<p>Students across the country experience food insecurity at alarming rates. OHSU and PSU both provide a list of resources to help combat food insecurity. Of note, the Committee to Improve Student Food Security (CISFS) at PSU provides a <a href="https://www.pdx.edu/student-access-center/free-food-market">Free Food Market</a> on the second Monday of each month. OHSU also provides <a href="https://o2.ohsu.edu/student-central/health-wellness/student-food-resources/snap.cfm">SNAP Enrollment Assistance</a>. The <a href="https://oregonhunger.org/snap-for-students/">Supplemental Nutrition Assistance Program (SNAP)</a> allocates money towards food for individuals below a certain income level. If you make less than $2,430 monthly, you may wish to enroll.</p>
+</section>
+<section id="support-for-students-with-children" class="level3">
+<h3 class="anchored" data-anchor-id="support-for-students-with-children">Support for Students with Children</h3>
+<p>Students who have children can use the PSU resource: <a href="https://www.pdx.edu/students-with-children/">Resource Center for Students with Children</a>. Resources are mostly focused on students with younger children. There are several great resources available, including: family-friendly study spaces, new baby starter packs, free kids clothing, and further information on financial resources for childcare.</p>
+</section>
+</section>
+<section id="see-brightspace-for-sph-and-ohsu-policies" class="level2">
+<h2 class="anchored" data-anchor-id="see-brightspace-for-sph-and-ohsu-policies">See Brightspace for SPH and OHSU policies</h2>
+<p>The Brightspace syllabus has more information from SPH and OHSU, including policy and resources.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

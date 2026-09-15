@@ -1,0 +1,81 @@
+---
+title: "Basics"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Basics"
+    html-math-method: mathjax
+    highlight-style: arrow
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+## Coding basics
+
+- R can be used to do calculations (like a calculator)
+- It will follow the order of operations (PEMDAS) when doing calculations
+
+```{r}
+1 / 200 * 30
+(59 + 73 + 2) / 3
+sin(pi / 2)
+```
+
+## Different operators
+
+- Most operators are the same as in math, but some are different
+
+ 
+
+Here are some common operators:
+
+| Operation      | Written                   | In R                   |
+|----------------|---------------------------|------------------------|
+| Addition       | $1+1$                     | `1+1`                  |
+| Subtraction    | $2-1$                     | `2-1`                  |
+| Multiplication | $3\times 2$ or $3\cdot 2$ | `3*2`                  |
+| Division       | $3 / 2$ or $\dfrac{3}{2}$ | `3/2`                  |
+| Exponential    | $4^2$                     | `4^2`                  |
+| Square root    | $\sqrt{4}$ or $4^{1/2}$   | `4^(1/2)` or `sqrt(4)` |
+
+## Relational operators
+
+- These operators are interpreted as questions
+
+- R will return a true or false answer, depending on if it meets the criteria
+
+| Operation                | In R   |
+|--------------------------|--------|
+| Less than                | `1<1`  |
+| Greater than             | `1>1`  |
+| Less than or equal to    | `1<=1` |
+| Greater than or equal to | `1>=1` |
+| Equal to                 | `1==1` |
+| Not equal to             | `1!=1` |
+
+## References
+
+- You can find more R operators here: <https://bookdown.org/manishpatwal/bookdown-demo/basic-operations-in-r.html>

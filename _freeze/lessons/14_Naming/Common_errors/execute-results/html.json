@@ -1,0 +1,19 @@
+{
+  "hash": "558ace234b41327647a6660f1a8474c4",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Common Errors\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: \"Common Errors\"\n    html-math-method: mathjax\n    highlight-style: arrow\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n## Common console errors (1/2)\n\n**Incomplete commands**\n\n::: columns\n::: {.column width=\"50%\"}\n-   When the console is waiting for a new command, the prompt line begins with `>`\n    -   If the console prompt is `+`, then a previous command is incomplete\n    -   You can finish typing the command in the console window\n:::\n\n::: {.column width=\"50%\"}\nExample:\n\n\n::: {.cell}\n\n```{.r .cell-code}\n> 3 + (2*6\n+ )\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 15\n```\n\n\n:::\n:::\n\n:::\n:::\n\n## Common console errors (2/2)\n\n**Object is not found**\n\n-   This happens when text is entered for a non-existent variable (object)\n\nExample:\n\n\n::: {.cell}\n\n```{.r .cell-code}\nhello\n```\n\n::: {.cell-output .cell-output-error}\n\n```\nError:\n! object 'hello' not found\n```\n\n\n:::\n:::\n\n\n-   Can be due to missing quotes\n\n\n::: {.cell}\n\n```{.r .cell-code}\ninstall.packages(dplyr) \n```\n\n::: {.cell-output .cell-output-error}\n\n```\nError:\n! object 'dplyr' not found\n```\n\n\n:::\n\n```{.r .cell-code}\n# correct code is: install.packages(\"dplyr\")\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

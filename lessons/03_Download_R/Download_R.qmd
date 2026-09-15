@@ -1,0 +1,145 @@
+---
+title: "Download + Intro to R & Rstudio"
+author: "Nicky Wakim, Jessica Minnier, and Meike Niederhausen"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Download + Intro to R & Rstudio"
+    html-math-method: mathjax
+    highlight-style: arrow
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(here)
+
+# terminal: for icons
+# quarto install extension quarto-ext/fontawesome
+```
+
+## Introduction to R
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](../img_slides/horst_welcome_R.png){fig-align="center"}
+
+## What is R?
+
+::::: columns
+::: {.column width="70%"}
+- A programming language
+- Focus on statistical modeling and data analysis
+- Useful for epidemiology, biostatistics, and data science
+- Great visualizations
+- Also useful for most anything else you'd want to tell a computer to do
+- Interfaces with other languages i.e. python, C++, bash
+- Free and open source!
+:::
+
+::: {.column width="30%"}
+![](../img_slides/R_logo.png)
+:::
+:::::
+
+## What is RStudio?
+
+::::: columns
+::: {.column width="50%"}
+- R is a programming language
+:::
+
+::: {.column width="50%"}
+- RStudio is an integrated development environment (IDE)\
+  - An interface to use R (with perks!)
+:::
+:::::
+
+![[Modern Dive](https://moderndive.com/1-getting-started.html#r-rstudio)](../img_slides/r_vs_rstudio_1.png){fig-align="center"}
+
+## We open RStudio on our computer (not R!)
+
+- When you are on your computer, you will open RStudio to use R
+- If you open R directly, it will much harder to navigate!
+
+ 
+
+:::::::::::::: columns
+
+::: {.column width="10%"}
+:::
+
+:::::: {.column width="35%"}
+::::: blue
+::: blue-ttl
+Do NOT open this!
+:::
+
+::: blue-cont
+![](../img_slides/R_logo.png){fig-align="center" width="500"}
+:::
+:::::
+::::::
+
+::: {.column width="10%"}
+:::
+
+:::::: {.column width="35%"}
+::::: pink
+::: pink-ttl
+Open this!
+:::
+
+::: pink-cont
+![](../img_slides/rstudiologo.png){fig-align="center" width="438"}
+:::
+:::::
+::::::
+
+::: {.column width="10%"}
+:::
+::::::::::::::
+
+## RStudio interface
+
+::::: columns
+::: {.column width="25%"}
+- [Editor window]{style="color: #5BAFF8;"}: where you write your code
+- [Console]{style="color: #9F71F7;"}: where you see the output of your code
+- [Environment pane]{style="color: #EF85B3;"}: where you see the objects you've created
+- [Viewer pane]{style="color: #459B99;"}: where you see plots, files, and help pages
+:::
+
+::: {.column width="75%"}
+![](../img_slides/RStudio_interface.png){fig-align="center"}
+:::
+:::::
+
+## So let's download them!
+
+- Use this link to start: <https://posit.co/download/rstudio-desktop/>
+
+ 
+
+- You must install R first
+  - Even if you have R installed already, I highly recommend installing the latest version
+  - In the future, you will periodically want to update this
+- Install RStudio Desktop Open Source License (second)
+
+## References
+
+- Read more about RStudio's layout in Section 3.4 of [Getting Used to R, RStudio, and R Markdown](https://ismayc.github.io/rbasics-book/3-rstudiobasics.html#rstudio-layout){target="_blank"} (Ismay and Kennedy 2021)

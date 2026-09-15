@@ -1,0 +1,104 @@
+---
+title: ""
+toc: false
+page-layout: full
+link-external-newwindow: true
+---
+
+::: {style="background-color: #3070BF"}
+::: {style="color: #FFFFFF"}
+
+::: columns
+
+::: {.column width="30%"}
+![](images/PUBH_R.png){fig-align="center" width="337"}
+:::
+
+::: {.column width="65%"}
+
+## PUBH 523: Introduction to R
+
+### Summer 2026
+
+ 
+
+This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables.  By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. No prior statistical or coding experience is expected or required.
+
+ 
+:::
+
+::: {.column width="5%"}
+:::
+
+:::
+:::
+:::
+
+::: {style="background-color: #F2EFEA"}
+::: {style="color: #000"}
+
+::: columns
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="20%"}
+### Links
+
+[{{< iconify material-symbols folder size=25px >}} OneDrive Folder](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623?csf=1&web=1&e=81YRnr)
+
+
+:::
+
+::: {.column width="20%"}
+### Instructor
+
+[{{< iconify fluent person-24-filled size=24px >}}]{style="color:#C83532;"} [Dr. Nicky Wakim](instructors.qmd)
+
+[{{< iconify bi building-fill size=24px >}}]{style="color:#C83532;"} Vanport 622A
+
+[{{< iconify tabler mail-filled size=24px >}}]{style="color:#C83532;"} [wakim\@ohsu.edu](mailto:wakim@ohsu.edu)
+:::
+
+::: {.column width="25%"}
+### Office Hours
+
+Running from 7/23-8/31
+
+::: columns
+::: {.column width="30%"}
+[Nicky](https://ohsu.webex.com/meet/wakim)
+:::
+::: {.column width="70%"}
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} M 3-3:30pm
+
+
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} Th 2-2:30pm
+:::
+:::
+:::
+
+::: {.column width="25%"}
+### Contacting me
+
+E-mail or Slack is the best way to get in contact with me. I will try to respond to all course-related e-mails within 24 hours Monday-Friday.
+:::
+
+::: {.column width="5%"}
+:::
+
+:::
+
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: grid
+::: g-col-9
+:::
+
+::: g-col-3
+[{{< iconify icomoon-free github size=24px >}} View the source on GitHub](https://github.com/nwakim/PUBH_523_26Su)
+:::
+:::

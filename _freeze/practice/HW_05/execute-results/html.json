@@ -1,0 +1,15 @@
+{
+  "hash": "1b4c3fbad581779423254542d85d8dc0",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Homework 5\"\nsubtitle: \"BSTA 513/613\"\nauthor: \"Your name here - update this!!!!\"\ndescription: \"Due: Thursday June 6, 2024 at 11pm\"\ndate-modified: \"today\"\ndate: \"6/6/2024\"\nformat: \n  html:\n    link-external-newwindow: true\n    toc: true\n    self-contained: true\n    embed-resources: true\n---\n\n```{=html}\n<style>div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}</style>\n```\n\n\n\n::: callout-caution\nNicky needs to edit\n:::\n\n## Directions\n\n-   [Download the `.qmd` file here.](https://github.com/nwakim/BSTA_513_26S/blob/main/homework/HW5.qmd)\n\n-   You will need to download the datasets. Use [this link to download](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/S2024_BSTA_513_613/Student_files/Data/Homework?csf=1&web=1&e=QEsqb9) the homework datasets needed in this assignment. If you do not want to make changes to the paths set in this document, then make sure the files are stored in a folder named \"data\" that is housed in the same location as this homework `.qmd` file.\n\n-   Please upload your homework to [Sakai](https://sakai.ohsu.edu/portal/site/BSTA-513-1-AV-Sp24/tool/c5ad42cb-c245-44d3-a4f3-535eec24e879). **Upload both your `.qmd` code file and the rendered `.html` file**\n\n    -   **Please rename you homework as `Lastname_Firstinitial_HW5.qmd`. This will help organize the homeworks when the TAs grade them.**\n\n    -   **Please also add the following line under `subtitle: \"BSTA 513/613\"`: `author: First-name Last-name` with your first and last name so it is attached to the viewable document.**\n\n-   For each question, make sure to include all code and resulting output in the html file to support your answers.\n\n-   Show the work of your calculations using R code within a code chunk. Make sure that both your code and output are visible in the rendered html file. This is the default setting.\n\n-   If you are computing something by hand, you may take a picture of your work and insert the image in this file. You may also use LaTeX to write it inline.\n\n-   Write all answers in complete sentences as if communicating the results to a collaborator. This means including a sentence summarizing results in the context of the research study.\n\n::: callout-tip\nIt is a good idea to try rendering your document from time to time as you go along! Note that rendering automatically saves your qmd file and rendering frequently helps you catch your errors more quickly.\n:::\n\n# Questions\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

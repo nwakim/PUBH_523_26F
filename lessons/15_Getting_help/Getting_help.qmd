@@ -1,0 +1,452 @@
+---
+title: "Getting help"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Getting help"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+## Main ways to get unstuck
+
+::: pink
+::: pink-cont
+A huge part of coding is **learning to debug your own code** and **figure out what's going wrong.**
+:::
+:::
+
+The good news is that there are many ways to get help. These are some good steps (in order):
+
+1. [Use the `?` in front of the function name to get more information!]{style="color:#BF396F;"}
+  
+    -   *Best for: understanding function arguments and usage*
+
+2. [Google or go to stackoverflow.com]{style="color:#3070BF;"}
+  
+    - *Best for: specific errors and edge cases*
+
+3. [I can also go to my favorite AI tool to get help]{style="color:#459B99;"}
+  
+    - *Best for: getting code started or explaining errors*
+
+4. [Ask another person!]{style="color:#C83532;"}
+  
+    - *Best for: when all else fails*
+
+## [1. R Documentation with `?`]{style="color:#BF396F;"}
+
+Type `?function_name` in the console to open the help page for any function.
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+?mean            #<1>
+help(mean)       #<1>
+```
+
+1. These two commands do the same thing
+
+ 
+
+Every help page has the same structure:
+
+| Section | What it tells you |
+|---|---|
+| **Description** | What the function does |
+| **Usage** | The function signature |
+| **Arguments** | What inputs it takes |
+| **Value** | What it returns |
+| **Examples** | Copy-pasteable code |
+
+:::
+
+::: {.column width="50%"}
+::: pink2
+::: pink2-ttl
+Pro tip: Jump straight to Examples
+:::
+::: pink2-cont
+Scroll to the bottom of any help page — the **Examples** section is often the fastest way to understand how a function works.
+
+```{r}
+#| eval: false
+example(mean)    #<1>
+```
+
+1. Run the examples directly
+:::
+:::
+
+If `?` doesn't help, try searching across all installed packages:
+
+```{r}
+#| eval: false
+??mean  #<1>      
+```
+
+1. Broader search of the function `mean()`
+:::
+:::
+
+## [1. Demo: using `?` to solve a problem]{style="color:#BF396F;"}
+
+::: pink2
+::: pink2-cont
+**Scenario:** You want to round the number `3.14159` to 2 decimal places. You know there's a `round()` function, but you're not sure how to use it.
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+[**Step 1:**]{style="color:#BF396F;"} Pull up the help page
+
+```{r}
+#| eval: false
+?round
+```
+
+
+[**Step 2:**]{style="color:#BF396F;"} Read the **Usage** and **Arguments** sections
+
+- Arguments and Examples are very helpful sections!
+
+```r
+round(x, digits = 0)
+```
+
+- `x` — the number to round
+- `digits` — how many decimal places (default is 0!)
+:::
+
+::: {.column width="50%"}
+[**Step 3:**]{style="color:#BF396F;"} Try it out
+
+```{r}
+round(3.14159)          #<1>
+```
+
+1. Default: 0 decimal places
+
+```{r}
+round(3.14159, digits = 2)   #<1> 
+```
+
+1. Now set `digits` to 2
+:::
+:::
+
+
+## [2. Google and Stack Overflow]{style="color:#3070BF;"}
+
+::: columns
+::: {.column width="60%"}
+::: blue
+::: blue-cont
+**Tips for a good search:**
+
+- Always include **"in R"** or **"R programming"** in your query
+- Copy and paste the **exact error message** into Google
+- Add the **function or package name** if relevant
+:::
+:::
+
+**Example:** Getting `NA` from `mean()`
+
+> Google: `"mean function returning NA in R"`
+
+This leads to answers like [this Stack Overflow thread](https://stackoverflow.com/questions/25297705/mean-na-rm-true-still-returns-na) or [this Posit Community post](https://forum.posit.co/t/why-r-return-na-for-all-my-functions/91751), where you'd learn about `na.rm = TRUE`.
+
+```{r}
+x <- c(1, 2, NA, 4)
+mean(x)             #<1>
+mean(x, na.rm = TRUE)  #<2>
+```
+
+1. Returns `NA`:not what we wanted!
+2. Returns `2.333...`: ignores the missing value
+:::
+
+::: {.column width="5%"}
+:::
+::: {.column width="35%"}
+::: blue
+::: blue-ttl
+Reading Stack Overflow answers
+:::
+::: blue-cont
+- Check the **accepted answer** (green checkmark) first
+- Look at the **vote count**: highly upvoted answers are usually reliable
+- Read the **comments** too: they often clarify edge cases
+- Check the **date**: R and its packages change over time
+  - Ex: `mean( df$SleepDuration[df$Gender == 1] )` is a base R coding
+:::
+:::
+:::
+:::
+
+## [2. Demo: Google and Stack Overflow]{style="color:#3070BF;"}
+
+::: blue
+::: blue-cont
+**Scenario:** You try to combine two pieces of text in R and get an unexpected error.
+
+```{r}
+#| error: true
+"Hello" + "World"    #<1>
+```
+
+1. Seems reasonable... but `+` is only for math!
+:::
+:::
+
+ 
+
+::: columns
+::: {.column width="50%"}
+**Step 1:** Copy the error and search Google:
+
+> Error in "Hello" + "World" : non-numeric argument to binary operator in R
+
+::: blue
+::: blue-cont
+Googling the **exact error message** in quotes is often faster than describing the problem in your own words.
+:::
+:::
+
+:::
+
+::: {.column width="50%"}
+**Step 2:** [Stack Overflow explains that `+` is only for math](https://stackoverflow.com/questions/66027835/non-numeric-argument-to-binary-operator-error-in-r) and [Google's search AI explains string combining uses `paste()` instead](https://share.google/aimode/wh2ZEyA8sJE9rogP8).
+
+**Step 3:** Apply what you found
+
+```{r}
+paste("Hello", "World")   #<1>
+paste0("Hello", "World")  #<2>
+```
+
+1. Combines with a space in between
+2. Combines with no space
+
+:::
+:::
+
+## [3. AI Tools (ChatGPT, Claude, etc.)]{style="color:#459B99;"}
+
+**When AI helps most:**
+
+- Explaining what an error message means
+- Getting starter code for something new
+- Understanding what a function does
+- Adding intricate details to plotting
+- Helping with lengthy data management code
+
+**Example prompts:**
+
+> *"Why is the mean function in R giving me an NA?"*
+
+> *"Can you explain what `na.rm = TRUE` does in R?"*
+
+[See an example ChatGPT conversation →](https://chatgpt.com/share/66f8a2b9-9918-8006-88af-0dc7b64bb86a)
+
+## [3. AI Tools (ChatGPT, Claude, etc.): *some hesitation*]{style="color:#459B99;"}
+
+- If you do not want to use AI, that's totally fine! You can still get help from the other methods
+
+**When using AI, watch out for:**
+
+- AI often gives you **more code than you need**
+- AI can be **confidently wrong**: always test the code it gives you
+- AI may use **functions we haven't covered yet**: stick to tools from class notes
+
+::: pink
+::: pink-ttl
+Course policy on AI
+:::
+::: pink-cont
+If you cannot trace code back to the class notes, do **not** use it in assignments. You should be able to **explain every line** of your submitted code. See the [syllabus](https://nwakim.github.io/F24_EPI_525/syllabus.html#plagiarism-and-attribution) for details.
+:::
+:::
+
+
+## [3. Demo: Using AI effectively]{style="color:#459B99;"}
+
+::: green
+::: green-cont
+**Scenario:** You want to find the largest value in a vector but have no idea what function to use.
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+**A vague prompt (less useful):**
+
+> *"how do i get the biggest number"*
+
+AI may give a long answer with many options you don't need yet.
+
+**A better prompt:**
+
+> *"In R, I have a vector of numbers: `c(4, 7, 2, 9, 1)`. What is the simplest function to find the maximum value?"*
+
+AI will likely point you to `max()`.
+:::
+
+::: {.column width="50%"}
+**Step 2:** Test it yourself — don't just trust it!
+
+```{r}
+scores <- c(4, 7, 2, 9, 1)
+max(scores) #<1>
+```
+
+1. Always run the code to confirm it works
+
+**Step 3:** Verify you understand it
+
+```{r}
+#| eval: false
+?max  #<1>
+```
+
+1. Check the docs to confirm what it does
+
+::: green
+::: green-cont
+AI gives you a **starting point**, not a final answer. Make sure you can explain every line before using it in your work.
+:::
+:::
+:::
+:::
+
+## [4. Getting help from someone]{style="color:#C83532;"}
+
+- When asking for help (from a classmate, from me, on Stack Overflow, or from AI), you want to include:
+  - Some information about the context
+  - A reproducible example (**reprex**) 
+
+- These make it much easier for someone to help you!
+
+::: columns
+::: column
+::: orange
+::: orange-ttl
+Some information about the context
+:::
+::: orange-cont
+- What you *expected* to happen
+- What *actually* happened
+- The **exact error message** you received
+:::
+:::
+:::
+::: column
+::: pink
+::: pink-ttl
+A good reprex has four parts:
+:::
+::: pink-cont
+- Needed packages
+- Needed data 
+- The exact code that produces the error
+- Needed code that leads to the error
+:::
+:::
+:::
+:::
+
+- In our labs, it's good to save a `.rds` file of your `qmd`'s starting data, and share that with me
+
+## [4. Demo: Writing a reprex]{style="color:#C83532;"}
+
+::: red
+::: red-cont
+**Scenario:** You're getting an unexpected result and want to ask your instructor or a classmate for help.
+:::
+:::
+
+- Focus on making your reprex self-contained and **minimal**: include what's needed, but no more!
+
+
+::: columns
+::: {.column width="50%"}
+[**A bad help request:**]{style="color:#C83532;"}
+
+> *"My mean function isn't working, can you help?"*
+
+Nobody can debug this — there's no code, no error, no data.
+:::
+
+::: {.column width="50%"}
+[**A good help request:**]{style="color:#459B99;"}
+
+> *"I'm trying to calculate the mean of my numbers but keep getting NA. Here's my code:"*
+
+```{r}
+library(tidyverse)      #<1>
+ages <- c(23, 31, NA, 45, 28) #<2>
+mean(ages)              #<3>
+```
+
+1. Packages included
+2. Small, simple data included
+3. The exact code producing the problem
+
+
+**The answer someone would give:**
+
+```{r}
+mean(ages, na.rm = TRUE)   #<1>
+```
+
+1. `na.rm = TRUE` tells R to ignore missing values
+:::
+:::
+
+## Wrap-up
+
+When you get stuck, try these steps **in order:**
+
+1. **Read the error message carefully** — R is often telling you exactly what's wrong
+2. **Check for typos** — a missing comma, parenthesis, or quote causes most beginner errors
+3. [**Use `?`** to check the function's expected arguments]{style="color:#BF396F;"}
+4. [**Google the error**: paste it in with "in R" and see what comes up]{style="color:#3070BF;"}
+5. [**Ask AI**: describe your problem clearly; paste in your code and error]{style="color:#459B99;"}
+6. [**Ask a human**: office hours, a classmate, or a forum with a reprex]{style="color:#C83532;"}
+
+- If you come to me, I will ask you if you've tried all of the above first
+  - **Not meant to be discouraging**, but a huge part of coding is learning to debug on your own and determine when you need other human help
+
+::: blue
+::: blue-cont
+Even experienced programmers spend a lot of time debugging. Getting better at reading error messages is one of the most valuable skills you'll build in this course.
+:::
+:::

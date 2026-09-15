@@ -1,0 +1,42 @@
+---
+title: "Practice"
+format: 
+  html:
+    page-layout: full
+    link-external-newwindow: true
+    toc: false
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+---
+
+```{r setup, include=FALSE}
+library(here)
+source(here("class_dates.R"))
+```
+
+| Practice | Assignment | Data | Assignment due (\@11pm) | Answers | Solutions |
+|----|----|----|----|----|----|
+| 1 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_01.qmd)]{style="color:#f8f5f0;"} | [{{< iconify tdesign data-filled size=29px >}}]{style="color:#f8f5f0;"} | `r pract1 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_01_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623/practice_solns/practice_01?csf=1&web=1&e=Sg2M0K)]{style="color:#f8f5f0;"} |
+| 2 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_02.qmd)]{style="color:#f8f5f0;"} | [{{< iconify tdesign data-filled size=29px >}}]{style="color:#f8f5f0;"} | `r pract2 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_02_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/practice_solns/practice_02?csf=1&web=1&e=ThRw5T)]{style="color:#f8f5f0;"} |
+| 3 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_03.qmd)]{style="color:#f8f5f0;"} | [{{< iconify tdesign data-filled size=29px >}}]{style="color:#f8f5f0;"} | `r pract3 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_03_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/practice_solns/practice_03?csf=1&web=1&e=IUjkTX)]{style="color:#f8f5f0;"} |
+| 4 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_04.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/data/hrs_data.rds)]{style="color:#f8f5f0;"} | `r pract4 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_04_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623/practice_solns/practice_04?d=w4e3cb35fdc45486b9ebaa7264bd0ecb1&csf=1&web=1&e=Bz5wLg)]{style="color:#f8f5f0;"} |
+| 5 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_05.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/data/hrs_data.rds)]{style="color:#f8f5f0;"} | `r pract5 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_05_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623/practice_solns/practice_05?d=w72835eccbf034b149205fb77da2fdab2&csf=1&web=1&e=iA0kHF)]{style="color:#f8f5f0;"} |
+| 6 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_06.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/data/hrs_data.rds)]{style="color:#f8f5f0;"} | `r pract6 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_06_ans.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify mdi folder-key size=30px >}}](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623/practice_solns/practice_06?d=web42edef474441b18bc4974f1cddaeb8&csf=1&web=1&e=pv8NTF)]{style="color:#f8f5f0;"} |
+| 7 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_07.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/practice/data_practice_07)]{style="color:#f8f5f0;"} | `r pract7 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_07_ans.qmd)]{style="color:#f8f5f0;"} | [{{< iconify mdi folder-key size=30px >}}]{style="color:#f8f5f0;"} |
+| 8 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_08.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/data/hrs_data.rds)]{style="color:#f8f5f0;"} | `r pract8 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_08_ans.qmd)]{style="color:#f8f5f0;"} | [{{< iconify mdi folder-key size=30px >}}]{style="color:#f8f5f0;"} |
+| 9 | [[{{< iconify material-symbols assignment size=29px >}}](/practice/practice_09.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify tdesign data-filled size=29px >}}](https://github.com/nwakim/PUBH_523_26Su/blob/main/data/hrs_data.rds)]{style="color:#f8f5f0;"} | `r pract9 %>% format("%m/%d")` | [[{{< iconify ph key-fill size=29px >}}](/practice/practice_09_ans.qmd)]{style="color:#f8f5f0;"} | [{{< iconify mdi folder-key size=30px >}}]{style="color:#f8f5f0;"} |
+
+\*Please note that you need to download the `.html` file to see the LaTeX math properly.
+
+## File Naming
+
+- For Practice assignments, please use the following file naming:
+  - "lastname_firstinitial_practice_01.qmd" and "lastname_firstinitial_practice_01.html"
+  - "Lastname_Firstinitial_Practice_01.qmd" and "Lastname_Firstinitial_Practice_01.html"
+
+## Rubrics
+
+|   | 1 point | 0 points |
+|----|----|----|
+| Completeness | 75% of the question parts are thoroughly worked out and have an answer. “Question parts” means the sub-questions labeled “Part \_." Answers can be incorrect or correct. For parts with longer processes and calculations, solution set up and calculations are required. | Less than 75% of question parts are thoroughly worked out. Attempts do not count as thoroughly worked out. |

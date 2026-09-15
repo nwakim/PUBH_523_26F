@@ -1,0 +1,477 @@
+---
+title: "Data visualization: Introduction to `ggplot2`"
+author: "Nicky Wakim, Jessica Minnier, and Meike Niederhausen"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data visualization: Introduction to `ggplot2`"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  freeze: auto
+  echo: true
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio
+)
+
+theme_set(theme_grey(base_size = 24)) 
+```
+
+```{r}
+#| echo: false
+
+hrs_data <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data) |>
+  relocate(diab, degree, .after = id)
+```
+
+## 
+
+::::: columns
+::: {.column width="46%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/)](../img_slides/horst_ggplot2_exploratory.png){fig-align="center"}
+:::
+
+::: {.column width="54%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/)](../img_slides/ggplot2_masterpiece.png){fig-align="center"}
+:::
+:::::
+
+## `ggplot2` in tidyverse
+
+::::: columns
+::: {.column width="40%"}
+![](../img_slides/ggplot2-part-of-tidyverse.png)
+:::
+
+::: {.column width="60%"}
+-   `ggplot2` is tidyverse's data visualization package
+
+    -   This is one of the main ways to create plots and explore data
+
+ 
+
+-   The `gg` in "ggplot2" stands for Grammar of Graphics
+
+ 
+
+-   It is inspired by the book **Grammar of Graphics** by Leland Wilkinson
+
+    -   Make graphs/plots by combining independent components
+    -   Start with a basic plot then add layers
+
+ 
+
+- `ggplot2` can create plots for a single variable or for multiple variables
+
+:::
+:::::
+
+```{css, echo=FALSE}
+.reveal code {
+  max-height: 100% !important;
+}
+```
+
+## Works best with "tidy" data[^1]
+
+[^1]: Source: R for Data Science. Grolemund and Wickham.
+
+![](../img_slides/tidy-data-frame.png){fig-align="center"}
+
+1.  Each variable must have its own column.
+
+2.  Each observation must have its own row.
+
+3.  Each value must have its own cell.
+
+## Grammar of ggplot2
+
+::::: columns
+::: {.column width="60%"}
+![](/lessons/img_slides/ggplot_layers.png){fig-align="center" width="1600"}
+:::
+
+::: {.column width="40%"}
+- We typically start at the bottom (data) and work our way up (themes)
+  - You skip some of the layers if you don't need them
+
+ 
+
+-   `ggplot2` needs at least the following three to produce a chart:
+    -   data, a mapping, and a layer
+
+ 
+
+-   For the most part, there are default settings for the other parts:
+    -   scales, facets, coordinates, and themes
+:::
+:::::
+
+## Basic layers of `ggplot2`
+
+- We can write very intricate plots with `ggplot2` by adding layers to a basic plot
+- A basic plot consists of three layers:
+  1. [Data:]{style="color: #F39C12;"} the dataset that contains the variables of interest
+  2. [Mapping:]{style="color: #5BAFF8;"} the mapping of variables to axes
+  3. [Layer:]{style="color: #459B99;"} the geometric object that represents the data
+- This translates to the following code:
+  - Use `ggplot()` to start the plot
+    - We can pass the data and mapping to this function
+  - Use `+` to add a layer to the plot
+  - Use `geom_*()` or `stat_*()` functions to add data visuals
+    - We can pass the data and mapping to these functions as well
+
+## 1. [Data]{style="color: #F39C12;"}
+
+-   `ggplot2` uses **data** to construct a plot
+
+-   Works best with tidy data (when every observation is a row and each variable is a column)
+
+-   First step in plotting:
+
+    -   Pass the data to the `ggplot` function, which stores the data to be used later by other parts of the plotting system
+
+-   For example, if we intend to make a graphic about the `hrs_data` dataset, we would start as follows:
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+#| output-location: column
+
+ggplot(
+  data = hrs_data #<1>
+  )
+```
+
+1. We input the data that contains our variables of interest.
+
+## 2. [Mapping]{style="color: #5BAFF8;"}
+
+-   Mappings use the `aes()` function to **map** variables to the different axes on a plot
+
+    -   `aes()` stands for "aesthetics"
+
+## [Data]{style="color: #F39C12;"} + [Mapping]{style="color: #5BAFF8;"}
+
+-   If we want the `age` and `income` columns to map to the x- and y-coordinates in the plot, we can do that as follows:
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| fig-align: center
+#| output-location: column
+#| code-line-numbers: "3-6"
+
+ggplot(
+  hrs_data, 
+  mapping = aes( #<1>
+    x = age_yr,  
+    y = income
+    ) #<1>
+  )
+```
+
+1. We use the `aes()` function to specify the mapping of variables to axes. In this case, we are mapping `age_yr` to the x-axis and `income` to the y-axis.
+
+## 3. [Layers]{style="color: #459B99;"}
+
+-   Every layer consists of three important parts:
+
+    -   The **geometry** that determines *how* data are displayed, such as points, lines, or rectangles
+
+    -   The **statistical transformation** that may compute new variables from the data and affect *what* of the data is displayed.
+
+    -   The **position adjustment** that primarily determines *where* a piece of data is being displayed
+
+-   A layer can be constructed using the `geom_*()` and `stat_*()` functions
+
+    -   These functions often determine one of the three parts of a layer, while the other two can still be specified.
+
+## [Data]{style="color: #F39C12;"} + [Mapping]{style="color: #5BAFF8;"} + [Layers]{style="color: #459B99;"}
+
+Here is how we can use two layers to display the `age` and `income` columns of the `hrs_data` dataset as points and stack a trend line on top:
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| fig-align: center
+#| output-location: column
+
+ggplot(
+  hrs_data, 
+  mapping = aes(
+    x = age_yr, 
+    y = income
+    )
+  ) + 
+  geom_point() +  # <1>
+  geom_smooth(  # <2> 
+    formula = y ~ x, 
+    method = "lm"
+    )  # <2>
+```
+
+1. To create a scatterplot
+2. To fit and overlay a line
+
+## Notice: the following create the same plot
+
+::: columns
+::: column
+[Naming the input arguments in the `ggplot()` function]{style="color: #5BAFF8;"}
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(
+  data = hrs_data, #<1>
+  mapping = aes( #<2>
+    x = age_yr, 
+    y = income
+    )
+  ) + 
+  geom_point()
+```
+1. We name the input argument for the dataset as `data`
+2. We name the input argument for the mapping as `mapping`
+:::
+::: column
+[More concise, no naming input arguments]{style="color: #BF396F;"}
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(
+  hrs_data, #<1>
+  aes( #<2>
+    x = age_yr, 
+    y = income
+    )
+  ) + 
+  geom_point()
+```
+1. Removed input argument name
+2. Removed input argument name
+:::
+::: column
+[We can pipe the dataset into `ggplot()`]{style="color: #459B99;"}
+```{r}
+#| echo: true
+#| eval: false
+
+hrs_data |> #<1>
+  ggplot(
+    aes(
+      x = age_yr, 
+      y = income
+      )
+    ) + 
+  geom_point()
+```
+1. We use the pipe operator to pass the dataset into `ggplot()`
+:::
+::: column
+[We can also move `aes()` out of `ggplot()`]{style="color: #3070BF;"}
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(hrs_data) + 
+  aes( #<1>
+    x = age_yr, 
+    y = income
+  ) + #<1>
+  geom_point()
+```
+1. We move the `aes()` function out of the `ggplot()` function
+
+```{r}
+ggplot() + 
+  geom_point(
+    data = hrs_data,
+    mapping = aes(x = age_yr, y = income)
+  )
+```
+:::
+:::
+
+## We can also make plots with a single variable
+
+-   Data: still `hrs_data`
+
+-   Mapping: using aesthetic to specify only one variable in the x-axis (`age`)
+
+-   Layers: using `geom_histogram()` to show a plot of the counts per `age` 
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| fig-align: center
+#| output-location: column
+
+ggplot(
+  hrs_data, 
+  aes(age_yr) #<1>
+  ) +
+  geom_histogram() #<2>
+```
+
+1. We specify only one variable in the `aes()` function, which will be mapped to the x-axis by default
+2. We use `geom_histogram()` to create a histogram of the counts per `age_yr`
+
+## Let's take a second to try this out {visibility="hidden"}
+
+-   Make sure you are working in a Quarto document that has all the libraries loaded
+
+-   Use `glimpse()` to look at the variables in `hrs_data`
+
+-   Choose one of the variables to make a plot for
+
+<!-- -->
+
+-   Go to this site: <https://bookdown.dongzhuoer.com/hadley/ggplot2-book/geom>
+
+    -   Choose one of the "One variable" geoms that would work well for the variable you chose (discrete or continuous options)
+
+-   Make a plot for the variable!
+
+```{r}
+#| echo: false
+countdown::countdown(5)
+```
+
+## We can add more to plots!
+
+We can change labels!
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| fig-align: center
+#| code-line-numbers: "6-10"
+#| output-location: column
+
+ggplot(
+  hrs_data, 
+  aes(age_yr)
+  ) +
+  geom_histogram() +
+  labs( #<1>
+    x = "Age (years)",#<2>
+    y = "Frequency", #<3>
+    title = "Distribution of Age" #<4>
+    ) #<1>
+```
+
+1. We use the `labs()` function to change the labels of the axes and title of the plot
+2. We change the x-axis label to "Age (years)"
+3. We change the y-axis label to "Frequency"
+4. We change the title of the plot to "Distribution of Age"
+
+## Adding more to plots!
+
+Increase (or decrease) text size so we can read it / it fits nicely!
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| fig-align: center
+#| code-line-numbers: "11-15"
+#| output-location: column
+
+ggplot(
+  hrs_data, 
+  aes(age_yr)
+  ) +
+  geom_histogram() +
+  labs( 
+    x = "Age (years)",
+    y = "Frequency",
+    title = "Distribution of Age"
+    ) +
+  theme( #<1>
+    axis.text = element_text(size = 28), #<2>
+    axis.title = element_text(size = 28), #<3>
+    title = element_text(size = 28) #<4>
+    ) #<1>
+```
+
+## Note: common components of `ggplot2`
+
+::: columns
+::: column
+- Common components of `ggplot2` include: 
+  - `ggplot()`: the main function to create a plot
+  - `aes()`: the function to specify the mapping of variables to axes
+  - `geom_*()` or `stat_*()`: functions to add layers to the plot
+  - `labs()`: the function to change labels of axes and title
+  - `theme()`: the function to adjust non-data plot elements such as text size,
+:::
+::: column
+
+ 
+
+```{r}
+#| eval: false
+
+ggplot(
+  data = my_data, 
+  mapping = aes(x = col1, y = col2)
+  ) +  #<1>       
+  
+  geom_point() +          
+  
+  labs() +       
+  
+  theme()                                  
+```
+:::
+:::
+
+
+
+## Wrap-up
+
+- `ggplot2` is great data visualization tool in R
+
+ 
+
+- Grammar of Graphics: data, mapping, layers, scales, facets, coordinates, themes
+  - We can add a lot of different components to our plots to make them more informative and visually appealing
+  
+ 
+  
+- We discussed *some* of the options in `ggplot2` but there are many more to explore!
+
+## Resources on `ggplot`
+
+-   `ggplot2` package website: <https://ggplot2.tidyverse.org/articles/ggplot2.html>
+-   Online textbook for `ggplot2`: <https://ggplot2-book.org/>
+-   Another online resource for data visualization with `ggplot2`: <https://socviz.co/index.html#preface>

@@ -1,0 +1,262 @@
+---
+title: "Practice 3 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+## Questions
+
+### Question 1: Getting to Know the HRS Dataset
+
+In Lesson 11, we were introduced to the *synthetic* HRS (Health and Retirement Study) dataset we will use for the rest of the course.
+
+#### Part A: Explore the codebook
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Open the [HRS codebook](https://nwakim.github.io/PUBH_523_26Su/resources/HRS_codebook.html) and answer the following:
+
+1.  What does the variable `srh` measure, and what are its possible levels?
+2.  Name **two** variables in the dataset that are stored as `factor`, and **two** that are stored as `numeric`.
+3.  In 1–2 sentences, explain why this is a *synthetic* dataset rather than the real HRS data, and what that means for any patterns you might see in it.
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part B: A mini HRS sample
+
+```{r}
+#| message: false
+pacman::p_load(tidyverse)
+
+mini_hrs <- data.frame(
+  id     = c("R1", "R2", "R3", "R4", "R5"),
+  age_yr = c(55, 62, 71, 48, 67),
+  sex    = c("Female", "Male", "Male", "Female", "Male"),
+  cesd   = c(2, 4, 6, 0, NA)
+)
+
+mini_hrs
+```
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Compare `mini_hrs` to the [HRS codebook](https://nwakim.github.io/PUBH_523_26Su/resources/HRS_codebook.html). In 2–3 sentences, describe what one row of `mini_hrs` represents, and name one way this mini sample is similar to (or different from) the full synthetic HRS dataset described in Lesson 11.
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+### Question 2: Functions
+
+In Lesson 12, we learned that functions take the general form `function_name(argument1 = value1, argument2 = value2, ...)`.
+
+#### Part A: Call a function with arguments
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use the `seq()` function to generate a sequence of even numbers from 2 to 20, naming your arguments (`from`, `to`, `by`) explicitly. Assign the output to an object called `evens`, then print `evens`.
+:::
+
+**Answer:**
+
+::: blue
+The resulting sequence should look like:
+
+```{r}
+#| echo: false
+evens <- seq(from = 2, to = 20, by = 2)
+evens
+```
+:::
+
+#### Part B: Use a function on your data
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using your `mini_hrs` data frame from Question 1, calculate the mean of the `cesd` column using the `mean()` function. Access the column with the `$` operator (Lesson 13).
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part C: Look up a function's help file
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Pick any **one** function you used in Question 1 or 2 (for example, `data.frame()`, `seq()`, or `mean()`). Open its help file using `?`. In 2–3 sentences, describe what you found: what are the function's main arguments, and is there anything in the help file that surprised you or that you didn't know before?
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+### Question 3: Objects
+
+In Lesson 13, we learned about different types of R objects, both single pieces of data and collections of data.
+
+#### Part A: Object types
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Fill in the table below with an example value for each object class, and one sentence describing when you might use that type in the HRS dataset.
+:::
+
+**Answer:**
+
+::: blue
+| Class | Example value | When might you see this in the real HRS dataset (see codebook)? |
+|---------------|---------------|------------------------------------------|
+| Double (`dbl`) | `71` or `3.5` | Continuous or count measures, like `age_yr` or a summed depression score |
+| Character (`chr`) |  |  |
+| Factor (`fct`) |  |  |
+| Logical (`lgl`) |  |  |
+
+Not given
+:::
+
+#### Part B: Check the class of variables
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using your `mini_hrs` data frame, use the `class()` function to check the object type of each of its four columns. Access each column with the `$` operator.
+:::
+
+**Answer:**
+
+::: blue
+```{r}
+class(mini_hrs$id)
+class(mini_hrs$age_yr)
+```
+:::
+
+### Question 4: Common Errors
+
+Even experienced R users run into errors constantly! Lesson 14 covered some of the most common ones.
+
+#### Part A: Spot and fix the bugs
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Each code chunk below contains **one error**. For each chunk, (1) identify what is causing the error, and (2) fix the code so it runs correctly.
+:::
+
+```{r}
+#| eval: false
+# Chunk 1
+mean(mini_hrs$Cesd)
+```
+
+::: blue
+**Answer:** `cesd` is case-sensitive, so it should be `mini_hrs$cesd` instead of `mini_hrs$Cesd`
+:::
+
+```{r}
+#| eval: false
+# Chunk 2
+avg_age <- mean(mini_hrs$age_yr
+```
+
+::: blue
+**Answer:** Not given
+:::
+
+```{r}
+#| eval: false
+# Chunk 3
+ages <- c(55, 62, 71, 48, 67)
+avg <- mean("ages")
+```
+
+::: blue
+**Answer:** Not given
+:::
+
+#### Part B: Read an error message
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+We ran the following code chunk and got the printed error. In 1–2 sentences, explain what the error message is telling you.
+:::
+
+```{r}
+#| error: true
+mini_hrs$age_yr + mini_hrs$id
+```
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+### Question 5: Getting Help
+
+Knowing how to get *unstuck* is one of the most important skills in R. Lesson 15 covered strategies for getting help.
+
+#### Part A: Search for your error
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take the error message from Question 4 Part B. Search for it online (Google, Stack Overflow, or another resource). Link to a resource you found helpful, and in 1–2 sentences summarize what it suggested.
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+#### Part B: Ask a good question
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Imagine you still can't solve the error from Question 4 Part B, and you need to email your instructor for help. Write the email you would send. Your email should include the pieces of information a good help-seeking question needs (think about what you'd want to know if you were the one answering).
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::

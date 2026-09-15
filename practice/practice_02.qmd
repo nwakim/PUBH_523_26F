@@ -1,0 +1,443 @@
+---
+title: "Practice 2"
+subtitle: "PUBH 523/623"
+author: "Your name here"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview
+
+This practice is mostly **hands-on**. You will set up the real folder structure you will use for the rest of the course, create your R Project, write your first `.qmd` from scratch, and practice loading packages — all skills you will rely on every week.
+
+Topics covered (Lessons 7–10):
+
+- Folder and file organization
+- Quarto and `.qmd` files
+- Packages
+- R Projects and working directories
+
+::: {.callout-tip appearance="minimal"}
+##### Note on ordering
+
+We're tackling **Quarto and `.qmd` files**, even though it comes second in the lesson order. This way you have access to the `.qmd` as you are working through the rest of the praactice.
+:::
+
+## Directions
+
+::: {.callout-tip appearance="minimal"}
+##### How to use this file
+
+- The boxes with the **yellow stripe** explain what to do. Keep these in your submitted file.
+- Do all your work **below and outside** of the yellow-striped boxes.
+- Please delete the following sections before submitting:
+    - Overview
+    - Directions
+    - Tip boxes (green stripe)
+    - Caution boxes / Needed Steps (orange/red stripe)
+    - Submission checklist
+    - Note on AI usage
+:::
+
+## Questions
+
+### Question 1: Your First Practice `.qmd`
+
+In Lesson 8, we walked through the three components of a `.qmd` file: the YAML header, text, and code chunks. In this question, you will demonstrate that you can create, edit, and render a `.qmd` file correctly.
+
+#### Part A: Downloading the practice file
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Download this practice `.qmd` from the course GitHub repository, rename it, and save it in your course folder.
+
+1. [Download `practice_02.qmd` from GitHub.](https://github.com/nwakim/PUBH_523_26Su/blob/main/practice/practice_02.qmd)
+2. Rename the file to `Lastname_Firstinitial_Practice_02.qmd` (or `lastname_firstinitial_practice_02.qmd`), replacing with your actual last name and first initial.
+3. Save it inside your `practice/` folder. You may create a `practice_02/` subfolder if you prefer.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+If you have already done this (you are reading this file in RStudio!), you are all set. Just confirm the file name is correct before moving on.
+:::
+
+#### Part B: Check your YAML header
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Scroll to the very top of this file and update the YAML header:
+
+- Replace `"Your name here"` in `author:` with your actual name.
+- Confirm that `date-modified: "today"` is present so the date updates automatically each time you render.
+
+Render the document and confirm your name and today's date appear at the top of the HTML output.
+:::
+
+#### Part C: Add a heading and paragraph
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Directly below this callout box, add:
+
+1. A **level 3 heading** (`###`) with a title of your choice (something about yourself or why you are taking this course)
+2. A short paragraph (2–4 sentences) of text (can be gibberish) under that heading
+
+You can use the Source editor or the Visual Editor.
+:::
+
+*Add your heading and paragraph here:*
+
+#### Part D: Code chunk options
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+The code chunk below calculates the mean of a small vector. Adjust the chunk options so that:
+
+- The **code is hidden** in the rendered output (results still show)
+- **Warnings are suppressed**
+:::
+
+```{r}
+x <- c(4, 8, 15, 16, 23, 42)
+mean(x)
+```
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Add the appropriate `#|` options at the top of the chunk. Refer to the chunk options table in Lesson 8 if you need a reminder.
+:::
+
+#### Part E: Render and confirm
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Render this document to HTML and confirm all of the following:
+
+- Your screenshot from Question 1 Part B appears
+- Your heading and paragraph from Part C appear
+- The code chunk in Part D shows the result but **not** the code
+:::
+
+### Question 2: Set Up Your Course Folder
+
+In our lesson on folder and file organization (L7), we learned that every project should live in **one well-organized folder**. In this question, you will create that folder and use it for the rest of the course.
+
+#### Part A: Create the folder structure
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+On your computer, create a folder called `PUBH_523_26Su` or `PUBH_623_26Su` somewhere that makes sense (your Documents folder, OneDrive, etc.). Inside it, create the following subfolders (feel free to change some of the subfolders if you have a preferred organization):
+
+```         
+PUBH_523_26Su/
+├── admin/
+├── data_lessons/
+├── data_practice/
+├── data_project/
+│   ├── data_raw/
+│   └── data_processed/
+├── lessons/
+├── practice/
+├── project/
+└── README.txt
+```
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tips
+
+- Create `README.txt` as a plain text file (open Notepad on Windows or TextEdit on Mac, save as `.txt`).
+- Create `data_raw/` and `data_processed/` *inside* the `data_project/` folder.
+- Folder names should be lowercase with underscores — no spaces!
+- You can also copy the folders from our shared folder
+:::
+
+#### Part B: Take a screenshot and insert it here
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take a screenshot of your `PUBH_523_26Su` folder open in your file browser (Finder on Mac, File Explorer on Windows) so that the subfolders are visible and insert in this `.qmd`.
+:::
+
+::: {.callout-caution appearance="minimal"}
+##### Needed Steps
+
+**New skill: inserting an image into a `.qmd`**
+
+Quarto makes it easy to embed images using Markdown syntax. Here is how:
+
+**Step 1.** Save your screenshot somewhere you can find it, ideally in your `practice/` folder where you create a `practice_02` subfolder. You can name something like `practice_02_folders.png`.
+
+**Step 2.** In this `.qmd` file, insert the image.
+
+- You can do this in the Visual editor by clicking the picture icon (![](./images_practice/practice_02_insert_image.png){width="30"}) up top and browsing for your file. If you do this, switch to Source editor to see how the picture insert translates to markdown.
+- You can do this in the Source editor by typing the following line, replacing the path with your own: `![Caption describing your image](path/to/your/image.png)`
+  - Note that `here()` does not work for image paths
+
+**Step 3.** Render the document and confirm the screenshot appears in the HTML output.
+:::
+
+### Question 3: Packages
+
+#### Part A: Load the course packages
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In Lesson 9, we learned to use `pacman::p_load()` to install and load packages in one step. In the code chunk below, use `pacman::p_load()` to load **all of the following** packages:
+
+`tidyverse`, `here`, `readxl`, `haven`, `writexl`, `janitor`, `rstatix`, `gt`, `gtsummary`, `naniar`
+:::
+
+```{r}
+# Load all course packages here using pacman::p_load()
+
+```
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+If `pacman` itself is not installed yet, run `install.packages("pacman")` in your Console first (just once, do not put `install.packages()` in your `.qmd`!).
+:::
+
+#### Part B: What does each package do?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Fill in the table below. Each package belongs to one of three categories from Lesson 9: **loading/saving data**, **summarizing/visualizing data**, or **wrangling data**. Note one specific thing each package is used for.
+:::
+
+| Package                       | Category | One thing it is used for |
+|-------------------------------|----------|--------------------------|
+| `here`                        |          |                          |
+| `readxl`                      |          |                          |
+| `haven`                       |          |                          |
+| `janitor`                     |          |                          |
+| `gtsummary`                   |          |                          |
+| `dplyr` (part of tidyverse)   |          |                          |
+| `ggplot2` (part of tidyverse) |          |                          |
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+You can use the `?` command in R to learn more about what a package does. 
+
+You can also search online for each one! A quick Google search of `gtsummary` shows me a [page on the package](https://www.danieldsjoberg.com/gtsummary/) 
+
+- I see the description: "The {gtsummary} package provides an elegant and flexible way to create publication-ready analytical and summary tables..." which I can put in my table.
+:::
+
+#### Part C: Install vs. load
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+A classmate wrote the following at the top of their `.qmd` file. Identify the problem and explain how to fix it.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+What is wrong with putting `install.packages()` inside a `.qmd`, and what should they do instead?
+:::
+
+*Write your answer here.*
+
+### Question 4: Create Your R Project
+
+We learned that an R Project (`.Rproj` file) sets the working directory automatically so you never need `setwd()`.
+
+#### Part A: Create the project
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create an R Project **inside your existing `PUBH_523_26Su` folder** and open this `.qmd` from within it.
+:::
+
+::: {.callout-caution appearance="minimal"}
+##### Needed Steps
+
+1. In RStudio: **File → New Project → Existing Directory**
+2. Browse to and select your `PUBH_523_26Su` or `PUBH_623_26Su` folder
+3. Click **Create Project**
+4. Open this `.qmd` from within the project (use the Files pane or **File → Open File**)
+
+Your folder should now contain a `PUBH_523_26Su.Rproj` or `PUBH_623_26Su.Rproj` file at the top level. From now on, always start your work by clicking this `.Rproj` file to open RStudio.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+If you already created your R Project, just make sure you opened this `.qmd` from within it. You can check the top-right corner of RStudio — it should show your project name, not "Project: (None)".
+:::
+
+#### Part B: Confirm the working directory
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Run the following code in your **Console** (not in a rendered chunk) and paste the output in the space below.
+
+```{r}
+#| eval: false
+getwd()
+```
+:::
+
+*Paste your `getwd()` output here:*
+
+Example: "/Users/yourname/Documents/PUBH_523_26Su"
+
+
+#### Part C: Does the working directory match?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now run `getwd()` inside a code chunk and render the document. Does the output match what you pasted in Part B? Write 1–2 sentences explaining what you observe.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Remove the `#| eval: false` line from the chunk below so that it runs and displays output when you render.
+:::
+
+```{r}
+#| eval: false
+getwd()
+```
+
+*Write your answer here.*
+
+#### Part D: Why not `setwd()`?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1–2 sentences, explain why you should not use `setwd()` in your `.qmd` files, and what you should do instead.
+:::
+
+*Write your answer here.*
+
+### Question 5: Using `here()` for file paths
+
+#### Part A: Explore `here()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Run the following code chunk and render the document. Does the output match your `getwd()` output from Question 4 Part B? Explain in 1 sentence why they match.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Remove the `#| eval: false` line from the chunk below so that it runs and displays output when you render.
+:::
+
+```{r}
+#| eval: false
+pacman::p_load(here)
+here()
+```
+
+*Write your answer here.*
+
+
+#### Part B: Build a file path with `here()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Imagine you saved a data file called `survey_data.csv` in your `data_practice/` folder. Fill in the `here()` call below to build the path to that file, then run the chunk to confirm the path looks correct.
+
+Which path style do you prefer and why? (1–2 sentences)
+:::
+
+```{r}
+#| eval: false
+# Remove the ___ and fill in the here() call
+file_path <- here("___", "___")
+file_path
+```
+
+*Write your answer here.*
+
+::: {.callout-caution appearance="minimal"}
+##### Needed Steps: two ways to write `here()` paths
+
+As shown in Lesson 10, you can write the path two ways — both work:
+
+```{r}
+#| eval: false
+# Option 1: comma-separated (platform-agnostic — preferred)
+here("folder", "file")
+
+# Option 2: slash-separated
+here("folder/file")
+```
+:::
+
+#### Part C: Console vs. render
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Explain in 2–3 sentences: what problem does `here()` solve that an R Project alone does not fully fix? Think about what happens when you run code in the Console versus when you render a `.qmd`.
+:::
+
+*Write your answer here.*
+
+## Submission Checklist
+
+If having a checklist helps you stay organized, check off each item below as you complete it. You do not need to submit this checklist.
+
+- [ ] `PUBH_523_26Su` (or `PUBH_623_26Su`) folder created with all subfolders (Q1 Part A)
+- [ ] Screenshot of folder structure inserted and visible in the rendered HTML (Q1 Part B)
+- [ ] All course packages loaded successfully with `pacman::p_load()` (Q2 Part A)
+- [ ] Package table filled in with category and description for each (Q2 Part B)
+- [ ] `install.packages()` question answered (Q2 Part C)
+- [ ] File downloaded and renamed correctly (Q3 Part A)
+- [ ] Name updated in YAML header and date appears correctly in rendered HTML (Q3 Part B)
+- [ ] Level 3 heading and paragraph added (Q3 Part C)
+- [ ] Code chunk options updated to hide code and suppress warnings (Q3 Part D)
+- [ ] Document renders with screenshot, heading, and hidden code confirmed (Q3 Part E)
+- [ ] R Project (`.Rproj`) created inside your course folder (Q4 Part A)
+- [ ] `getwd()` output pasted from Console (Q4 Part B)
+- [ ] `getwd()` chunk rendered and output compared to Part B, with explanation (Q4 Part C)
+- [ ] `setwd()` question answered (Q4 Part D)
+- [ ] `here()` chunk rendered and output match explained (Q5 Part A)
+- [ ] `here()` file path filled in and path style preference explained (Q5 Part B)
+- [ ] Console vs. render question answered (Q5 Part C)
+- [ ] Document renders to HTML with no errors
+- [ ] Files named correctly: `Lastname_Firstinitial_Practice_02.qmd` and `Lastname_Firstinitial_Practice_02.html` (or lowercase versions)
+- [ ] Both `.qmd` and `.html` submitted to Brightspace
+
+## Note on AI usage
+
+I used GenAI (Claude) to help me draft this practice assignment. It helped me brainstorm ideas for the assignment, and I directed it to help you complete the needed tasks that I showed in the lessons.
+
+The submission checklist was Claude's idea. I really like it! Let me know what you think!

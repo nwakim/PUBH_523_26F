@@ -1,0 +1,376 @@
+---
+title: "Common errors"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Common errors"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  # janitor,
+  here, 
+  rio
+)
+```
+
+## Errors and troubleshooting are a huge part of coding!
+
+
+<style>
+.small-error pre,
+.small-error .cell-output-error {
+  font-size: 0.55em;
+}
+</style>
+
+:::: pink
+::: pink-cont
+A huge part of coding is **learning to debug your own code** and **figuring out what's going wrong.**
+:::
+::::
+
+- Errors can feel frustrating at first, but they are R trying to *help* you.
+
+We will cover:
+
+1.  [How to interpret error messages]{style="color:#BF396F;"}
+2.  [The most common types of errors and how to fix them]{style="color:#3070BF;"}
+
+## Error vs. Warning vs. Message
+
+
+| Type        | Meaning                                          |
+|-------------|--------------------------------------------------|
+| **Error**   | Code stopped; something went wrong               |
+| **Warning** | Code ran, but R is flagging something suspicious |
+| **Message** | Informational; not a problem                     |
+
+ 
+
+Example of a warning:
+```{r}
+#| warning: true
+
+log(-1)  
+```
+
+- In this case, the code ran, but R is warning you that the result is `NaN` (not a number) because the logarithm of a negative number is undefined
+
+## Interpreting error messages
+
+- R error messages can feel cryptic, but they usually follow a pattern
+
+::::: blue
+::: blue-ttl
+Pay attention to
+:::
+
+::: blue-cont
+- Which **function** is mentioned in the error
+- **Keywords** like `not found`, `unexpected`, `unused argument`, or `subscript out of bounds`
+- Any **line numbers** or column names that appear
+:::
+:::::
+
+## Types of common errors
+
+We will go through the following error messages:
+
+- Misspelled function or variable name
+- Mismatched parentheses
+- Function not found
+- Object not found
+- File not found
+- Subscript out of bounds
+- Wrong argument name
+- Silent logic errors
+
+
+:::: pink
+::: pink-cont
+We will go through each type with real error messages and how to fix them. Keep this slide as a reference!
+:::
+::::
+
+## Misspelled function or variable name
+
+::: blue
+::: blue-ttl
+R is case-sensitive
+:::
+::: blue-cont
+`Mean()` and `mean()` are different things!
+
+```{r}
+#| error: true
+Mean(c(1, 2, 3))   #<1>
+```
+
+1.  Capital M — R can't find this function
+
+```{r}
+mean(c(1, 2, 3)) 
+```
+:::
+:::
+
+
+::: pink
+::: pink-ttl
+Accidental mispelling
+:::
+::: pink-cont
+```{r}
+#| error: true
+my_data <- data.frame(x = 1:5, y = 6:10)
+sumamry(my_data)   #<2>
+```
+
+2.  Typo in the function name (`sumamry` instead of `summary`)
+:::
+:::
+
+## Mismatched parentheses
+
+::: {.small-error}
+```{r}
+#| error: true
+mean(c(1, 2, 3)   #<1>
+```
+:::
+
+- Missing closing `)` — the console shows `+` waiting for more input
+
+:::: blue
+::: blue-cont
+When the console prompt is `>`, R is ready for a new command. When it switches to `+`, a previous command is **incomplete** — finish typing it, or press **Escape** to cancel and start over.
+:::
+::::
+
+**Quick fixes:**
+
+- Use **Tab** to autocomplete function names and avoid typos
+- Check that every `(` has a closing `)`
+- Use RStudio's bracket highlighting — click next to a `(` and its match will highlight
+
+## Function not found, package not loaded
+
+- This usually means you typed the function name incorrectly, or **forgot to install or load the package**
+
+```{r}
+#| error: true
+clean_names(iris)   #<1>
+```
+
+1.  `clean_names()` is from `janitor`: if it's not loaded, R can't find it
+
+::: orange
+::: orange-ttl
+Fix: make sure to load the package!
+:::
+::: orange-cont
+
+```{r}
+pacman::p_load(janitor)      #<2>
+iris_clean <- clean_names(iris)
+names(iris_clean)
+```
+
+2.  Load the package first, then call the function
+
+:::
+:::
+
+::: pink
+::: pink-ttl
+You can also use `::` to call it without loading the whole package
+:::
+::: pink-cont
+```{r}
+iris_clean2 <- janitor::clean_names(iris)   #<3>
+names(iris_clean2)
+```
+
+3.  Recall from the Packages lesson: `package::function()` lets you use one function without `library()`
+
+:::
+:::
+
+
+## Object not found
+
+This means R can't find a variable you referenced. Common causes:
+
+[1. You never created the object]{style="color:#BF396F;"}
+
+- This can happen if you ran something in the console, but don't have it in your current `.qmd` file when rendering
+
+```{r}
+#| error: true
+my_summary   #<1>
+```
+
+1.  This object was never created: code above may not have run
+
+ 
+
+[2. You're missing quotes around a package or a string]{style="color:#459B99;"}
+```{r}
+#| error: true
+install.packages(dplyr)   #<2>
+```
+
+2.  Missing quotes: R looks for an object named `dplyr`, not the text "dplyr"
+
+    - Fix: `install.packages("dplyr")`
+
+## File not found
+
+- This happens when R can't locate a file you're trying to read in
+
+```{r}
+#| error: true
+import(here("data/hrs_Data.csv"))   #<2>
+```
+
+ 
+
+For now, if you run into it, check:
+
+- Spelling of the file name
+- Forward slashes (MAC) vs. backward slashes (Windows)
+- Correct file extension (`.csv`, `.xlsx`, `.rds`)
+- That you're working inside the right **R Project**, so your working directory is where you think it is 
+
+## Subscript out of bounds
+
+- This happens when you try to access an **element** of a vector, list, or data frame that doesn't exist
+
+```{r}
+#| error: true
+x <- c(1, 2, 3, 4, 5)  #<1>
+x[3:10]  #<2>
+```
+
+1.  `x` is a vector of length 5
+2. I try to access the 3rd to 10th elements, but some of them don't exist.
+
+- There is no error, but R returns `NA` for the elements that don't exist
+
+ 
+
+- Here's an example of the error wording (if an error is thrown):
+
+```{r}
+#| error: true
+x[[10]]  #<3>
+```
+
+3. I try to access the 10th element iwth double brackets, but it doesn't exist.
+
+## Wrong argument name
+
+- This can happen if you misremember the argument name, or if you accidentally type it incorrectly
+
+::::::: columns
+::: {.column width="60%"}
+```{r}
+#| error: true
+mean(c(1, 2, NA), remove.na = TRUE)   #<1>
+```
+
+1.  `remove.na` is not a real argument: R silently ignores it, and `NA` propagates through
+
+:::: pink
+::: pink-cont
+**Notice this one didn't throw an error!** It just gave you the wrong answer! Not every mistake is loud. 
+:::
+::::
+
+- Fix: use the correct argument name
+
+```{r}
+mean(c(1, 2, NA), na.rm = TRUE)   #<2>
+```
+
+2.  The correct argument is `na.rm`
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="35%"}
+::::: orange
+::: orange-ttl
+How to find the right argument names
+:::
+
+::: orange-cont
+Run `?function_name` and read the **Arguments** section — it lists every accepted argument, what it expects, and its default value.
+
+```{r}
+#| eval: false
+?mean
+```
+:::
+:::::
+
+:::
+:::::::
+
+## Silent logic errors
+
+- This happens when your code runs without throwing an error, but the 'TRUE'/'FALSE' output is not what you expected
+
+```{r}
+0.1 + 0.2 == 0.3   #<1>
+```
+
+1.  You'd expect `TRUE`, but computers store decimals in binary, and `0.1 + 0.2` is actually stored as a number *very slightly* off from `0.3`, so the **comparison quietly returns `FALSE`**
+
+ 
+
+- Fix: use `all.equal()` or a small tolerance instead of `==` when comparing decimals:
+
+```{r}
+all.equal(0.1 + 0.2, 0.3)  #<1>
+```
+
+1.  `all.equal()` checks whether two numbers are "close enough," rather than checking for exact equality
+
+:::: pink
+::: pink-cont
+Logic errors are the sneakiest bugs. Always **check your output** or check an example if you're running many calculations. 
+:::
+::::
+
+## Wrap-up
+
+- Errors are a normal part of coding! 
+  - Don't be discouraged, R is trying to help you
+- When you get an error, read it carefully and try to understand what it's telling you
+- Recognize the most common types of errors and what might have caused them
+
+

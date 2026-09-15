@@ -1,0 +1,370 @@
+---
+title: "PUBH 523/623 Syllabus"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    page-layout: full
+    toc: true
+  pdf: default
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo=FALSE}
+.title{
+  font-size: 30px;
+  color: #3070BF;
+  background-color: #fff;
+  padding: 0px;
+}
+
+.blue{
+  margin: 1em 0;
+  border: 3px solid #5BAFF8;
+  border-radius: 10px;
+}
+.blue-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #5BAFF8;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.blue-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+```
+
+```{r setup, include=FALSE}
+library(here)
+source(here("class_dates.R"))
+```
+
+::::: blue
+::: blue-ttl
+Key Course Info
+:::
+
+::: blue-cont
+- If an assignment on Brightspace is closed or you are submitting late work, **please email me your work** (see [instructor page](instructors.qmd) for all email addresses)
+- If you are emailing for an extension, please email me (see [instructor page](instructors.qmd) for all email addresses)
+- Latework policy
+  - **For practice:** can be turned in any time before course ends, but you will not receive feedback on late work
+  - **For labs:** one "no questions asked", 3-day extension
+    - After that, 1 point deducted per day late
+- **No attendance policy:** Your grade will not be linked to watching instructional videos, but you will be responsible for content in the videos.
+- The class will end on `{r} w11d1 %>% format("%B %d, %Y")`. **All coursework MUST be completed by `{r} last_day %>% format("%B %d, %Y")`**
+- Feel free to fill out the [Ongoing Course Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u) with any concerns or questions.
+:::
+:::::
+
+## Description
+
+Welcome to PUBH 523/623! This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables. By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. No prior statistical or coding experience is expected or required.
+
+### Course Learning Objectives
+
+At the end of this course, students should be able to...
+
+1.  Set up and manage project-based folders to build reproducible workflows.
+
+2.  Clean, filter, restructure, and summarize datasets using standard R toolkits.
+
+3.  Create clear, publication-quality data visualizations and figures to represent trends and summaries.
+
+4.  Launch a data exploration project on a new dataset, preparing it for advanced statistical analysis.
+
+## Instructors
+
+[Here is the instructor page.](instructors.qmd) This also has office hours!
+
+## Meeting Times
+
+This class is asynhronous, meaning we will not have set class times. However, I will set up recurring office hours.
+
+## Materials
+
+### Textbooks
+
+- [**R for Data Science**](https://r4ds.hadley.nz/) by Hadley Wickham , Mine Çetinkaya-Rundel, Garrett Grolemund
+
+- [**The Epidemiologist R Handbook**](https://epirhandbook.com/en/) by Neale Batra (Editor)
+
+#### Other helpful textbook
+
+- [Hands-On Programming with R](https://rstudio-education.github.io/hopr/) by Garrett Grolemund
+
+### Brightspace
+
+While most course materials will be delivered online through this website, assignments will be turned in through [Brightspace](https://ohsu.brightspace.com/), OHSU's course management system.
+
+### Webex/Zoom
+
+Webex or Zoom software will be used for virtual office hours. To give everyone the best possible experience with Webex/Zoom, I recommend the following best practices:
+
+- Please stay muted until you want to participate
+- During office hours, please send a message in chat with your question or with a statement like "I have a question." This makes sure I or the TA can address everyone's questions in order. 
+- I encourage you to attend office hours with your video on. This helps me recognize you, and keep mental notes on what techniques/concepts I emphasize to facilitate your specific understanding. 
+
+### Slack
+
+We will use Slack as our main form of communication for the class. If you are unsure how to do a homework problem or have other questions, please ask me by posting your question(s) on Slack. Please know that Slack is not guarded by the OSHU firewall, so if you have a question about accommodations or any sensitive topics, you may wish to message me via email. You can still message me regarding sensitive information on Slack, but I will not initiate those conversations on Slack.
+
+[\*\*Please use this invitation link for our Slack workspace!\*\*](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg)
+
+### R: Statistical Computing Software
+
+Students will use statistical software to complete homework assignments. Students are required to use R/RStudio for this course. R can be freely downloaded. [Helpful documentation](https://rstudio-education.github.io/hopr/starting.html) on installing R is available. **I encourage you to install R prior to attending our first lecture.** Please email me if you need help installing R or RStudio.
+
+You will need to download the following three things:
+
+1.  R <https://www.r-project.org/>
+
+2.  Rstudio <https://posit.co/download/rstudio-desktop/>
+
+3.  Quarto <https://quarto.org/docs/get-started/>
+
+## Course structure
+
+The course is structured around the following four components:
+
+|  |  |  |  |
+|:-----------:|:-----------:|:-----------:|:--------------------------------|
+| **Component** | **Modality** | **Frequency** | **Description** |
+| Video lessons | Online | Twice, Weekly | Course content is provided through pre-recorded videos. Videos will consist of didactic lessons, interactive examples, and demonstrations. |
+| Practice | Online | Weekly | The course includes 9 practice assignments. They are an opportunity for you to engage with important concepts and practice coding. Practice assignments should be submitted online, and will be graded by me. Students are encouraged to work in groups for practice assignments, but each person should do their own summary and hand in their work. |
+| Project (Labs and Poster) | Online | 4 labs, 1 final poster | The project will be a combination of submitted labs that will span the quarter and one final assignment due at the end of the quarter. This is meant to translate the R tools learned in the course to an information sheet using data. Labs will guide you through the needed coding and deliverables. |
+
+#### Types of assessments
+
+This class will use a combination of formative and summative assessments to build and test our knowledge. Below I define each of these types of assessments:
+
+- **Formative assessment:** Activity or work meant to help students learn and practice. Feedback on these assessments are meant to help the instructor and student identify gaps in knowledge and highlight accomplishments.
+
+- **Summative assessment:** Work meant to test how well students have achieved learning objectives. Grading of these assessments are meant to gauge how well a student grasps the learning objectives and will be able to use their knowledge outside of the classroom.
+
+## Assessment Breakdown
+
+### Grading & Requirements
+
+Letter grades will be assigned roughly according to the following scheme: A (\>=93%), A- (90-92%), B+ (88-89%), B(83-87%), B- (82-80%), C+(78-79%), C(73-77%), C- (70-72%), D (60 -- 69%), F(\<60%).
+
+Grades will be based on homework assignments, midterm exam, class "attendance", and final exam, as follows:
+
+|  |  |  |  |  |
+|:--------------|:--------------|:--------------|:--------------|:--------------|
+| **Course activity** | **Type of Assessment** | **Due Date** | **Percentage of final grade (PUBH 523)** | **Percentage of final grade (PUBH 623)** |
+| Practice | Formative | Every 1-2 weeks | 40% | 40% |
+| Project Labs | Formative/Summative | Every 2-3 weeks | 40% | 40% |
+| Project Poster | Summative | `r proj %>% format("%m/%d")` | 20% | 20% |
+
+### Practice assignment grading
+
+No student has the same amount of time available to dedicate to homework. This class may not be a priority to you, you may be taking several other courses, or you may need to dedicate time to other activities. Practice assignments are **formative assessments**, meaning its purpose is to help you learn and practice (heh). To reduce the pressure on you to have perfect or complete practice assignments, I have a very simple grading policy: **Your practice assignment will be given a check mark if you turn in 75% of the questions parts completed (whether the 75% is correct or wrong).** I highly encourage you to stay up-to-date with the practice and put in as much effort as you can. This will be the most helpful work in this class!
+
+If you turn in the practice on time, I will give you feedback (on one or more complete problems). **There is no grade penalty for turning in the practice late, but you will not get feedback on your work.** Please make sure to check the solutions or go to office hours to assess your work.
+
+### Viewing Grades in Brightspace
+
+Points you receive for graded activities will be posted to the Bightspace Gradebook. Click on the Gradebook link on the left navigation to view your points.
+
+## Course & Instructor Evaluations
+
+### Ongoing Course Feedback
+
+Throughout the duration of the course, you are also welcome to informally and anonymously submit your feedback through this [Microsoft Form](https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u). Students can submit feedback at any time and this form will be reviewed regularly by me. Your responses will be anonymous unless you elect to leave your email address. If I have done anything to make you feel uncomfortable, please give me feedback so I can change my behavior. **Ultimately, this class is for you, and my individual social identity/behavior should not inhibit your learning.** Thank you for your help making PUBH 523/623 a more successful class! Examples of ongoing feedback are:
+
+- Nicky talks a little fast during lecture time. May you speak slower?
+
+- During Office Hours, Dr. Wakim made a face when I asked a question. This face made me feel self-conscious about my question.
+
+- Dr. W asked me a question about my experience that made me feel like a monolith. Please do not assume I can speak on behalf of my social identity groups.
+
+- The in-class examples do not make me more interested in the material.
+
+### Final Course Feedback
+
+At the conclusion of the course, you will be asked to complete a formal online review of the course and the instructor. **Your feedback on this University evaluation is critical to improving future student learning in this course as well as providing metrics relevant to the instructor's career advancement (or lack of).** Since our class is on the smaller side, everyone's participation is needed for feedback to be released.
+
+## Schedule
+
+[Please refer to the Schedule page.](/schedule.qmd) I will make changes to this schedule if we need more or less time on a concept. You do not need to read the corresponding chapters in the textbook for each class.
+
+## Course Policies and Resources
+
+### Late Work Policy
+
+I encourage you to make your best effort to submit all assignments on time, but I understand circumstances arise that are beyond our control. Please see this [Swansea University's page on extenuating circumstances](https://myuni.swansea.ac.uk/academic-life/extenuating-circumstances/#how-can-the-university-support-me-and-what-should-i-do=is-expanded&what-are-extenuating-circumstances=is-expanded&what-isnt-an-extenuating-circumstance=is-expanded&what-supporting-evidence-is-required=is-expanded&who-should-i-contact-to-make-an-extenuating-circumstances-application=is-expanded&who-will-make-a-decision-on-my-application=is-expanded) for some examples. Not all circumstances are covered here, so please reach out if you have questions. 
+
+- The class will end on `{r} w11d1 %>% format("%B %d, %Y")`. **All coursework MUST be completed by `{r} last_day %>% format("%B %d, %Y")`** If you have *extenuating circumstances*, and need additional time to complete class assignments, please contact me. Together, we will come up with a plan for completion and to sort out registrar logistics.
+
+- If you have extenuating circumstances that may jeopardize your ability to do work for several weeks, please contact me. We will come up with a plan to keep you on track in the course and prevent any delay in your education.
+
+- For **practice**, there is a due date posted, but you may turn in the assignment any time before the class ends. I will give you the check regardless of when you submit the assignment. **However, if you would like feedback on the homework, you must turn it in on time OR email me asking for feedback for your late homework.**
+
+- For **the final project**, I ask you to email me directly. You can explain your circumstances and may ask me for an extension, but I won't necessarily grant one.
+
+- For **labs**, you will have **ONE no-questions-asked, 3-day extension**. Please use this wisely! You just need to send me a quick email saying "I am using my no-questions-asked extension for Lab \_\_."
+
+  - After you have used the one no-questions-asked extension, you will need to explain your circumstances and ask me for an extension.
+  - **Otherwise, 1 point will be deducted for each day that the lab is late**
+
+- If you have a emergency involving your self, family, pet, friend, classmate, or anything/one deemed important to you, please do not worry about immediately contacting me. We can work something out after your emergency. If I contact you during an emergency, it is only because I am worried, and you do NOT need to respond until you are able. 
+
+### Regrade Policy
+
+If you think a question/assignment was incorrectly graded, first compare your answer to the solutions. If you believe a re-grade would be appropriate, write an email to me containing the question and a short explanation as to why the question(s) was/were incorrectly graded. Deadline: One week after assignments were returned to class (late requests will not be considered).
+
+### Plagiarism and Attribution
+
+Please note that this section has been motivated by [Dr. Steven Bedrick's Course Policies and Grading site](https://dmice.ohsu.edu/bedricks/courses/bmi525/policies.html) for BMI 525. (Note that this is a good example of informal attribution of someone else's work.)
+
+In this class, it is easy to use generative AI tools to solve your homework for you. Many problems follow a basic structure that is especially easy for generative AI to solve. In this class, you may use generative AI to help with your homework. You may even ask for direct answers. However, there are a few things I do not want you to do:
+
+- **Do not copy generative AI's answer directly into your practice or labs.** Your practice is graded for full credit if you turn it in, in any state, so turning in generative AI's answers is unacceptable. I rather see half-written answers that show what you're thinking than see a correct answer from generative AI.
+
+- **Do not stop once generative AI answered a question.** If it gives an explanation, interact with it! Make sure you understand the thought process of generative AI. Try writing out the process to help cement it in your head. Check the answer with what we learn in class.
+
+At the end of the day, generative AI is a resource that will be available to you in a job and outside of school. Thus, we should use it as a tool in school as well! Let me know if generative AI helped you understand something! I would love to incorporate it into future classes!
+
+::: callout-important
+You can think of this class as assembling a toolbox. When a handyperson starts working for the first time, they need to buy their tools. For their first few jobs, they might need help finding their tools, or remembering which tool is best used for what action. Eventually, they get to know their tools well, and using them appropriately becomes second nature.
+
+**For now, generative AI can help us find and use our tools, but we need to work towards using them as second nature!**
+:::
+
+## How to succeed in this course
+
+Every professor has different expectations when assigning certain work or providing certain resources. I want to walk through each class resource and assignment so that you know what you can do to succeed in *this class*. For resources, I want you to optimize the opportunities to learn. For assignments, I want you to know the strategies that students can use to learn the most and prepare for future exams.
+
+### Resources
+
+|  |  |  |
+|:-------------:|:------------------------|:--------------------------|
+| **Resource** | **What is it?** | **How do I use it?** |
+| Office Hours | Blocks of time a professor or TA dedicates for questions. The teaching staff will be located in a specific room. Several students may enter the space at a time and will ask specific or broad questions. If many students attend office hours, a queue will be created so that students can be served equally. | The main use of office hours is to ask questions about an assignment or lesson notes. You are welcome to sit and work through your assignments in office hours. OH are also an informal way of meeting fellow students to collaborate with. |
+| Lessons and recordings | Time shared between the professor and students where the professor conveys important class material. Material discussed in lectures include concepts, calculations, code, and examples. Lectures are a mix of presentation of information and working through examples together. | Students should watch all lesson videos. You should attempt to understand new material presented by following the presentation slides, taking notes on additional details that may conveyed verbally, and working through examples with the professor. Students are encouraged to ask questions when you don't understand the material at any point in the lesson. |
+| Textbooks | Written and published material that explains concepts, steps through calculations, provides examples, and provides practice problems. The listed textbooks is the basis for this course. While I am to cover all topics in class, the textbook provides alternative explanations and additional examples. | I do not expect students to read the textbooks. I see the textbook as a good resource if you are struggling with a specific topic, in need of an example while working on homework, or want additional practice. |
+| Website | The course website is designed by me so that you have access to all the course materials in a more organized and flexible way. All resources delivered from me to you will be available on the website. Any assignments turned in will be through Brightspace. | You can navigate through different course resources and information using the left-side tabs or top navigation bar. Course materials, like lecture notes, practice, data examples, and recordings, can be found on the site. Please explore the tabs and get a sense of the organization. |
+| Brightspace | Brightspace is a learning management system for higher ed. This is the university sanctioned LMS where we will submit assignments. | You will turn in assignments through Brightspace under the "Assignments" tab. You can also view your grades under "Grades." |
+
+### Assignments
+
+| **Assignment** | **Type of assessment** | **Before you submit/take it** | **After it is graded** |
+|:----------:|:----------:|:--------------------|:--------------------|
+| Practice | Formative | • Work out each problem on your own as much as you can<br>• Talk through problems with a peer<br>• Go to Office Hours for help<br>• Ask questions on Slack<br>• Write down work that shows your thought process<br>• Search your issue on Stack Exchange/Stack Overflow | • Review the solutions<br>• Review your mistakes<br>• For solutions that involve writing sentences, check with me or a TA if your answer fits the solution<br>• Go to Office Hours to ask about your solutions |
+| Project Labs and Information sheet | Formative and Summative | • Start the lab as early as possible<br>• Work on R coding and check with classmates on work<br>• Come to Office Hours for help with specific R work<br>• For the report, compile your work from the labs, and decide what is important in the analysis. | • Review feedback on labs and integrate into future labs and final project.<br>• The project final will be graded at the end of the quarter, so you will not have a chance to interact with my feedback as much<br>• If you have questions about your grade, you may email me<br>• Keep the information sheet for future reference<br>• You can add this project to your resume! |
+
+If you would like any other course resources explained in this format, please request it through the [Ongoing Course Feedback](https://forms.office.com/Pages/ResponsePage.aspx?id=V3lz4rj6fk2U9pvWr59xWFMopmPUjRtDiHLswhgacNhURDc2S1dGNTlTRVJVUFoyQUUzNFJMS0JXUi4u). 
+
+## Course Expectations
+
+### Instructor Expectations
+
+#### Commitment to your learning and your success
+
+I believe that everyone has the ability to be successful in this course and I have put a lot of effort into designing the course in a way that maximizes your learning to ensure your success. Please talk to me before or after class or stop by my office if there is anything you want to discuss or about which you are unclear. I want to be supportive of your learning and growth.
+
+#### Inclusive & supportive learning community
+
+I believe that learning happens best when we all learn together, as a community. This means creating a space characterized by generous listening, civility, humility, patience, and hospitality. I will attempt to promote a safe climate where we examine content from multiple cultural perspectives, and I will strive to create and maintain a classroom atmosphere in which you feel free to both listen to others and express your views and ask questions to increase your learning.
+
+#### Openness to feedback
+
+I appreciate straightforward feedback from you regarding how well the class is meeting your needs. Let me know if material is not clear or when its relevance to the student learning outcomes for the course is not apparent. In particular, let me know if you identify bias or stereotyping in my teaching materials as I will seek to continuously improve. Please also let me know if there's an aspect of the class you find particularly interesting, helpful, or enjoyable!
+
+#### Responsiveness
+
+I will monitor email as well as the discussion board daily and try respond to all messages within 24 hours Monday-Friday.
+
+#### Clear guidelines and prompt feedback on assignments
+
+I will provide clear instructions for all assignments, and a grading rubric when applicable. I will provide detailed feedback on your submissions and will update grades promptly in Brightspace.
+
+### Student Expectations and Resources
+
+#### Watch lessons
+
+You are expected to watch all lesson videos following the schedule.
+
+#### Participate
+
+I encourage you to participate actively in class and online discussions. I will expect all students, and all instructors, to be respectful of each other's contributions, whether I agree with them or not. Professional interactions are expected.
+
+#### Build rapport
+
+If you find that you have any trouble keeping up with assignments or other aspects of the course, make sure you let me know as early as possible. As you will find, building rapport and effective relationships are key to becoming an effective professional. Make sure that you are proactive in informing me when difficulties arise during the quarter so that I can help you find a solution.
+
+#### Complete assignments
+
+All assignments for this course will be submitted electronically through Brightspace unless otherwise instructed. I encourage you to make your best effort to submit all assignments on time, but I understand that sometimes circumstances arise that are beyond our control. If you need an extension, please contact me in congruence with the Late Policy.
+
+#### Seek help if you need it
+
+I believe it is important to support the physical and emotional well‐being of my students. If you are experiencing physical or mental health issues, I encourage you to use the resources on campus such as those listed below. If you have a health issue that is affecting your performance or participation in the course, and/or if you need help connecting with these resources, please contact me.
+
+- Student Health and Wellness Center (SHW), [Website](https://www.ohsu.edu/education/student-health-and-wellness), 503-494-8665 (OHSU Students only)
+
+- Student Health and Counseling (SHAC), [Website](https://www.pdx.edu/health-counseling/), 503-725-2800
+
+#### Inform your instructor of any accommodations needed
+
+You should speak with or email me before or during the first week of classes regarding any special needs. Students seeking academic accommodations should register with the appropriate service under the School policies below.
+
+Some religious holidays may occur on regularly scheduled class days. Because available class hours are so limited in number, we will have to hold class on all such days. Class video recordings will be available and you are encouraged to engage with the material outside of the regular class time. You are also encouraged to come to office hours with questions from the session.
+
+#### Commit to integrity
+
+As a student in this course (and at PSU or OHSU) you are expected to maintain high degrees of professionalism, commitment to active learning and participation in this class and also integrity in your behavior in and out of the classroom.
+
+Cheating and other forms of academic misconduct will not be tolerated in this course and will be dealt with firmly. Student academic misconduct refers to behavior that includes plagiarism, cheating on assignments, fabrication of data, falsification of records or official documents, intentional misuse of equipment or materials (including library materials), or aiding and abetting the perpetration of such acts. Preparation of exams, assigned on an individual basis, must represent each student's own individual effort. When used, resource materials should be cited in conventional reference format.
+
+## Course Communications
+
+### Brightspace announcements
+
+For important/urgent matters, I will communicate with you using announcements via Brightspace that will be delivered to your OHSU Email account as well as displayed in the Brightspace course site Announcements section.
+
+I will copy these announcements over to Slack if it does not contain sensitive information.
+
+### E-mail
+
+E-mail should be used only for messages that are private in nature. Please send private messages to my OHSU email address (wakim\@ohsu.edu). **Messages sent through Brightspace Inbox will not be answered.**
+
+## Further Student Resources
+
+### SPH Writing Lab
+
+The School of Public Health Writing Support serves graduate students (master's and PhD) in SPH, offering help on all professional writing tasks, including class papers, dissertations, job application documents, personal statements, and grant applications, to name a few. Leslie Bienen, MFA, DVM offers one-on-one writing support and other workshops. Appointments are virtual for the time being. You can make an appointment by contacting [writingsupportsph\@pdx.edu](mailto:writingsupportsph@pdx.edu) or making an appointment through [Calendly](https://calendly.com/writingsupportsph/writing-meeting).
+
+### Grammarly Subscription
+
+The School of Public Health students have access to a subscription version of Grammarly. While Grammarly cannot improve the argument and flow of your work, it can help with spelling, grammar, and sentence structure. If you are interested in this tool, please add your name to this email [form](https://docs.google.com/forms/d/1IQWFsARrTJlasK2a5JTonR4ygr8MxqIzbh_bAxKmWWI/edit?ts=614ce07a) and they will get you added to the subscription. Be sure to use your PSU login credentials to access the form.
+
+### Student Wellness
+
+I am committed to supporting the physical and emotional well-being of my students. Both PSU and OHSU have designated centers for student health. For OHSU, students can visit the [Behavioral Health site](https://www.ohsu.edu/education/behavioral-health), where you can find more information including the number to make an appointment. **All student visits are free.** OHSU students also have access to PSU's [Counseling Services](https://www.pdx.edu/health-counseling/counseling) through the school's Student Health & Counseling. Information on additional student resources for OHSU students are available on the OHSU [Health and Wellness Resource page](https://ohsu-psu-sph.org/health_and_wellness/). 
+
+### Support for Food Insecurity
+
+Students across the country experience food insecurity at alarming rates. OHSU and PSU both provide a list of resources to help combat food insecurity. Of note, the Committee to Improve Student Food Security (CISFS) at PSU provides a [Free Food Market](https://www.pdx.edu/student-access-center/free-food-market) on the second Monday of each month. OHSU also provides [SNAP Enrollment Assistance](https://o2.ohsu.edu/student-central/health-wellness/student-food-resources/snap.cfm). The [Supplemental Nutrition Assistance Program (SNAP)](https://oregonhunger.org/snap-for-students/) allocates money towards food for individuals below a certain income level. If you make less than \$2,430 monthly, you may wish to enroll.
+
+### Support for Students with Children
+
+Students who have children can use the PSU resource: [Resource Center for Students with Children](https://www.pdx.edu/students-with-children/). Resources are mostly focused on students with younger children. There are several great resources available, including: family-friendly study spaces, new baby starter packs, free kids clothing, and further information on financial resources for childcare.
+
+## See Brightspace for SPH and OHSU policies
+
+The Brightspace syllabus has more information from SPH and OHSU, including policy and resources.

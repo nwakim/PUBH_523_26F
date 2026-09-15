@@ -1,0 +1,3206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nicky Wakim, Jessica Minnier, and Meike Niederhausen">
+
+<title>Missing data: transformations – Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-702b68d2bb46f0b77d76c36fa481b3ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Introduction to R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../instructors.html"> 
+<span class="menu-text">Instructors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../practice.html"> 
+<span class="menu-text">Practice</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project.html"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources/lesson_references.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#from-finding-missing-data-to-handling-it" id="toc-from-finding-missing-data-to-handling-it" class="nav-link active" data-scroll-target="#from-finding-missing-data-to-handling-it">From finding missing data to handling it</a>
+  <ul class="collapse">
+  <li><a href="#before-we-start" id="toc-before-we-start" class="nav-link" data-scroll-target="#before-we-start">Before we start</a></li>
+  <li><a href="#what-do-we-do-with-missing-data" id="toc-what-do-we-do-with-missing-data" class="nav-link" data-scroll-target="#what-do-we-do-with-missing-data">What do we do with missing data?</a></li>
+  </ul></li>
+  <li><a href="#filtering-out-missing-values-using-drop_na" id="toc-filtering-out-missing-values-using-drop_na" class="nav-link" data-scroll-target="#filtering-out-missing-values-using-drop_na">Filtering out missing values using <code>drop_na()</code></a>
+  <ul class="collapse">
+  <li><a href="#check-missingness-rates-first-before-dropping-nas" id="toc-check-missingness-rates-first-before-dropping-nas" class="nav-link" data-scroll-target="#check-missingness-rates-first-before-dropping-nas">Check missingness rates first before dropping <code>NA</code>s</a></li>
+  <li><a href="#drop_na-removing-missingness-from-all-variables-in-the-dataset" id="toc-drop_na-removing-missingness-from-all-variables-in-the-dataset" class="nav-link" data-scroll-target="#drop_na-removing-missingness-from-all-variables-in-the-dataset"><code>drop_na()</code>: removing missingness from all variables in the dataset</a></li>
+  <li><a href="#drop_na-removing-missingness-from-all-variables-in-the-dataset-1" id="toc-drop_na-removing-missingness-from-all-variables-in-the-dataset-1" class="nav-link" data-scroll-target="#drop_na-removing-missingness-from-all-variables-in-the-dataset-1"><code>drop_na()</code>: removing missingness from all variables in the dataset</a></li>
+  </ul></li>
+  <li><a href="#a-warning-about-filter-check-for-na" id="toc-a-warning-about-filter-check-for-na" class="nav-link" data-scroll-target="#a-warning-about-filter-check-for-na">A warning about <code>filter()</code>: check for <code>NA</code></a>
+  <ul class="collapse">
+  <li><a href="#warning-on-filter-it-can-silently-drop-your-nas" id="toc-warning-on-filter-it-can-silently-drop-your-nas" class="nav-link" data-scroll-target="#warning-on-filter-it-can-silently-drop-your-nas">Warning on <code>filter()</code>: it can silently drop your <code>NA</code>s</a></li>
+  <li><a href="#use-filter_out-to-keep-nas" id="toc-use-filter_out-to-keep-nas" class="nav-link" data-scroll-target="#use-filter_out-to-keep-nas">Use <code>filter_out()</code> to keep <code>NA</code>s</a></li>
+  </ul></li>
+  <li><a href="#replace-missing-values-with-replace_na" id="toc-replace-missing-values-with-replace_na" class="nav-link" data-scroll-target="#replace-missing-values-with-replace_na">Replace missing values with <code>replace_na()</code></a>
+  <ul class="collapse">
+  <li><a href="#replace_na-replace-missing-values-with-a-specific-value" id="toc-replace_na-replace-missing-values-with-a-specific-value" class="nav-link" data-scroll-target="#replace_na-replace-missing-values-with-a-specific-value"><code>replace_na()</code>: replace missing values with a specific value</a></li>
+  <li><a href="#example-1-filling-a-numeric-variable" id="toc-example-1-filling-a-numeric-variable" class="nav-link" data-scroll-target="#example-1-filling-a-numeric-variable">Example 1: filling a numeric variable</a></li>
+  <li><a href="#fct_na_value_to_level-filling-a-factor-variable" id="toc-fct_na_value_to_level-filling-a-factor-variable" class="nav-link" data-scroll-target="#fct_na_value_to_level-filling-a-factor-variable"><code>fct_na_value_to_level()</code>: filling a factor variable</a></li>
+  <li><a href="#example-2-filling-a-factor-variable" id="toc-example-2-filling-a-factor-variable" class="nav-link" data-scroll-target="#example-2-filling-a-factor-variable">Example 2: filling a factor variable</a></li>
+  </ul></li>
+  <li><a href="#replacing-a-factor-level-with-na" id="toc-replacing-a-factor-level-with-na" class="nav-link" data-scroll-target="#replacing-a-factor-level-with-na">Replacing a factor level with <code>NA</code></a>
+  <ul class="collapse">
+  <li><a href="#replace_with_na-replace-a-factor-level-with-na" id="toc-replace_with_na-replace-a-factor-level-with-na" class="nav-link" data-scroll-target="#replace_with_na-replace-a-factor-level-with-na"><code>replace_with_na()</code>: replace a factor level with <code>NA</code></a></li>
+  <li><a href="#example-3-replace-certain-levels-or-values-with-na-12" id="toc-example-3-replace-certain-levels-or-values-with-na-12" class="nav-link" data-scroll-target="#example-3-replace-certain-levels-or-values-with-na-12">Example 3: replace certain levels or values with <code>NA</code> (1/2)</a></li>
+  <li><a href="#example-3-replace-certain-levels-or-values-with-na-22" id="toc-example-3-replace-certain-levels-or-values-with-na-22" class="nav-link" data-scroll-target="#example-3-replace-certain-levels-or-values-with-na-22">Example 3: replace certain levels or values with <code>NA</code> (2/2)</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a>
+  <ul class="collapse">
+  <li><a href="#wrap-up-1" id="toc-wrap-up-1" class="nav-link" data-scroll-target="#wrap-up-1">Wrap-up</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Missing_data_transformations.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Missing data: transformations</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nicky Wakim, Jessica Minnier, and Meike Niederhausen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="from-finding-missing-data-to-handling-it" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">From finding missing data to handling it</h1>
+<section id="before-we-start" class="level2">
+<h2 class="anchored" data-anchor-id="before-we-start">Before we start</h2>
+<ul>
+<li>Install and load the <code>naniar</code> package (a play on Narnia) if you haven’t already!</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_naniar.png" class="img-fluid figure-img" alt="&quot;Explore missing data in naniar!&quot; Cute monsters with exploring gear looking around a landscape full of subtle (and not so subtle) NAs, hidden in trees, on mountain tops, as birds, and in flowers. Learn more about naniar."></p>
+<figcaption><a href="https://allisonhorst.com/r-packages-functions">Artwork by <span class="citation" data-cites="allison_horst">@allison_horst</span></a></figcaption>
+</figure>
+</div>
+<ul>
+<li>We’ll be working with only a few variables in the HRS dataset in this lesson!
+<ul>
+<li>Mostly to help us view the tables and plots within the slides</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="ot">&lt;-</span> hrs_data <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ed, race_original, srh, sex, act_vig, height, degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="what-do-we-do-with-missing-data" class="level2">
+<h2 class="anchored" data-anchor-id="what-do-we-do-with-missing-data">What do we do with missing data?</h2>
+<ul>
+<li><em>Filtering out</em> missing values with <code>drop_na()</code></li>
+<li>A common gotcha: how <code>filter()</code> silently drops <code>NA</code>s</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>We will also use <code>naniar</code> functions to work with <code>NA</code>s in a more flexible way
+<ul>
+<li><em>Filling in</em> missing values with <code>replace_na()</code> (and <code>fct_na_value_to_level()</code> for factors)</li>
+<li><em>Replacing</em> a values (numbers or levels) with <code>NA</code> using <code>replace_with_na()</code></li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Not covered in this course (but very important in practice):
+<ul>
+<li>Imputation methods for filling in missing values</li>
+<li>Weighting methods for adjusting for missingness</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="filtering-out-missing-values-using-drop_na" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Filtering out missing values using <code>drop_na()</code></h1>
+<section id="check-missingness-rates-first-before-dropping-nas" class="level2">
+<h2 class="anchored" data-anchor-id="check-missingness-rates-first-before-dropping-nas">Check missingness rates first before dropping <code>NA</code>s</h2>
+<ul>
+<li><p>We may want to remove rows that have missing data, coded as <code>NA</code></p></li>
+<li><p>First, summarize and visualize missingness using <code>naniar</code></p></li>
+<li><p>We’ll take a quick look at the counts</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Create missingness sumamry table with <code>miss_var_summary()</code></summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">miss_var_summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(<span class="at">table.font.size =</span> <span class="fu">px</span>(<span class="dv">40</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="nyaaoolgyu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nyaaoolgyu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nyaaoolgyu thead, #nyaaoolgyu tbody, #nyaaoolgyu tfoot, #nyaaoolgyu tr, #nyaaoolgyu td, #nyaaoolgyu th {
+  border-style: none;
+}
+
+#nyaaoolgyu p {
+  margin: 0;
+  padding: 0;
+}
+
+#nyaaoolgyu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 40px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nyaaoolgyu .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nyaaoolgyu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nyaaoolgyu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nyaaoolgyu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nyaaoolgyu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nyaaoolgyu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nyaaoolgyu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nyaaoolgyu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nyaaoolgyu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nyaaoolgyu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nyaaoolgyu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nyaaoolgyu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nyaaoolgyu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nyaaoolgyu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nyaaoolgyu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nyaaoolgyu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nyaaoolgyu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nyaaoolgyu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nyaaoolgyu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nyaaoolgyu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nyaaoolgyu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nyaaoolgyu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nyaaoolgyu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nyaaoolgyu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nyaaoolgyu .gt_left {
+  text-align: left;
+}
+
+#nyaaoolgyu .gt_center {
+  text-align: center;
+}
+
+#nyaaoolgyu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nyaaoolgyu .gt_font_normal {
+  font-weight: normal;
+}
+
+#nyaaoolgyu .gt_font_bold {
+  font-weight: bold;
+}
+
+#nyaaoolgyu .gt_font_italic {
+  font-style: italic;
+}
+
+#nyaaoolgyu .gt_super {
+  font-size: 65%;
+}
+
+#nyaaoolgyu .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nyaaoolgyu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nyaaoolgyu .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nyaaoolgyu .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nyaaoolgyu .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nyaaoolgyu .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nyaaoolgyu .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#nyaaoolgyu .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#nyaaoolgyu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">variable</th>
+<th id="n_miss" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n_miss</th>
+<th id="pct_miss" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">pct_miss</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">ed</td>
+<td class="gt_row gt_right" headers="n_miss">507</td>
+<td class="gt_row gt_center" headers="pct_miss">18.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">race_original</td>
+<td class="gt_row gt_right" headers="n_miss">486</td>
+<td class="gt_row gt_center" headers="pct_miss">17.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">degree</td>
+<td class="gt_row gt_right" headers="n_miss">470</td>
+<td class="gt_row gt_center" headers="pct_miss">17.2</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">height</td>
+<td class="gt_row gt_right" headers="n_miss">55</td>
+<td class="gt_row gt_center" headers="pct_miss">2.02</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">act_vig</td>
+<td class="gt_row gt_right" headers="n_miss">9</td>
+<td class="gt_row gt_center" headers="pct_miss">0.330</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">srh</td>
+<td class="gt_row gt_right" headers="n_miss">4</td>
+<td class="gt_row gt_center" headers="pct_miss">0.147</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">sex</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="drop_na-removing-missingness-from-all-variables-in-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="drop_na-removing-missingness-from-all-variables-in-the-dataset"><code>drop_na()</code>: removing missingness from all variables in the dataset</h2>
+<ul>
+<li><code>drop_na()</code> removes rows with missing data
+<ul>
+<li>You can target specific columns, or drop any row with any missingness</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hrs_01_na_rm <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(hrs_01_na_rm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,151 × 7
+      ed race_original          srh       sex    act_vig     height degree      
+   &lt;dbl&gt; &lt;fct&gt;                  &lt;fct&gt;     &lt;fct&gt;  &lt;fct&gt;        &lt;dbl&gt; &lt;fct&gt;       
+ 1    12 White/Caucasian        Good      Female Never         1.60 High school…
+ 2    16 White/Caucasian        Excellent Male   &gt;1 per week   1.88 Master's de…
+ 3    16 Black/African American Good      Male   1 per week    1.75 Master's de…
+ 4    17 White/Caucasian        Poor      Female Never         1.55 Professiona…
+ 5    11 Black/African American Excellent Male   Never         1.78 None        
+ 6    13 Black/African American Fair      Male   Never         1.78 Associate's…
+ 7    16 White/Caucasian        Very Good Male   1 per week    1.73 Master's de…
+ 8    12 White/Caucasian        Good      Male   Never         1.88 High school…
+ 9    12 Black/African American Fair      Male   Never         1.73 None        
+10    12 Black/African American Very Good Male   Never         1.73 None        
+# ℹ 2,141 more rows</code></pre>
+</div>
+</div>
+<p><em>Pay attention to the number of rows for each of these results</em></p>
+</section>
+<section id="drop_na-removing-missingness-from-all-variables-in-the-dataset-1" class="level2">
+<h2 class="anchored" data-anchor-id="drop_na-removing-missingness-from-all-variables-in-the-dataset-1"><code>drop_na()</code>: removing missingness from all variables in the dataset</h2>
+<ul>
+<li>Remove missingness in one or more columns:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hrs_02_race_rm <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(race_original, ed)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>hrs_02_race_rm <span class="sc">|&gt;</span> <span class="fu">miss_var_summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(<span class="at">table.font.size =</span> <span class="fu">px</span>(<span class="dv">40</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="ocktueinib" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ocktueinib table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ocktueinib thead, #ocktueinib tbody, #ocktueinib tfoot, #ocktueinib tr, #ocktueinib td, #ocktueinib th {
+  border-style: none;
+}
+
+#ocktueinib p {
+  margin: 0;
+  padding: 0;
+}
+
+#ocktueinib .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 40px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ocktueinib .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ocktueinib .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ocktueinib .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ocktueinib .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ocktueinib .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ocktueinib .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ocktueinib .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ocktueinib .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ocktueinib .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ocktueinib .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ocktueinib .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ocktueinib .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ocktueinib .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ocktueinib .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ocktueinib .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ocktueinib .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ocktueinib .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ocktueinib .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ocktueinib .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ocktueinib .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ocktueinib .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ocktueinib .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ocktueinib .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ocktueinib .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ocktueinib .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ocktueinib .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ocktueinib .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ocktueinib .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ocktueinib .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ocktueinib .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ocktueinib .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ocktueinib .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ocktueinib .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ocktueinib .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ocktueinib .gt_left {
+  text-align: left;
+}
+
+#ocktueinib .gt_center {
+  text-align: center;
+}
+
+#ocktueinib .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ocktueinib .gt_font_normal {
+  font-weight: normal;
+}
+
+#ocktueinib .gt_font_bold {
+  font-weight: bold;
+}
+
+#ocktueinib .gt_font_italic {
+  font-style: italic;
+}
+
+#ocktueinib .gt_super {
+  font-size: 65%;
+}
+
+#ocktueinib .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ocktueinib .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ocktueinib .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ocktueinib .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ocktueinib .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ocktueinib .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ocktueinib .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ocktueinib .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ocktueinib div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">variable</th>
+<th id="n_miss" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n_miss</th>
+<th id="pct_miss" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">pct_miss</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">height</td>
+<td class="gt_row gt_right" headers="n_miss">47</td>
+<td class="gt_row gt_center" headers="pct_miss">2.13</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">act_vig</td>
+<td class="gt_row gt_right" headers="n_miss">6</td>
+<td class="gt_row gt_center" headers="pct_miss">0.272</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">srh</td>
+<td class="gt_row gt_right" headers="n_miss">4</td>
+<td class="gt_row gt_center" headers="pct_miss">0.181</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">ed</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">race_original</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">sex</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">degree</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-warning-about-filter-check-for-na" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">A warning about <code>filter()</code>: check for <code>NA</code></h1>
+<section id="warning-on-filter-it-can-silently-drop-your-nas" class="level2">
+<h2 class="anchored" data-anchor-id="warning-on-filter-it-can-silently-drop-your-nas">Warning on <code>filter()</code>: it can silently drop your <code>NA</code>s</h2>
+<ul>
+<li>Suppose we want to remove the <code>"Poor"</code> category from <code>srh</code> (self-reported health)</li>
+</ul>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(srh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       srh   n     percent valid_percent
+ Excellent 277 0.101539589    0.10168869
+ Very Good 647 0.237170088    0.23751836
+      Good 870 0.318914956    0.31938326
+      Fair 743 0.272360704    0.27276065
+      Poor 187 0.068548387    0.06864905
+      &lt;NA&gt;   4 0.001466276            NA</code></pre>
+</div>
+</div>
+</div><div class="column">
+<p><code>srh</code> has 4 missing values!</p>
+</div>
+</div>
+<div class="columns">
+<div class="column">
+<p>When we try to filter using <code>!=</code>, we <strong>lose our <code>NA</code>s</strong>!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hrs_03_rm_poor <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(srh <span class="sc">!=</span> <span class="st">"Poor"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column">
+<p>When <code>R</code> checks <code>NA != "Poor"</code>, it evaluates to <code>NA</code>, not <code>TRUE</code>, so that row gets dropped</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hrs_03_rm_poor <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(srh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       srh   n   percent
+ Excellent 277 0.1091841
+ Very Good 647 0.2550256
+      Good 870 0.3429247
+      Fair 743 0.2928656
+      Poor   0 0.0000000</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-filter_out-to-keep-nas" class="level2">
+<h2 class="anchored" data-anchor-id="use-filter_out-to-keep-nas">Use <code>filter_out()</code> to keep <code>NA</code>s</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>We can use <code>filter_out()</code> from the <code>dplyr</code> package to keep the <code>NA</code>s when we want to perform an exclusionary (<code>!=</code>) filter</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hrs_04_rm_poor <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter_out</span>(srh <span class="sc">==</span> <span class="st">"Poor"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>hrs_04_rm_poor <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(srh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       srh   n     percent valid_percent
+ Excellent 277 0.109012200     0.1091841
+ Very Good 647 0.254624164     0.2550256
+      Good 870 0.342384888     0.3429247
+      Fair 743 0.292404565     0.2928656
+      Poor   0 0.000000000     0.0000000
+      &lt;NA&gt;   4 0.001574183            NA</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="pink">
+<div class="pink-ttl">
+<p>Build this habit</p>
+</div>
+<div class="pink-cont">
+<p>Whenever you filter on a column that has missing values, stop and check: <em>how many observations were removed and does that correspond to the number of values I expect (excluding <code>NA</code>s?)</em></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="replace-missing-values-with-replace_na" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Replace missing values with <code>replace_na()</code></h1>
+<section id="replace_na-replace-missing-values-with-a-specific-value" class="level2">
+<h2 class="anchored" data-anchor-id="replace_na-replace-missing-values-with-a-specific-value"><code>replace_na()</code>: replace missing values with a specific value</h2>
+<ul>
+<li><p>Sometimes we want to fill in missing values with a specific value instead of removing the row</p></li>
+<li><p>We can use the <code>replace_na()</code> function <em>inside <code>mutate()</code></em> to set <code>NA</code>s to a specific value</p></li>
+<li><p><code>replace_na()</code> works on <em>numeric</em> and <em>character</em> variables, not <em>factors</em> &nbsp;</p></li>
+<li><p>Here’s the general version of the function:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>data_filled <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_filled =</span> <span class="fu">replace_na</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-4" class="code-annotation-target"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>      variable,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-5" class="code-annotation-target"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>      value_to_fill_in</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="3" data-code-annotation="1"><code>replace_na()</code> swaps out any <code>NA</code> in <code>variable</code> for the value we provide. It’s good practice to assign this to a new variable, like <code>variable_filled</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="4" data-code-annotation="2"><code>variable</code> is the column we want to fill in</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="5" data-code-annotation="3"><code>value_to_fill_in</code> is the value we want to use to replace the missing</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="example-1-filling-a-numeric-variable" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-filling-a-numeric-variable">Example 1: filling a numeric variable</h2>
+<ul>
+<li>Suppose if <code>height</code> is missing, we want to replace it with the average <code>height</code> across the dataset
+<ul>
+<li>This is <strong>not</strong> an advised solution, I just want to show you how the function works!</li>
+</ul></li>
+<li>Here’s how we can use <code>replace_na()</code> to fill in the missing values:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>hrs_05_height_filled <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">height_filled =</span> <span class="fu">replace_na</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>      height,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-6-5" class="code-annotation-target"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>(height, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2,6" data-code-annotation="1">We need to wrap <code>replace_na()</code> in <code>mutate()</code> to create a new variable, <code>height_filled</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="2"><code>replace_na()</code> swaps out any <code>NA</code> in <code>height</code> for the value we provide</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="3"><code>height</code> is the column we want to fill in.<br>
+</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="5" data-code-annotation="4">We will replace the missing values with the mean of <code>height</code></span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Check that the function worked</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hrs_05_height_filled <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"height"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(height) <span class="sc">|&gt;</span> <span class="fu">tail</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     height height_filled
+2723     NA      1.688729
+2724     NA      1.688729
+2725     NA      1.688729
+2726     NA      1.688729
+2727     NA      1.688729
+2728     NA      1.688729</code></pre>
+</div>
+</div>
+</section>
+<section id="fct_na_value_to_level-filling-a-factor-variable" class="level2">
+<h2 class="anchored" data-anchor-id="fct_na_value_to_level-filling-a-factor-variable"><code>fct_na_value_to_level()</code>: filling a factor variable</h2>
+<ul>
+<li>This is the <code>forcats</code> version of <code>replace_na()</code> for <em>factor</em> variables</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li><p>We can use the <code>fct_na_value_to_level()</code> function <em>inside <code>mutate()</code></em> to set <code>NA</code>s to a specific value</p></li>
+<li><p><code>fct_na_value_to_level()</code> works on <em>factors</em>!!</p></li>
+<li><p>General version of the function is similar to <code>replace_na()</code>:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>data_filled <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_filled =</span> <span class="fu">fct_na_value_to_level</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>      variable,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">level =</span> <span class="st">"new level to replace NAs"</span></span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="2,7" data-code-annotation="1">We need to wrap <code>fct_na_value_to_level()</code> in <code>mutate()</code> to create a new variable, <code>variable_filled</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="2"><code>fct_na_value_to_level()</code> swaps out any <code>NA</code> in <code>variable</code> for the level we provide</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="4" data-code-annotation="3"><code>variable</code> is the column we want to fill in</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="4"><code>"new level to replace NAs"</code> is added as a new level, and used to replace the missing values</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="example-2-filling-a-factor-variable" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-filling-a-factor-variable">Example 2: filling a factor variable</h2>
+<ul>
+<li>Suppose if <code>race_original</code> is missing, we want to replace it with <code>Unknown</code>
+<ul>
+<li>This is <strong>not</strong> an advised solution, I just want to show you how the function works!</li>
+</ul></li>
+<li>Here’s how we can use <code>replace_na()</code> to fill in the missing values:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>hrs_06_race_filled <span class="ot">&lt;-</span> hrs_00 <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">race_filled =</span> <span class="fu">fct_na_value_to_level</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>      race_original,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">level =</span> <span class="st">"Unknown"</span>)</span>
+<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="1"><code>fct_na_value_to_level()</code> swaps out any <code>NA</code> in <code>race_original</code> for the level we provide</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="4" data-code-annotation="2"><code>race_original</code> is the column we want to fill in</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="5" data-code-annotation="3"><code>"Unknown"</code> is added as a new level, and used to replace the missing values</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Check that the function worked</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hrs_06_race_filled <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(race_original, race_filled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          race_original White/Caucasian Black/African American Other Unknown
+        White/Caucasian            1000                      0     0       0
+ Black/African American               0                    884     0       0
+                  Other               0                      0   358       0
+                   &lt;NA&gt;               0                      0     0     486</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="replacing-a-factor-level-with-na" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Replacing a factor level with <code>NA</code></h1>
+<section id="replace_with_na-replace-a-factor-level-with-na" class="level2">
+<h2 class="anchored" data-anchor-id="replace_with_na-replace-a-factor-level-with-na"><code>replace_with_na()</code>: replace a factor level with <code>NA</code></h2>
+<ul>
+<li>Sometimes there are data values that are not missing, but we want to treat them as missing
+<ul>
+<li>Example: you might see a numeric value as <code>-99</code> or <code>"999"</code> to indicate missingness, but because it’s a valid number, R doesn’t treat it as <code>NA</code></li>
+</ul></li>
+<li><strong>Note:</strong> there are no good examples of this in the HRS dataset, so I’m going to show you how to use the function with levels and values that <strong>should not be considered missing</strong></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>General version of the function:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>data_replaced_na <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_with_na</span>(<span class="at">replace =</span> <span class="fu">list</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">numeric_var1 =</span> numeric_val1,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-11-4" class="code-annotation-target"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">numeric_var2 =</span> <span class="fu">c</span>(numeric_val2a, numeric_val2b, numeric_val2c),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-11-5" class="code-annotation-target"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">factor_var1 =</span> <span class="fu">c</span>(<span class="st">"factor_level1"</span>, <span class="st">"factor_level2"</span>)</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a>  ))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="1"><code>replace_with_na()</code> takes a named list of columns and values to replace with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="3" data-code-annotation="2"><code>numeric_var1</code> is the name of a numeric column, and <code>numeric_val1</code> is the value to replace with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="4" data-code-annotation="3"><code>numeric_var2</code> is the name of a numeric column, and <code>numeric_val2a</code>, <code>numeric_val2b</code>, and <code>numeric_val2c</code> are the values to replace with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="5" data-code-annotation="4"><code>factor_var1</code> is the name of a factor column, and <code>"factor_level1"</code> and <code>"factor_level2"</code> are the levels to replace with <code>NA</code></span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="example-3-replace-certain-levels-or-values-with-na-12" class="level2">
+<h2 class="anchored" data-anchor-id="example-3-replace-certain-levels-or-values-with-na-12">Example 3: replace certain levels or values with <code>NA</code> (1/2)</h2>
+<ul>
+<li>We can replace a few values in the <code>hrs_06_race_filled</code> dataset with <code>NA</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>hrs_07_other_na <span class="ot">&lt;-</span> hrs_06_race_filled <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex_na =</span> sex, </span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">height_na =</span> height,</span>
+<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">race_filled_na =</span> race_filled</span>
+<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-12-7" class="code-annotation-target"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_with_na</span>(<span class="at">replace =</span> <span class="fu">list</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-12-8" class="code-annotation-target"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex_na =</span> <span class="st">"Male"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-12-9" class="code-annotation-target"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">height_na =</span> <span class="fl">1.6002</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-12-10" class="code-annotation-target"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">race_filled_na =</span> <span class="fu">c</span>(<span class="st">"Other"</span>, <span class="st">"Unknown"</span>)</span>
+<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>  ))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="2,6" data-code-annotation="1">I often make a new variable to hold the original values, so I can compare before and after</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="7" data-code-annotation="2"><code>replace_with_na()</code> takes a named list of columns and values to replace with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="8" data-code-annotation="3">In the <code>sex</code> column, we will replace <code>"Male"</code> with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="9" data-code-annotation="4">In the <code>height</code> column, we will replace <code>70</code> with <code>NA</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="10" data-code-annotation="5">In the <code>race_filled</code> column, we will replace <code>"Other"</code> and <code>"Unknown"</code> with <code>NA</code></span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="example-3-replace-certain-levels-or-values-with-na-22" class="level2">
+<h2 class="anchored" data-anchor-id="example-3-replace-certain-levels-or-values-with-na-22">Example 3: replace certain levels or values with <code>NA</code> (2/2)</h2>
+<ul>
+<li>We need to check our data to make sure we replaced the values we wanted to replace with <code>NA</code></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:28%;">
+<div class="cell">
+<details class="code-fold">
+<summary>Check <code>sex_na</code></summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>hrs_07_other_na <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(sex, sex_na) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(<span class="at">table.font.size =</span> <span class="fu">px</span>(<span class="dv">35</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="mjtfaoctqk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mjtfaoctqk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mjtfaoctqk thead, #mjtfaoctqk tbody, #mjtfaoctqk tfoot, #mjtfaoctqk tr, #mjtfaoctqk td, #mjtfaoctqk th {
+  border-style: none;
+}
+
+#mjtfaoctqk p {
+  margin: 0;
+  padding: 0;
+}
+
+#mjtfaoctqk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 35px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mjtfaoctqk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mjtfaoctqk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mjtfaoctqk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mjtfaoctqk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mjtfaoctqk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mjtfaoctqk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mjtfaoctqk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mjtfaoctqk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mjtfaoctqk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mjtfaoctqk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mjtfaoctqk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mjtfaoctqk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mjtfaoctqk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mjtfaoctqk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mjtfaoctqk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mjtfaoctqk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mjtfaoctqk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mjtfaoctqk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mjtfaoctqk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mjtfaoctqk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mjtfaoctqk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mjtfaoctqk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mjtfaoctqk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mjtfaoctqk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mjtfaoctqk .gt_left {
+  text-align: left;
+}
+
+#mjtfaoctqk .gt_center {
+  text-align: center;
+}
+
+#mjtfaoctqk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mjtfaoctqk .gt_font_normal {
+  font-weight: normal;
+}
+
+#mjtfaoctqk .gt_font_bold {
+  font-weight: bold;
+}
+
+#mjtfaoctqk .gt_font_italic {
+  font-style: italic;
+}
+
+#mjtfaoctqk .gt_super {
+  font-size: 65%;
+}
+
+#mjtfaoctqk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mjtfaoctqk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mjtfaoctqk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mjtfaoctqk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mjtfaoctqk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mjtfaoctqk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mjtfaoctqk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mjtfaoctqk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mjtfaoctqk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="sex" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">sex</th>
+<th id="Female" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Female</th>
+<th id="Male" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Male</th>
+<th id="NA_" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">NA_</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="sex">Female</td>
+<td class="gt_row gt_right" headers="Female">1568</td>
+<td class="gt_row gt_right" headers="Male">0</td>
+<td class="gt_row gt_right" headers="NA_">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="sex">Male</td>
+<td class="gt_row gt_right" headers="Female">0</td>
+<td class="gt_row gt_right" headers="Male">0</td>
+<td class="gt_row gt_right" headers="NA_">1160</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div><div class="column" style="width:72%;">
+<div class="cell">
+<details class="code-fold">
+<summary>Check <code>race_filled_na</code></summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>hrs_07_other_na <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(race_filled, race_filled_na) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(<span class="at">table.font.size =</span> <span class="fu">px</span>(<span class="dv">35</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="rcywxjpqzn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rcywxjpqzn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rcywxjpqzn thead, #rcywxjpqzn tbody, #rcywxjpqzn tfoot, #rcywxjpqzn tr, #rcywxjpqzn td, #rcywxjpqzn th {
+  border-style: none;
+}
+
+#rcywxjpqzn p {
+  margin: 0;
+  padding: 0;
+}
+
+#rcywxjpqzn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 35px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rcywxjpqzn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rcywxjpqzn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rcywxjpqzn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rcywxjpqzn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rcywxjpqzn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rcywxjpqzn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rcywxjpqzn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rcywxjpqzn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rcywxjpqzn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rcywxjpqzn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rcywxjpqzn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rcywxjpqzn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rcywxjpqzn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rcywxjpqzn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rcywxjpqzn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rcywxjpqzn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rcywxjpqzn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rcywxjpqzn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rcywxjpqzn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rcywxjpqzn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rcywxjpqzn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rcywxjpqzn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rcywxjpqzn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rcywxjpqzn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rcywxjpqzn .gt_left {
+  text-align: left;
+}
+
+#rcywxjpqzn .gt_center {
+  text-align: center;
+}
+
+#rcywxjpqzn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rcywxjpqzn .gt_font_normal {
+  font-weight: normal;
+}
+
+#rcywxjpqzn .gt_font_bold {
+  font-weight: bold;
+}
+
+#rcywxjpqzn .gt_font_italic {
+  font-style: italic;
+}
+
+#rcywxjpqzn .gt_super {
+  font-size: 65%;
+}
+
+#rcywxjpqzn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rcywxjpqzn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rcywxjpqzn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rcywxjpqzn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rcywxjpqzn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rcywxjpqzn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rcywxjpqzn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rcywxjpqzn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rcywxjpqzn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="race_filled" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">race_filled</th>
+<th id="White/Caucasian" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">White/Caucasian</th>
+<th id="Black/African-American" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Black/African American</th>
+<th id="Other" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Other</th>
+<th id="Unknown" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Unknown</th>
+<th id="NA_" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">NA_</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="race_filled">White/Caucasian</td>
+<td class="gt_row gt_right" headers="White/Caucasian">1000</td>
+<td class="gt_row gt_right" headers="Black/African American">0</td>
+<td class="gt_row gt_right" headers="Other">0</td>
+<td class="gt_row gt_right" headers="Unknown">0</td>
+<td class="gt_row gt_right" headers="NA_">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="race_filled">Black/African American</td>
+<td class="gt_row gt_right" headers="White/Caucasian">0</td>
+<td class="gt_row gt_right" headers="Black/African American">884</td>
+<td class="gt_row gt_right" headers="Other">0</td>
+<td class="gt_row gt_right" headers="Unknown">0</td>
+<td class="gt_row gt_right" headers="NA_">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="race_filled">Other</td>
+<td class="gt_row gt_right" headers="White/Caucasian">0</td>
+<td class="gt_row gt_right" headers="Black/African American">0</td>
+<td class="gt_row gt_right" headers="Other">0</td>
+<td class="gt_row gt_right" headers="Unknown">0</td>
+<td class="gt_row gt_right" headers="NA_">358</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="race_filled">Unknown</td>
+<td class="gt_row gt_right" headers="White/Caucasian">0</td>
+<td class="gt_row gt_right" headers="Black/African American">0</td>
+<td class="gt_row gt_right" headers="Other">0</td>
+<td class="gt_row gt_right" headers="Unknown">0</td>
+<td class="gt_row gt_right" headers="NA_">486</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Check <code>height_na</code></summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>hrs_07_other_na <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(height_na)) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(height, height_na) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  height height_na
+1 1.6002        NA
+2 1.6002        NA
+3 1.6002        NA
+4 1.6002        NA
+5     NA        NA
+6 1.6002        NA</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="wrap-up" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Wrap-up</h1>
+<section id="wrap-up-1" class="level2">
+<h2 class="anchored" data-anchor-id="wrap-up-1">Wrap-up</h2>
+<ul>
+<li><p>We learned a few ways to <em>handle</em> missing data, once we know it’s there</p></li>
+<li><p><code>drop_na()</code> removes rows with missing data — target specific columns, or drop any row with any missingness</p></li>
+<li><p><code>filter()</code> <strong>silently drops <code>NA</code> rows</strong> unless you explicitly keep them with <code>| is.na(...)</code>; <code>filter_out()</code> handles this for you automatically</p></li>
+<li><p><code>replace_na()</code> fills in missing values for <strong>numeric</strong> and <strong>character</strong> columns</p></li>
+<li><p><code>fct_na_value_to_level()</code> fills in missing values for <strong>factor</strong> columns, by adding a new explicit level</p></li>
+<li><p><code>replace_with_na()</code> goes the other direction: turns a specific <em>value</em> (or factor level) into <code>NA</code></p>
+<ul>
+<li>Always check your work afterward — compare before/after values with <code>tabyl()</code>, or compare <code>miss_var_summary()</code> before and after</li>
+</ul></li>
+<li><p>There is no single “correct” way to handle missing data — the right choice depends on <strong>why</strong> the data is missing and what you’re trying to learn from it</p></li>
+</ul>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li><a href="https://tidyr.tidyverse.org/reference/drop_na.html"><code>drop_na()</code> reference</a></li>
+<li><a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter_out()</code> reference</a></li>
+<li><a href="https://tidyr.tidyverse.org/reference/replace_na.html"><code>replace_na()</code> reference</a></li>
+<li><a href="https://forcats.tidyverse.org/reference/fct_na_value_to_level.html"><code>fct_na_value_to_level()</code> reference</a></li>
+<li><a href="http://naniar.njtierney.com/reference/replace_with_na.html"><code>replace_with_na()</code> reference</a></li>
+<li><a href="https://r4ds.hadley.nz/missing-values.html">Missing values chapter in <em>R for Data Science (2e)</em></a></li>
+<li><a href="https://epirhandbook.com/en/missing-data.html">Dealing with missing data in the <em>Epidemiologist R Handbook</em></a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

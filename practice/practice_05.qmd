@@ -1,0 +1,318 @@
+---
+title: "Practice 5"
+subtitle: "PUBH 523/623"
+author: "Your name here"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview
+
+This practice is mostly **hands-on**. You will start transforming the HRS dataset the way real analysts do: keeping and reordering the rows and columns you need, creating new variables, and combining conditions to answer more specific questions about respondents. Along the way you'll get a little more practice with the pipe (`|>`) and with data frames in general — but the focus this week is on the new `dplyr` verbs.
+
+Topics covered (Lessons 20-23):
+
+- Intro to data transformations and summarizations
+- Data transformation: rows
+- Data transformation: columns
+- Data transformations: advanced
+
+## Directions
+
+Download this practice `.qmd` from the course GitHub repository, rename it, and save it in your course folder.
+
+1.  [Download `practice_05.qmd` from GitHub.](https://github.com/nwakim/PUBH_523_26Su/blob/main/practice/practice_05.qmd)
+2.  Rename the file to `Lastname_Firstinitial_Practice_05.qmd` (or `lastname_firstinitial_practice_05.qmd`), replacing with your actual last name and first initial.
+3.  Save it inside your `practice` folder. You may create a `practice_05` subfolder if you prefer.
+
+::: {.callout-tip appearance="minimal"}
+##### How to use this file
+
+- The boxes with the **yellow stripe** explain what to do. Keep these in your submitted file.
+- Do all your work **below and outside** of the yellow-striped boxes.
+  - *You will need to create code chunks within this document to run your R code.*
+- Please delete the following sections before submitting:
+  - Overview
+  - Directions
+  - Tip boxes (green stripe)
+  - Caution boxes / Needed Steps (orange/red stripe)
+  - Submission checklist
+  - Note on AI usage
+:::
+
+::: {.callout-important appearance="minimal"}
+##### Needed setup
+
+- You should already have `hrs_data.rds` from Practice 4 (link on the practice page). Place it in your `data` folder if you haven't already.
+  - You can check out the [codebook here](./resources/HRS_codebook.qmd)
+- Load the `tidyverse`, `here`, and `rio` packages. `tidyverse` includes both `dplyr` (for this week's functions) and `forcats` (for the factor functions in Question 4).
+:::
+
+## Questions
+
+### Question 1: `dplyr` Basics
+
+In Lesson 20, we learned that `dplyr` functions are "verbs" that take a data frame in and return a data frame out, and that they can be grouped into four categories based on what they operate on: rows, columns, groups, and joins.
+
+#### Part A: Input and output
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1 sentence, describe the general input and output of most `dplyr` functions. What type of object typically goes in, and what type of object comes out?
+:::
+
+*Write your answer here.*
+
+#### Part B: Sort the verbs
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+For each function below, fill in the table with:
+
+1.  Whether it operates on **rows**, **columns**, or is part of the **groups** category (which we have *not* covered yet, but you saw it mentioned in Lesson 20)
+2.  What the function does, in your own words
+3.  What output you'd expect if you ran it on `hrs_data` (for example: the same number of rows but fewer columns, fewer rows but all the same columns, the rows reordered, etc.)
+
+| Function | Rows, Columns, or Groups (not yet covered)? | What does it do? | Expected output on `hrs_data` |
+|--------------|--------------------------|--------------|------------------|
+| `filter()` |  |  |  |
+| `select()` |  |  |  |
+| `mutate()` |  |  |  |
+| `arrange()` |  |  |  |
+| `distinct()` |  |  |  |
+| `relocate()` |  |  |  |
+| `rename()` |  |  |  |
+| `group_by()` |  |  |  |
+| `summarize()` |  |  |  |
+:::
+
+### Question 2: Data transformation: rows
+
+In Lesson 21, we learned three functions for transforming rows: `filter()`, `arrange()`, and `distinct()`.
+
+#### Part A: `filter()`
+
+Using `hrs_data`:
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Use `filter()` to keep only respondents whose `cond_count` (total number of chronic conditions) is **5 or more**. Assign this to `hrs_01_filter_conditions`, and use `nrow()` to report how many respondents that is.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Use `filter()` to keep only respondents whose `srh` (self-rated health) is exactly `"Poor"`. Assign this to `hrs_02_filter_srh`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Remember: if you misspell or mis-capitalize a value for a categorical/factor variable, `filter()` will **not** throw an error — it will just silently return 0 rows. Always check your output!
+:::
+
+#### Part B: `arrange()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Sort `hrs_data` by `cesd` in **descending** order first, and within ties, by `age_yr` in **ascending** order. Assign the result to `hrs_03_arrange`, and print it using `tibble()`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+In 1 sentence, describe what would change about the output if you arranged by `age_yr` first and `cesd` second instead.
+:::
+
+*Write your answer here.*
+
+#### Part C: `distinct()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Use `distinct()` on `degree` and `race_original` together to see how many unique combinations of these two variables exist in `hrs_data`. Assign this to `hrs_04_distinct`, and print it using `tibble()`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Use `distinct()` on `degree` again, but this time with `.keep_all = TRUE`, so you keep the full row (all columns) for the first respondent found at each unique `degree` value. Assign this to `hrs_05_distinct_all`.
+:::
+
+### Question 3: Data transformation: columns
+
+In Lesson 22, we learned four functions for transforming columns: `select()`, `relocate()`, `mutate()`, and `rename()`.
+
+#### Part A: `select()` and `relocate()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Use `select()` to keep only `id`, `age_yr`, `ed`, `degree`, `income`, `cesd`, and `srh` from `hrs_data`. Assign this to `hrs_06_vars_subset`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Starting from `hrs_06_vars_subset`, use `relocate()` to move `srh` so that it comes right after `id`. Assign this to `hrs_07_reloc`, and print it using `tibble()`.
+:::
+
+#### Part B: `mutate()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data`, create a new variable called `height_ft` that converts `height` (recorded in meters) into feet, using the conversion 1 meter = 3.28084 feet. Round `height_ft` to 1 decimal place using `round()` *inside* your `mutate()` call. Assign the result to `hrs_08_mutate`, and use `relocate()` so that `height_ft` sits right next to `height` for easy comparison. Print it using `tibble()`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Remember, inside `mutate()` you use a single `=`, not `<-` or `==`, to define your new column.
+:::
+
+#### Part C: `rename()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data`, rename `cesd` to `depression_score` and `srh` to `self_rated_health`. Assign the result to `hrs_09_rename`, and print `names(hrs_09_rename)` to confirm the change.
+:::
+
+### Question 4: Data transformation: advanced
+
+In Lesson 23, we covered more advanced techniques: combining conditions with `&`, `|`, and `%in%`; checking our work; creating variables with `case_when()`; and working with factors.
+
+#### Part A: Combining conditions
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Before writing any code: do you expect *more* respondents to have diabetes **AND** high blood pressure (`bp`), or diabetes **OR** high blood pressure? Explain your reasoning in 1 sentence.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Use `filter()` with `&` to find respondents who **have diabetes and have high blood pressure**. Assign this to `hrs_10_filter_diab_bp`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 3
+
+Use `filter()` with `|` to find respondents who **have diabetes or have high blood pressure**. Assign this to `hrs_11_filter_diab_or_bp`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 4
+
+Use `nrow()` (or `count()`) on both objects to check whether your prediction from Task 1 was correct.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 5
+
+Now combine **multiple** logic statements in a single `filter()`: find respondents who **have diabetes and have high blood pressure, or who have more than 5 chronic conditions**. Assign this to `hrs_12_filter_combo`. Think carefully about where your parentheses go.
+:::
+
+#### Part B: `case_when()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data`, create a new variable called `income_cat` with **4** categories based on `income`:
+
+- `"<25k"` if `income` is less than \$25,000
+- `"25k-50k"` if `income` is at least \$25,000 but less than \$50,000
+- `"50k+"` if `income` is \$50,000 or more
+- `"unknown"` if `income` is missing (use `.default` for this case)
+
+Then use `fct()` to convert `income_cat` into a factor. Assign your final result to `hrs_13_case_when`, and check your work using `count()`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+For the middle category, you'll need an `&` statement inside `case_when()`, similar to how we combined conditions in Part A.
+:::
+
+#### Part C: Factors
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Check the current class of `hrs_data$srh` using `class()`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Use `fct_relevel()` to reorder the levels of `srh` into descending order from "Excellent" to "Poor." Call the new column `srh_releveled`, and assign the result to `hrs_14_relevel`. Confirm the new order with `levels()`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+If you misspell one of the levels inside `fct_relevel()`, R will not throw an error — it will silently drop that level to the bottom of the order (and print a warning in the console). Double-check your spelling against the original values in `srh`!
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 3
+
+Now suppose you had instead written `fct_relevel(srh, "Excellent", "Very good", "Good", "Fair", "Poor")` — with a lowercase "g" in `"Very good"`. Run this version and look at the warning message R gives you. In 1-2 sentences, explain what the warning is telling you and why it happens.
+:::
+
+#### Part D: Selecting columns by pattern or type
+
+::: {.callout-warning appearance="minimal"}
+##### Task 1
+
+Use `select()` with `contains()` to grab all columns in `hrs_data` whose name contains `"smoke"`. Assign this to `hrs_15_select_contains`, and print it using `tibble()`.
+:::
+
+::: {.callout-warning appearance="minimal"}
+##### Task 2
+
+Use `select()` with `where(is.factor)` to grab all factor columns in `hrs_data`, and pipe the result into `names()` so you just see the column names.
+:::
+
+## Submission Checklist
+
+If having a checklist helps you stay organized, check off each item below as you complete it. You do not need to submit this checklist.
+
+- [ ] Input/output of `dplyr` functions described (Q1 Part A)
+- [ ] `dplyr` functions sorted into rows/columns/groups, with what they do and expected output (Q1 Part B)
+- [ ] `hrs_01_filter_conditions` and `hrs_02_filter_srh` created with `filter()` (Q2 Part A)
+- [ ] `hrs_03_arrange` created with `arrange()` on two variables, with explanation (Q2 Part B)
+- [ ] `hrs_04_distinct` and `hrs_05_distinct_all` created with `distinct()` (Q2 Part C)
+- [ ] `hrs_06_vars_subset` created with `select()`, then `srh` relocated after `id` in `hrs_07_reloc` (Q3 Part A)
+- [ ] `hrs_08_mutate` created with `height_ft` and relocated next to `height` (Q3 Part B)
+- [ ] `hrs_09_rename` created with `rename()`, names confirmed (Q3 Part C)
+- [ ] Prediction made, `hrs_10_filter_diab_bp` and `hrs_11_filter_diab_or_bp` created and compared, `hrs_12_filter_combo` written with combined `&`/`|` statement (Q4 Part A)
+- [ ] `hrs_13_case_when` created with `case_when()` (4 categories, including `.default`), converted to a factor with `fct()`, checked with `count()` (Q4 Part B)
+- [ ] `hrs_14_relevel` created with `fct_relevel()` on `srh`, confirmed with `levels()` (Q4 Part C)
+- [ ] `hrs_15_select_contains` created with `contains()`, and columns selected with `where(is.factor)` (Q4 Part D)
+- [ ] Document renders to HTML with no errors
+- [ ] Files named correctly: `Lastname_Firstinitial_Practice_05.qmd` and `Lastname_Firstinitial_Practice_05.html` (or lowercase versions)
+- [ ] Both `.qmd` and `.html` submitted to Brightspace
+
+## Note on AI usage
+
+I used GenAI (Claude) to help me draft this practice assignment. It helped me brainstorm ideas for the assignment, and I directed it to help you complete the needed tasks that I showed in the lessons.

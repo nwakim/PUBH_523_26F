@@ -1,0 +1,168 @@
+---
+title: "Data Summarization: Grouped summaries"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data Summarization: Grouped summaries"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio, 
+  skimr
+)
+```
+
+```{r}
+#| label: "import data" 
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(diab, degree, .after = id)
+```
+
+## Grouped summaries
+
+- Sometimes we want to compare summary statistics for different groups of people in our dataset
+- You can use `group_by()` to specify the grouping variable(s) before summarizing
+- Then you can use another summary function to calculate the statistics for each group separately
+
+- We will review the functions that can be used for grouped summaries:
+  - `summarise()` from `dplyr`
+  - `skim()` from `skimr`
+  - `get_summary_stats()` from `rstatix`
+  - `tbl_summary()` from `gtsummary`
+    - Slightly different: does not use `group_by()`
+  
+ 
+
+- For each, we will look at grouped summaries for:
+  - Grouped by `sex`
+  - Summarize `age_yr`, `cesd`, and `income`
+
+## New summary function: `summarise()`/`summarize()`
+
+- Not necessarily grouped
+- Flexible function that allows you to calculate any summary statistic you want, and name the resulting columns yourself
+  - You need to feed it a column and a function to apply to that column
+  
+ 
+
+::: pink
+::: pink-cont
+- Really flexible: you can calculate custom summary statistics
+- More work if you want general summary statistics: you have to write out each statistic and name each resulting column yourself
+:::
+:::
+
+## Example: summary statistics on age
+
+- For each summary statistic, I need to use the **designated function** and **specify the column** I want to summarize
+
+```{r}
+hrs_00 |>
+  summarise(
+    mean_age = mean(age_yr, na.rm = TRUE),
+    mean_age_above_80 = mean(age_yr[age_yr > 80], na.rm = TRUE), #<1>
+    median_age = median(age_yr, na.rm = TRUE),
+    sd_age = sd(age_yr, na.rm = TRUE),
+    min_age = min(age_yr, na.rm = TRUE),
+    max_age = max(age_yr, na.rm = TRUE), 
+  )
+```
+
+1. I can create a unique summary statistic without changing the dataset. I have calculated the mean age for people above 80 years old.
+
+## Group by a variable in `summarise()`
+
+```{r}
+hrs_00 |>
+  group_by(sex) |> #<1>
+  summarise( #<2>
+    mean_age = mean(age_yr, na.rm = TRUE),
+    sd_age = sd(age_yr, na.rm = TRUE),
+    mean_cesd = mean(cesd, na.rm = TRUE),
+    sd_cesd = sd(cesd, na.rm = TRUE),
+    mean_income = mean(income, na.rm = TRUE),
+    sd_income = sd(income, na.rm = TRUE)
+  ) #<2>
+```
+
+1. Use `group_by()` to specify the grouping variable before summarizing. The summary statistics will be calculated separately for each level of `sex`.
+2. Use `summarise()` to calculate the summary statistics. Syntax will be the same as non-grouped summaries.
+
+## Group by a variable in `skim()` {.scrollable}
+
+```{r}
+hrs_00 |>
+  group_by(sex) |> #<1>
+  select(age_yr, cesd, income) |> #<2>
+  skim() #<3>
+```
+
+1. Use `group_by()` to specify the grouping variable before summarizing. The summary statistics will be calculated separately for each level of `sex`.
+2. Use `select()` to specify the variables you want to summarize.
+3. Use `skim()` to calculate the summary statistics. Syntax will be the same as non-grouped summaries.
+
+## Group by a variable in `get_summary_stats()`
+
+```{r}
+hrs_00 |>
+  group_by(sex) |> #<1>
+  get_summary_stats( #<2>
+    age_yr, cesd, income, 
+    type = "common"
+    ) #<2>
+```
+
+1. Use `group_by()` to specify the grouping variable before summarizing. The summary statistics will be calculated separately for each level of `sex`.
+2. Use `get_summary_stats()` to calculate the summary statistics. Syntax will be the same as non-grouped summaries. 
+
+## Group by a variable in `tbl_summary()`
+
+- Slightly different syntax than the other functions: does not use `group_by()`
+- `by =` splits the table into side-by-side columns for each group
+
+```{r}
+hrs_00 |>
+  select(age_yr, cesd, income, sex) |>
+  tbl_summary(by = sex)                                    # <1>
+```
+1. Stratify the whole table by `sex`, creating one column per group
+
+## Wrap-up
+
+- We have covered several functions for summarizing **grouped data** in R
+  - `summarise()`
+  - `skim()`
+  - `get_summary_stats()`
+  - `tbl_summary()`
+

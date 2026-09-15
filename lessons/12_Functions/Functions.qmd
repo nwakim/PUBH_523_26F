@@ -1,0 +1,164 @@
+---
+title: "Functions"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: Functions
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+## What are functions?
+
+- R has many built-in functions that allow you to perform a variety of tasks
+
+- Functions usually take the form:
+
+```{r}
+#| eval: false
+
+function_name(                           # <1>
+  argument1 = input_value1,              # <2>
+  argument2 = input_value2,              # <2>
+  ...                                    # <2>
+  )                                      # <1>
+```
+
+1. `function_name` is the name of the function we are using.
+2. Within the parentheses of the function, there are set arguments that we assign values to. 
+
+## Example: simple function like `mean()`
+
+- `mean()` is a function that generates the calculated mean of a set of numbers
+- It has one main argument: `x`
+- Output (automatically printed) will be the mean of the numbers in `x`
+
+```{r}
+mean(
+  x = c(1, 2, 3, 4, 5, 6) #<1>
+)
+```
+
+1. The argument `x` is assigned the value of a vector of numbers (1, 2, 3, 4, 5)
+
+## Example: calling the `seq()` function
+
+- `seq()` is a function that generates a sequence of numbers. 
+- It has three arguments: `from`, `to`, and `by`
+- Output will be the sequence numbers 
+
+```{r}
+seq(
+  from = 1, #<1>
+  to = 10, #<2>
+  by = 2 #<3>
+)
+```
+
+1. The argument `from` is assigned the value of 1, which is the starting point of the sequence.
+2. The argument `to` is assigned the value of 10, which is the ending point of the sequence.
+3. The argument `by` is assigned the value of 2, which specifies the increment between numbers in the sequence.
+
+## We don't need to specify the argument names
+
+- We can run `seq()` without the argument names
+- R will assume that the values are in the correct order of the arguments
+
+ 
+
+We get the same result:
+
+```{r}
+seq(1, 10, 2)
+```
+
+## Output of a function
+
+- We can also assign the output of a function to an object using the assignment operator `<-`:
+
+```{r}
+#| eval: false
+
+function_output <- function_name(        # <1>
+  argument1 = input_value1,              # <2>
+  argument2 = input_value2,              # <2>
+  ...                                    # <2>
+  )                                     
+```
+
+1. The output of `function_name` is assigned to an object called `function_output`
+2. Within the parentheses of the function, there are set arguments that we assign values to. 
+
+
+- The output will not print, but it will be stored in the object `function_output`
+
+## Now with the `seq()` function
+
+- We will assign the output of the `seq()` function to an object called `odds`:
+
+```{r}
+odds <- seq(
+  from = 1, 
+  to = 10, 
+  by = 2
+)
+```
+
+- So `odds` will now contain the sequence (1,3,5,7,9)
+
+## Help with functions
+
+- If you need a reminder of how to use a function, you can use the `?` or `??` to access the help file for that function:
+```{r}
+#| eval: false
+?seq #<1>
+??read_sas #<2>
+```
+
+1. The `?` will take you to the help file for the `seq()` function, which will show you the arguments and how to use it.
+2. The `??` will search for any functions `read_sas` from your *installed* packages and show you a list of functions that match that search term. This is helpful when you don't remember the package a function is in.
+
+ 
+
+- Certain functions will show you the arguments if you press `Tab` after typing the function name and parentheses
+```{r}
+#| eval: false
+mean()
+sd()
+```
+
+ 
+
+- R will also help autofill the names of functions from your loaded packages:
+```{r}
+#| eval: false
+m
+s
+```
+

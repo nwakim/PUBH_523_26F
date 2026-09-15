@@ -1,0 +1,266 @@
+---
+title: "Data Summarization: Tables"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data Summarization: Tables"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio, 
+  skimr
+)
+```
+
+```{r}
+#| label: "import data" 
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(diab, degree, .after = id)
+```
+
+## What are summary tables?
+
+- Summary tables are a way to present data in a structured format
+- The use is a little vague here... 
+  - It could mean:
+    - A table for categorical data (like a frequency table)
+    - A presentable table for categorical and numeric data
+
+ 
+
+- We will cover two functions that can help us create summary tables for categorical and numeric data:
+  - `tabyl()` from the `janitor` package
+  - `tbl_summary()` from the `gtsummary` package
+
+## What does `tabyl()` do?
+
+- `tabyl()` is a simple function that creates a frequency table for a single categorical variable
+- It returns a data frame with three columns:
+  - `n`: the count in each category
+  - `percent`: that count as a proportion of *all* rows (including missing values)
+  - `valid_percent`: that count as a proportion of only the *non-missing* rows
+
+::: pink
+::: pink-cont
+- Pretty simple to use and can be used to create two-by-two tables
+- Need to feed it one variable at a time
+:::
+:::
+
+## What does `tabyl()` output look like?
+
+```{r}
+hrs_00 |>
+  tabyl(degree)
+```
+
+## Cross-tabulations with `tabyl()`
+
+- You can also cross-tabulate two variables by adding a second column name
+  - This will give you a table of counts for each combination of the two variables
+
+```{r}
+hrs_00 |>
+  tabyl(degree, sex)
+```
+
+## Dressing up a `tabyl()` with `adorn_*()`
+
+- `adorn_*()` functions let you format that table for presentation
+- These are designed to be piped together, one after another
+
+| Function | What it does |
+|----|--------|
+| `adorn_totals()` | Adds a total row and/or column (`where = "row"`, `"col"`, or `"both"`) |
+| `adorn_percentages()` | Converts counts to proportions (`denominator = "row"`, `"col"`, or `"all"`) |
+| `adorn_pct_formatting()` | Converts proportions to nicely formatted percents (control decimals with `digits =`) |
+| `adorn_ns()` | Adds the raw counts back onto a table of percents, e.g. `"45.2% (120)"` |
+
+## Example: Formatting a frequency table
+
+- We can add totals, convert to percentages, format as percents, and add counts back to a frequency table
+- Order matters! 
+  - You generally want: tabulate → add totals → convert to percentages → format as percents → add counts back
+  
+```{r}
+hrs_00 |>
+  tabyl(degree) |>
+  adorn_totals(where = "row") |> #<1>
+  adorn_pct_formatting(digits = 2) #<2>
+```
+
+1. Add a row for totals to the table. A little confusing because it totals each column, but "row" refers to the position of the total row, not what is being totaled
+2. Format the percentages to 2 decimal places
+
+## Example: Formatting a cross-tabulation
+
+- We can also add totals, convert to percentages, format as percents, and add counts back to a cross-tabulation
+
+```{r}
+hrs_00 |>
+  tabyl(degree, sex) |> #<1>
+  adorn_totals(where = "row") |> #<2>
+  adorn_percentages(denominator = "col") |> #<3>
+  adorn_pct_formatting(digits = 1) |> #<4>
+  adorn_ns(position = "front") #<5>
+```
+
+1. Create a cross-tabulation of `degree` by `sex`
+2. Add a row for totals to the table. A little confusing because it totals each column.
+3. Convert the counts to percentages, using the column totals (the added row of totals) as the denominator.
+4. Format the percentages to 1 decimal place
+5. Add the raw counts back to the table, in front of the percentages.
+
+## What does `tbl_summary()` do?
+
+- `tbl_summary()` builds a publication-ready summary table for *all* the columns you give it in a single command
+- It automatically picks sensible statistics based on each variable's type:
+  - Numeric variables: median (interquartile range)
+  - Categorical variables: count (percent)
+  - Missing values are shown as their own "Unknown" row
+- We need to use `select()` to decide what goes into the table
+
+ 
+
+::: pink
+::: pink-cont
+- Great for publications!
+- You can customize the statistics shown, the labels, and even stratify the table by a grouping variable
+- Some of the customizations are syntax heavy
+:::
+:::
+
+## What does `tbl_summary()` output look like? {.scrollable}
+
+::: columns
+::: column
+```{r}
+#| eval: false
+
+hrs_00 |>
+  select(-id, -hhid, -pn) |> #<1>
+  tbl_summary()
+```
+
+1. Only removing this because it would add thousands of rows to this table! See what happens when you don't remove these variables!
+:::
+::: column
+```{r}
+#| echo: false
+
+hrs_00 |>
+  select(-id, -hhid, -pn) |>
+  tbl_summary()
+```
+:::
+:::
+
+## Customizing `tbl_summary()`
+
+- `statistic =` lets you change which statistics are shown, using `{ }` to insert stat names like `{mean}`, `{sd}`, `{median}`, `{n}`, `{p}` (percent)
+- `label =` lets you rename variables to something more readable
+
+```{r}
+hrs_00 |>
+  select(age_yr, sex, diab) |>
+  tbl_summary(
+    statistic = age_yr ~ "{mean} ({sd})",          # <1>
+    label = age_yr ~ "Age (years)"                 # <2>
+  )
+```
+1. Show mean (sd) for `age_yr` instead of the default median (IQR)
+2. Give `age_yr` a nicer display name
+
+## Presentation-ready tables with `gt()`
+
+- `gt()` turns any data frame or table (including a `tabyl()` output) into a polished, presentation-ready table
+- It's a general-purpose "make this table look nice" tool
+- You can further customize titles, column labels, and colors using additional `gt` functions (like `tab_header()` or `fmt_percent()`)
+
+::: columns
+::: column
+```{r}
+#| code-fold: true
+#| code-summary: "Original table from `tabyl()`"
+
+hrs_00 |>
+  tabyl(degree)
+```
+:::
+::: column
+```{r}
+#| code-fold: true
+#| code-summary: "Using `gt()` to make it look nice"
+
+hrs_00 |>
+  tabyl(degree) |>
+  gt() |>
+  tab_header(title = "Highest Degree Earned")
+```
+:::
+:::
+
+## We can change the font size for `tbl_summary()`
+
+```{r}
+hrs_00 |>
+  select(age_yr, sex, diab) |>
+  tbl_summary(
+    statistic = age_yr ~ "{mean} ({sd})",          
+    label = age_yr ~ "Age (years)"                 
+  ) |>
+  as_gt() |> #<1>
+  tab_options(table.font.size = px(50)) #<2>
+```
+
+1. Convert the `tbl_summary()` output to a `gt` table so we can customize it. Need to use `as_gt()` instead of `gt()` because `tbl_summary()` already creates a table.
+2. Change the font size to 50 pixels. Be careful: font size is relative to your document. 50px is probably too large for your standard html's. 
+
+## Wrap-up
+
+- We covered a few functions for summarizing data in R:
+  - `tabyl()` from the `janitor` package
+    - For categorical data
+    - Can be used for one-way or two-way tables
+  - `tbl_summary()` from the `gtsummary` package
+    - For categorical and numeric data
+    - Good for publications!
+    - Can be customized to show different statistics, labels, and stratifications
+
+## Resources
+
+- [Tutorial on `tbl_summary()` from the `gtsummary` package](https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html)
+  - Includes more options than covered here!
+- [More on the `gt` package](https://gt.rstudio.com/articles/gt.html)
+  - Includes more options than covered here!

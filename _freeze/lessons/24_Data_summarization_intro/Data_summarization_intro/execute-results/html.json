@@ -1,0 +1,19 @@
+{
+  "hash": "9500acf385f5c25edca347625b0c72f2",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Data Summarization: Intro\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: \"Data Summarization: Intro\"\n    html-math-method: mathjax\n    highlight-style: ayu\n    code-annotations: hover\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n\n::: {.cell}\n\n:::\n\n\n## Data Summarization\n\n- There are **many ways to summarize data** in R\n  - Each function can be useful in different scenarios!\n\n \n  \n- We may need **different tools based on the type of measurement** (categorical vs. numeric)\n  - Categorical data (represented as factors in R) will focus on frequencies and counts\n  - Numeric data (represented as numbers in R) will focus on summary metrics like mean, median, standard deviation, etc.\n\n## Summary functions we will cover\n\n| Package | Function | Categorical or Numeric? | Type | What it does |\n|--------|-----------|-----------|-----------------|---------------------|\n| built-in | `summary()` | Both | Quick browsing | Base R's simple way to get a quick stats of each variable |\n| `skimr` | `skim()` | Both | Quick browsing, Grouped summaries | Overview of every variable in your dataset at once |\n| `rstatix` | `get_summary` `_stats()` | Numeric | Quick browsing, Grouped summaries | Automatically generates common numeric summary statistics |\n| `dplyr` | `summarize()` | Both | Pointed summaries, Grouped summaries | Calculates custom summary statistics you specify yourself |\n| `janitor` | `tabyl()` | Categorical | Quick browsing | Builds frequency tables for one or more categorical variables |\n| `gtsummary` | `tbl_summary()` | Both | Presentations, Grouped summaries | Creates a polished, publication-ready summary table |\n\n## Helper functions we will cover\n\n| Package | Function | Type | What it does |\n|-----------|-----------|---------------|----------------------|\n| `dplyr` | `group_by()` | Grouped summaries | Splits your data into groups so later functions operate *per group* |\n| `gt` | `gt()` | Presentation | Creates a polished, publication-ready table |\n\n## Make sure you have the following packages installed\n\n- Remember, you can use `pacman::p_load()` to install and load packages in one step\n\n- Needed packages:\n\n  - `dplyr`\n  - `skimr`\n  - `rstatix`\n  - `janitor`\n  - `gtsummary`\n  - `gt`\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,337 @@
+---
+title: "Practice 7 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+pacman::p_load(
+  tidyverse, 
+  here, 
+  rio,
+  scales, 
+  gtsummary, 
+  gt
+)
+
+hrs_activity <- import(here("data", "hrs_wide_activity.rds"))
+```
+
+## Questions
+
+### Question 1: Data transformation: Lengthening data
+
+In Lesson 28, we learned that `pivot_longer()` takes multiple columns and collapses them into two new columns: one holding the old column names, and one holding the values.
+
+#### Part A: Import "wide" data
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Import `hrs_wide_risk_factors.rds` and assign it to `hrs_risk`. Use `glimpse()` (or `tibble()`) to take a look at the data. 
+:::
+
+::: blue
+**Answer:**
+
+Here's an example to show you the pattern — the rest of your answers should follow this same style, with code chunks and a `#| ...` chunk options as needed.
+
+```{r}
+hrs_risk <- import(here("data", "hrs_wide_risk_factors.rds"))
+
+glimpse(hrs_risk)
+```
+:::
+
+#### Part B: `pivot_longer()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Use `pivot_longer()` on `hrs_risk` to collapse the 5 risk-factor columns (`smoke_ever` through `high_cesd`) into two new columns: `risk_factor` (holding the old column names) and `response` (holding the Yes/No values). Keep `id`, `sex`, and `age_yr` as they are. Assign the result to `hrs_01_long`.
+
+Use `nrow()` to confirm your work: how many rows do you now have, and why is that the number you'd expect?
+:::
+
+::: {.callout-note appearance="minimal"}
+##### Note
+
+Please note that we are lengthening a tidy dataset! Just because we can lengthen something, does not mean we should!
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Check your work
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_01_long`, group by `risk_factor` and use `count()` on `response` to see how many respondents have `"Yes"` vs. `"No"` for each risk factor. Assign the result to `hrs_02_factor_counts` and display it.
+
+Which risk factor has the most `"Yes"` responses?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 2: Data transformation: Widening data
+
+In Lesson 29, we learned that `pivot_wider()` does the opposite of `pivot_longer()`, it spreads values from one column back out across many new columns.
+
+#### Part A: When to widen
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1 sentence, describe a situation where you'd want to widen a dataset instead of lengthening it.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part B: `pivot_wider()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Starting from `hrs_01_long`, use `pivot_wider()` to spread `risk_factor` back out into separate columns, filled in with the values from `response`. Assign the result to `hrs_03_wide`.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_03_wide <- hrs_01_long |> 
+  pivot_wider(
+    names_from = ______,
+    values_from = ______
+  )
+```
+:::
+
+#### Part C: Round-trip check
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Compare the dimensions of `hrs_03_wide` (using `dim()`) to the dimensions of the original `hrs_risk`. Are they the same? In 1-2 sentences, explain why lengthening and then widening again should (or shouldn't) get you back to where you started.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 3: Putting pivoting together with earlier tools
+
+Pivoting is most useful when combined with tools from previous weeks. Let's practice that using a second dataset.
+
+#### Part A: Lengthen a new dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Import `hrs_wide_activity.rds` and assign it to `hrs_activity`. Use `pivot_longer()` to collapse the `2019`, `2021`, and `2023` columns into two new columns: `year` and `activity_level`. Keep `id` and `sex` as they are. Assign the result to `hrs_04_long_years`.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Column names that start with a number (like `2019`) need backticks around them inside `cols =`, e.g. `` `2019`:`2023` ``.
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_04_long_years <- hrs_activity |> 
+  pivot_longer(
+    cols = ______,
+    names_to = ______,
+    values_to = ______
+  )
+```
+:::
+
+#### Part B: Review: `filter()` and `arrange()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_04_long_years`, `filter()` to keep only the rows where `year` is `"2023"`, then `arrange()` by `activity_level` in descending order. Assign the result to `hrs_05_2023_sorted`.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Review: grouped counts
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_04_long_years`, group by `year` and use `tbl_summary()` on `activity_level` to see how exercise frequency is distributed within each year. Assign the result to `hrs_06_year_counts`.
+
+Does the distribution of `activity_level` look like it shifts much across the 3 years?
+:::
+
+::: blue
+**Answer:**
+
+Start with something like:
+
+```{r}
+#| eval: false
+
+hrs_06_year_counts <- hrs_04_long_years |> 
+  select(______, ______) |> 
+  tbl_summary(by = ______)
+```
+:::
+
+### Question 4: Quarto revisited: reporting your results
+
+In Lesson 30, we covered tools for writing polished reports: inline code, LaTeX math, code chunk options, callouts, and tabsets. Let's use a few of them to report what you found above.
+
+#### Part A: Inline code
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_risk` (from Question 1), calculate the percent of respondents with `drink == "Yes"`. You can use `mean()` like the lessons or calculate the proportion using counts. Use `percent()` (from the `scales` package) to display the value as a percent. Assign the result to an object called `perc_drink`.
+
+Then copy and paste this sentence and fill it with the inline code: "Approximately _____ of respondents in the HRS dataset report drinking alcohol."
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part B: LaTeX math
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using LaTeX display math (`$$...$$`), write out the formula for a proportion: the number of respondents with a given risk factor ($n$), divided by the total number of respondents ($N$). Use $\widehat{p}$ (or similar notation) for the proportion itself.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: Code folding
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take the code chunk you used to create `hrs_06_year_counts` in Question 3 and turn it into a **folded** code chunk (`code-fold: true`), with a `code-summary` of `"Counting exercise frequency by year"`. Please copy and paste the code chunk under this task and then add the chunk options to it.
+:::
+
+::: {.callout-tip appearance="minimal"}
+##### Tip
+
+Code chunk options go inside the *same* chunk as your code, on lines that start with `#|`. They don't create a new chunk.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part D: Cross-referencing
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Give that same code chunk a `label:` starting with `tbl-` (for example, `tbl-activity-by-year`) and a `tbl-cap:` caption. Then, in a sentence below the chunk, reference the table using `@` and your chosen label.
+
+Then copy and paste this sentence and fill it with the table reference: "_________ shows that reports of exercising `"Every day"` become more common in later years, while reports of `"Never"` exercising become less common."
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part E: Callout
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Add a `callout-note` (appearance `"minimal"`) that contains the following text: "This is a warning about exercise frequency trends."
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part F: Tabset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create a `panel-tabset` with two tabs: one labeled "Long format" that displays `hrs_01_long` (using `tibble()`), and one labeled "Wide format" that displays `hrs_03_wide` (using `tibble()`).
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::

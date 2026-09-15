@@ -1,0 +1,239 @@
+---
+title: "Practice 4 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+    highlight-style: ayu
+    code-block-bg: "#f8f9fa"   
+    code-block-border-left: "#5BAFF8" 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+## Questions
+
+### Question 1: Import and Export
+
+In Lesson 18, we learned how to import and export data using file-specific functions and the `rio` package.
+
+#### Part A: Import the HRS dataset
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Load the `tidyverse`, `rio`, and `here` packages. Then use `import()` together with `here()` to import `hrs_data.rds` from your `data` folder. Assign it to an object called `hrs_data`. Use `glimpse()` (or `tibble()`) to take a look at its structure.
+:::
+
+::: blue
+**Answer:**
+
+```{r}
+pacman::p_load(
+  tidyverse, 
+  rio, 
+  here
+)
+
+hrs_data <- import(here("data", "hrs_data.rds")) #<1>
+```
+
+1. This file path is specific to my folder set-up. 
+:::
+
+#### Part B: Export and re-import
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+1. Use `export()` from `rio` to save `hrs_data` as a `.csv` file named `hrs_data_export.csv` in the same folder as the `hrs_data.rds` file. 
+2. Use `import()` from `rio` to read `hrs_data_export.csv` back into R as a new object called `hrs_data_csv`.
+3. Use `class()` to check the class of the `sex` column in **both** `hrs_data` and `hrs_data_csv`. In 1-2 sentences, describe what you notice — is the class the same or different, and why might that be?
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part C: When to use which file type
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1-2 sentences, explain when you would prefer to save a dataset as `.rds` versus `.csv`, based on what we discussed in Lesson 18.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 2: Piping
+
+In Lesson 16, we learned that pipes (`|>`) let us write code that reads left to right, passing the output of one step into the next.
+
+#### Part A: Nested to piped
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Here is a chunk of **nested** code:
+
+```{r}
+#| eval: false
+paste0("Mean CESD score: ", round(mean(hrs_data$cesd, na.rm = TRUE), digits = 1))
+```
+
+Rewrite this same calculation using the pipe (`|>`) instead of nesting. You will need the placeholder `_` for at least one step, since `paste0()` does not take the piped input as its first argument. Assign the result to an object called `cesd_summary` and print it.
+:::
+
+::: blue
+**Answer:**
+
+```{r}
+cesd_summary <- hrs_data$cesd |> 
+  mean(na.rm = TRUE) |> 
+  round(digits = 1) |> 
+  paste0("Mean CESD score: ", x = _)
+
+cesd_summary
+```
+:::
+
+#### Part B: Write your own pipe
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$height`, write a pipe that (1) calculates the mean while handling any missing values, and (2) rounds that mean to 1 decimal place. Assign the result to an object called `height_summary` and print it.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+### Question 3: Key operators and functions
+
+In Lesson 17, we expanded on boolean operators and were introduced to several new functions.
+
+#### Part A: Boolean operators and `%in%`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$sex`, answer the following with R code (don't just eyeball the data frame):
+
+1. Is `"Female"` one of the values in `hrs_data$sex`? Use `%in%`.
+2. Write one logical statement that uses `&` to check whether the **first** respondent (`hrs_data$age_yr[1]`) is over 65 **and** the **first** respondent's `sex` is `"Female"`.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::
+
+#### Part B: Statistical functions
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Using `hrs_data$cesd`, calculate each of the following and print them: the standard deviation (`sd()`), the range (`range()`), and the mean rounded to the nearest whole number using `round()`. (Handle any missing values you find along the way.)
+:::
+
+::: blue
+**Answer:**
+
+Standard deviation result:
+```{r}
+#| echo: false
+sd(hrs_data$cesd, na.rm = TRUE)
+```
+:::
+
+#### Part C: `seq()`, `rep()`, and `sample()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+1. Use `set.seed(523)` and then `sample()` to randomly draw 5 ids (without replacement) from `hrs_data$id`. Assign this to `sampled_ids` and print it.
+2. In 1 sentence, explain why we use `set.seed()` before `sample()`.
+:::
+
+::: blue
+**Answer:**
+
+Sampled ID's: 
+```{r}
+#| echo: false
+
+set.seed(523)
+sample(hrs_data$id, size = 5, replace = FALSE)
+```
+:::
+
+### Question 4: Tidy data
+
+In Lesson 19, we learned that tidy data follow three rules: each variable has its own column, each observation has its own row, and each value has its own cell.
+
+#### Part A: Is it tidy?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Below is a small dataset showing the same information two different ways. For **each** table, state whether it is tidy or not, and explain why in 1-2 sentences (referencing the three rules above).
+
+**Table 1**
+
+| id | age_yr | cesd |
+|----|--------|------|
+| R1 | 55     | 2    |
+| R2 | 62     | 4    |
+
+**Table 2**
+
+| id | variable | value |
+|----|----------|-------|
+| R1 | age_yr   | 55    |
+| R1 | cesd     | 2     |
+| R2 | age_yr   | 62    |
+| R2 | cesd     | 4     |
+:::
+
+::: blue
+**Answer:**
+
+Table 1 is tidy. Table is not tidy. 
+:::
+
+#### Part B: Is `hrs_data` tidy?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Look at `hrs_data`. In 1-2 sentences, explain whether it is tidy, and identify what one row and one column represent.
+:::
+
+::: blue
+**Answer:**
+
+Not given
+:::

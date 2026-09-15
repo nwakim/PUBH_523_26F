@@ -1,0 +1,126 @@
+---
+title: "Intro to data transformations and summarizations"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Intro to data transformations and summarizations"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio
+)
+```
+
+```{r}
+#| echo: false
+
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_data <- clean_names(hrs_data_rds)
+```
+
+## `dplyr` basics
+
+
+- `dplyr` is a package in the tidyverse that provides a **set of functions for data manipulation and transformation**
+
+ 
+
+- **Each function** in `dplyr` is like a **verb that describes the action** being performed on the data
+
+ 
+
+- Most functions within `dplyr` have similar input and output:
+  - [*Input:*]{style="color:#C83532"} a data frame (usually the first argument in the function)
+  - [*Output:*]{style="color:#C83532"} a data frame
+  - [*Additional arguments:*]{style="color:#C83532"} typically describe what columns (variables) to operate on
+
+## Example of a `dplyr` function: `select()`
+
+::: columns
+::: {.column width="45%"}
+
+::: pink2
+::: pink2-cont
+I can use the `select()` function to select specific columns (`age_yr` and `ed`) from my data frame (`hrs_data`)
+:::
+:::
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="50%"}
+```{r}
+#| eval: false
+hrs_data |> # <1> 
+  select( # <2>
+    age_yr, # <3>
+    ed  # <3>
+    ) # <2>
+```
+
+1. The first argument is the data frame we want to operate on (in this case, `hrs_data`)
+2. `select` is the function we are using on the data frame
+3. `age` and `ed` are the columns (in the data frame) that we perform the `select()` function on
+
+```{r}
+#| echo: false
+hrs_data |> 
+  select(
+    age_yr, 
+    ed  
+    ) |>
+  head(10)
+```
+
+:::
+:::
+
+## Types of `dplyr` functions
+
+`dplyr` functions can be categorized into four groups based on what they operate on:
+
+1. [**Rows**]{style="color: #5BAFF8;"}: functions that operate on rows of a data frame 
+    - Examples: `filter()`, `slice()`
+    - Under the Data Transformation lesson series
+2. [**Columns**]{style="color: #E75B5C;"}: functions that operate on columns of a data frame
+    - Examples: `select()`, `mutate()`
+    - Under the Data Transformation lesson series
+3. [**Groups**]{style="color: #EF85B3;"}: functions that operate on groups of rows in a data frame 
+    - Examples: `group_by()`, `summarize()`
+    - Under the Data Summarization lesson series
+4. [**Joins**]{style="color: #459B99;"}: functions that combine two data frames based on a common key 
+    - Examples: `left_join()`, `inner_join()`
+    - Not covered in this class
+
+## Resources
+
+- [`dplyr` cheat sheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html)
+

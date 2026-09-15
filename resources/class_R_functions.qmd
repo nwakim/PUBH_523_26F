@@ -1,0 +1,81 @@
+---
+title: "R Functions in Course"
+description: "This resource contains all the R functions that we use in this class, including the lesson they are introduced and appear in."
+date: today
+format: 
+  html:
+    page-layout: full
+    link-external-newwindow: true
+    toc: true
+    highlight-style: arrow
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+
+pacman::p_load(
+  tidyverse,
+  DT,
+  here
+)
+
+functions_df <- read_csv(here("resources", "r_functions.csv"), show_col_types = FALSE) |>
+  mutate(
+    R_Documentation = if_else(
+      !is.na(R_Documentation) & R_Documentation != "",
+      paste0('<a href="', R_Documentation, '" target="_blank">docs</a>'),
+      ""
+    ),
+    Additional_Help = if_else(
+      !is.na(Additional_Help) & Additional_Help != "",
+      paste0('<a href="', Additional_Help, '" target="_blank">link</a>'),
+      "—"
+    ),
+    Function = paste0("<code>", Function, "()</code>")
+  ) |>
+  select(
+    Function,
+    Package,
+    `Lesson #` = Lesson_Introduced,
+    `Lesson Introduced` = Lesson_Topic,
+    Documentation = R_Documentation,
+    `Additional Help` = Additional_Help,
+    `Appears in Lessons` = Appears_In_Lessons
+  )
+```
+
+::: {.callout-note}
+## Notes on this table
+
+- Click a column header to **sort**, and use the search boxes under each header to **filter** by a column. The global search box (top right) searches across **all columns** at once.
+- **Lesson #** / **Lesson Introduced** reflect the first lesson (per the course [schedule](https://nwakim.github.io/PUBH_523_26Su/schedule.html)) where the function is used in a code chunk or explicitly named in the slides.
+- **Appears in Lessons** lists every lesson number where the function shows up again.
+:::
+
+
+```{r}
+#| label: table
+
+datatable(
+  functions_df,
+  escape = FALSE,               # allow the HTML links/code tags to render
+  rownames = FALSE,
+  filter = "top",                # per-column filter boxes
+  extensions = "Buttons",
+  options = list(
+    pageLength = 25,
+    lengthMenu = list(c(15, 25, 50, 100, -1), c("15", "25", "50", "100", "All")),
+    dom = "Blfrtip",
+    buttons = c("copy", "csv", "excel"),
+    columnDefs = list(
+      list(width = "110px", targets = 0),
+      list(width = "90px",  targets = c(2, 4, 5))
+    )
+  ),
+  class = "display compact stripe hover"
+)
+```

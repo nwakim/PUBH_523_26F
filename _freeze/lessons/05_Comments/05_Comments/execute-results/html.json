@@ -1,0 +1,15 @@
+{
+  "hash": "68957c981b7735cb69921f94cdb5b3e7",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Comments\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: \"Comments\"\n    html-math-method: mathjax\n    highlight-style: arrow\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n## Comments\n\n- R will ignore any text after `#` for that line.\n- This allows you to write **comments**, text that is ignored by R but read by other humans.\n- We'll sometimes include comments in examples explaining why we are running code\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# This is a comment\n\n## This is also a comment\n\n########## This is a comment that can help me section off code ##########\n\nThis is not a comment # but this part is a comment\n```\n:::\n\n\n## Describing your process with comments\n\nComments can be helpful for briefly describing what the following code does.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Subtract 1 from 10, then divide by 2\n(10 - 1) / 2\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 4.5\n```\n\n\n:::\n\n```{.r .cell-code}\n# Take the sine of 3\nsin(3)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 0.14112\n```\n\n\n:::\n:::\n\n\n- Comment on every line is not necessary\n- As code gets more complex, comments can help you figure out your process \n\n## Better use of comments\n\n- Use comments to explain the *why* of your code\n\n \n\n- Think of it as **note-taking for your future** self and others who might read your code\n  - In theory, we should be able to figure out what we were doing\n  - So we want to leave ourselves notes about **why we were doing it**, and any **important details that might not be obvious** from the code itself\n\n \n  \n- For example:\n\n::: {.cell}\n\n```{.r .cell-code}\n# Calculate average age of 3 people\n(29 + 42 + 68) / 3\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 46.33333\n```\n\n\n:::\n:::\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

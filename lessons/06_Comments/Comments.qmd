@@ -1,0 +1,86 @@
+---
+title: "Comments"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Comments"
+    html-math-method: mathjax
+    highlight-style: arrow
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  janitor,
+  here
+)
+```
+
+## Comments
+
+- R will ignore any text after `#` for that line.
+- This allows you to write **comments**, text that is ignored by R but read by other humans.
+- We'll sometimes include comments in examples explaining why we are running code
+
+```{r}
+#| eval: false
+
+# This is a comment
+
+## This is also a comment
+
+########## This is a comment that can help me section off code ##########
+
+This is not a comment # but this part is a comment
+```
+
+## Describing your process with comments
+
+Comments can be helpful for briefly describing what the following code does.
+
+```{r}
+# Subtract 1 from 10, then divide by 2
+(10 - 1) / 2
+
+# Take the sine of 3
+sin(3)
+```
+
+- Comment on every line is not necessary
+- As code gets more complex, comments can help you figure out your process 
+
+## Better use of comments
+
+- Use comments to explain the *why* of your code
+
+ 
+
+- Think of it as **note-taking for your future** self and others who might read your code
+  - In theory, we should be able to figure out what we were doing
+  - So we want to leave ourselves notes about **why we were doing it**, and any **important details that might not be obvious** from the code itself
+
+ 
+  
+- For example:
+```{r}
+# Calculate average age of 3 people
+(29 + 42 + 68) / 3
+```
+

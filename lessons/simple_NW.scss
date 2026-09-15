@@ -1,0 +1,577 @@
+/*-- scss:defaults --*/
+
+@import url(https://fonts.googleapis.com/css?family=News+Cycle:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@import url('https://fonts.googleapis.com/css?family=Signika:400light,700light');
+
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+// fonts
+$font-family-sans-serif: Lato, sans-serif !default;
+
+//$font-family-sans-serif: "Open Sans", sans-serif !default;
+
+$blue:        #5BAFF8 !default;
+$dark-blue:   #3070BF !default;
+$pink:        #EF85B3 !default;
+$pink2:       #BF396F !default;
+$orange:      #E75B5C !default;
+$red:         #C83532 !default;
+$purple:      #8043F3 !default;
+$purple2:     #9F71F7 !default;
+$slate-grey:  #6C757D !default;
+$green:       #367B79 !default;
+$green2:      #459B99 !default;
+$ivory:       #FDF3F2 !default;
+$yellow:      #F39C12!default; 
+
+// lower shade 
+$light-blue:   #DAECFE !default;
+$light-dark-blue: #D0DDF1 !default;
+$light-pink:   #FCF2F7 !default;
+$light-orange: #FFE6E6 !default;
+$light-red:    #F8ECE9 !default;
+$light-purple: #F0E6FF !default;
+$light-green:  #D9E8E9 !default;
+$light-gray:  #F8F9FA !default;
+$light-yellow: #FCF3E2 !default;
+
+
+
+// colors
+$body-bg: #fff !default;
+$body-color: #000 !default;
+$link-color: $orange !default;
+$selection-bg: #FFDE64;
+$selection-color: #000 !default;
+
+
+// headings
+$presentation-heading-font: Signika, sans-serif !default;
+$presentation-heading-color: $dark-blue !default;
+
+.reveal .sourceCode {
+  font-size: 0.98em !important;
+}
+
+.reveal code {
+  max-height: 100% !important;
+}
+
+
+.large-code code {
+  font-size: 1.7em !important;
+}
+
+/* Container for the code block */
+.reveal pre {
+  max-height: 600px !important; /* Locks height so it forces a scroll */
+  overflow-y: auto !important;  /* Enables vertical scrolling */
+  overflow-x: auto !important;  /* Enables horizontal scrolling if lines are long */
+}
+
+/* Internal code text formatting */
+.reveal pre code {
+  max-height: none !important;  /* Lets the code expand naturally inside the container */
+  white-space: pre !important;  /* Prevents automatic line wrapping */
+  word-wrap: normal !important; /* Forces horizontal scrolling instead of snapping text */
+}
+
+/* Target stderr (errors), stdout (text), and regular outputs directly at the code level */
+.reveal .cell-output-stderr pre code,
+.reveal .cell-output pre code {
+  font-size: 1.63em !important;
+  max-height: 100% !important;
+}
+
+/* Optional: Make error blocks tall if they are getting cut off by a scrolling box */
+.reveal .cell-output-stderr pre {
+  max-height: 800px !important;
+}
+
+
+// Target the Tippy box explicitly for code annotations
+.tippy-box {
+  font-size: 1.1em !important; /* Bump up as much as you need */
+  
+  // --- Widens the hover popup box ---
+  max-width: 550px !important;  /* Prevents Tippy from clamping the width */
+  width: 500px !important;      /* Sets the actual width of the box */
+  
+  // Target the container grid inside the popup
+  dl.code-annotation-container-grid {
+    font-size: 1.1em !important; 
+    
+    dt {
+      font-size: 1.1em !important; /* Sizes the numbers (e.g., 1, 2) */
+    }
+    dd {
+      font-size: 1.1em !important; /* Sizes your actual description text */
+    }
+  }
+}
+
+// Change column size??
+
+.reveal .custom-size div.column:first-child { width: 35%; }
+.reveal .custom-size div.column:not(:first-child) { width: 65%; }
+
+
+// My added divs
+
+// COMMON USES
+
+// Learning Objectives
+.lob{
+  margin-left: 0em;
+  padding-left:  25px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $dark-blue;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  border-radius: 15px;
+}
+
+
+// JUST NAMED BY COLOR
+
+// blue
+.blue{
+  margin: 1em 0;
+  border: 3px solid $blue;
+  border-radius: 10px;
+}
+.blue-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $blue;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.blue-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 10px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// blue2
+.blue2{
+  margin: 1em 0;
+  border: 3px solid $dark-blue;
+  border-radius: 10px;
+}
+.blue2-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $dark-blue;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.blue2-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+// pink
+.pink{
+  margin: 1em 0;
+  border: 3px solid $pink;
+  border-radius: 10px;
+}
+.pink-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $pink;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.pink-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// pink2
+.pink2{
+  margin: 1em 0;
+  border: 3px solid $pink2;
+  border-radius: 10px;
+}
+.pink2-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $pink2;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.pink2-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// orange
+.orange{
+  margin: 1em 0;
+  border: 3px solid $orange;
+  border-radius: 10px;
+}
+.orange-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $orange;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.orange-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+// red
+.red{
+  margin: 1em 0;
+  border: 3px solid $red;
+  border-radius: 10px;
+}
+.red-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $red;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.red-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// purple
+.purple{
+  margin: 1em 0;
+  border: 3px solid $purple;
+  border-radius: 10px;
+}
+.purple-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $purple;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.purple-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// purple2
+.purple2{
+  margin: 1em 0;
+  border: 3px solid $purple2;
+  border-radius: 10px;
+}
+.purple2-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $purple2;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.purple2-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// green
+.green{
+  margin: 1em 0;
+  border: 3px solid $green;
+  border-radius: 10px;
+}
+.green-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $green;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.green-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+// green2
+.green2{
+  margin: 1em 0;
+  border: 3px solid $green2;
+  border-radius: 10px;
+}
+.green2-ttl {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: $green2;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+.green2-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+// regression analysis process 1
+.RAP1{
+  margin: 1em 0;
+  border: 7px solid #FF8021;
+  border-radius: 10px;
+}
+
+.RAP1-title {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #FF8021;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+
+.RAP1-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: #FAD3B7;
+}
+
+// regression analysis process 2
+.RAP2{
+  margin: 1em 0;
+  border: 7px solid #34AC8B;
+  border-radius: 10px;
+}
+
+.RAP2-title {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #34AC8B;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+
+.RAP2-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: #BCDCD0;
+}
+
+// regression analysis process 3
+.RAP3{
+  margin: 1em 0;
+  border: 7px solid #A7EA52;
+  border-radius: 10px;
+}
+
+.RAP3-title {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #A7EA52;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+
+.RAP3-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: #E3F6C6;
+}
+
+// regression analysis process 3
+.RAP4{
+  margin: 1em 0;
+  border: 7px solid #4FADF3;
+  border-radius: 10px;
+}
+
+.RAP4-title {
+  margin-left: 0em;
+  padding-left:  15px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  background-color: #4FADF3;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  //background-image: url("goal.png");
+}
+
+.RAP4-cont {
+  margin-left: 0em;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: #C9E0F9;
+}
+
+.box{
+  margin-left: 0em;
+  padding-left:  25px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  color: white;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  border: 10px solid #E7E6E6;
+  background-color: #E7E6E6;
+  border-radius: 15px;
+
+}
+
+// highlight
+.hl{
+  margin-left: 0em;
+  padding-left:  25px;
+  padding-top:  5px;
+  padding-bottom: 0.1em;
+  padding-right:  25px;
+  color: white;
+  background-color: $red;
+  font-size: 1em;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  border-radius: 15px;
+}

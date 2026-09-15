@@ -1,0 +1,104 @@
+---
+title: "Workflow: Naming"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Workflow: Basics"
+    html-math-method: mathjax
+    highlight-style: arrow
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(here)
+```
+
+## Naming
+
+- File naming
+- variable naming
+
+## What's in a name? {#sec-whats-in-a-name}
+
+Object names must start with a letter and can only contain letters, numbers, `_`, and `.`.
+You want your object names to be descriptive, so you'll need to adopt a convention for multiple words.
+We recommend **snake_case**, where you separate lowercase words with `_`.
+
+```{r}
+#| eval: false
+i_use_snake_case
+otherPeopleUseCamelCase
+some.people.use.periods
+And_aFew.People_RENOUNCEconvention
+```
+
+We'll return to names again when we discuss code style in @sec-workflow-style.
+
+You can inspect an object by typing its name:
+
+```{r}
+x <- 3
+x
+```
+
+##
+
+Make another assignment:
+
+```{r}
+this_is_a_really_long_name <- 2.5
+```
+
+To inspect this object, try out RStudio's completion facility: type "this", press TAB, add characters until you have a unique prefix, then press return.
+
+Let's assume you made a mistake, and that the value of `this_is_a_really_long_name` should be 3.5, not 2.5.
+You can use another keyboard shortcut to help you fix it.
+For example, you can press ↑ to bring the last command you typed and edit it.
+Or, type "this" then press Cmd/Ctrl + ↑ to list all the commands you've typed that start with those letters.
+Use the arrow keys to navigate, then press enter to retype the command.
+
+##
+
+Change 2.5 to 3.5 and rerun.
+
+Make yet another assignment:
+
+```{r}
+r_rocks <- 2^3
+```
+
+##
+
+Let's try to inspect it:
+
+```{r}
+#| eval: false
+r_rock
+#> Error: object 'r_rock' not found
+R_rocks
+#> Error: object 'R_rocks' not found
+```
+
+This illustrates the implied contract between you and R: R will do the tedious computations for you, but in exchange, you must be completely precise in your instructions.
+If not, you're likely to get an error that says the object you're looking for was not found.
+Typos matter; R can't read your mind and say, "oh, they probably meant `r_rocks` when they typed `r_rock`".
+Case matters; similarly, R can't read your mind and say, "oh, they probably meant `r_rocks` when they typed `R_rocks`".
+

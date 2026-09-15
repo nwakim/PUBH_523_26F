@@ -1,0 +1,184 @@
+---
+title: "Data Summarization: Quick summaries"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Data Summarization: Quick summaries"
+    html-math-method: mathjax
+    highlight-style: ayu
+    code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  here, 
+  tidyverse, 
+  writexl, 
+  rstatix, 
+  janitor, 
+  naniar,
+  gt,
+  gtsummary,
+  readxl, 
+  rio, 
+  skimr
+)
+```
+
+```{r}
+#| label: "import data" 
+#| echo: false
+hrs_data_rds <- import(here("data", "hrs_data.rds"))
+hrs_00 <- clean_names(hrs_data_rds) |>
+  relocate(diab, degree, .after = id)
+```
+
+## Quick summaries
+
+- A good first step when working with data is to **explore the dataset, variables, and observations**
+  - Does every variable have the expected number of observations?
+  - Are there any missing values?
+  - Are there any weird values that don't make sense?
+- We want to **quickly browse the data** and get summary statistics for each variable
+
+ 
+
+- There are a few functions in R that give you automatic summaries of your data:
+  - `summary()` in base R
+  - `skim()` in `skimr`
+  - `get_summary_stats()` in `rstatix`
+
+## What does `summary()` do?
+
+- `summary()` will show:
+  - For categorical data: the counts in each category
+  - For numeric data: the minimum, 1st quartile, median, mean, 3rd quartile, maximum, and count for NA's
+
+ 
+
+:::: pink
+::: pink-cont
+- No package needed: it's built into base R, so it always worksks
+- Downside: no standard deviation, and the output is harder to read/scroll through for datasets with many columns
+- Often what I use when I'm feeling super lazy, but **not the best for a first look at a whole dataset**
+:::
+::::
+
+## What does `summary()` output look like?
+
+**Input is a data frame, output is a list of summary statistics for each variable**
+
+```{r}
+summary(hrs_00)
+```
+
+**You can input a specific variable:**
+
+```{r}
+summary(hrs_00$age_yr) #<1>
+```
+
+1.  Use `$` to select a specific variable from a data frame
+
+## What does `skim()` do?
+
+- `skim()` will show a few tables:
+  - Data summary: number of rows, number of columns, and types of variables
+  - Variable type summaries:
+    - For categorical data: the counts in each category, the number of unique values, and the most common value
+    - For numeric data: the minimum, 1st quartile, median, mean, 3rd quartile, maximum, standard deviation, and count for NA's
+
+ 
+
+:::: pink
+::: pink-cont
+- Best of the three for a first look at a whole dataset: nicely formatted, includes standard deviation, and separates variables by type automatically
+- Downside: the output is a special `skim_df` object, so it's not as
+:::
+::::
+
+## What does `skim()` output look like? {.scrollable}
+
+```{r}
+skim(hrs_00)
+```
+
+## What does `get_summary_stats()` do?
+
+- `get_summary_stats()` will show a table of summary statistics for each numeric variable
+
+ 
+
+:::: pink
+::: pink-cont
+- Only works for numeric variables: categorical variables are silently dropped
+- Returns a data frame (a tibble), which makes it easy to use the results in further code, tables, or plots: this is its biggest advantage over `summary()` and `skim()`
+:::
+::::
+
+## What does `get_summary_stats()` output look like?
+
+```{r}
+hrs_00 |>
+  get_summary_stats()
+```
+
+## Flexibility of `get_summary_stats()`: show certain variables
+
+- You can use the same syntax as the `select()` in `dplyr` to keep or remove specific columns
+  - Use `variable_name` to keep and `-variable_name` to remove
+
+```{r}
+hrs_00 |>
+  get_summary_stats(-birthmo)
+```
+
+## Flexibility of `get_summary_stats()`: show certain summary statistics
+
+- Use `type =` to specify which summary statistics you want to see
+  - Options include: `"common"`, `"full"`, `"mean_sd"`, `"mean_ci"`, `"median_iqr"`, and more (see `?get_summary_stats` for the full list)
+
+```{r}
+hrs_00 |>
+  get_summary_stats(type = "common")
+```
+
+## Which one should I use?
+
++-----------------------+---------------------------------------------------------------------------+----------------------------------------------+
+| Function              | Best for                                                                  | Watch out for                                |
++:======================+:==========================================================================+:=============================================+
+| `summary()`           | -A fast, no-setup check of a small dataset                                | -No standard deviation                       |
+|                       |                                                                           |                                              |
+|                       |                                                                           | -Output can be hard to read for many columns |
++-----------------------+---------------------------------------------------------------------------+----------------------------------------------+
+| `skim()`              | -A first, fairly thorough look at a whole dataset (categorical + numeric) | -Requires `skimr`                            |
+|                       |                                                                           |                                              |
+|                       |                                                                           | -Output isn't a plain data frame             |
++-----------------------+---------------------------------------------------------------------------+----------------------------------------------+
+| `get_summary_stats()` | -Numeric summaries you want to reuse (e.g., in a table or plot)           | -Requires `rstatix`                          |
+|                       |                                                                           |                                              |
+|                       | -Grouped summaries (to be covered later)                                  | -Numeric variables only                      |
++-----------------------+---------------------------------------------------------------------------+----------------------------------------------+
+
+ 
+
+- In practice, you'll often start with `skim()` to explore
+- Then use `get_summary_stats()` if you have certain numeric variables and statistics you actually need
+

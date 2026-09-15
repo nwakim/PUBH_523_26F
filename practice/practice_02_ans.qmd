@@ -1,0 +1,350 @@
+---
+title: "Practice 2 Answers"
+subtitle: "PUBH 523/623"
+author: "Nicky Wakim"
+date-modified: "today"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    self-contained: true
+    page-layout: full
+    html-math-method: mathjax
+    self-contained-math: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+```
+
+## Questions
+
+### Question 1: Your First Practice `.qmd`
+
+In Lesson 8, we walked through the three components of a `.qmd` file: the YAML header, text, and code chunks. In this question, you will demonstrate that you can create, edit, and render a `.qmd` file correctly.
+
+#### Part A: Downloading the practice file
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Download this practice `.qmd` from the course GitHub repository, rename it, and save it in your course folder.
+
+1.  [Download `practice_02.qmd` from GitHub.](https://github.com/nwakim/PUBH_523_26Su/blob/main/practice/practice_02.qmd)
+2.  Rename the file to `Lastname_Firstinitial_Practice_02.qmd` (or `lastname_firstinitial_practice_02.qmd`), replacing with your actual last name and first initial.
+3.  Save it inside your `practice/` folder. You may create a `practice_02/` subfolder if you prefer.
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part B: Check your YAML header
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Scroll to the very top of this file and update the YAML header:
+
+- Replace `"Your name here"` in `author:` with your actual name.
+- Confirm that `date-modified: "today"` is present so the date updates automatically each time you render.
+
+Render the document and confirm your name and today's date appear at the top of the HTML output.
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part C: Add a heading and paragraph
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Directly below this callout box, add:
+
+1.  A **level 3 heading** (`###`) with a title of your choice (something about yourself or why you are taking this course)
+2.  A short paragraph (2–4 sentences) of text (can be gibberish) under that heading
+
+You can use the Source editor or the Visual Editor.
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+#### Part D: Code chunk options
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+The code chunk below calculates the mean of a small vector. Adjust the chunk options so that:
+
+- The **code is hidden** in the rendered output (results still show)
+- **Warnings are suppressed**
+:::
+
+**Answer:**
+
+::: blue
+`echo` and `warning` control these options.
+:::
+
+#### Part E: Render and confirm
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Render this document to HTML and confirm all of the following:
+
+- Your screenshot from Question 1 Part B appears
+- Your heading and paragraph from Part C appear
+- The code chunk in Part D shows the result but **not** the code
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+
+
+### Question 2: Set Up Your Course Folder
+
+In our lesson on folder and file organization (L7), we learned that every project should live in **one well-organized folder**. In this question, you will create that folder and use it for the rest of the course.
+
+#### Part A: Create the folder structure
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+On your computer, create a folder called `PUBH_523_26Su` or `PUBH_623_26Su` somewhere that makes sense (your Documents folder, OneDrive, etc.). Inside it, create the following subfolders (feel free to change some of the subfolders if you have a preferred organization):
+
+```         
+PUBH_523_26Su/
+├── admin/
+├── data_lessons/
+├── data_practice/
+├── data_project/
+│   ├── data_raw/
+│   └── data_processed/
+├── lessons/
+├── practice/
+├── project/
+└── README.txt
+```
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part B: Take a screenshot and insert it here
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Take a screenshot of your `PUBH_523_26Su` folder open in your file browser (Finder on Mac, File Explorer on Windows) so that the subfolders are visible and insert in this `.qmd`.
+:::
+
+**Answer:**
+
+::: blue
+Here is the image path to my screenshot:
+
+```
+![](../images_practice_solns/folder_screenshot.png)
+```
+
+You will need to make sure your file path takes you to your screenshot. 
+:::
+
+### Question 3: Packages
+
+#### Part A: Load the course packages
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In Lesson 9, we learned to use `pacman::p_load()` to install and load packages in one step. In the code chunk below, use `pacman::p_load()` to load **all of the following** packages:
+
+`tidyverse`, `here`, `readxl`, `haven`, `writexl`, `janitor`, `rstatix`, `gt`, `gtsummary`, `naniar`
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part B: What does each package do?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Fill in the table below. Each package belongs to one of three categories from Lesson 9: **loading/saving data**, **summarizing/visualizing data**, or **wrangling data**. Note one specific thing each package is used for.
+:::
+
+**Answer:**
+
+::: blue
+Here is the table with select rows filled out
+
+| Package | Category | One thing it is used for |
+|--------------------|--------------------|--------------------------------|
+| `here` |  |  |
+| `readxl` | Loading/saving data | Read Excel (`.xlsx`) files into R |
+| `haven` |  |  |
+| `janitor` |  |  |
+| `gtsummary` |  |  |
+| `dplyr` (part of tidyverse) |  |  |
+| `ggplot2` (part of tidyverse) | Summarizing/visualizing data | Create data visualizations using a layered syntax |
+
+Note: other valid answers exist for each package, the above are examples.
+:::
+
+#### Part C: Install vs. load
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+A classmate wrote the following at the top of their `.qmd` file. Identify the problem and explain how to fix it.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+What is wrong with putting `install.packages()` inside a `.qmd`, and what should they do instead?
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+### Question 4: Create Your R Project
+
+We learned that an R Project (`.Rproj` file) sets the working directory automatically so you never need `setwd()`.
+
+#### Part A: Create the project
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Create an R Project **inside your existing `PUBH_523_26Su` folder** and open this `.qmd` from within it.
+:::
+
+**Answer:**
+
+::: blue
+No answer given, for completion only.
+:::
+
+#### Part B: Confirm the working directory
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Run the following code in your **Console** (not in a rendered chunk) and paste the output in the space below.
+
+```{r}
+#| eval: false
+getwd()
+```
+:::
+
+**Answer:**
+
+::: blue
+The output should be the full path to your `PUBH_523_26Su` (or `PUBH_623_26Su`) folder.
+:::
+
+#### Part C: Does the working directory match?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Now run `getwd()` inside a code chunk and render the document. Does the output match what you pasted in Part B? Write 1–2 sentences explaining what you observe.
+:::
+
+**Answer:**
+
+::: blue
+No, the output will not match.
+:::
+
+#### Part D: Why not `setwd()`?
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+In 1–2 sentences, explain why you should not use `setwd()` in your `.qmd` files, and what you should do instead.
+:::
+
+**Answer:**
+
+::: blue
+Not given. Think about absolute file paths vs relative file paths.
+:::
+
+### Question 5: Using `here()` for file paths
+
+#### Part A: Explore `here()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Run the following code chunk and render the document. Does the output match your `getwd()` output from Question 4 Part B? Explain in 1 sentence why they match.
+:::
+
+**Answer:**
+
+::: blue
+Should match!
+:::
+
+#### Part B: Build a file path with `here()`
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Imagine you saved a data file called `survey_data.csv` in your `data_practice/` folder. Fill in the `here()` call below to build the path to that file, then run the chunk to confirm the path looks correct.
+
+Which path style do you prefer and why? (1–2 sentences)
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::
+
+#### Part C: Console vs. render
+
+::: {.callout-warning appearance="minimal"}
+##### Task
+
+Explain in 2–3 sentences: what problem does `here()` solve that an R Project alone does not fully fix? Think about what happens when you run code in the Console versus when you render a `.qmd`.
+:::
+
+**Answer:**
+
+::: blue
+Not given
+:::

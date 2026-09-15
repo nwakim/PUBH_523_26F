@@ -1,0 +1,697 @@
+---
+title: "Common errors for data transformations"
+author: "Nicky Wakim"
+title-slide-attributes:
+    data-background-color: "#3070BF"
+format: 
+  revealjs:
+    theme: "../simple_NW.scss"
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    width: 1955
+    height: 1100
+    footer: "Common errors for data transformations"
+    html-math-method: mathjax
+    highlight-style: ayu
+code-annotations: hover
+execute:
+  echo: true
+  freeze: auto
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+pacman::p_load(
+  tidyverse, 
+  lubridate,
+  # janitor,
+  here
+)
+```
+
+## Types of common errors
+
+1.  [Typo errors]{style="color:#BF396F;"}
+2.  [Package errors]{style="color:#3070BF;"}
+3.  [Object errors]{style="color:#459B99;"}
+4.  [Function syntax errors]{style="color:#C83532;"}
+5.  [Logic errors]{style="color:#BF396F;"}
+6.  [Factor errors]{style="color:#3070BF;"}
+7.  [Plotting errors]{style="color:#459B99;"}
+8.  [R Markdown / Quarto errors]{style="color:#C83532;"}
+
+:::: pink
+::: pink-cont
+We will go through each type with real error messages and how to fix them. Keep this slide as a reference!
+:::
+::::
+
+
+## [1. Typo errors]{style="color:#BF396F;"}
+
+::::::: columns
+::::: {.column width="50%"}
+**Missing comma**
+
+```         
+Error: unexpected symbol in:
+"  geom_histogram(stat = "identity")+
+  tidyquant::geom_ma(n=7, size = 2, color = "red" lty"
+```
+
+:::: pink
+::: pink-cont
+If you see **"unexpected symbol"**, the first thing to check is a **missing comma**.
+:::
+::::
+
+R is case-sensitive — `Mean()` and `mean()` are different things!
+
+```{r}
+#| error: true
+Mean(c(1, 2, 3))   #<1>
+```
+
+1.  Capital M — R can't find this function
+:::::
+
+::: {.column width="50%"}
+**Mismatched parentheses**
+
+```{r}
+#| error: true
+mean(c(1, 2, 3)   #<1>
+```
+
+1.  Missing closing `)` — the console shows `+` waiting for more input
+
+**Quick fixes:**
+
+- Use **Tab** to autocomplete function names and avoid typos
+- Check that every `(` has a closing `)`
+- Use RStudio's bracket highlighting — click next to a `(` and its match will highlight
+- Press **Escape** if the console gets stuck on `+`
+:::
+:::::::
+
+------------------------------------------------------------------------
+
+## [2. Package errors (1/2)]{style="color:#3070BF;"}
+
+**Function not found**
+
+```         
+could not find function "x"...
+```
+
+This usually means you typed the function name incorrectly, or **forgot to install or load the package**.
+
+:::::::: columns
+::: {.column width="50%"}
+```{r}
+#| error: true
+clean_names(iris)   #<1>
+```
+
+1.  `clean_names()` is from `janitor` — if it's not loaded, R can't find it
+
+✅ Fix:
+
+```{r}
+library(janitor)       #<1>
+clean_names(iris) |> names()
+```
+
+1.  Load the package first, then call the function
+:::
+
+:::::: {.column width="50%"}
+::::: blue
+::: blue-ttl
+Install once, load every session
+:::
+
+::: blue-cont
+- `install.packages("janitor")` — run **once**, downloads to your computer
+- `library(janitor)` — run **every session**, makes it available in R
+
+Think of it like: install = buy the book; library = open it.
+:::
+:::::
+::::::
+::::::::
+
+------------------------------------------------------------------------
+
+## [2. Package errors (2/2)]{style="color:#3070BF;"}
+
+**Masked functions — when two packages have the same function name**
+
+```         
+Error in select(data, var) : unused argument (var)
+```
+
+:::::::: columns
+::: {.column width="55%"}
+This is a classic error! Both `dplyr` and `MASS` have a `select()` function. Whichever package was loaded **last** wins — and if `MASS` was loaded after `dplyr`, you'll get the wrong `select()`.
+
+```{r}
+#| eval: false
+library(MASS)
+library(dplyr)
+iris |> select(Species)   #<1>
+```
+
+1.  Which `select()` is this? Depends on load order!
+
+✅ Fix — be explicit with `package::function()`:
+
+```{r}
+iris |> dplyr::select(Species) |> head(3)   #<1>
+```
+
+1.  No ambiguity — always uses `dplyr`'s version
+:::
+
+::: {.column width="5%"}
+:::
+
+::::: {.column width="40%"}
+**Other common masking conflicts:**
+
+| Package A | Package B | Function      |
+|-----------|-----------|---------------|
+| `dplyr`   | `MASS`    | `select()`    |
+| `dplyr`   | `plyr`    | `summarise()` |
+| `dplyr`   | `stats`   | `filter()`    |
+
+:::: blue
+::: blue-cont
+The [**conflicted** package](https://www.tidyverse.org/blog/2018/06/conflicted/) forces R to throw an error whenever a masked function is used — great for catching these silently wrong results.
+:::
+::::
+:::::
+::::::::
+
+------------------------------------------------------------------------
+
+## [3. Object errors]{style="color:#459B99;"}
+
+::::: columns
+::: {.column width="50%"}
+**Object not found**
+
+```         
+object 'x' not found
+```
+
+This means R can't find a variable you referenced. Common causes:
+
+```{r}
+#| error: true
+my_summary   #<1>
+```
+
+1.  This object was never created — code above may not have run
+
+```{r}
+#| error: true
+install.packages(dplyr)   #<1>
+```
+
+1.  Missing quotes — R looks for an object named `dplyr`
+
+✅ Fix: `install.packages("dplyr")`
+:::
+
+::: {.column width="50%"}
+**File not found**
+
+```         
+No such file or directory
+```
+
+```{r}
+#| error: true
+#| eval: false
+read_csv("my data.csv")   #<1>
+```
+
+1.  Typo, wrong path, or file doesn't exist yet
+
+**Check:**
+
+- Spelling of the file name
+- Forward slashes `/` not backward `\`
+- Correct file extension (`.csv`, `.xlsx`, `.rds`)
+- That you are in the right **R Project**
+
+**Subscript out of bounds**
+
+```         
+Error in 'x': subscript out of bounds
+```
+
+You tried to access an element that doesn't exist — e.g., asking for the 10th element of a 5-element vector.
+:::
+:::::
+
+------------------------------------------------------------------------
+
+## [4. Function syntax errors]{style="color:#C83532;"}
+
+**Wrong or missing argument names**
+
+:::::::: columns
+::: {.column width="50%"}
+A very common `mutate()` mistake — forgetting to repeat the column name inside `recode()`:
+
+```{r}
+#| error: true
+iris |>
+  mutate(Species = recode("setosa" ~ "S"))   #<1>
+```
+
+1.  `recode()` needs the column name as its first argument
+
+✅ Fix:
+
+```{r}
+iris |>
+  mutate(Species = recode(Species,
+                          "setosa" = "S")) |>   #<1>
+  count(Species)
+```
+
+1.  Pass `Species` as the first argument, then `OLD = NEW` pairs
+:::
+
+:::::: {.column width="50%"}
+**Wrong argument name**
+
+```{r}
+#| error: true
+mean(c(1, 2, NA), remove.na = TRUE)   #<1>
+```
+
+1.  `remove.na` is not a real argument — R ignores it and NA propagates
+
+✅ Fix:
+
+```{r}
+mean(c(1, 2, NA), na.rm = TRUE)   #<1>
+```
+
+1.  The correct argument is `na.rm`
+
+::::: orange
+::: orange-ttl
+How to find the right argument names
+:::
+
+::: orange-cont
+Run `?function_name` and read the **Arguments** section — it lists every accepted argument and what it expects.
+:::
+:::::
+::::::
+::::::::
+
+------------------------------------------------------------------------
+
+## [5. Logic errors]{style="color:#BF396F;"}
+
+**These don't always produce an error — the code runs, but gives you the wrong answer!**
+
+::::::: columns
+::: {.column width="50%"}
+**`if` statement errors**
+
+```         
+Error in if
+```
+
+This usually means an `if` statement was applied to something that wasn't `TRUE` or `FALSE`:
+
+```{r}
+#| error: true
+x <- c(1, 2, 3)
+if (x > 1) print("big")   #<1>
+```
+
+1.  `x > 1` returns a *vector* — `if` expects a single TRUE/FALSE
+
+✅ Fix — use `any()` or `all()`:
+
+```{r}
+if (any(x > 1)) print("at least one is big")   #<1>
+```
+
+1.  `any()` collapses the vector to a single TRUE/FALSE
+:::
+
+::::: {.column width="50%"}
+**Silent logic errors (no error message!)**
+
+```{r}
+ages <- c(23, 31, 40, 45, 28)
+mean(ages[ages = 30])   #<1>
+```
+
+1.  `=` should be `==` — this silently does something wrong!
+
+✅ Fix:
+
+```{r}
+mean(ages[ages == 30])   #<1>
+```
+
+1.  `==` is "equal to"; `=` is assignment
+
+:::: pink
+::: pink-cont
+Logic errors are the sneakiest bugs. Always **check intermediate results** with `print()`, `head()`, or `View()` to confirm your data looks right at each step.
+:::
+::::
+:::::
+:::::::
+
+------------------------------------------------------------------------
+
+## [6. Factor errors]{style="color:#3070BF;"}
+
+**Factors look like character strings, but they have fixed levels — adding new values creates `NA`!**
+
+::::::: columns
+::::: {.column width="50%"}
+**Adding a value not in the levels:**
+
+```{r}
+#| warning: true
+age_cat <- factor(c("child", "adult", "elder"))
+age_cat[1] <- "infant"   #<1>
+age_cat
+```
+
+1.  "infant" is not a defined level — `NA` is introduced
+
+:::: blue
+::: blue-cont
+This error message gives it away:
+
+```         
+invalid factor level, NA generated
+```
+
+If you see it, you tried to add a value that wasn't in the factor's pre-defined levels.
+:::
+::::
+:::::
+
+::: {.column width="50%"}
+✅ Fix — convert to character first, then back to factor:
+
+```{r}
+age_cat <- factor(c("child", "adult", "elder"))
+age_cat <- as.character(age_cat)   #<1>
+age_cat[1] <- "infant"
+age_cat <- factor(age_cat)         #<2>
+levels(age_cat)
+```
+
+1.  Convert to character so any value is accepted
+2.  Re-factor with all levels present
+
+**Unexpected alphabetical ordering:**
+
+```{r}
+survey <- data.frame(
+  rating = factor(c("Agree", "Neutral", "Disagree")))
+levels(survey$rating)   #<1>
+```
+
+1.  Default is alphabetical — probably not what you want!
+
+✅ Fix with `levels =`:
+
+```{r}
+survey$rating <- factor(survey$rating,
+  levels = c("Disagree", "Neutral", "Agree"))
+levels(survey$rating)
+```
+:::
+:::::::
+
+------------------------------------------------------------------------
+
+## [7. Plotting errors]{style="color:#459B99;"}
+
+::::: columns
+::: {.column width="50%"}
+**Not enough colors for factor levels**
+
+```         
+Error: Insufficient values in manual scale. 
+3 needed but only 2 provided.
+```
+
+```{r}
+#| error: true
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) +
+  geom_histogram() +
+  scale_fill_manual(values = c("orange", "purple"))   #<1>
+```
+
+1.  `iris` has 3 species, but only 2 colors were provided
+
+✅ Fix — provide one color per level (check if `NA` became a factor level too!):
+
+```{r}
+#| eval: false
+scale_fill_manual(values = c("orange", "purple", "green"))
+```
+:::
+
+::: {.column width="50%"}
+**Extra `+` at the end of a ggplot chain**
+
+```         
+Can't add x object
+```
+
+```{r}
+#| error: true
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram() +   #<1>
+```
+
+1.  Trailing `+` with nothing after it
+
+✅ Fix — delete the final `+`
+
+**Extra `%>%` or `|>` in a dplyr chain**
+
+Similarly, re-arranging piped steps and leaving a stray pipe at the end (or middle) will break your code:
+
+```{r}
+#| error: true
+iris |>
+  filter(Sepal.Length > 5) |>   #<1>
+```
+
+1.  Dangling pipe — R waits for the next step but there isn't one
+:::
+:::::
+
+------------------------------------------------------------------------
+
+## [8. R Markdown / Quarto errors]{style="color:#C83532;"}
+
+::::::: columns
+::: {.column width="50%"}
+**Wrong chunk option names**
+
+```         
+Error in options[[sprintf("fig.%s", i)]]
+```
+
+Check that your chunk options use the correct names:
+
+| ❌ Wrong         | ✅ Correct           |
+|------------------|----------------------|
+| `fig.width = 5`  | `out.width = "5in"`  |
+| `fig.height = 3` | `out.height = "3in"` |
+
+**Duplicate chunk labels**
+
+```         
+Error: Duplicate chunk label 'my-plot'
+```
+
+Every code chunk label in your document must be unique. Labels also cannot contain spaces.
+
+```{{r}}
+#| label: my-plot-1   #<1>
+```
+
+ 1. Add a number or descriptor to make each label unique
+:::
+
+::::: {.column width="50%"}
+**YAML indentation errors**
+
+``` yaml
+---
+format: html
+  toc: true   # ❌ wrong indentation
+---
+```
+
+✅ Fix:
+
+``` yaml
+---
+format: 
+  html:
+    toc: true   # ✅ correct nesting
+---
+```
+
+:::: red
+::: red-cont
+**Chunk runs in console but fails on render**
+
+This usually means your document is relying on objects created earlier in your **R session** that don't exist when rendering. The render starts with a **fresh environment**.
+
+Always use **Session → Restart R → Render** to catch these before submitting.
+:::
+::::
+:::::
+:::::::
+
+------------------------------------------------------------------------
+
+## Wrap-up: A troubleshooting checklist
+
+When your code gives an error, work through this list:
+
+:::::: columns
+::: {.column width="10%"}
+:::
+
+::: {.column width="80%"}
+| Step | What to do |
+|----------------|--------------------------------------------------------|
+| **Read** | Read the error message — what function? What keyword? |
+| **Typos** | Check spelling, capitalization, commas, and matching parentheses |
+| **Packages** | Is the right package installed *and* loaded? Any masking conflicts? |
+| **Objects** | Does the variable exist? Run `ls()` to list everything in your environment |
+| **Arguments** | Run `?function_name` and check argument names and types |
+| **Restart** | Session → Restart R → rerun from top |
+| **Google** | Search the exact error message + "in R" |
+| **Ask** | Make a reprex and ask a classmate, in office hours, or on Posit Community |
+:::
+
+::: {.column width="10%"}
+:::
+::::::
+
+:::: blue
+::: blue-cont
+Even experienced programmers encounter errors constantly. Getting faster at *reading* error messages is one of the most valuable skills you will build in this course.
+:::
+::::
+
+## Typo errors: Incomplete commands
+
+::::: columns
+::: {.column width="50%"}
+- When the console is waiting for a new command, the prompt line begins with `>`
+  - If the console prompt is `+`, then a previous command is incomplete
+  - You can finish typing the command in the console window
+:::
+
+::: {.column width="50%"}
+Example:
+
+```{r}
+#| error: true
+#| message: true
+#| warning: true
+#| prompt: true
+3 + (2*6
+```
+
+```{r}
+#| error: true
+#| message: true
+#| warning: true
+#| prompt: true
+3 + (2*6
+)
+```
+:::
+:::::
+
+## Error Type 1: Typo Errors
+
+**The most common error — and the easiest to fix!**
+
+:::::: columns
+::: {.column width="50%"}
+**Misspelled function or variable name:**
+
+```{r}
+#| error: true
+# Typo in function name
+my_data <- data.frame(x = 1:5, y = 6:10)
+sumamry(my_data)
+```
+
+```{r}
+#| error: true
+# Typo in variable name
+my_datta |> head()
+```
+:::
+
+:::: {.column width="50%"}
+**Mismatched parentheses or brackets:**
+
+```{r}
+#| error: true
+mean(c(1, 2, 3)
+```
+
+::: callout-tip
+## Quick Fixes
+
+- R is **case-sensitive**: `Mean()` ≠ `mean()`
+- Use RStudio's auto-complete (Tab key) to avoid typos
+- Check that every `(` has a matching `)`
+:::
+::::
+::::::
+
+## Object is not found
+
+- This happens when text is entered for a non-existent variable (object)
+
+Example:
+
+```{r}
+#| error: true
+hello
+```
+
+- Can be due to missing quotes
+
+```{r}
+#| error: true
+install.packages(dplyr) 
+# correct code is: install.packages("dplyr")
+```
