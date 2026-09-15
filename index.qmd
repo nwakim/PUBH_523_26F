@@ -18,7 +18,7 @@ link-external-newwindow: true
 
 ## PUBH 523: Introduction to R
 
-### Summer 2026
+### Fall 2026
 
  
 
