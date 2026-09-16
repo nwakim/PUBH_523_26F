@@ -17,7 +17,7 @@ website:
         text: Syllabus
       - href: instructors.qmd
         text: Instructors
-      - href: practice.qmd
+      - href: https://nwakim.github.io/R-practice-tutorials/
         text: Practice
       - href: project.qmd
         text: Project
