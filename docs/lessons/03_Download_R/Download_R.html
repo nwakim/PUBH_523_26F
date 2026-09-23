@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Nicky Wakim, Jessica Minnier, and Meike Niederhausen">
   <title>Introduction to R – Download + Intro to R &amp; Rstudio</title>
@@ -20,10 +20,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -32,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9e4ab3f3e19523e32f7555d916d8bf17.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9e6b66dd654051dec486914fbb48eb8b.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -137,7 +140,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Nicky Wakim, Jessica Minnier, and Meike Niederhausen 
+Nicky Wakim, Jessica Minnier, and Meike Niederhausen
 </div>
 </div>
 </div>
@@ -244,9 +247,10 @@ Nicky Wakim, Jessica Minnier, and Meike Niederhausen
 </section>
 <section id="so-lets-download-them" class="slide level2">
 <h2>So let’s download them!</h2>
-<ul>
-<li>Use this link to start: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></li>
-</ul>
+<ol type="1">
+<li>Use this link to download R: <a href="https://mirror.its.umich.edu/cran/" class="uri">https://mirror.its.umich.edu/cran/</a></li>
+<li>Use this link to download Rstudio: <a href="https://docs.posit.co/ide/user/#direct-downloads-open-source" class="uri">https://docs.posit.co/ide/user/#direct-downloads-open-source</a></li>
+</ol>
 <p>&nbsp;</p>
 <ul>
 <li>You must install R first
@@ -456,7 +460,7 @@ Nicky Wakim, Jessica Minnier, and Meike Niederhausen
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

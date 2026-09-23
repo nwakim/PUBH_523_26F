@@ -131,7 +131,8 @@ Open this!
 
 ## So let's download them!
 
-- Use this link to start: <https://posit.co/download/rstudio-desktop/>
+1. Use this link to download R: <https://mirror.its.umich.edu/cran/>
+2. Use this link to download Rstudio: <https://docs.posit.co/ide/user/#direct-downloads-open-source>
 
  
 
@@ -139,6 +140,7 @@ Open this!
   - Even if you have R installed already, I highly recommend installing the latest version
   - In the future, you will periodically want to update this
 - Install RStudio Desktop Open Source License (second)
+
 
 ## References
 

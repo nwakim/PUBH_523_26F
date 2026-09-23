@@ -27,7 +27,7 @@ source(here("class_dates.R"))
 
 ## Labs
 
-The labs are meant to scaffold and build the work needed to complete the final project. This will help us complete the work over the quarter instead of all at the end! If you receive feedback on something in a lab, it is expected to be fixed for the next lab and final project.
+The labs are meant to scaffold and build the work needed to complete the final project. This will help us complete the work over the quarter instead of all at the end! **If you receive feedback on something in a lab, it is expected to be fixed for the next lab and final project.**
 
 | Lab Instructions | Points | Editing file | Rubric | Due Date | Topics |
 |----|----|----|----|----|----|

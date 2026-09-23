@@ -47,20 +47,15 @@ Running from 7/23-8/31
 [Nicky's Webex](https://ohsu.webex.com/meet/wakim)
 :::
 ::: {.column width="70%"}
-[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} M 3-3:30pm
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} TBD
 
 
-[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} Th 2-2:30pm
+[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} TBD
 :::
 :::
 
 ::: callout-warning
-**I am out of town from July 2 to July 22**
-
-- I can answer questions via Slack/email from July 13-17
-  - *Maybe* take some meetings during that time, but I'm in a flipped time zone eek!
-- **I will not have access to my computer from July 2-12 and July
-  18-22**
+**I am out of town from October 10 to October 18**
 :::
 
 ## My scope of practice
