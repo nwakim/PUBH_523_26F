@@ -106,11 +106,11 @@ link-external-newwindow: true
 This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables. By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. **No prior statistical or coding experience is expected or required.**
 :::
 
-[OneDrive Folder](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623?csf=1&web=1&e=81YRnr){.hero-btn} [Syllabus](syllabus.qmd){.hero-btn} [Schedule](schedule.qmd){.hero-btn} [Join Slack](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg){.hero-btn}
+[OneDrive Folder](https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26F/student_files_PUBH_523_623?d=w2acab095cf684570bd07d7285a4af43f&csf=1&web=1&e=9joeKf){.hero-btn} [Syllabus](syllabus.qmd){.hero-btn} [Schedule](schedule.qmd){.hero-btn} [Join Slack](https://join.slack.com/t/pubh523623/shared_invite/zt-4av0be2fm-vl10vcXPLgRKqUYqvSRqQQ){.hero-btn}
 :::
 :::
 
-::: cards-band
+
 ::: grid
 ::: {.g-col-12 .g-col-md-4}
 ::: {.info-card .card-green}
@@ -145,7 +145,6 @@ This course provides an introduction to programming in R in public health, medic
 ### Contacting me
 
 [{{< iconify tabler message-circle-filled size=24px >}}]{.icon} E-mail or Slack is the best way to reach me. I try to respond to all course-related e-mails within 24 hours, Monday-Friday.
-:::
 :::
 :::
 :::
