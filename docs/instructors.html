@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Instructors – Introduction to R</title>
+<title>instructors – Introduction to R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -131,95 +131,135 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#instructor-nicole-nicky-wakim-phd" id="toc-instructor-nicole-nicky-wakim-phd" class="nav-link active" data-scroll-target="#instructor-nicole-nicky-wakim-phd">Instructor: Nicole (Nicky) Wakim, PhD</a>
-  <ul class="collapse">
-  <li><a href="#office-hours" id="toc-office-hours" class="nav-link" data-scroll-target="#office-hours">Office Hours</a></li>
-  </ul></li>
-  <li><a href="#my-scope-of-practice" id="toc-my-scope-of-practice" class="nav-link" data-scroll-target="#my-scope-of-practice">My scope of practice</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Instructors</h1>
-</div>
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
+<style>
+/* ---- Lesson color palette ---- */
+:root {
+  --blue: #5BAFF8;   --dark-blue: #3070BF;
+  --pink: #EF85B3;   --pink2: #BF396F;
+  --orange: #E75B5C; --red: #C83532;
+  --green: #367B79;  --green2: #459B99;
+  --ivory: #FDF3F2;
+  --coral-text: #C44546;
+}
+.title { font-size: 30px; color: var(--dark-blue); }
 
+/* Main headers: block of color */
+.sec-blue  { --sec: var(--dark-blue); }
+.sec-green { --sec: var(--green); }
+section.level2 > h2 {
+  background-color: var(--sec, var(--dark-blue));
+  color: white;
+  padding: 0.45em 0.8em;
+  border-radius: 10px;
+  border-bottom: none;
+  margin-top: 2rem;
+}
+section.level3 > h3 {
+  color: var(--dark-blue);
+  border-left: 6px solid var(--blue);
+  padding-left: 0.5em;
+}
+.icon { color: var(--dark-blue); }
 
-</header>
+/* Profile card */
+.profile {
+  border-radius: 16px;
+  padding: 1.5rem;
+  align-items: center;
+}
+.profile img { border-radius: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+.profile strong { color: var(--dark-blue); }
+.profile em { color: #495057; }
 
+/* Professor statement */
+.statement {
+  border-left: 6px solid var(--green2);
+  background-color: #EEF6F6;
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+.statement strong { color: var(--green); }
 
-<section id="instructor-nicole-nicky-wakim-phd" class="level2">
-<h2 class="anchored" data-anchor-id="instructor-nicole-nicky-wakim-phd">Instructor: Nicole (Nicky) Wakim, PhD</h2>
-<div class="columns">
-<div class="column" style="width:68%;">
-<ul>
-<li><p><strong>Email:</strong> <a href="mailto:wakim@ohsu.edu">wakim@ohsu.edu</a></p></li>
-<li><p><strong>Office:</strong> VPT 622A</p></li>
-</ul>
+/* Office hours card */
+.oh-card {
+  background-color: white;
+  border: 1px solid #E9E4E2;
+  border-top: 6px solid var(--orange);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 0.25rem 1.25rem;
+  max-width: 520px;
+}
+.oh-card .icon { color: var(--orange); }
+
+/* Out-of-town note */
+.heads-up {
+  border: 2px solid var(--orange);
+  background-color: #FDECEC;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0;
+  max-width: 520px;
+}
+.heads-up p { margin: 0; }
+.heads-up strong { color: var(--coral-text); }
+
+/* Scope of practice table */
+.scope table { border-collapse: separate; border-spacing: 0; }
+.scope table thead th { color: white; border-bottom: none; padding: 0.6em 0.8em; }
+.scope table thead th:nth-child(1) { background-color: var(--green); border-radius: 10px 0 0 0; }
+.scope table thead th:nth-child(2) { background-color: var(--orange); border-radius: 0 10px 0 0; }
+.scope table tbody tr:nth-child(even) { background-color: var(--ivory); }
+.scope table td { padding: 0.5em 0.8em; }
+.scope table td:nth-child(1)::before { content: "\2713\00a0"; color: var(--green); font-weight: 700; }
+.scope table td:nth-child(2)::before { content: "\2715\00a0"; color: var(--orange); font-weight: 700; }
+</style>
+<section id="instructor-nicole-nicky-wakim-phd" class="level2 sec-blue">
+<h2 class="sec-blue anchored" data-anchor-id="instructor-nicole-nicky-wakim-phd">Instructor: Nicole (Nicky) Wakim, PhD</h2>
+<div class="grid profile">
+<div class="g-col-12 g-col-md-8">
+<p><strong>Email:</strong> <a href="mailto:wakim@ohsu.edu">wakim@ohsu.edu</a></p>
+<p><strong>Office:</strong> VPT 622A</p>
 <p><strong>Pronouns:</strong> she/her/hers</p>
 <p><em>You are welcome to address me as Nicky (pronounced “nik-EE”), Dr.&nbsp;Wakim (pronounced “wah-KEEM”), Dr.&nbsp;W, Dr.&nbsp;Nicky, Professor, Professor Wakim, or any combination of the prior.</em></p>
 <p><strong>Best method to contact:</strong> Office hours or Slack for most things or E-mail for private communication.</p>
-</div><div class="column" style="width:2%;">
-
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-right">
+</div>
+<div class="g-col-12 g-col-md-4">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/N_Wakim.jpg" class="img-fluid quarto-figure quarto-figure-right figure-img" width="256"></p>
+<p><img src="images/N_Wakim.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="256"></p>
 </figure>
 </div>
 </div>
 </div>
+<div class="statement">
 <p><strong>Brief professor statement:</strong> As a professor, my main goal is to instill a growth mindset into my students. Growth mindset means we are NOT stuck in our abilities or knowledge, and that we all can and will grow! This course aims to be as transparent as possible. I want you to understand my motivation for assessments, questions, and lessons. I also want those assessments to be clear, so please ask for clarification whenever needed.</p>
+</div>
 <section id="office-hours" class="level3">
 <h3 class="anchored" data-anchor-id="office-hours">Office Hours</h3>
-<p>Running from 7/23-8/31</p>
-<div class="columns">
-<div class="column" style="width:30%;">
-<p><a href="https://ohsu.webex.com/meet/wakim">Nicky’s Webex</a></p>
-</div><div class="column" style="width:70%;">
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<p><strong><a href="https://ohsu.webex.com/meet/wakim">Nicky’s Webex</a></strong></p>
+<p><span class="icon"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
+<p><span class="icon"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
+<div class="heads-up">
 <p><strong>I am out of town from October 10 to October 18</strong></p>
 </div>
-</div>
 </section>
 </section>
-<section id="my-scope-of-practice" class="level2">
-<h2 class="anchored" data-anchor-id="my-scope-of-practice">My scope of practice</h2>
+<section id="my-scope-of-practice" class="level2 sec-green">
+<h2 class="sec-green anchored" data-anchor-id="my-scope-of-practice">My scope of practice</h2>
 <p>If you are interested in what I consider my Scope of Practice, here is an adapted table from Dr.&nbsp;Costa’s <a href="http://dx.doi.org/10.1007/978-3-030-92705-9_15">An Educator’s Scope of Practice</a>:</p>
+<div class="scope">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -278,6 +318,7 @@ Warning
 </tr>
 </tbody>
 </table>
+</div>
 
 
 </section>
@@ -370,6 +411,11 @@ Warning
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

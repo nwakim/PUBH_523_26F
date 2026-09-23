@@ -131,21 +131,12 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#labs" id="toc-labs" class="nav-link active" data-scroll-target="#labs">Labs</a></li>
-  <li><a href="#final-project-information-sheet" id="toc-final-project-information-sheet" class="nav-link" data-scroll-target="#final-project-information-sheet">Final Project: Information Sheet</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="project.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -154,14 +145,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">September 21, 2026</p>
+      <p class="date-modified">September 23, 2026</p>
     </div>
   </div>
     
@@ -174,17 +165,123 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="cell">
 <style type="text/css">
+/* ---- Lesson color palette ---- */
+:root {
+  --blue: #5BAFF8;   --dark-blue: #3070BF;
+  --pink: #EF85B3;   --pink2: #BF396F;
+  --orange:  #C44546; --red: #C83532;
+  --green: #367B79;  --green2: #459B99;
+  --ivory: #FDF3F2;
+  --coral-text: #C44546;
+}
+
 .title{
   font-size: 30px;
   color: #3070BF;
   background-color: #fff;
   padding: 0px;
 }
+
+/* Main headers: block of color */
+.sec-blue  { --sec: var(--dark-blue); --sec-text: var(--dark-blue); }
+.sec-coral { --sec: var(--orange);    --sec-text: var(--coral-text); } /* darker coral for text */
+.sec-green { --sec: var(--green);     --sec-text: var(--green); }
+section.level2 > h2 {
+  background-color: var(--sec, var(--dark-blue));
+  color: white;
+  padding: 0.45em 0.8em;
+  border-radius: 10px;
+  border-bottom: none;
+  margin-top: 2rem;
+}
+section.level2 p strong { color: var(--sec-text, var(--dark-blue)); }
+
+/* ---- Timeline: Lab 1 -> ... -> Final project ---- */
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 0.5rem 0 1.5rem 0;
+}
+.step {
+  position: relative;
+  flex: 1 1 110px;
+  background-color: white;
+  color: var(--dark-blue);
+  border: 2px solid var(--dark-blue);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+.step p { margin: 0; }
+.step a { color: var(--dark-blue) !important; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+.step a:hover { text-decoration: underline; }
+.step .when { display: block; font-size: 0.9rem; color: #495057; }
+.step:not(:last-child)::after {
+  content: "\279C";
+  position: absolute;
+  right: -1.45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ADB5BD;
+  font-size: 1.2rem;
+}
+
+/* ---- Labs table ---- */
+.labs table thead th {
+  background-color: var(--orange);
+  color: white;
+  border-bottom: none;
+}
+.labs table tbody tr:nth-child(even) { background-color: var(--ivory); }
+.labs table td { vertical-align: middle; }
+.labs table td:nth-child(2),
+.labs table td:nth-child(3),
+.labs table td:nth-child(4),
+.labs table th:nth-child(2),
+.labs table th:nth-child(3),
+.labs table th:nth-child(4) { text-align: center; }
+.labs table td:nth-child(5) { font-weight: 700; color: var(--coral-text); }
+
+/* ---- Final project buttons ---- */
+.proj-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+.proj-links p { margin: 0; }
+.proj-btn {
+  display: inline-block;
+  color: white !important;
+  background-color: var(--btn);
+  font-weight: 700;
+  text-decoration: none !important;
+  padding: 0.6em 1.2em;
+  border-radius: 12px;
+}
+.proj-btn:hover { filter: brightness(0.9); }
+.b-blue  { --btn: var(--dark-blue); }
+.b-green { --btn: var(--green); }
+.b-pink  { --btn: var(--pink2); }
 </style>
 </div>
-<section id="labs" class="level2">
-<h2 class="anchored" data-anchor-id="labs">Labs</h2>
+<div class="timeline">
+<div class="step s1">
+<p><a href="./project/Lab_01_instructions.html">Lab 1</a> <span class="when">10/25</span></p>
+</div>
+<div class="step s2">
+<p><a href="./project/Lab_02_instructions.html">Lab 2</a> <span class="when">11/08</span></p>
+</div>
+<div class="step s3">
+<p><a href="./project/Lab_03_instructions.html">Lab 3</a> <span class="when">11/15</span></p>
+</div>
+<div class="step s4">
+<p><a href="./project/Lab_04_instructions.html">Lab 4</a> <span class="when">11/29</span></p>
+</div>
+<div class="step s5">
+<p><a href="./project/Final_Project_instructions.html">Final Project</a> <span class="when">12/09</span></p>
+</div>
+</div>
+<section id="labs" class="level2 sec-coral">
+<h2 class="sec-coral anchored" data-anchor-id="labs">Labs</h2>
 <p>The labs are meant to scaffold and build the work needed to complete the final project. This will help us complete the work over the quarter instead of all at the end! <strong>If you receive feedback on something in a lab, it is expected to be fixed for the next lab and final project.</strong></p>
+<div class="labs">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -231,27 +328,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</div>
 </section>
-<section id="final-project-information-sheet" class="level2">
-<h2 class="anchored" data-anchor-id="final-project-information-sheet">Final Project: Information Sheet</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The project instructions, rubric, and template are read for you! (Nicky 8/28/2026)</p>
-</div>
-</div>
+<section id="final-project-information-sheet" class="level2 sec-green">
+<h2 class="sec-green anchored" data-anchor-id="final-project-information-sheet">Final Project: Information Sheet</h2>
 <p><strong>The final project is due 12/09.</strong></p>
 <p>We are going to create an information sheet using the Well-Being and Basic Needs Survey. The following links will give you the needed instructions, rubric, and template to complete the final project.</p>
-<p><a href="./project/Final_Project_instructions.html"><iconify-icon inline="" icon="fa6-solid:sheet-plastic" style="font-size: 30px;"></iconify-icon> Final Project Instructions</a></p>
-<p><a href="./project/Final_project_rubric.xlsx"><iconify-icon inline="" icon="material-symbols:rubric-rounded" style="font-size: 30px;"></iconify-icon> Final Project Rubric</a></p>
-<p><a href="./project/Final_Project_template.pptx"><iconify-icon inline="" icon="mdi:edit-box" style="font-size: 30px;"></iconify-icon> Final Project Template</a></p>
+<div class="proj-links">
+<p><a href="./project/Final_Project_instructions.html" class="proj-btn b-green"><iconify-icon inline="" icon="fa6-solid:sheet-plastic" style="font-size: 22px;"></iconify-icon> Final Project Instructions</a></p>
+<p><a href="./project/Final_project_rubric.xlsx" class="proj-btn b-green"><iconify-icon inline="" icon="material-symbols:rubric-rounded" style="font-size: 22px;"></iconify-icon> Final Project Rubric</a></p>
+<p><a href="./project/Final_Project_template.pptx" class="proj-btn b-green"><iconify-icon inline="" icon="mdi:edit-box" style="font-size: 22px;"></iconify-icon> Final Project Template</a></p>
+</div>
 
 
 </section>

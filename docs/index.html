@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-702b68d2bb46f0b77d76c36fa481b3ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8495ca2634ea0cc98cc95c7b496276bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-1.0.0-beta.2/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -138,80 +141,138 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div style="background-color: #3070BF">
-<div style="color: #FFFFFF">
-<div class="columns">
-<div class="column" style="width:30%;">
+<style>
+/* ---- Lesson color palette ---- */
+:root {
+  --blue: #5BAFF8;   --dark-blue: #3070BF;
+  --pink: #EF85B3;   --pink2: #BF396F;
+  --orange: #E75B5C; --red: #C83532;
+  --green: #367B79;  --green2: #459B99;
+  --ivory: #FDF3F2;
+  --coral-text: #C44546;  /* darker coral so text stays readable */
+}
+
+/* ---- Welcome banner ---- */
+.hero {
+  background: linear-gradient(135deg, var(--dark-blue) 0%, #2A5FA3 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 2rem 2rem 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.hero h2 {
+  color: white;
+  border-bottom: none;
+  margin-top: 0;
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+.hero img { border-radius: 12px; }
+.term-pill {
+  display: inline-block;
+  background-color: var(--blue);
+  color: white;
+  font-weight: 700;
+  padding: 0.2em 0.9em;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+.hero-text { font-size: 1.08rem; line-height: 1.6; }
+
+/* Buttons in the banner */
+.hero-btn {
+  display: inline-block;
+  background-color: white;
+  color: var(--dark-blue) !important;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.45em 1.1em;
+  border-radius: 999px;
+  margin: 0.25rem 0.4rem 0.25rem 0;
+  border: 2px solid white;
+}
+.hero-btn:hover { background-color: transparent; color: white !important; }
+
+/* ---- Info cards ---- */
+.info-card {
+  background-color: white;
+  border: 1px solid #E9E4E2;
+  border-top: 6px solid var(--card);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 0.5rem 1.25rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.info-card h3 {
+  color: var(--card-text);
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.info-card .icon { color: var(--card); }
+.info-card p { margin-bottom: 0.6rem; }
+.card-blue  { --card: var(--dark-blue); --card-text: var(--dark-blue); }
+.card-green { --card: var(--green);     --card-text: var(--green); }
+.card-coral { --card: var(--orange);    --card-text: var(--coral-text); }
+.card-pink  { --card: var(--pink2);     --card-text: var(--pink2); }
+
+.cards-band {
+  background-color: var(--ivory);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.source-link { text-align: right; color: #6C757D; }
+</style>
+<div class="grid hero">
+<div class="g-col-12 g-col-md-4">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/PUBH_R.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="337"></p>
 </figure>
 </div>
-</div><div class="column" style="width:65%;">
-<section id="pubh-523-introduction-to-r" class="level2">
+</div>
+<section id="pubh-523-introduction-to-r" class="level2 g-col-12 g-col-md-8">
 <h2 class="anchored" data-anchor-id="pubh-523-introduction-to-r">PUBH 523: Introduction to R</h2>
-<section id="fall-2026" class="level3">
-<h3 class="anchored" data-anchor-id="fall-2026">Fall 2026</h3>
-<p>&nbsp;</p>
-<p>This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables. By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. No prior statistical or coding experience is expected or required.</p>
-<p>&nbsp;</p>
+<p><span class="term-pill">Fall 2026</span></p>
+<div class="hero-text">
+<p>This course provides an introduction to programming in R in public health, medicine, and related fields. Students will gain basic proficiency with the R environment and toolkit, focusing on reproducible workflows, data manipulation, visualization, and reporting. Topics include basic R programming, working in project-based folders, data transformations and summaries, data visualizations and plots, generating dynamic reports, and constructing summary tables. By the end of the course, students will be comfortable initiating data exploration projects in R and will be prepared to apply these skills in further analysis courses. <strong>No prior statistical or coding experience is expected or required.</strong></p>
+</div>
+<p><a href="https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623?csf=1&amp;web=1&amp;e=81YRnr" class="hero-btn">OneDrive Folder</a> <a href="./syllabus.html" class="hero-btn">Syllabus</a> <a href="./schedule.html" class="hero-btn">Schedule</a> <a href="https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg" class="hero-btn">Join Slack</a></p>
 </section>
-</section>
-</div><div class="column" style="width:5%;">
-
 </div>
-</div>
-</div>
-</div>
-<div style="background-color: #F2EFEA">
-<div style="color: #000">
-<div class="columns">
-<div class="column" style="width:5%;">
-
-</div><div class="column" style="width:20%;">
-<section id="links" class="level3">
-<h3 class="anchored" data-anchor-id="links">Links</h3>
-<p><a href="https://ohsuitg-my.sharepoint.com/:f:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/PUBH_523_26Su/Student_files_PUBH_523_623?csf=1&amp;web=1&amp;e=81YRnr"><iconify-icon inline="" icon="material-symbols:folder" style="font-size: 25px;"></iconify-icon> OneDrive Folder</a></p>
-</section>
-</div><div class="column" style="width:20%;">
-<section id="instructor" class="level3">
-<h3 class="anchored" data-anchor-id="instructor">Instructor</h3>
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="fluent:person-24-filled" style="font-size: 24px;"></iconify-icon></span> <a href="./instructors.html">Dr.&nbsp;Nicky Wakim</a></p>
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="bi:building-fill" style="font-size: 24px;"></iconify-icon></span> Vanport 622A</p>
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="tabler:mail-filled" style="font-size: 24px;"></iconify-icon></span> <a href="mailto:wakim@ohsu.edu">wakim@ohsu.edu</a></p>
-</section>
-</div><div class="column" style="width:25%;">
-<section id="office-hours" class="level3">
-<h3 class="anchored" data-anchor-id="office-hours">Office Hours</h3>
-<p>Running from 7/23-8/31</p>
-<div class="columns">
-<div class="column" style="width:30%;">
-<p><a href="https://ohsu.webex.com/meet/wakim">Nicky</a></p>
-</div><div class="column" style="width:70%;">
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> M 3-3:30pm</p>
-<p><span style="color:#C83532;"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> Th 2-2:30pm</p>
-</div>
-</div>
-</section>
-</div><div class="column" style="width:25%;">
-<section id="contacting-me" class="level3">
-<h3 class="anchored" data-anchor-id="contacting-me">Contacting me</h3>
-<p>E-mail or Slack is the best way to get in contact with me. I will try to respond to all course-related e-mails within 24 hours Monday-Friday.</p>
-</section>
-</div><div class="column" style="width:5%;">
-
-</div>
-</div>
-</div>
-</div>
-<hr>
+<div class="cards-band">
 <div class="grid">
-<div class="g-col-9">
-
+<div class="g-col-12 g-col-md-4">
+<section id="instructor" class="level3 info-card card-green">
+<h3 class="anchored" data-anchor-id="instructor">Instructor</h3>
+<p><span class="icon"><iconify-icon inline="" icon="fluent:person-24-filled" style="font-size: 24px;"></iconify-icon></span> <a href="./instructors.html">Dr.&nbsp;Nicky Wakim</a></p>
+<p><span class="icon"><iconify-icon inline="" icon="bi:building-fill" style="font-size: 24px;"></iconify-icon></span> Vanport 622A</p>
+<p><span class="icon"><iconify-icon inline="" icon="tabler:mail-filled" style="font-size: 24px;"></iconify-icon></span> <a href="mailto:wakim@ohsu.edu">wakim@ohsu.edu</a></p>
+</section>
 </div>
-<div class="g-col-3">
+<div class="g-col-12 g-col-md-4">
+<section id="office-hours" class="level3 info-card card-coral">
+<h3 class="anchored" data-anchor-id="office-hours">Office Hours</h3>
+<p><strong><a href="https://ohsu.webex.com/meet/wakim">Nicky</a></strong></p>
+<p><span class="icon"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
+<p><span class="icon"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
+<p><strong>TA</strong></p>
+<p><span class="icon"><iconify-icon inline="" icon="icon-park-solid:time" style="font-size: 24px;"></iconify-icon></span> TBD</p>
+</section>
+</div>
+<div class="g-col-12 g-col-md-4">
+<section id="contacting-me" class="level3 info-card card-pink">
+<h3 class="anchored" data-anchor-id="contacting-me">Contacting me</h3>
+<p><span class="icon"><iconify-icon inline="" icon="tabler:message-circle-filled" style="font-size: 24px;"></iconify-icon></span> E-mail or Slack is the best way to reach me. I try to respond to all course-related e-mails within 24 hours, Monday-Friday.</p>
+</section>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="source-link">
 <p><a href="https://github.com/nwakim/PUBH_523_26Su"><iconify-icon inline="" icon="icomoon-free:github" style="font-size: 24px;"></iconify-icon> View the source on GitHub</a></p>
-</div>
 </div>
 
 

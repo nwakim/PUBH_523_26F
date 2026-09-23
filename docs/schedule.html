@@ -168,46 +168,53 @@ ul.task-list li input[type="checkbox"] {
   padding: 0px;
 }
 
-.sched table tbody tr:has(.rbasics) td:nth-child(4){
-  background-color: #fcf2f7 !important;
-  color: #EF85B3;
+/* ---- Theme labels: small colored pills (text darkened so it's readable) ---- */
+.sched .info, .sched .rbasics, .sched .randr, .sched .bestpract,
+.sched .trans, .sched .summ, .sched .viz {
+  display: inline-block;
+  padding: 0.15em 0.65em;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92em;
+  line-height: 1.35;
+  white-space: nowrap;
+  border: 1px solid transparent;
 }
+.sched .info      { background-color: #EEF0F2; color: #5A6268; border-color: #D5D9DD; }
+.sched .rbasics   { background-color: #FCE7F0; color: #AE2F66; border-color: #F5C2D9; }
+.sched .randr     { background-color: #FCF0DC; color: #9A5A06; border-color: #F3D7A6; }
+.sched .bestpract { background-color: #E3F1FE; color: #1F6DB5; border-color: #B9DBFB; }
+.sched .trans     { background-color: #DCE6F5; color: #28599A; border-color: #B5C9E8; }
+.sched .summ      { background-color: #DDEEEE; color: #2E6B69; border-color: #B5D6D5; }
+.sched .viz       { background-color: #FBE3E2; color: #A12B28; border-color: #F2BDBB; }
 
-.sched table tbody tr:has(.info) td:nth-child(4){
-  background-color: #F8F9FA !important;
+/* ---- Weekly total video time ---- */
+.sched .total {
+  font-size: 0.8em;
+  white-space: nowrap;
   color: #6C757D;
+  font-weight: 600;
 }
 
-.sched table tbody tr:has(.randr) td:nth-child(4){
-  background-color: #FCF3E2 !important;
-  color: #F39C12;
+/* ---- Header row ---- */
+.sched table thead th {
+  background-color: #3070BF;
+  color: white;
+  border-bottom: none;
+  vertical-align: middle;
 }
+.sched table thead th a { color: white; }
 
-.sched table tbody tr:has(.bestpract) td:nth-child(4){
-  background-color: #DAECFE !important;
-  color: #5BAFF8;
-}
-
-.sched table tbody tr:has(.trans) td:nth-child(4){
-  background-color: #D0DDF1 !important;
-  color: #3070BF;
-}
-
-.sched table tbody tr:has(.summ) td:nth-child(4){
-  background-color: #D9E8E9 !important;
-  color: #459B99;
-}
-
-.sched table tbody tr:has(.viz) td:nth-child(4){
-  background-color: #FFE6E6 !important;
-  color: #C83532;
-}
+/* ---- Scroll sideways on small screens instead of squishing ---- */
+.sched { overflow-x: auto; }
+.sched table { min-width: 900px; }
 
 .sched table tbody tr:has(.pract-row) td,
 .sched table tbody tr:has(.proj-row) td,
 .sched table tbody tr:has(.lab-row) td{
   background-color: #F8EAF0 !important;
-  color: #BF396F;
+  color: #B3346A;  /* slightly darker pink so it's readable */
+  font-weight: 600;
 }
 
 .sched table tbody tr:has(.week-row) td{
@@ -317,7 +324,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">5</td>
+<td style="text-align: left;">4</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Basics</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/520012d15ef442109896878ba8c5683c" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 06min</a></td>
@@ -328,7 +335,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">7</td>
+<td style="text-align: left;">5</td>
 <td><span class="randr">Rigor &amp; Reproducibility</span></td>
 <td style="text-align: left;">Folder and file organization</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/06734d1ad7204da0a8587f04ae3923ed" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 16min</a></td>
@@ -339,7 +346,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">8</td>
+<td style="text-align: left;">6</td>
 <td><span class="randr">Rigor &amp; Reproducibility</span></td>
 <td style="text-align: left;">Quarto and <code>.qmd</code>’s</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/74a90b5fe7be4cbeaa38009363e33ad6" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 23min</a></td>
@@ -353,7 +360,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"></td>
 <td></td>
 <td style="text-align: left;"></td>
-<td style="text-align: center;">Total: 79min</td>
+<td style="text-align: center;"><span class="total">Total: 79min</span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -383,7 +390,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">10/05</td>
-<td style="text-align: left;">4</td>
+<td style="text-align: left;">7</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">R scripts</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/dae3a73b80f540189f60f1ed547917fc" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 05min</a></td>
@@ -394,7 +401,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">6</td>
+<td style="text-align: left;">8</td>
 <td><span class="bestpract">Best Practices in R</span></td>
 <td style="text-align: left;">Comments</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/79cbe592ce374632b497d4d50e732cdb" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 05min</a></td>
@@ -405,7 +412,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">14</td>
+<td style="text-align: left;">9</td>
 <td><span class="bestpract">Best Practices in R</span></td>
 <td style="text-align: left;">Common errors</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/f92d1a9c3e3f44a2aaf1a3f493d308c2" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 14min</a></td>
@@ -416,7 +423,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">11</td>
+<td style="text-align: left;">10</td>
 <td><span class="info">Course info</span></td>
 <td style="text-align: left;">Introduction to HRS dataset</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/c6b9a396d1df4dd8bd14cd30b7f71659" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 04min</a></td>
@@ -427,7 +434,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">9</td>
+<td style="text-align: left;">11</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Packages</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/32ed9bec751b48e9aa53981d72d0c0f2" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 09min</a></td>
@@ -438,7 +445,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">10</td>
+<td style="text-align: left;">12</td>
 <td><span class="randr">Rigor &amp; Reproducibility</span></td>
 <td style="text-align: left;">R projects and working directories</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/ad8129f76cdb46509ffd5f8bf4050b94" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 22min</a></td>
@@ -447,6 +454,17 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/r_projects.html">6</a></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 59min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">10/11</td>
 <td style="text-align: left;"></td>
@@ -457,7 +475,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><span class="week-row">&nbsp;</span></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -468,10 +486,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">10/12</td>
-<td style="text-align: left;">12</td>
+<td style="text-align: left;">13</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Functions</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/fbccebe3180c44a38b46108138bf8bb8" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 13min</a></td>
@@ -479,10 +497,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/workflow-basics.html#calling-functions">2.4</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/basics.html#functions">3.6</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">13</td>
+<td style="text-align: left;">14</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Objects</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/910d90d7a8d9444f8d6f9b256b84e334" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 14min</a></td>
@@ -490,7 +508,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/basics.html#objects">3.10</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">15</td>
@@ -501,7 +519,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/workflow-help.html">8</a></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">16</td>
@@ -512,16 +530,27 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-transform.html#sec-the-pipe">3.4</a>, <a href="https://r4ds.hadley.nz/workflow-style.html#sec-pipes">4.3</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/basics.html#piping">8.1</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">18</td>
+<td style="text-align: left;">17</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Import and export</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/cad115be79604eacbe5c267c79598e9a" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 11min</a></td>
 <td style="text-align: center;"><span style="color:#f8f5f0;"><a href="./lessons/19_Import_Export/Import_Export.html"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 30px;"></iconify-icon></a></span></td>
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-import.html">7</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/importing.html">7</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 64min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -559,7 +588,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">10/19</td>
-<td style="text-align: left;">17</td>
+<td style="text-align: left;">18</td>
 <td><span class="rbasics">R Basics</span></td>
 <td style="text-align: left;">Key operators and functions</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/32b44e841ec64091ac0f8b3e66fa47fd" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 17min</a></td>
@@ -613,6 +642,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 58min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
 <td style="text-align: left;">10/25</td>
 <td style="text-align: left;"></td>
 <td></td>
@@ -622,7 +662,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><span class="week-row">&nbsp;</span></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -633,7 +673,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">10/26</td>
 <td style="text-align: left;">23</td>
@@ -644,25 +684,36 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/logicals.html#comparisons">12.2</a>, <a href="https://r4ds.hadley.nz/factors.html">16</a></td>
 <td style="text-align: center;"><a href="https://www.epirhandbook.com/en/new_pages/factors.html">11</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">34</td>
-<td><span class="viz">Data visualization</span></td>
+<td style="text-align: left;">24</td>
+<td><span class="summ">Data summarization</span> <span class="viz">Data visualization</span></td>
 <td style="text-align: left;">Missing data: summarization and visualization</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/7ffaaba7d7014d88a477732eb0737ecd" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 25min</a></td>
 <td style="text-align: center;"><span style="color:#f8f5f0;"><a href="./lessons/34_Missing_data_summ_viz/Missing_data_summ_viz.html"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 30px;"></iconify-icon></a></span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/missing_data.html#assess-missingness-in-a-data-frame">20.4</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">35</td>
+<td style="text-align: left;">25</td>
 <td><span class="trans">Data transformation</span></td>
 <td style="text-align: left;">Missing data: transformations</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/04599c305ec14ee5b3649460bd2e8e09" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 20min</a></td>
 <td style="text-align: center;"><span style="color:#f8f5f0;"><a href="./lessons/35_Missing_data_transformations/Missing_data_transformations.html"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 30px;"></iconify-icon></a></span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 73min</span></td>
+<td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
@@ -702,7 +753,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">6</td>
 <td style="text-align: left;">11/02</td>
-<td style="text-align: left;">24</td>
+<td style="text-align: left;">26</td>
 <td><span class="summ">Data summarization</span></td>
 <td style="text-align: left;">Data summarization: intro</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/444652c20115444c936889f4c257b3d8" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 04min</a></td>
@@ -713,7 +764,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">25</td>
+<td style="text-align: left;">27</td>
 <td><span class="summ">Data summarization</span></td>
 <td style="text-align: left;">Data summarization: quick summaries</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/504f8e3b3c2a41d0b3cb60cdb281fa0a" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 14min</a></td>
@@ -724,7 +775,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">26</td>
+<td style="text-align: left;">28</td>
 <td><span class="summ">Data summarization</span></td>
 <td style="text-align: left;">Data summarization: tables</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/63222e62ec804fbda2f934b0176f8416" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 16min</a></td>
@@ -735,7 +786,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">27</td>
+<td style="text-align: left;">29</td>
 <td><span class="summ">Data summarization</span></td>
 <td style="text-align: left;">Data summarization: grouped summaries</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/ec3647c4b36e44b18ee2cc5aa577fd49" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 13min</a></td>
@@ -744,6 +795,17 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/tables_descriptive.html">17</a></td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 47min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">11/08</td>
 <td style="text-align: left;"></td>
@@ -754,7 +816,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><span class="week-row">&nbsp;</span></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -765,10 +827,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">11/09</td>
-<td style="text-align: left;">31</td>
+<td style="text-align: left;">30</td>
 <td><span class="viz">Data visualization</span></td>
 <td style="text-align: left;">Data visualization: intro to ggplot</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/a24cde6f35614716a665b6361ab1decc" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 18min</a></td>
@@ -776,10 +838,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-visualize.html#introduction">1.1-1.3</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/ggplot_basics.html#basics-of-ggplot">30.2-30.5</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">32</td>
+<td style="text-align: left;">31</td>
 <td><span class="viz">Data visualization</span></td>
 <td style="text-align: left;">Data visualization: basic plotting</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/eb98ea7d89ba4942978b3421bf58e7a0" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 23min</a></td>
@@ -787,16 +849,27 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/layers.html#aesthetic-mappings">9.2-9.3</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/ggplot_basics.html#geoms">30.4-30.5</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">33</td>
+<td style="text-align: left;">32</td>
 <td><span class="viz">Data visualization</span></td>
 <td style="text-align: left;">Data visualization: design choices</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/d344674bab9d4b91a2813c1cba3502e6" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 25min</a></td>
 <td style="text-align: center;"><span style="color:#f8f5f0;"><a href="./lessons/33_Data_viz_Design_choices/Data_viz_Design_choices.html"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 30px;"></iconify-icon></a></span></td>
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-visualize.html#visualizing-relationships">1.5</a></td>
 <td style="text-align: center;"><a href="https://epirhandbook.com/en/new_pages/ggplot_basics.html#ggplot_basics_facet">30.6-30.10</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 66min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -834,7 +907,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">8</td>
 <td style="text-align: left;">11/16</td>
-<td style="text-align: left;">30</td>
+<td style="text-align: left;">33</td>
 <td><span class="randr">Rigor &amp; Reproducibility</span></td>
 <td style="text-align: left;">Quarto and <code>.qmd</code>’s: revisited</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/9b926cb9c8df4ae8a043e069aff6be37" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 25min</a></td>
@@ -848,23 +921,12 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"></td>
 <td></td>
 <td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="total">Total: 25min</span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">11/22</td>
 <td style="text-align: left;"></td>
@@ -875,7 +937,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><span class="week-row">&nbsp;</span></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -886,10 +948,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">9</td>
 <td style="text-align: left;">11/23</td>
-<td style="text-align: left;">28</td>
+<td style="text-align: left;">34</td>
 <td><span class="trans">Data transformation</span></td>
 <td style="text-align: left;">Lengthening data</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/a5c12521dc3c4f889d845eb477be52a7" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 12min</a></td>
@@ -897,15 +959,26 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-tidy.html#sec-pivoting">5.3</a></td>
 <td style="text-align: center;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">29</td>
+<td style="text-align: left;">35</td>
 <td><span class="trans">Data transformation</span></td>
 <td style="text-align: left;">Widening data</td>
 <td style="text-align: center;"><a href="https://www.loom.com/share/54cafe7735fe4ef49e0336a8b8259801" class="video-badge"><iconify-icon inline="" icon="mdi:video" style="font-size: 25px;"></iconify-icon> 10min</a></td>
 <td style="text-align: center;"><span style="color:#f8f5f0;"><a href="./lessons/29_Data_transformation_widen/Data_transformation_widen.html"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 30px;"></iconify-icon></a></span></td>
 <td style="text-align: center;"><a href="https://r4ds.hadley.nz/data-tidy.html#widening-data">5.4</a></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><span class="total">Total: 22min</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">

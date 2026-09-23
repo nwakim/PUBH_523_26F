@@ -45,7 +45,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4e7301f795183ddf9934333f6d2ce2ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8495ca2634ea0cc98cc95c7b496276bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./syllabus.html" aria-current="page"> 
+    <a class="nav-link" href="./syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#sph-and-ohsu-policies" id="toc-sph-and-ohsu-policies" class="nav-link" data-scroll-target="#sph-and-ohsu-policies">SPH and OHSU Policies</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="syllabus.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="syllabus--1-.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
@@ -223,14 +223,13 @@ ul.task-list li input[type="checkbox"] {
 :root {
   --blue: #5BAFF8;   --dark-blue: #3070BF;
   --pink: #EF85B3;   --pink2: #BF396F;
-  --orange:  #C44546; --red: #C83532;
+  --orange: #E75B5C; --red: #C83532;
   --purple: #8043F3; --purple2: #9F71F7;
   --slate-grey: #6C757D;
   --green: #367B79;  --green2: #459B99;
   --ivory: #FDF3F2;
   --sec: var(--dark-blue);       /* section color (set per section below) */
   --sec-light: var(--blue);
-  --sec-text: var(--sec);        /* color for sub-headers and bold text */
 }
 
 .title{
@@ -246,8 +245,6 @@ ul.task-list li input[type="checkbox"] {
 .sec-purple { --sec: var(--purple);    --sec-light: var(--purple2); }
 .sec-pink   { --sec: var(--pink2);     --sec-light: var(--pink); }
 .sec-red    { --sec: var(--red);       --sec-light: var(--orange); }
-.sec-coral  { --sec: var(--orange);    --sec-light: #F29B9B; --sec-text: #C44546; } /* darker coral for text so it's readable */
-.sec-blue, .sec-green, .sec-purple, .sec-pink, .sec-red { --sec-text: var(--sec); }
 
 /* Main headers: block of color */
 section.level2 > h2 {
@@ -260,18 +257,24 @@ section.level2 > h2 {
 }
 /* Sub-headers: colored text with an accent bar */
 section.level3 > h3 {
-  color: var(--sec-text);
+  color: var(--sec);
   border-left: 6px solid var(--sec-light);
   padding-left: 0.5em;
   margin-top: 1.75rem;
 }
 section.level4 > h4 {
-  color: var(--sec-text);
+  color: var(--sec);
   margin-top: 1.25rem;
 }
 
 /* Bold text picks up the section color */
-main p strong, main li strong { color: var(--sec-text); }
+main p strong, main li strong { color: var(--sec); }
+
+/* Highlighter for the most important lines: [text]{.hl} */
+.hl {
+  background: linear-gradient(transparent 45%, rgba(239, 133, 179, 0.35) 45%);
+  padding: 0 2px;
+}
 
 /* Friendly opening paragraph */
 .lead { font-size: 1.15em; }
@@ -355,7 +358,9 @@ main blockquote {
 </div>
 <section id="description" class="level2 sec-blue">
 <h2 class="sec-blue anchored" data-anchor-id="description">Description</h2>
-<p>Welcome to PUBH 523/623! This course introduces programming in R for public health, medicine, and related fields. We’ll focus on reproducible workflows, data manipulation, visualization, and reporting: working in project-based folders, transforming and summarizing data, making plots, generating dynamic reports, and building summary tables. <strong>No prior statistics or coding experience is expected.</strong> By the end, you’ll be comfortable starting a data exploration project in R and ready to use these skills in future analysis courses.</p>
+<div class="lead">
+<p>Welcome to PUBH 523/623! This course introduces programming in R for public health, medicine, and related fields. We’ll focus on reproducible workflows, data manipulation, visualization, and reporting: working in project-based folders, transforming and summarizing data, making plots, generating dynamic reports, and building summary tables. <span class="hl"><strong>No prior statistics or coding experience is expected.</strong></span> By the end, you’ll be comfortable starting a data exploration project in R and ready to use these skills in future analysis courses.</p>
+</div>
 <section id="course-learning-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="course-learning-objectives">Course Learning Objectives</h3>
 <p>By the end of this course, you should be able to…</p>
@@ -371,8 +376,8 @@ main blockquote {
 <h2 class="sec-green anchored" data-anchor-id="instructors-meeting-times">Instructors &amp; Meeting Times</h2>
 <p>This class is <strong>asynchronous</strong>, so there are no set class times, but we’ll have recurring office hours. Office hours and contact info are on the <a href="./instructors.html">instructor page</a>.</p>
 </section>
-<section id="materials" class="level2 sec-coral">
-<h2 class="sec-coral anchored" data-anchor-id="materials">Materials</h2>
+<section id="materials" class="level2 sec-purple">
+<h2 class="sec-purple anchored" data-anchor-id="materials">Materials</h2>
 <section id="textbooks" class="level3">
 <h3 class="anchored" data-anchor-id="textbooks">Textbooks</h3>
 <p>You don’t need to read along with each lesson. These are here for when you want another explanation, more examples, or extra practice.</p>
@@ -384,7 +389,7 @@ main blockquote {
 </section>
 <section id="r-and-rstudio" class="level3">
 <h3 class="anchored" data-anchor-id="r-and-rstudio">R and RStudio</h3>
-<p>We’ll use R and RStudio (both free). <strong>Please install them before our second lesson</strong>, and email me if you get stuck. Here’s some <a href="https://rstudio-education.github.io/hopr/starting.html">helpful installation documentation</a>.</p>
+<p>We’ll use R and RStudio (both free). <span class="hl"><strong>Please install them before our second lesson</strong></span>, and email me if you get stuck. Here’s some <a href="https://rstudio-education.github.io/hopr/starting.html">helpful installation documentation</a>.</p>
 <ol type="1">
 <li>R: <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a></li>
 <li>RStudio: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></li>
@@ -501,7 +506,7 @@ main blockquote {
 <h3 class="anchored" data-anchor-id="how-each-activity-is-graded">How each activity is graded</h3>
 <section id="practice-40" class="level4">
 <h4 class="anchored" data-anchor-id="practice-40">Practice (40%)</h4>
-<p>Everyone has a different amount of time for coursework, and practice is for <em>learning</em>, so grading is simple: <strong>you get a check if you complete at least 75% of the question parts, whether your answers are right or wrong.</strong> Each of the 9 practice assignments counts equally.</p>
+<p>Everyone has a different amount of time for coursework, and practice is for <em>learning</em>, so grading is simple: <span class="hl"><strong>you get a check if you complete at least 75% of the question parts, whether your answers are right or wrong.</strong></span> Each of the 9 practice assignments counts equally.</p>
 <ul>
 <li><strong>On time:</strong> you get the check <em>and</em> feedback on one or more problems.</li>
 <li><strong>Late:</strong> no grade penalty. You still get the check if submitted before the course ends, just no feedback (unless you email me to ask). Compare your work to the solutions or bring it to office hours.</li>
@@ -510,7 +515,7 @@ main blockquote {
 </section>
 <section id="office-hours-visit-2" class="level4">
 <h4 class="anchored" data-anchor-id="office-hours-visit-2">Office hours visit (2%)</h4>
-<p><strong>Come to office hours at least once during the quarter</strong> for full credit. You don’t need a question! Stopping by to say hi, working quietly on practice, or listening to others’ questions all count. If none of the office hour times work for you, email me and we’ll find another time to meet.</p>
+<p><span class="hl"><strong>Come to office hours at least once during the quarter</strong> for full credit.</span> You don’t need a question! Stopping by to say hi, working quietly on practice, or listening to others’ questions all count. If none of the office hour times work for you, email me and we’ll find another time to meet.</p>
 </section>
 <section id="project-labs-40" class="level4">
 <h4 class="anchored" data-anchor-id="project-labs-40">Project Labs (40%)</h4>
@@ -530,9 +535,9 @@ main blockquote {
 <p>I encourage you to submit work on time, but I know life happens. Here are some <a href="https://myuni.swansea.ac.uk/academic-life/extenuating-circumstances/">examples of extenuating circumstances</a> (not a complete list, so please reach out with questions).</p>
 <ul>
 <li><strong>Practice:</strong> submit any time before the course ends for full credit. For feedback, submit on time or email me.</li>
-<li><strong>Labs:</strong> you get <strong>ONE no-questions-asked, 3-day extension</strong>. Just email me: “I am using my no-questions-asked extension for Lab __.” After that, email me to explain and ask for an extension; <strong>otherwise, 1 point is deducted per day late.</strong></li>
+<li><strong>Labs:</strong> you get <span class="hl"><strong>ONE no-questions-asked, 3-day extension</strong></span>. Just email me: “I am using my no-questions-asked extension for Lab __.” After that, email me to explain and ask for an extension; <strong>otherwise, 1 point is deducted per day late.</strong></li>
 <li><strong>Final poster:</strong> email me to explain your circumstances. You may ask for an extension, but I won’t necessarily grant one.</li>
-<li><strong>All coursework must be completed by December 13, 2026.</strong> If extenuating circumstances mean you need more time, or may affect your work for several weeks, contact me and we’ll make a plan together (including any registrar logistics).</li>
+<li><span class="hl"><strong>All coursework must be completed by December 13, 2026.</strong></span> If extenuating circumstances mean you need more time, or may affect your work for several weeks, contact me and we’ll make a plan together (including any registrar logistics).</li>
 </ul>
 <div class="pink">
 <div class="pink-ttl">
@@ -545,17 +550,17 @@ main blockquote {
 </section>
 <section id="regrade-policy" class="level3">
 <h3 class="anchored" data-anchor-id="regrade-policy">Regrade Policy</h3>
-<p>If you think something was graded incorrectly, first compare your answer to the solutions. If you still think a regrade is warranted, email me the question and a short explanation <strong>within one week</strong> of the assignment being returned.</p>
+<p>If you think something was graded incorrectly, first compare your answer to the solutions. If you still think a regrade is warranted, email me the question and a short explanation <span class="hl"><strong>within one week</strong></span> of the assignment being returned.</p>
 </section>
 <section id="generative-ai-policy" class="level3">
 <h3 class="anchored" data-anchor-id="generative-ai-policy">Generative AI Policy</h3>
 <p><em>This policy is adapted from the OHSU-PSU SPH Biostatistics program’s AI policy, which classifies PUBH 523/623 as a <strong>foundational</strong> course. Everything you need for this class is below.</em></p>
-<p><strong>Using AI is <em>not</em> required in this class.</strong> If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them <em>responsibly</em>, not avoid them.</p>
-<div class="green">
-<div class="green-ttl">
+<p><span class="hl"><strong>Using AI is <em>not</em> required in this class.</strong></span> If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them <em>responsibly</em>, not avoid them.</p>
+<div class="purple">
+<div class="purple-ttl">
 <p>The toolbox analogy</p>
 </div>
-<div class="green-cont">
+<div class="purple-cont">
 <p>Think of this class as assembling a toolbox. A new handyperson might need help finding their tools or remembering which one does what, but eventually using them becomes second nature.</p>
 <p><strong>For now, generative AI can help us find and use our tools, but we’re working toward using them as second nature!</strong></p>
 </div>
@@ -736,8 +741,8 @@ main blockquote {
 <p>As a PSU/OHSU student, you’re expected to act with professionalism and integrity. Academic misconduct (plagiarism, cheating, fabricating data, falsifying records, or helping others do so) will be taken seriously. Your submitted work should reflect your own effort, and any resources you use should be cited.</p>
 </section>
 </section>
-<section id="how-to-succeed-in-this-course" class="level2 sec-coral">
-<h2 class="sec-coral anchored" data-anchor-id="how-to-succeed-in-this-course">How to Succeed in This Course</h2>
+<section id="how-to-succeed-in-this-course" class="level2 sec-purple">
+<h2 class="sec-purple anchored" data-anchor-id="how-to-succeed-in-this-course">How to Succeed in This Course</h2>
 <p>Every instructor uses resources and assignments a little differently, so here’s how to get the most out of each in <em>this class</em>.</p>
 <section id="resources" class="level3">
 <h3 class="anchored" data-anchor-id="resources">Resources</h3>
@@ -836,7 +841,7 @@ main blockquote {
 <ul>
 <li><strong>Brightspace announcements:</strong> for important or urgent updates, sent to your OHSU email. I’ll copy non-sensitive ones to Slack.</li>
 <li><strong>Slack:</strong> for questions and general discussion.</li>
-<li><strong>Email:</strong> for private matters. Please use my OHSU address (wakim@ohsu.edu). <strong>Messages sent through Brightspace Inbox will not be answered.</strong></li>
+<li><strong>Email:</strong> for private matters. Please use my OHSU address (wakim@ohsu.edu). <span class="hl"><strong>Messages sent through Brightspace Inbox will not be answered.</strong></span></li>
 </ul>
 </section>
 <section id="course-feedback" class="level2 sec-green">
@@ -856,8 +861,8 @@ main blockquote {
 <p>At the end of the course, you’ll be asked to complete a formal evaluation. <strong>Your feedback is critical for improving this course and matters for my career advancement.</strong> Since our class is on the smaller side, everyone’s participation is needed for the feedback to be released. Thank you!</p>
 </section>
 </section>
-<section id="schedule" class="level2 sec-coral">
-<h2 class="sec-coral anchored" data-anchor-id="schedule">Schedule</h2>
+<section id="schedule" class="level2 sec-purple">
+<h2 class="sec-purple anchored" data-anchor-id="schedule">Schedule</h2>
 <p>See the <a href="./schedule.html">Schedule page</a>. I may adjust it if we need more or less time on a topic.</p>
 </section>
 <section id="student-resources" class="level2 sec-pink">

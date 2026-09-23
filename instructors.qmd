@@ -1,17 +1,105 @@
 ---
-title: "Instructors"
-editor: 
-  markdown: 
-    wrap: 72
+format:
+  html:
+    link-external-newwindow: true
+    page-layout: full
+    toc: false
 ---
 
-## Instructor: Nicole (Nicky) Wakim, PhD
+```{=html}
+<style>
+/* ---- Lesson color palette ---- */
+:root {
+  --blue: #5BAFF8;   --dark-blue: #3070BF;
+  --pink: #EF85B3;   --pink2: #BF396F;
+  --orange: #E75B5C; --red: #C83532;
+  --green: #367B79;  --green2: #459B99;
+  --ivory: #FDF3F2;
+  --coral-text: #C44546;
+}
+.title { font-size: 30px; color: var(--dark-blue); }
 
-:::::: columns
-::: {.column width="68%"}
-- **Email:** [wakim\@ohsu.edu](mailto:wakim@ohsu.edu)
+/* Main headers: block of color */
+.sec-blue  { --sec: var(--dark-blue); }
+.sec-green { --sec: var(--green); }
+section.level2 > h2 {
+  background-color: var(--sec, var(--dark-blue));
+  color: white;
+  padding: 0.45em 0.8em;
+  border-radius: 10px;
+  border-bottom: none;
+  margin-top: 2rem;
+}
+section.level3 > h3 {
+  color: var(--dark-blue);
+  border-left: 6px solid var(--blue);
+  padding-left: 0.5em;
+}
+.icon { color: var(--dark-blue); }
 
-- **Office:** VPT 622A
+/* Profile card */
+.profile {
+  border-radius: 16px;
+  padding: 1.5rem;
+  align-items: center;
+}
+.profile img { border-radius: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+.profile strong { color: var(--dark-blue); }
+.profile em { color: #495057; }
+
+/* Professor statement */
+.statement {
+  border-left: 6px solid var(--green2);
+  background-color: #EEF6F6;
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+.statement strong { color: var(--green); }
+
+/* Office hours card */
+.oh-card {
+  background-color: white;
+  border: 1px solid #E9E4E2;
+  border-top: 6px solid var(--orange);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 0.25rem 1.25rem;
+  max-width: 520px;
+}
+.oh-card .icon { color: var(--orange); }
+
+/* Out-of-town note */
+.heads-up {
+  border: 2px solid var(--orange);
+  background-color: #FDECEC;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0;
+  max-width: 520px;
+}
+.heads-up p { margin: 0; }
+.heads-up strong { color: var(--coral-text); }
+
+/* Scope of practice table */
+.scope table { border-collapse: separate; border-spacing: 0; }
+.scope table thead th { color: white; border-bottom: none; padding: 0.6em 0.8em; }
+.scope table thead th:nth-child(1) { background-color: var(--green); border-radius: 10px 0 0 0; }
+.scope table thead th:nth-child(2) { background-color: var(--orange); border-radius: 0 10px 0 0; }
+.scope table tbody tr:nth-child(even) { background-color: var(--ivory); }
+.scope table td { padding: 0.5em 0.8em; }
+.scope table td:nth-child(1)::before { content: "\2713\00a0"; color: var(--green); font-weight: 700; }
+.scope table td:nth-child(2)::before { content: "\2715\00a0"; color: var(--orange); font-weight: 700; }
+</style>
+```
+
+## Instructor: Nicole (Nicky) Wakim, PhD {.sec-blue}
+
+::: {.grid .profile}
+::: {.g-col-12 .g-col-md-8}
+**Email:** [wakim\@ohsu.edu](mailto:wakim@ohsu.edu)
+
+**Office:** VPT 622A
 
 **Pronouns:** she/her/hers
 
@@ -22,14 +110,12 @@ or any combination of the prior.*
 **Best method to contact:** Office hours or Slack for most things or E-mail for private communication.
 :::
 
-::: {.column width="2%"}
+::: {.g-col-12 .g-col-md-4}
+![](images/N_Wakim.jpg){fig-align="center" width="256"}
+:::
 :::
 
-::: {.column width="30%"}
-![](images/N_Wakim.jpg){fig-align="right" width="256"}
-:::
-::::::
-
+::: statement
 **Brief professor statement:** As a professor, my main goal is to
 instill a growth mindset into my students. Growth mindset means we are
 NOT stuck in our abilities or knowledge, and that we all can and will
@@ -37,33 +123,27 @@ grow! This course aims to be as transparent as possible. I want you to
 understand my motivation for assessments, questions, and lessons. I also
 want those assessments to be clear, so please ask for clarification
 whenever needed.
+:::
 
 ### Office Hours
 
-Running from 7/23-8/31
+**[Nicky's Webex](https://ohsu.webex.com/meet/wakim)**
 
-::: columns
-::: {.column width="30%"}
-[Nicky's Webex](https://ohsu.webex.com/meet/wakim)
-:::
-::: {.column width="70%"}
-[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} TBD
+[{{< iconify icon-park-solid time size=24px >}}]{.icon} TBD
 
+[{{< iconify icon-park-solid time size=24px >}}]{.icon} TBD
 
-[{{< iconify icon-park-solid time size=24px >}}]{style="color:#C83532;"} TBD
-:::
-:::
-
-::: callout-warning
+::: heads-up
 **I am out of town from October 10 to October 18**
 :::
 
-## My scope of practice
+## My scope of practice {.sec-green}
 
 If you are interested in what I consider my Scope of Practice, here is
 an adapted table from Dr. Costa's [An Educator’s Scope of
 Practice](http://dx.doi.org/10.1007/978-3-030-92705-9_15):
 
+::: scope
 | What I do | What I do not do |
 |------------------------------------|------------------------------------|
 | Create positive learning conditions for all learners | Police my students’ attention |
@@ -77,3 +157,4 @@ Practice](http://dx.doi.org/10.1007/978-3-030-92705-9_15):
 | Recognize and respond to impact of trauma on learning | Rigidity or over-reliance on what worked for me (or others in past) as a learner |
 | Refer you to resources in school, city, local government | Ignore your concerns nor tell you it's “not my problem” |
 | Scaffold work in the course to gradually build knowledge | Eliminate all struggle while learning |
+:::

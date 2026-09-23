@@ -29,9 +29,10 @@ $dark-blue:   #3070BF !default;
 $pink:        #EF85B3 !default;
 $pink2:       #BF396F !default;
 $orange:      #E75B5C !default;
+$orange2:     #C44546 !default;   // darker coral, readable as text on white
 $red:         #C83532 !default;
-$purple:      #8043F3 !default;
-$purple2:     #9F71F7 !default;
+$purple:      #6A4C9C !default;   // softer violet (was #8043F3)
+$purple2:     #9F87C9 !default;   // was #9F71F7
 $slate-grey:  #6C757D !default;
 $green:       #367B79 !default;
 $green2:      #459B99 !default;
@@ -387,4 +388,3 @@ input,
 }
 
 // My added divs
-

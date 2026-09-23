@@ -16,14 +16,13 @@ editor_options:
 :root {
   --blue: #5BAFF8;   --dark-blue: #3070BF;
   --pink: #EF85B3;   --pink2: #BF396F;
-  --orange:  #C44546; --red: #C83532;
+  --orange: #E75B5C; --red: #C83532;
   --purple: #8043F3; --purple2: #9F71F7;
   --slate-grey: #6C757D;
   --green: #367B79;  --green2: #459B99;
   --ivory: #FDF3F2;
   --sec: var(--dark-blue);       /* section color (set per section below) */
   --sec-light: var(--blue);
-  --sec-text: var(--sec);        /* color for sub-headers and bold text */
 }
 
 .title{
@@ -39,8 +38,6 @@ editor_options:
 .sec-purple { --sec: var(--purple);    --sec-light: var(--purple2); }
 .sec-pink   { --sec: var(--pink2);     --sec-light: var(--pink); }
 .sec-red    { --sec: var(--red);       --sec-light: var(--orange); }
-.sec-coral  { --sec: var(--orange);    --sec-light: #F29B9B; --sec-text: #C44546; } /* darker coral for text so it's readable */
-.sec-blue, .sec-green, .sec-purple, .sec-pink, .sec-red { --sec-text: var(--sec); }
 
 /* Main headers: block of color */
 section.level2 > h2 {
@@ -53,18 +50,24 @@ section.level2 > h2 {
 }
 /* Sub-headers: colored text with an accent bar */
 section.level3 > h3 {
-  color: var(--sec-text);
+  color: var(--sec);
   border-left: 6px solid var(--sec-light);
   padding-left: 0.5em;
   margin-top: 1.75rem;
 }
 section.level4 > h4 {
-  color: var(--sec-text);
+  color: var(--sec);
   margin-top: 1.25rem;
 }
 
 /* Bold text picks up the section color */
-main p strong, main li strong { color: var(--sec-text); }
+main p strong, main li strong { color: var(--sec); }
+
+/* Highlighter for the most important lines: [text]{.hl} */
+.hl {
+  background: linear-gradient(transparent 45%, rgba(239, 133, 179, 0.35) 45%);
+  padding: 0 2px;
+}
 
 /* Friendly opening paragraph */
 .lead { font-size: 1.15em; }
@@ -153,8 +156,9 @@ Key Course Info
 
 ## Description {.sec-blue}
 
-Welcome to PUBH 523/623! This course introduces programming in R for public health, medicine, and related fields. We'll focus on reproducible workflows, data manipulation, visualization, and reporting: working in project-based folders, transforming and summarizing data, making plots, generating dynamic reports, and building summary tables. **No prior statistics or coding experience is expected.** By the end, you'll be comfortable starting a data exploration project in R and ready to use these skills in future analysis courses.
-
+::: lead
+Welcome to PUBH 523/623! This course introduces programming in R for public health, medicine, and related fields. We'll focus on reproducible workflows, data manipulation, visualization, and reporting: working in project-based folders, transforming and summarizing data, making plots, generating dynamic reports, and building summary tables. [**No prior statistics or coding experience is expected.**]{.hl} By the end, you'll be comfortable starting a data exploration project in R and ready to use these skills in future analysis courses.
+:::
 
 ### Course Learning Objectives
 
@@ -169,7 +173,7 @@ By the end of this course, you should be able to...
 
 This class is **asynchronous**, so there are no set class times, but we'll have recurring office hours. Office hours and contact info are on the [instructor page](instructors.qmd).
 
-## Materials {.sec-coral}
+## Materials {.sec-purple}
 
 ### Textbooks
 
@@ -181,7 +185,7 @@ You don't need to read along with each lesson. These are here for when you want 
 
 ### R and RStudio
 
-We'll use R and RStudio (both free). **Please install them before our second lesson**, and email me if you get stuck. Here's some [helpful installation documentation](https://rstudio-education.github.io/hopr/starting.html).
+We'll use R and RStudio (both free). [**Please install them before our second lesson**]{.hl}, and email me if you get stuck. Here's some [helpful installation documentation](https://rstudio-education.github.io/hopr/starting.html).
 
 1.  R: <https://www.r-project.org/>
 2.  RStudio: <https://posit.co/download/rstudio-desktop/>
@@ -226,7 +230,7 @@ Points are posted to the Brightspace Gradebook ("Grades" in the left navigation)
 
 #### Practice (40%)
 
-Everyone has a different amount of time for coursework, and practice is for *learning*, so grading is simple: **you get a check if you complete at least 75% of the question parts, whether your answers are right or wrong.** Each of the 9 practice assignments counts equally.
+Everyone has a different amount of time for coursework, and practice is for *learning*, so grading is simple: [**you get a check if you complete at least 75% of the question parts, whether your answers are right or wrong.**]{.hl} Each of the 9 practice assignments counts equally.
 
 - **On time:** you get the check *and* feedback on one or more problems.
 - **Late:** no grade penalty. You still get the check if submitted before the course ends, just no feedback (unless you email me to ask). Compare your work to the solutions or bring it to office hours.
@@ -235,7 +239,7 @@ Practice is the most helpful work in this class, so I encourage you to keep up w
 
 #### Office hours visit (2%)
 
-**Come to office hours at least once during the quarter** for full credit. You don't need a question! Stopping by to say hi, working quietly on practice, or listening to others' questions all count. If none of the office hour times work for you, email me and we'll find another time to meet.
+[**Come to office hours at least once during the quarter** for full credit.]{.hl} You don't need a question! Stopping by to say hi, working quietly on practice, or listening to others' questions all count. If none of the office hour times work for you, email me and we'll find another time to meet.
 
 #### Project Labs (40%)
 
@@ -254,9 +258,9 @@ The poster (an information sheet) is your chance to bring together what you buil
 I encourage you to submit work on time, but I know life happens. Here are some [examples of extenuating circumstances](https://myuni.swansea.ac.uk/academic-life/extenuating-circumstances/) (not a complete list, so please reach out with questions).
 
 - **Practice:** submit any time before the course ends for full credit. For feedback, submit on time or email me.
-- **Labs:** you get **ONE no-questions-asked, 3-day extension**. Just email me: "I am using my no-questions-asked extension for Lab \_\_." After that, email me to explain and ask for an extension; **otherwise, 1 point is deducted per day late.**
+- **Labs:** you get [**ONE no-questions-asked, 3-day extension**]{.hl}. Just email me: "I am using my no-questions-asked extension for Lab \_\_." After that, email me to explain and ask for an extension; **otherwise, 1 point is deducted per day late.**
 - **Final poster:** email me to explain your circumstances. You may ask for an extension, but I won't necessarily grant one.
-- **All coursework must be completed by `{r} last_day %>% format("%B %d, %Y")`.** If extenuating circumstances mean you need more time, or may affect your work for several weeks, contact me and we'll make a plan together (including any registrar logistics).
+- [**All coursework must be completed by `{r} last_day %>% format("%B %d, %Y")`.**]{.hl} If extenuating circumstances mean you need more time, or may affect your work for several weeks, contact me and we'll make a plan together (including any registrar logistics).
 
 ::::: pink
 ::: pink-ttl
@@ -270,20 +274,20 @@ Whether it involves yourself, family, a pet, a friend, or anyone/anything import
 
 ### Regrade Policy
 
-If you think something was graded incorrectly, first compare your answer to the solutions. If you still think a regrade is warranted, email me the question and a short explanation **within one week** of the assignment being returned.
+If you think something was graded incorrectly, first compare your answer to the solutions. If you still think a regrade is warranted, email me the question and a short explanation [**within one week**]{.hl} of the assignment being returned.
 
 ### Generative AI Policy
 
 *This policy is adapted from the OHSU-PSU SPH Biostatistics program's AI policy, which classifies PUBH 523/623 as a **foundational** course. Everything you need for this class is below.*
 
-**Using AI is *not* required in this class.** If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them *responsibly*, not avoid them.
+[**Using AI is *not* required in this class.**]{.hl} If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them *responsibly*, not avoid them.
 
-::::: green
-::: green-ttl
+::::: purple
+::: purple-ttl
 The toolbox analogy
 :::
 
-::: green-cont
+::: purple-cont
 Think of this class as assembling a toolbox. A new handyperson might need help finding their tools or remembering which one does what, but eventually using them becomes second nature.
 
 **For now, generative AI can help us find and use our tools, but we're working toward using them as second nature!**
@@ -367,7 +371,7 @@ First-time, good-faith mistakes (like forgetting an AI Use Statement) will gener
 
 As a PSU/OHSU student, you're expected to act with professionalism and integrity. Academic misconduct (plagiarism, cheating, fabricating data, falsifying records, or helping others do so) will be taken seriously. Your submitted work should reflect your own effort, and any resources you use should be cited.
 
-## How to Succeed in This Course {.sec-coral}
+## How to Succeed in This Course {.sec-purple}
 
 Every instructor uses resources and assignments a little differently, so here's how to get the most out of each in *this class*.
 
@@ -413,7 +417,7 @@ Want another part of the course explained like this? Let me know through the [On
 
 - **Brightspace announcements:** for important or urgent updates, sent to your OHSU email. I'll copy non-sensitive ones to Slack.
 - **Slack:** for questions and general discussion.
-- **Email:** for private matters. Please use my OHSU address (wakim\@ohsu.edu). **Messages sent through Brightspace Inbox will not be answered.**
+- **Email:** for private matters. Please use my OHSU address (wakim\@ohsu.edu). [**Messages sent through Brightspace Inbox will not be answered.**]{.hl}
 
 ## Course Feedback {.sec-green}
 
@@ -430,7 +434,7 @@ You can share anonymous feedback anytime through this [Microsoft Form](https://f
 
 At the end of the course, you'll be asked to complete a formal evaluation. **Your feedback is critical for improving this course and matters for my career advancement.** Since our class is on the smaller side, everyone's participation is needed for the feedback to be released. Thank you!
 
-## Schedule {.sec-coral}
+## Schedule {.sec-purple}
 
 See the [Schedule page](/schedule.qmd). I may adjust it if we need more or less time on a topic.
 
