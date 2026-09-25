@@ -23,7 +23,22 @@ pacman::p_load(
   here
 )
 
+# Base URL of the course site (used to build links to each lesson's slides)
+site_url <- "https://nwakim.github.io/PUBH_523_26Su"
+
+# Look up each lesson's slides from the lessons folder (e.g., "04_Basics_operators"),
+# so links stay correct if lessons are renumbered again
+lesson_links <- tibble(folder = basename(list.dirs(here("lessons"), recursive = FALSE))) |>
+  filter(str_detect(folder, "^\\d+_")) |>
+  mutate(
+    Lesson_Introduced = as.numeric(str_extract(folder, "^\\d+")),
+    Slides_URL = paste0(site_url, "/lessons/", folder, "/",
+                        str_remove(folder, "^\\d+_"), ".html")
+  ) |>
+  select(Lesson_Introduced, Slides_URL)
+
 functions_df <- read_csv(here("resources", "r_functions.csv"), show_col_types = FALSE) |>
+  left_join(lesson_links, by = "Lesson_Introduced") |>
   mutate(
     R_Documentation = if_else(
       !is.na(R_Documentation) & R_Documentation != "",
@@ -44,7 +59,8 @@ functions_df <- read_csv(here("resources", "r_functions.csv"), show_col_types = 
     `Lesson Introduced` = Lesson_Topic,
     Documentation = R_Documentation,
     `Additional Help` = Additional_Help,
-    `Appears in Lessons` = Appears_In_Lessons
+    `Appears in Lessons` = Appears_In_Lessons,
+    Slides_URL                     # hidden; used to link the lesson number
   )
 ```
 
@@ -52,7 +68,7 @@ functions_df <- read_csv(here("resources", "r_functions.csv"), show_col_types = 
 ## Notes on this table
 
 - Click a column header to **sort**, and use the search boxes under each header to **filter** by a column. The global search box (top right) searches across **all columns** at once.
-- **Lesson #** / **Lesson Introduced** reflect the first lesson (per the course [schedule](https://nwakim.github.io/PUBH_523_26Su/schedule.html)) where the function is used in a code chunk or explicitly named in the slides.
+- **Lesson #** / **Lesson Introduced** reflect the first lesson (per the course [schedule](https://nwakim.github.io/PUBH_523_26Su/schedule.html)) where the function is used in a code chunk or explicitly named in the slides. Click the **Lesson #** to open that lesson's slides.
 - **Appears in Lessons** lists every lesson number where the function shows up again.
 :::
 
@@ -73,7 +89,18 @@ datatable(
     buttons = c("copy", "csv", "excel"),
     columnDefs = list(
       list(width = "110px", targets = 0),
-      list(width = "90px",  targets = c(2, 4, 5))
+      list(width = "90px",  targets = c(2, 4, 5)),
+      # Show the lesson number as a link to its slides, but keep it a number
+      # underneath so sorting and the filter slider still work
+      list(targets = 2, render = JS(
+        "function(data, type, row) {",
+        "  if (type === 'display' && row[7]) {",
+        "    return '<a href=\"' + row[7] + '\" target=\"_blank\">' + data + '</a>';",
+        "  }",
+        "  return data;",
+        "}"
+      )),
+      list(targets = 7, visible = FALSE, searchable = FALSE)
     )
   ),
   class = "display compact stripe hover"

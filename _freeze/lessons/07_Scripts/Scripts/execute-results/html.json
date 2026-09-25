@@ -1,0 +1,15 @@
+{
+  "hash": "37dde961c9e0e06691325e13b2397894",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"R Scripts\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: R Scripts\n    html-math-method: mathjax\n    highlight-style: arrow\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n## What is an R script?\n\n::: columns\n::: {.column width=\"45%\"}\n::: pink\n::: pink-ttl\nR script\n:::\n::: pink-cont\nAn **R script** is a document that can hold your code, comments, and outputs\n:::\n:::\n\n- Unlike the console, we can **save our work in an R script** and **come back to it later**\n- Think of this like a very basic Word or Google document file\n:::\n::: {.column width=\"55%\"}\n![](../img_slides/script.png)\n:::\n:::\n\n## How to create an R script?\n\n::: columns\n::: {.column width=\"48%\"}\nCreate a new R script by going to `File` > `New File` > `R Script`\n\n{{< video ../img_slides/new_R_script_file.mov >}}\n\n:::\n:::{.column width=\"4%\"}\n:::\n::: {.column width=\"48%\"}\nCreate a new R script by clicking `New File` icon in the toolbar and selecting `R Script`\n\n{{< video ../img_slides/new_R_script_icon.mov >}}\n:::\n:::\n\n\n## How to run code in an R script?\n\n::: columns\n::: {.column width=\"25%\"}\n1. Highlighting the code and clicking the `Run` button in the toolbar\n2. Highlighting the code and `Ctrl + Enter` (Windows) or `Cmd + Enter` (Mac)\n3. Placing the cursor on the line of code and clicking the `Run` button in the toolbar\n4. Placing the cursor on the line of code and `Ctrl + Enter` (Windows) or `Cmd + Enter` (Mac)\n:::\n::: {.column width=\"2%\"}\n:::\n::: {.column width=\"73%\"}\n{{< video ../img_slides/running_code.mov width=\"1450\" >}}\n:::\n:::\n\n## Saving an R script\n\n::: columns\n::: {.column width=\"25%\"}\n1. Go to `File` > `Save` or `Save As`\n2. Click the `Save` icon in the toolbar\n3. Click the `Save` icon in the Editor\n:::\n::: {.column width=\"2%\"}\n:::\n::: {.column width=\"73%\"}\n{{< video ../img_slides/saving_R_script.mov width=\"1450\" >}}\n:::\n:::\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

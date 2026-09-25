@@ -108,14 +108,7 @@ section.level3 > h3 {
 or any combination of the prior.*
 
 **Best method to contact:** Office hours or Slack for most things or E-mail for private communication.
-:::
 
-::: {.g-col-12 .g-col-md-4}
-![](images/N_Wakim.jpg){fig-align="center" width="256"}
-:::
-:::
-
-::: statement
 **Brief professor statement:** As a professor, my main goal is to
 instill a growth mindset into my students. Growth mindset means we are
 NOT stuck in our abilities or knowledge, and that we all can and will
@@ -125,7 +118,16 @@ want those assessments to be clear, so please ask for clarification
 whenever needed.
 :::
 
+::: {.g-col-12 .g-col-md-4}
+![](images/N_Wakim.jpg){fig-align="center" width="256"}
+:::
+:::
+
 ### Office Hours
+
+::: heads-up
+**I am out of town from October 12 to October 18**
+:::
 
 **[Nicky's Webex](https://ohsu.webex.com/meet/wakim)**
 
@@ -133,9 +135,6 @@ whenever needed.
 
 [{{< iconify icon-park-solid time size=24px >}}]{.icon} TBD
 
-::: heads-up
-**I am out of town from October 10 to October 18**
-:::
 
 ## My scope of practice {.sec-green}
 

@@ -25,14 +25,14 @@ editor_options:
   --sec-light: var(--blue);
   --sec-text: var(--sec);        /* color for sub-headers and bold text */
 }
-
+ 
 .title{
   font-size: 30px;
   color: var(--dark-blue);
   background-color: #fff;
   padding: 0px;
 }
-
+ 
 /* ---- Section colors: add {.sec-___} after a ## header ---- */
 .sec-blue   { --sec: var(--dark-blue); --sec-light: var(--blue); }
 .sec-green  { --sec: var(--green);     --sec-light: var(--green2); }
@@ -41,7 +41,7 @@ editor_options:
 .sec-red    { --sec: var(--red);       --sec-light: var(--orange); }
 .sec-coral  { --sec: var(--orange);    --sec-light: #F29B9B; --sec-text: #C44546; } /* darker coral for text so it's readable */
 .sec-blue, .sec-green, .sec-purple, .sec-pink, .sec-red { --sec-text: var(--sec); }
-
+ 
 /* Main headers: block of color */
 section.level2 > h2 {
   background-color: var(--sec);
@@ -51,24 +51,22 @@ section.level2 > h2 {
   border-bottom: none;
   margin-top: 2.5rem;
 }
-/* Sub-headers: colored text with an accent bar */
+/* Sub-headers: colored text */
 section.level3 > h3 {
   color: var(--sec-text);
-  border-left: 6px solid var(--sec-light);
-  padding-left: 0.5em;
   margin-top: 1.75rem;
 }
 section.level4 > h4 {
   color: var(--sec-text);
   margin-top: 1.25rem;
 }
-
+ 
 /* Bold text picks up the section color */
 main p strong, main li strong { color: var(--sec-text); }
-
+ 
 /* Friendly opening paragraph */
 .lead { font-size: 1.15em; }
-
+ 
 /* Tables */
 main table thead th {
   background-color: var(--sec);
@@ -76,7 +74,7 @@ main table thead th {
   border-bottom: none;
 }
 main table tbody tr:nth-child(even) { background-color: var(--ivory); }
-
+ 
 /* Yes / No pills in the AI table: [Yes]{.yes} [No]{.no} */
 .yes, .no {
   display: inline-block;
@@ -89,7 +87,7 @@ main table tbody tr:nth-child(even) { background-color: var(--ivory); }
 }
 .yes { background-color: var(--green); }
 .no  { background-color: var(--red); }
-
+ 
 /* Block quotes (e.g., AI Use Statement example) */
 main blockquote {
   background-color: var(--ivory);
@@ -98,14 +96,14 @@ main blockquote {
   border-radius: 0 10px 10px 0;
   color: black;
 }
-
+ 
 /* ---- Colored boxes: ::::: blue / ::: blue-ttl / ::: blue-cont ---- */
 .blue   { --box: var(--blue); }
 .pink   { --box: var(--pink2); }
 .green  { --box: var(--green); }
 .red    { --box: var(--red); }
 .purple { --box: var(--purple); }
-
+ 
 .blue, .pink, .green, .red, .purple {
   margin: 1em 0;
   border: 3px solid var(--box);
@@ -155,7 +153,6 @@ Key Course Info
 
 Welcome to PUBH 523/623! This course introduces programming in R for public health, medicine, and related fields. We'll focus on reproducible workflows, data manipulation, visualization, and reporting: working in project-based folders, transforming and summarizing data, making plots, generating dynamic reports, and building summary tables. **No prior statistics or coding experience is expected.** By the end, you'll be comfortable starting a data exploration project in R and ready to use these skills in future analysis courses.
 
-
 ### Course Learning Objectives
 
 By the end of this course, you should be able to...
@@ -189,14 +186,14 @@ We'll use R and RStudio (both free). **Please install them before our second les
 ### Where things live
 
 - **This website:** all course materials (lessons, practice, data, recordings).
-- **[Brightspace](https://ohsu.brightspace.com/):** where you submit assignments ("Assignments" tab) and see your grades ("Grades").
+- [**Brightspace**](https://ohsu.brightspace.com/)**:** where you submit assignments ("Assignments" tab) and see your grades ("Grades").
 - **Slack:** our main way to communicate! Post questions about practice, labs, or anything else. [**Here's the invitation link to our Slack workspace!**](https://join.slack.com/t/pubh523623/shared_invite/zt-4av0be2fm-vl10vcXPLgRKqUYqvSRqQQ) Slack is not behind the OHSU firewall, so for accommodations or sensitive topics you may prefer email. You're welcome to message me about sensitive things on Slack, but I won't start those conversations there.
 - **Webex/Zoom:** for virtual office hours. Please stay muted until you want to talk, drop your question (or "I have a question") in the chat so we can go in order, and turn your video on if you're comfortable, since it helps me get to know you and how you learn.
 
 ## Course Structure {.sec-pink}
 
 | **Component** | **Frequency** | **Description** |
-|:--------------|:--------------|:----------------------------|
+|:------------------|:------------------|:----------------------------------|
 | Video lessons | Weekly | Pre-recorded lessons with explanations, interactive examples, and demos. |
 | Practice | Weekly | 9 assignments to practice coding and engage with key concepts. Working in groups is encouraged, but everyone submits their own work. |
 | Project (Labs + Poster) | 4 labs, 1 final poster | Labs guide you step-by-step through the coding for a data project, which comes together in a final poster (information sheet) at the end of the quarter. |
@@ -212,13 +209,14 @@ This class uses two types of assessments:
 - **Summative:** work meant to show *how well you've met the learning objectives* and can use your skills outside the classroom.
 
 | **Course activity** | **Type** | **Due** | **PUBH 523** | **PUBH 623** |
-|:--------------|:--------------|:--------------|:--------------:|:--------------:|
+|:--------------|:--------------|:--------------|:-------------:|:-------------:|
 | Practice | Formative | Every 1-2 weeks | 40% | 40% |
 | Office hours visit | — | Once during the quarter | 2% | 2% |
+| Slack post | — | Once during the quarter | 1% | 1% |
 | Project Labs | Formative/Summative | Every 2-3 weeks | 40% | 40% |
-| Project Poster | Summative | `r proj %>% format("%m/%d")` | 18% | 18% |
+| Project Poster | Summative | `r proj %>% format("%m/%d")` | 17% | 17% |
 
-Letter grades: A (≥93%), A- (90-92%), B+ (88-89%), B (83-87%), B- (80-82%), C+ (78-79%), C (73-77%), C- (70-72%), D (60-69%), F (<60%).
+Letter grades: A (≥93%), A- (90-92%), B+ (88-89%), B (83-87%), B- (80-82%), C+ (78-79%), C (73-77%), C- (70-72%), D (60-69%), F (\<60%).
 
 Points are posted to the Brightspace Gradebook ("Grades" in the left navigation).
 
@@ -236,6 +234,10 @@ Practice is the most helpful work in this class, so I encourage you to keep up w
 #### Office hours visit (2%)
 
 **Come to office hours at least once during the quarter** for full credit. You don't need a question! Stopping by to say hi, working quietly on practice, or listening to others' questions all count. If none of the office hour times work for you, email me and we'll find another time to meet.
+
+#### Slack post (1%)
+
+Post in our Slack page at least once during the quarter for full credit. You may respond to someone else's question or ask for help. As long as you show some engagement within the Slack page!
 
 #### Project Labs (40%)
 
@@ -272,9 +274,9 @@ Whether it involves yourself, family, a pet, a friend, or anyone/anything import
 
 If you think something was graded incorrectly, first compare your answer to the solutions. If you still think a regrade is warranted, email me the question and a short explanation **within one week** of the assignment being returned.
 
-### Generative AI Policy
+### Generative AI Policy {#generative-ai-policy}
 
-*This policy is adapted from the OHSU-PSU SPH Biostatistics program's AI policy, which classifies PUBH 523/623 as a **foundational** course. Everything you need for this class is below.*
+*This policy is adapted from the [OHSU-PSU SPH Biostatistics program's AI policy](https://ohsuitg-my.sharepoint.com/:b:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/BSTA_550_26F/student-files_BSTA-550-26F/admin/Biostatistics_program_AI_policy_2026-09-25.pdf?d=w90a821e0cf1649d9bab24fa5c51a4150&csf=1&web=1&e=d7UcfA), which classifies PUBH 523/623 as a **foundational** course. Everything you need for this class is below.*
 
 **Using AI is *not* required in this class.** If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them *responsibly*, not avoid them.
 
@@ -300,8 +302,8 @@ Think of this class as assembling a toolbox. A new handyperson might need help f
 #### What's allowed
 
 | **Can I use AI to...** | **Practice** | **Labs & Poster** |
-|:---------------------------------------------|:------------:|:------------:|
-| ***Coding*** | | |
+|:----------------------------------------|:--------------:|:--------------:|
+| ***Coding*** |  |  |
 | Explain an error message | [Yes]{.yes} | [Yes]{.yes} |
 | Explain what a function does | [Yes]{.yes} | [Yes]{.yes} |
 | Help debug my code | [Yes]{.yes} | [Yes]{.yes} |
@@ -311,11 +313,11 @@ Think of this class as assembling a toolbox. A new handyperson might need help f
 | Draft code for repetitive data management (e.g., categorizing a numeric variable) | [No]{.no} | [Yes]{.yes} |
 | Draft code for a whole analysis or explore approaches beyond what we've learned | [No]{.no} | [No]{.no} |
 | Take an assignment question and write the code for me | [No]{.no} | [No]{.no} |
-| ***Data and statistics*** | | |
+| ***Data and statistics*** |  |  |
 | Explain a concept or method in general terms | [Yes]{.yes} | [Yes]{.yes} |
 | Check reasoning I've already written about which summary or plot to use | [Yes]{.yes} | [Yes]{.yes} |
 | Pick the summary/plot for me or interpret my output for me | [No]{.no} | [No]{.no} |
-| ***Writing*** | | |
+| ***Writing*** |  |  |
 | Give grammar or clarity feedback on my own draft | [Yes]{.yes} | [Yes]{.yes} |
 | Brainstorm structure or an outline | [Yes]{.yes} | [Yes]{.yes} |
 | Critique an interpretation I wrote myself | [Yes]{.yes} | [Yes]{.yes} |
@@ -334,7 +336,7 @@ Never allowed
 - Copying and pasting AI-generated answers into your assignment
 - Pasting all or part of an assignment into AI and asking for the solution
 - Presenting AI output as your own reasoning
-- Uploading confidential or restricted data (including any data with protected health information) into an AI tool, unless it's a university-approved platform under a data use agreement
+- **Uploading confidential or restricted data (including any data with protected health information) into an AI tool, unless it's a university-approved platform under a data use agreement**
 - Using AI-generated datasets or output as if they came from the assigned data and methods
 - Using AI-generated references, results, or facts without verifying them yourself
 - Submitting AI-assisted work without an AI Use Statement
@@ -374,7 +376,7 @@ Every instructor uses resources and assignments a little differently, so here's 
 ### Resources
 
 | **Resource** | **How to use it** |
-|:-------------|:---------------------------|
+|:-----------------------|:----------------------------------------------|
 | Lesson videos | Watch all of them, following the schedule. Follow the slides, take notes on details mentioned out loud, and work through examples with me. |
 | Office hours | Ask questions about assignments or lessons, work on your assignments with help nearby, or meet classmates to collaborate with. |
 | Slack | Ask questions anytime. Chances are a classmate has the same question! |
@@ -384,7 +386,7 @@ Every instructor uses resources and assignments a little differently, so here's 
 ### Assignments
 
 | **Assignment** | **Before you submit** | **After it's graded** |
-|:--------------|:-------------------|:-------------------|
+|:-------------------|:-------------------------|:-------------------------|
 | Practice | • Try each problem on your own first<br>• Talk it through with a peer<br>• Ask on Slack or come to office hours<br>• Show your thought process<br>• Search Stack Overflow for errors | • Review the solutions and your mistakes<br>• For written answers, check with me or a TA if yours fits<br>• Bring questions to office hours |
 | Labs and Poster | • Start early!<br>• Check your coding with classmates<br>• Bring specific R questions to office hours<br>• For the poster, pull together your lab work and decide what matters most | • Use lab feedback in future labs and your poster<br>• Email me with grade questions<br>• Keep your poster and add it to your resume! |
 
@@ -436,7 +438,7 @@ See the [Schedule page](/schedule.qmd). I may adjust it if we need more or less 
 
 ## Student Resources {.sec-pink}
 
-### Student Wellness
+### Student Wellness {#student-wellness}
 
 I care about your physical and emotional well-being. If a health issue is affecting your work, or you'd like help connecting with resources, please reach out.
 

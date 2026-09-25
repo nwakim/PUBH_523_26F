@@ -21,14 +21,14 @@ execute:
 
 ## Important note
 
-- I will NOT be in the country from 7/2-7/22
-- I will be present on our Slack from 7/13-7/17, but otherwise I am on vacation
-  - I can potentially take meetings during 7/13-7/17, but I'm in a flipped time zone eek!
-- I've asked my colleagues, Meike and Jessica, to manage our Slack page while I'm gone
+- I will out of town from 10/12 - 10/16
+  - 10/12-10/14: half capacity for work
+  - 10/15-10/16: completely off
 
 ## Some good things to know for this class!
 
 - Copying code: the copy option on all code!
+
 ```{r}
 #| eval: false
 I can hit the copy button and paste it!
@@ -64,11 +64,12 @@ I can hit the copy button and paste it!
 
 ## Some important tasks
 
-- [Join the Slack page!](https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg)
+- [Join the Slack page!](https://join.slack.com/t/pubh523623/shared_invite/zt-4av0be2fm-vl10vcXPLgRKqUYqvSRqQQ)
 
-- Star the class website: <https://nwakim.github.io/PUBH_523_26Su/> 
+- Star the class website: <https://nwakim.github.io/PUBH_523_26Su/>
 
-- Complete the [When2meet](https://www.when2meet.com/?37173220-5IzYW) for office hours
+- Complete the [When2meet](https://www.when2meet.com/?38860118-eEVFE) for office hours
+
   - You don't need to put your name, just a unique identifier
 
 - Complete Practice 1 due this week (Sunday at 11pm)
@@ -96,9 +97,9 @@ I can hit the copy button and paste it!
 - Weeks, class info, due dates
 
 |  |  |  |
-|---------------------------|-----------------|----------------------------|
+|---------------------------|------------------|----------------------------|
 |  | Theme | Each lesson fits into a different theme for the class |
-| [[{{< iconify mdi video size=90px >}}](mothing)]{style="color:#f8f5f0;"} | Lesson video | I record our classes. This will be a link to the OneDrive folder containing this recording. |
+| [[{{< iconify mdi video size=90px >}}](mothing)]{style="color:#f8f5f0;"} | Lesson video | I record our classes. This will be a link to the Loom page containing this recording. |
 | [[{{< iconify ri slideshow-fill size=80px >}}](lessons/17_Negative_binomial_rv/17_Negative_binomial_rv.qmd)]{style="color:#f8f5f0;"} | Slides | These are the basic slides that will open in your browser. |
 |  | Textbooks | There are two textbooks that will be helpful. They are not necessary, but it might be nice to learn from a different voice. |
 |  | Due dates | At the end of each week, there are highlighted assignments with their due dates |
@@ -108,7 +109,7 @@ I can hit the copy button and paste it!
 - Search
 - Homework
 - Project
-- Resources
+- Resources!
 
 ## More tips!
 

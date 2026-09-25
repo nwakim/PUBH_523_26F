@@ -6,9 +6,9 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/quarto-contrib/iconify-1.0.0-beta.2/iconify-icon.min.js"></script><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Nicky Wakim">
   <title>Introduction to R – Course logistics</title>
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +102,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9e4ab3f3e19523e32f7555d916d8bf17.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9e6b66dd654051dec486914fbb48eb8b.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -204,7 +207,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Nicky Wakim 
+Nicky Wakim
 </div>
 </div>
 </div>
@@ -213,12 +216,11 @@ Nicky Wakim
 <section id="important-note" class="slide level2">
 <h2>Important note</h2>
 <ul>
-<li>I will NOT be in the country from 7/2-7/22</li>
-<li>I will be present on our Slack from 7/13-7/17, but otherwise I am on vacation
+<li>I will out of town from 10/12 - 10/16
 <ul>
-<li>I can potentially take meetings during 7/13-7/17, but I’m in a flipped time zone eek!</li>
+<li>10/12-10/14: half capacity for work</li>
+<li>10/15-10/16: completely off</li>
 </ul></li>
-<li>I’ve asked my colleagues, Meike and Jessica, to manage our Slack page while I’m gone</li>
 </ul>
 </section>
 <section id="some-good-things-to-know-for-this-class" class="slide level2">
@@ -227,7 +229,7 @@ Nicky Wakim
 <li>Copying code: the copy option on all code!</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>I can hit the copy button and paste it<span class="sc">!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>I can hit the copy button and paste it<span class="sc">!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>&nbsp;</p>
 <ul>
@@ -275,9 +277,9 @@ Nicky Wakim
 <section id="some-important-tasks" class="slide level2">
 <h2>Some important tasks</h2>
 <ul>
-<li><p><a href="https://join.slack.com/t/pubh523623/shared_invite/zt-40eg9bxpw-IW_2bAyq6SiXdn1q_tl2Yg">Join the Slack page!</a></p></li>
+<li><p><a href="https://join.slack.com/t/pubh523623/shared_invite/zt-4av0be2fm-vl10vcXPLgRKqUYqvSRqQQ">Join the Slack page!</a></p></li>
 <li><p>Star the class website: <a href="https://nwakim.github.io/PUBH_523_26Su/" class="uri">https://nwakim.github.io/PUBH_523_26Su/</a></p></li>
-<li><p>Complete the <a href="https://www.when2meet.com/?37173220-5IzYW">When2meet</a> for office hours</p>
+<li><p>Complete the <a href="https://www.when2meet.com/?38860118-eEVFE">When2meet</a> for office hours</p>
 <ul>
 <li>You don’t need to put your name, just a unique identifier</li>
 </ul></li>
@@ -323,7 +325,7 @@ Nicky Wakim
 <tr class="even">
 <td><span style="color:#f8f5f0;"><a href="mothing"><iconify-icon inline="" icon="mdi:video" style="font-size: 90px;"></iconify-icon></a></span></td>
 <td>Lesson video</td>
-<td>I record our classes. This will be a link to the OneDrive folder containing this recording.</td>
+<td>I record our classes. This will be a link to the Loom page containing this recording.</td>
 </tr>
 <tr class="odd">
 <td><span style="color:#f8f5f0;"><a href="lessons/17_Negative_binomial_rv/17_Negative_binomial_rv.qmd"><iconify-icon inline="" icon="ri:slideshow-fill" style="font-size: 80px;"></iconify-icon></a></span></td>
@@ -349,7 +351,7 @@ Nicky Wakim
 <li>Search</li>
 <li>Homework</li>
 <li>Project</li>
-<li>Resources</li>
+<li>Resources!</li>
 </ul>
 </section>
 <section id="more-tips" class="slide level2">
@@ -551,7 +553,7 @@ Nicky Wakim
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

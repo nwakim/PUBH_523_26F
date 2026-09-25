@@ -1,0 +1,15 @@
+{
+  "hash": "03f9f43eb08552ef4dba518b20f0678b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Introduction to HRS dataset\"\nauthor: \"Nicky Wakim\"\ntitle-slide-attributes:\n    data-background-color: \"#3070BF\"\nformat: \n  revealjs:\n    theme: \"../simple_NW.scss\"\n    chalkboard: true\n    slide-number: true\n    show-slide-number: all\n    width: 1955\n    height: 1100\n    footer: \"Introduction to HRS dataset\"\n    html-math-method: mathjax\n    highlight-style: ayu\ncode-annotations: hover\nexecute:\n  echo: true\n  freeze: auto\n---\n\n\n\n## The Health and Retirement Study (HRS)\n\n[From HRS website:](https://hrs.isr.umich.edu/about)\n\n> The University of Michigan Health and Retirement Study (HRS) is a longitudinal panel study that surveys a representative sample of approximately 20,000 people in America, supported by the National Institute on Aging (NIA U01AG009740) and the Social Security Administration.\n\n \n\n- HRS measures many **aspects of aging**, including health, retirement, and economic status\n\n## We are using *synthetic* data\n\n- We will be working with a **synthetic** dataset from HRS\n  - We will be using this dataset in our lessons\n\n \n\n- HRS is a protected dataset, so I cannot publish the real data\n\n \n\n- My synthetic dataset has the same structure and variables as the real HRS data\n  - Initial correlations of the data are not preserved in this dataset!!\n\n## A little bit more info on our dataset\n\n- We have measurements on **2,728 synthetic individuals from the HRS dataset**\n\n \n\n- Measurements include:\n  - Household information\n  - Demographics\n  - Health behaviors\n  - Phyiscal health information\n  - Mental health information\n  - Economic information\n\n## Resources\n\n- [Check out the codebook I made for us!](../../resources/HRS_codebook.qmd)\n\n## Note on AI usage\n\n- I used some AI to help me clean the data, rename variables, and label variables\n- I also asked AI to help me make the codebook\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

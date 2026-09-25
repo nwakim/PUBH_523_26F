@@ -206,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">September 23, 2026</p>
+      <p class="date-modified">September 25, 2026</p>
     </div>
   </div>
     
@@ -232,14 +232,14 @@ ul.task-list li input[type="checkbox"] {
   --sec-light: var(--blue);
   --sec-text: var(--sec);        /* color for sub-headers and bold text */
 }
-
+ 
 .title{
   font-size: 30px;
   color: var(--dark-blue);
   background-color: #fff;
   padding: 0px;
 }
-
+ 
 /* ---- Section colors: add {.sec-___} after a ## header ---- */
 .sec-blue   { --sec: var(--dark-blue); --sec-light: var(--blue); }
 .sec-green  { --sec: var(--green);     --sec-light: var(--green2); }
@@ -248,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
 .sec-red    { --sec: var(--red);       --sec-light: var(--orange); }
 .sec-coral  { --sec: var(--orange);    --sec-light: #F29B9B; --sec-text: #C44546; } /* darker coral for text so it's readable */
 .sec-blue, .sec-green, .sec-purple, .sec-pink, .sec-red { --sec-text: var(--sec); }
-
+ 
 /* Main headers: block of color */
 section.level2 > h2 {
   background-color: var(--sec);
@@ -258,24 +258,22 @@ section.level2 > h2 {
   border-bottom: none;
   margin-top: 2.5rem;
 }
-/* Sub-headers: colored text with an accent bar */
+/* Sub-headers: colored text */
 section.level3 > h3 {
   color: var(--sec-text);
-  border-left: 6px solid var(--sec-light);
-  padding-left: 0.5em;
   margin-top: 1.75rem;
 }
 section.level4 > h4 {
   color: var(--sec-text);
   margin-top: 1.25rem;
 }
-
+ 
 /* Bold text picks up the section color */
 main p strong, main li strong { color: var(--sec-text); }
-
+ 
 /* Friendly opening paragraph */
 .lead { font-size: 1.15em; }
-
+ 
 /* Tables */
 main table thead th {
   background-color: var(--sec);
@@ -283,7 +281,7 @@ main table thead th {
   border-bottom: none;
 }
 main table tbody tr:nth-child(even) { background-color: var(--ivory); }
-
+ 
 /* Yes / No pills in the AI table: [Yes]{.yes} [No]{.no} */
 .yes, .no {
   display: inline-block;
@@ -296,7 +294,7 @@ main table tbody tr:nth-child(even) { background-color: var(--ivory); }
 }
 .yes { background-color: var(--green); }
 .no  { background-color: var(--red); }
-
+ 
 /* Block quotes (e.g., AI Use Statement example) */
 main blockquote {
   background-color: var(--ivory);
@@ -305,14 +303,14 @@ main blockquote {
   border-radius: 0 10px 10px 0;
   color: black;
 }
-
+ 
 /* ---- Colored boxes: ::::: blue / ::: blue-ttl / ::: blue-cont ---- */
 .blue   { --box: var(--blue); }
 .pink   { --box: var(--pink2); }
 .green  { --box: var(--green); }
 .red    { --box: var(--red); }
 .purple { --box: var(--purple); }
-
+ 
 .blue, .pink, .green, .red, .purple {
   margin: 1em 0;
   border: 3px solid var(--box);
@@ -394,7 +392,7 @@ main blockquote {
 <h3 class="anchored" data-anchor-id="where-things-live">Where things live</h3>
 <ul>
 <li><strong>This website:</strong> all course materials (lessons, practice, data, recordings).</li>
-<li><strong><a href="https://ohsu.brightspace.com/">Brightspace</a>:</strong> where you submit assignments (“Assignments” tab) and see your grades (“Grades”).</li>
+<li><a href="https://ohsu.brightspace.com/"><strong>Brightspace</strong></a><strong>:</strong> where you submit assignments (“Assignments” tab) and see your grades (“Grades”).</li>
 <li><strong>Slack:</strong> our main way to communicate! Post questions about practice, labs, or anything else. <a href="https://join.slack.com/t/pubh523623/shared_invite/zt-4av0be2fm-vl10vcXPLgRKqUYqvSRqQQ"><strong>Here’s the invitation link to our Slack workspace!</strong></a> Slack is not behind the OHSU firewall, so for accommodations or sensitive topics you may prefer email. You’re welcome to message me about sensitive things on Slack, but I won’t start those conversations there.</li>
 <li><strong>Webex/Zoom:</strong> for virtual office hours. Please stay muted until you want to talk, drop your question (or “I have a question”) in the chat so we can go in order, and turn your video on if you’re comfortable, since it helps me get to know you and how you learn.</li>
 </ul>
@@ -404,9 +402,9 @@ main blockquote {
 <h2 class="sec-pink anchored" data-anchor-id="course-structure">Course Structure</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 49%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 47%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -449,9 +447,9 @@ main blockquote {
 </ul>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 <col style="width: 20%">
 <col style="width: 20%">
 </colgroup>
@@ -480,18 +478,25 @@ main blockquote {
 <td style="text-align: center;">2%</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Slack post</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Once during the quarter</td>
+<td style="text-align: center;">1%</td>
+<td style="text-align: center;">1%</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Project Labs</td>
 <td style="text-align: left;">Formative/Summative</td>
 <td style="text-align: left;">Every 2-3 weeks</td>
 <td style="text-align: center;">40%</td>
 <td style="text-align: center;">40%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Project Poster</td>
 <td style="text-align: left;">Summative</td>
 <td style="text-align: left;">12/09</td>
-<td style="text-align: center;">18%</td>
-<td style="text-align: center;">18%</td>
+<td style="text-align: center;">17%</td>
+<td style="text-align: center;">17%</td>
 </tr>
 </tbody>
 </table>
@@ -511,6 +516,10 @@ main blockquote {
 <section id="office-hours-visit-2" class="level4">
 <h4 class="anchored" data-anchor-id="office-hours-visit-2">Office hours visit (2%)</h4>
 <p><strong>Come to office hours at least once during the quarter</strong> for full credit. You don’t need a question! Stopping by to say hi, working quietly on practice, or listening to others’ questions all count. If none of the office hour times work for you, email me and we’ll find another time to meet.</p>
+</section>
+<section id="slack-post-1" class="level4">
+<h4 class="anchored" data-anchor-id="slack-post-1">Slack post (1%)</h4>
+<p>Post in our Slack page at least once during the quarter for full credit. You may respond to someone else’s question or ask for help. As long as you show some engagement within the Slack page!</p>
 </section>
 <section id="project-labs-40" class="level4">
 <h4 class="anchored" data-anchor-id="project-labs-40">Project Labs (40%)</h4>
@@ -549,7 +558,7 @@ main blockquote {
 </section>
 <section id="generative-ai-policy" class="level3">
 <h3 class="anchored" data-anchor-id="generative-ai-policy">Generative AI Policy</h3>
-<p><em>This policy is adapted from the OHSU-PSU SPH Biostatistics program’s AI policy, which classifies PUBH 523/623 as a <strong>foundational</strong> course. Everything you need for this class is below.</em></p>
+<p><em>This policy is adapted from the <a href="https://ohsuitg-my.sharepoint.com/:b:/r/personal/wakim_ohsu_edu/Documents/Teaching/Classes/BSTA_550_26F/student-files_BSTA-550-26F/admin/Biostatistics_program_AI_policy_2026-09-25.pdf?d=w90a821e0cf1649d9bab24fa5c51a4150&amp;csf=1&amp;web=1&amp;e=d7UcfA">OHSU-PSU SPH Biostatistics program’s AI policy</a>, which classifies PUBH 523/623 as a <strong>foundational</strong> course. Everything you need for this class is below.</em></p>
 <p><strong>Using AI is <em>not</em> required in this class.</strong> If you choose to use it, please follow these guidelines. AI tools (like ChatGPT, Claude, Copilot, Gemini, or an AI assistant built into RStudio) are becoming an essential skill for public health data work, so the goal is to use them <em>responsibly</em>, not avoid them.</p>
 <div class="green">
 <div class="green-ttl">
@@ -573,9 +582,9 @@ main blockquote {
 <h4 class="anchored" data-anchor-id="whats-allowed">What’s allowed</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 62%">
-<col style="width: 18%">
-<col style="width: 18%">
+<col style="width: 56%">
+<col style="width: 21%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -702,7 +711,7 @@ main blockquote {
 <li>Copying and pasting AI-generated answers into your assignment</li>
 <li>Pasting all or part of an assignment into AI and asking for the solution</li>
 <li>Presenting AI output as your own reasoning</li>
-<li>Uploading confidential or restricted data (including any data with protected health information) into an AI tool, unless it’s a university-approved platform under a data use agreement</li>
+<li><strong>Uploading confidential or restricted data (including any data with protected health information) into an AI tool, unless it’s a university-approved platform under a data use agreement</strong></li>
 <li>Using AI-generated datasets or output as if they came from the assigned data and methods</li>
 <li>Using AI-generated references, results, or facts without verifying them yourself</li>
 <li>Submitting AI-assisted work without an AI Use Statement</li>

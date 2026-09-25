@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nicky Wakim">
+
+<title>Common errors – Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-4e7301f795183ddf9934333f6d2ce2ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Introduction to R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../instructors.html"> 
+<span class="menu-text">Instructors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://nwakim.github.io/R-practice-tutorials/"> 
+<span class="menu-text">Practice</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project.html"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#errors-and-troubleshooting-are-a-huge-part-of-coding" id="toc-errors-and-troubleshooting-are-a-huge-part-of-coding" class="nav-link active" data-scroll-target="#errors-and-troubleshooting-are-a-huge-part-of-coding">Errors and troubleshooting are a huge part of coding!</a></li>
+  <li><a href="#error-vs.-warning-vs.-message" id="toc-error-vs.-warning-vs.-message" class="nav-link" data-scroll-target="#error-vs.-warning-vs.-message">Error vs.&nbsp;Warning vs.&nbsp;Message</a></li>
+  <li><a href="#interpreting-error-messages" id="toc-interpreting-error-messages" class="nav-link" data-scroll-target="#interpreting-error-messages">Interpreting error messages</a></li>
+  <li><a href="#types-of-common-errors" id="toc-types-of-common-errors" class="nav-link" data-scroll-target="#types-of-common-errors">Types of common errors</a></li>
+  <li><a href="#misspelled-function-or-variable-name" id="toc-misspelled-function-or-variable-name" class="nav-link" data-scroll-target="#misspelled-function-or-variable-name">Misspelled function or variable name</a></li>
+  <li><a href="#mismatched-parentheses" id="toc-mismatched-parentheses" class="nav-link" data-scroll-target="#mismatched-parentheses">Mismatched parentheses</a></li>
+  <li><a href="#function-not-found-package-not-loaded" id="toc-function-not-found-package-not-loaded" class="nav-link" data-scroll-target="#function-not-found-package-not-loaded">Function not found, package not loaded</a></li>
+  <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found">Object not found</a></li>
+  <li><a href="#file-not-found" id="toc-file-not-found" class="nav-link" data-scroll-target="#file-not-found">File not found</a></li>
+  <li><a href="#subscript-out-of-bounds" id="toc-subscript-out-of-bounds" class="nav-link" data-scroll-target="#subscript-out-of-bounds">Subscript out of bounds</a></li>
+  <li><a href="#wrong-argument-name" id="toc-wrong-argument-name" class="nav-link" data-scroll-target="#wrong-argument-name">Wrong argument name</a></li>
+  <li><a href="#silent-logic-errors" id="toc-silent-logic-errors" class="nav-link" data-scroll-target="#silent-logic-errors">Silent logic errors</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Common_errors.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Common errors</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nicky Wakim </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="errors-and-troubleshooting-are-a-huge-part-of-coding" class="level2">
+<h2 class="anchored" data-anchor-id="errors-and-troubleshooting-are-a-huge-part-of-coding">Errors and troubleshooting are a huge part of coding!</h2>
+<style>
+.small-error pre,
+.small-error .cell-output-error {
+  font-size: 0.55em;
+}
+</style>
+<div class="pink">
+<div class="pink-cont">
+<p>A huge part of coding is <strong>learning to debug your own code</strong> and <strong>figuring out what’s going wrong.</strong></p>
+</div>
+</div>
+<ul>
+<li>Errors can feel frustrating at first, but they are R trying to <em>help</em> you.</li>
+</ul>
+<p>We will cover:</p>
+<ol type="1">
+<li><span style="color:#BF396F;">How to interpret error messages</span></li>
+<li><span style="color:#3070BF;">The most common types of errors and how to fix them</span></li>
+</ol>
+</section>
+<section id="error-vs.-warning-vs.-message" class="level2">
+<h2 class="anchored" data-anchor-id="error-vs.-warning-vs.-message">Error vs.&nbsp;Warning vs.&nbsp;Message</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Error</strong></td>
+<td>Code stopped; something went wrong</td>
+</tr>
+<tr class="even">
+<td><strong>Warning</strong></td>
+<td>Code ran, but R is flagging something suspicious</td>
+</tr>
+<tr class="odd">
+<td><strong>Message</strong></td>
+<td>Informational; not a problem</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Example of a warning:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="sc">-</span><span class="dv">1</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in log(-1): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NaN</code></pre>
+</div>
+</div>
+<ul>
+<li>In this case, the code ran, but R is warning you that the result is <code>NaN</code> (not a number) because the logarithm of a negative number is undefined</li>
+</ul>
+</section>
+<section id="interpreting-error-messages" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-error-messages">Interpreting error messages</h2>
+<ul>
+<li>R error messages can feel cryptic, but they usually follow a pattern</li>
+</ul>
+<div class="blue">
+<div class="blue-ttl">
+<p>Pay attention to</p>
+</div>
+<div class="blue-cont">
+<ul>
+<li>Which <strong>function</strong> is mentioned in the error</li>
+<li><strong>Keywords</strong> like <code>not found</code>, <code>unexpected</code>, <code>unused argument</code>, or <code>subscript out of bounds</code></li>
+<li>Any <strong>line numbers</strong> or column names that appear</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="types-of-common-errors" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-common-errors">Types of common errors</h2>
+<p>We will go through the following error messages:</p>
+<ul>
+<li>Misspelled function or variable name</li>
+<li>Mismatched parentheses</li>
+<li>Function not found</li>
+<li>Object not found</li>
+<li>File not found</li>
+<li>Subscript out of bounds</li>
+<li>Wrong argument name</li>
+<li>Silent logic errors</li>
+</ul>
+<div class="pink">
+<div class="pink-cont">
+<p>We will go through each type with real error messages and how to fix them. Keep this slide as a reference!</p>
+</div>
+</div>
+</section>
+<section id="misspelled-function-or-variable-name" class="level2">
+<h2 class="anchored" data-anchor-id="misspelled-function-or-variable-name">Misspelled function or variable name</h2>
+<div class="blue">
+<div class="blue-ttl">
+<p>R is case-sensitive</p>
+</div>
+<div class="blue-cont">
+<p><code>Mean()</code> and <code>mean()</code> are different things!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1">Capital M — R can’t find this function</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `Mean()`:
+! could not find function "Mean"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="pink">
+<div class="pink-ttl">
+<p>Accidental mispelling</p>
+</div>
+<div class="pink-cont">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">y =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="2">2</button><span id="annotated-cell-16-2" class="code-annotation-target"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sumamry</span>(my_data)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="2" data-code-annotation="2">Typo in the function name (<code>sumamry</code> instead of <code>summary</code>)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `sumamry()`:
+! could not find function "sumamry"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="mismatched-parentheses" class="level2">
+<h2 class="anchored" data-anchor-id="mismatched-parentheses">Mismatched parentheses</h2>
+<div class="small-error">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre id="annotated-cell-19" class="code-annotation-code"><code>Error in parse(text = input): &lt;text&gt;:2:0: unexpected end of input
+1: mean(c(1, 2, 3)
+   ^</code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li>Missing closing <code>)</code> — the console shows <code>+</code> waiting for more input</li>
+</ul>
+<div class="blue">
+<div class="blue-cont">
+<p>When the console prompt is <code>&gt;</code>, R is ready for a new command. When it switches to <code>+</code>, a previous command is <strong>incomplete</strong> — finish typing it, or press <strong>Escape</strong> to cancel and start over.</p>
+</div>
+</div>
+<p><strong>Quick fixes:</strong></p>
+<ul>
+<li>Use <strong>Tab</strong> to autocomplete function names and avoid typos</li>
+<li>Check that every <code>(</code> has a closing <code>)</code></li>
+<li>Use RStudio’s bracket highlighting — click next to a <code>(</code> and its match will highlight</li>
+</ul>
+</section>
+<section id="function-not-found-package-not-loaded" class="level2">
+<h2 class="anchored" data-anchor-id="function-not-found-package-not-loaded">Function not found, package not loaded</h2>
+<ul>
+<li>This usually means you typed the function name incorrectly, or <strong>forgot to install or load the package</strong></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clean_names</span>(iris)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1"><code>clean_names()</code> is from <code>janitor</code>: if it’s not loaded, R can’t find it</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `clean_names()`:
+! could not find function "clean_names"</code></pre>
+</div>
+</div>
+<div class="orange">
+<div class="orange-ttl">
+<p>Fix: make sure to load the package!</p>
+</div>
+<div class="orange-cont">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="2">2</button><span id="annotated-cell-21-1" class="code-annotation-target"><a href="#annotated-cell-21-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(janitor)</span>
+<span id="annotated-cell-21-2"><a href="#annotated-cell-21-2" aria-hidden="true" tabindex="-1"></a>iris_clean <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(iris)</span>
+<span id="annotated-cell-21-3"><a href="#annotated-cell-21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris_clean)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-21" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="1" data-code-annotation="2">Load the package first, then call the function</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sepal_length" "sepal_width"  "petal_length" "petal_width"  "species"     </code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="pink">
+<div class="pink-ttl">
+<p>You can also use <code>::</code> to call it without loading the whole package</p>
+</div>
+<div class="pink-cont">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="3">3</button><span id="annotated-cell-23-1" class="code-annotation-target"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a>iris_clean2 <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>(iris)</span>
+<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris_clean2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-23" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-23" data-code-lines="1" data-code-annotation="3">Recall from the Packages lesson: <code>package::function()</code> lets you use one function without <code>library()</code></span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sepal_length" "sepal_width"  "petal_length" "petal_width"  "species"     </code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="object-not-found" class="level2">
+<h2 class="anchored" data-anchor-id="object-not-found">Object not found</h2>
+<p>This means R can’t find a variable you referenced. Common causes:</p>
+<p><span style="color:#BF396F;">1. You never created the object</span></p>
+<ul>
+<li>This can happen if you ran something in the console, but don’t have it in your current <code>.qmd</code> file when rendering</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>my_summary</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">This object was never created: code above may not have run</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'my_summary' not found</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><span style="color:#459B99;">2. You’re missing quotes around a package or a string</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(dplyr)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="2">Missing quotes: R looks for an object named <code>dplyr</code>, not the text “dplyr”</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'dplyr' not found</code></pre>
+</div>
+</div>
+</section>
+<section id="file-not-found" class="level2">
+<h2 class="anchored" data-anchor-id="file-not-found">File not found</h2>
+<ul>
+<li>This happens when R can’t locate a file you’re trying to read in</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">import</span>(<span class="fu">here</span>(<span class="st">"data/hrs_Data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! No such file: /Users/wakim/Library/CloudStorage/OneDrive-OregonHealth&amp;ScienceUniversity/Teaching/Classes/PUBH_523_26F/PUBH_523_26F_site/data/hrs_Data.csv</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>For now, if you run into it, check:</p>
+<ul>
+<li>Spelling of the file name</li>
+<li>Forward slashes (MAC) vs.&nbsp;backward slashes (Windows)</li>
+<li>Correct file extension (<code>.csv</code>, <code>.xlsx</code>, <code>.rds</code>)</li>
+<li>That you’re working inside the right <strong>R Project</strong>, so your working directory is where you think it is</li>
+</ul>
+</section>
+<section id="subscript-out-of-bounds" class="level2">
+<h2 class="anchored" data-anchor-id="subscript-out-of-bounds">Subscript out of bounds</h2>
+<ul>
+<li>This happens when you try to access an <strong>element</strong> of a vector, list, or data frame that doesn’t exist</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">3</span><span class="sc">:</span><span class="dv">10</span>]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="1"><code>x</code> is a vector of length 5</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">I try to access the 3rd to 10th elements, but some of them don’t exist.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3  4  5 NA NA NA NA NA</code></pre>
+</div>
+</div>
+<ul>
+<li>There is no error, but R returns <code>NA</code> for the elements that don’t exist</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Here’s an example of the error wording (if an error is thrown):</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">10</span>]]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="3">I try to access the 10th element iwth double brackets, but it doesn’t exist.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `x[[10]]`:
+! subscript out of bounds</code></pre>
+</div>
+</div>
+</section>
+<section id="wrong-argument-name" class="level2">
+<h2 class="anchored" data-anchor-id="wrong-argument-name">Wrong argument name</h2>
+<ul>
+<li>This can happen if you misremember the argument name, or if you accidentally type it incorrectly</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-1" class="code-annotation-target"><a href="#annotated-cell-30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>), <span class="at">remove.na =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="1" data-code-annotation="1"><code>remove.na</code> is not a real argument: R silently ignores it, and <code>NA</code> propagates through</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<div class="pink">
+<div class="pink-cont">
+<p><strong>Notice this one didn’t throw an error!</strong> It just gave you the wrong answer! Not every mistake is loud.</p>
+</div>
+</div>
+<ul>
+<li>Fix: use the correct argument name</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-31"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="2">2</button><span id="annotated-cell-31-1" class="code-annotation-target"><a href="#annotated-cell-31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-31" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="1" data-code-annotation="2">The correct argument is <code>na.rm</code></span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.5</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:35%;">
+<div class="orange">
+<div class="orange-ttl">
+<p>How to find the right argument names</p>
+</div>
+<div class="orange-cont">
+<p>Run <code>?function_name</code> and read the <strong>Arguments</strong> section — it lists every accepted argument, what it expects, and its default value.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>?mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="silent-logic-errors" class="level2">
+<h2 class="anchored" data-anchor-id="silent-logic-errors">Silent logic errors</h2>
+<ul>
+<li>This happens when your code runs without throwing an error, but the ‘TRUE’/‘FALSE’ output is not what you expected</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">==</span> <span class="fl">0.3</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">You’d expect <code>TRUE</code>, but computers store decimals in binary, and <code>0.1 + 0.2</code> is actually stored as a number <em>very slightly</em> off from <code>0.3</code>, so the <strong>comparison quietly returns <code>FALSE</code></strong></span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<ul>
+<li>Fix: use <code>all.equal()</code> or a small tolerance instead of <code>==</code> when comparing decimals:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.2</span>, <span class="fl">0.3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1"><code>all.equal()</code> checks whether two numbers are “close enough,” rather than checking for exact equality</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<div class="pink">
+<div class="pink-cont">
+<p>Logic errors are the sneakiest bugs. Always <strong>check your output</strong> or check an example if you’re running many calculations.</p>
+</div>
+</div>
+</section>
+<section id="wrap-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrap-up">Wrap-up</h2>
+<ul>
+<li>Errors are a normal part of coding!
+<ul>
+<li>Don’t be discouraged, R is trying to help you</li>
+</ul></li>
+<li>When you get an error, read it carefully and try to understand what it’s telling you</li>
+<li>Recognize the most common types of errors and what might have caused them</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

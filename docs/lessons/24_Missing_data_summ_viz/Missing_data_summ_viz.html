@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nicky Wakim, Jessica Minnier, and Meike Niederhausen">
+
+<title>Missing data: summarization and visualization – Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-4e7301f795183ddf9934333f6d2ce2ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo light-content">
+    <img src="../../images/PUBH_R.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Introduction to R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../instructors.html"> 
+<span class="menu-text">Instructors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://nwakim.github.io/R-practice-tutorials/"> 
+<span class="menu-text">Practice</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project.html"> 
+<span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#missing-data-summary-and-visualization" id="toc-missing-data-summary-and-visualization" class="nav-link active" data-scroll-target="#missing-data-summary-and-visualization">Missing data summary and visualization</a>
+  <ul class="collapse">
+  <li><a href="#before-we-start" id="toc-before-we-start" class="nav-link" data-scroll-target="#before-we-start">Before we start</a></li>
+  <li><a href="#why-summarize-and-visualize-missingness-before-doing-anything-else" id="toc-why-summarize-and-visualize-missingness-before-doing-anything-else" class="nav-link" data-scroll-target="#why-summarize-and-visualize-missingness-before-doing-anything-else">Why summarize and visualize missingness before doing anything else?</a></li>
+  </ul></li>
+  <li><a href="#missingness-statistics" id="toc-missingness-statistics" class="nav-link" data-scroll-target="#missingness-statistics">Missingness statistics</a>
+  <ul class="collapse">
+  <li><a href="#missing-values-in-a-dataset" id="toc-missing-values-in-a-dataset" class="nav-link" data-scroll-target="#missing-values-in-a-dataset">Missing values in a dataset</a></li>
+  <li><a href="#missing-values-in-a-single-variable" id="toc-missing-values-in-a-single-variable" class="nav-link" data-scroll-target="#missing-values-in-a-single-variable">Missing values in a single variable</a></li>
+  <li><a href="#missingness-by-each-variable-for-every-variable" id="toc-missingness-by-each-variable-for-every-variable" class="nav-link" data-scroll-target="#missingness-by-each-variable-for-every-variable">Missingness by each variable, for every variable</a></li>
+  </ul></li>
+  <li><a href="#visualizing-missing-data" id="toc-visualizing-missing-data" class="nav-link" data-scroll-target="#visualizing-missing-data">Visualizing missing data</a>
+  <ul class="collapse">
+  <li><a href="#vis_miss-visualizing-missing-data-across-the-dataset" id="toc-vis_miss-visualizing-missing-data-across-the-dataset" class="nav-link" data-scroll-target="#vis_miss-visualizing-missing-data-across-the-dataset"><code>vis_miss()</code>: visualizing missing data across the dataset</a></li>
+  <li><a href="#gg_miss_fct-missingness-heatmap-by-group" id="toc-gg_miss_fct-missingness-heatmap-by-group" class="nav-link" data-scroll-target="#gg_miss_fct-missingness-heatmap-by-group"><code>gg_miss_fct()</code>: missingness heatmap by group</a></li>
+  <li><a href="#gg_miss_upset-missingness-intersections-12" id="toc-gg_miss_upset-missingness-intersections-12" class="nav-link" data-scroll-target="#gg_miss_upset-missingness-intersections-12"><code>gg_miss_upset()</code>: missingness intersections (1/2)</a></li>
+  <li><a href="#gg_miss_upset-missingness-intersections-22" id="toc-gg_miss_upset-missingness-intersections-22" class="nav-link" data-scroll-target="#gg_miss_upset-missingness-intersections-22"><code>gg_miss_upset()</code>: missingness intersections (2/2)</a></li>
+  <li><a href="#gg_miss_upset-what-am-i-taking-away-from-this-plot" id="toc-gg_miss_upset-what-am-i-taking-away-from-this-plot" class="nav-link" data-scroll-target="#gg_miss_upset-what-am-i-taking-away-from-this-plot"><code>gg_miss_upset()</code>: What am I taking away from this plot?</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a>
+  <ul class="collapse">
+  <li><a href="#wrap-up-1" id="toc-wrap-up-1" class="nav-link" data-scroll-target="#wrap-up-1">Wrap-up</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Missing_data_summ_viz.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Missing data: summarization and visualization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nicky Wakim, Jessica Minnier, and Meike Niederhausen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="missing-data-summary-and-visualization" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Missing data summary and visualization</h1>
+<section id="before-we-start" class="level2">
+<h2 class="anchored" data-anchor-id="before-we-start">Before we start</h2>
+<ul>
+<li>Install and load the <code>naniar</code> package (a play on Narnia) if you haven’t already!</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img_slides/horst_naniar.png" class="img-fluid figure-img" alt="&quot;Explore missing data in naniar!&quot; Cute monsters with exploring gear looking around a landscape full of subtle (and not so subtle) NAs, hidden in trees, on mountain tops, as birds, and in flowers. Learn more about naniar."></p>
+<figcaption><a href="https://allisonhorst.com/r-packages-functions">Artwork by <span class="citation" data-cites="allison_horst">@allison_horst</span></a></figcaption>
+</figure>
+</div>
+<ul>
+<li>We’ll be working with only a few variables in the HRS dataset in this lesson!
+<ul>
+<li>Mostly to help us view the tables and plots within the slides</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="ot">&lt;-</span> hrs_data <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ed, race_original, srh, sex, act_vig, height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>&nbsp;</p>
+</section>
+<section id="why-summarize-and-visualize-missingness-before-doing-anything-else" class="level2">
+<h2 class="anchored" data-anchor-id="why-summarize-and-visualize-missingness-before-doing-anything-else">Why summarize and visualize missingness before doing anything else?</h2>
+<ul>
+<li>Before you transform, model, or plot a variable, you need to know <strong>how much of it is actually there</strong></li>
+</ul>
+<p>&nbsp;</p>
+<div class="columns">
+<div class="column">
+<div class="blue">
+<div class="blue-ttl">
+<p>Missing data can be a problem for many reasons</p>
+</div>
+<div class="blue-cont">
+<ul>
+<li>It can <em>reduce your sample size</em> (and therefor your ability to make conclusions)</li>
+<li>It can <em>bias your results</em> if there’s a pattern to missingness</li>
+<li>It can <em>make your plots look weird</em> or misleading</li>
+</ul>
+</div>
+</div>
+</div><div class="column">
+<div class="pink">
+<div class="pink-ttl">
+<p>A quick missingness check can reveal</p>
+</div>
+<div class="pink-cont">
+<ul>
+<li>Which <em>variables have the most missing data</em></li>
+<li>Whether <em>missingness is scattered or clustered</em></li>
+<li>Whether <em>missingness looks related to another variable</em> (which matters for how you handle it later)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="missingness-statistics" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Missingness statistics</h1>
+<section id="missing-values-in-a-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="missing-values-in-a-dataset">Missing values in a dataset</h2>
+<ul>
+<li><code>n_miss()</code> from <code>naniar</code> counts the total number of missing values <strong>across an entire dataset</strong></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_miss</span>(hrs_00)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1061</code></pre>
+</div>
+</div>
+<ul>
+<li>This is the total count of <code>NA</code> cells across <em>every</em> column combined</li>
+<li><code>n_complete()</code> is the complement of <code>n_miss()</code>
+<ul>
+<li>It counts the total number of non-missing values across the dataset</li>
+</ul></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li><code>prop_miss()</code> gives the proportion of all cells in the dataset that are missing</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop_miss</span>(hrs_00)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0648216</code></pre>
+</div>
+</div>
+<ul>
+<li>Useful as a single, high-level number to report on the overall proportion missingness of your dataset</li>
+</ul>
+</section>
+<section id="missing-values-in-a-single-variable" class="level2">
+<h2 class="anchored" data-anchor-id="missing-values-in-a-single-variable">Missing values in a single variable</h2>
+<ul>
+<li>We can use <code>n_miss()</code> to count the number of missing values in a single variable</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_miss</span>(hrs_00<span class="sc">$</span>srh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<ul>
+<li>This is the count of <code>NA</code> cells in self-reported health</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>We can also use <code>prop_miss()</code> to get the proportion of missing values in a single variable</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop_miss</span>(hrs_00<span class="sc">$</span>srh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.001466276</code></pre>
+</div>
+</div>
+<ul>
+<li>This is the proportion of <code>NA</code> cells in self-reported health</li>
+</ul>
+</section>
+<section id="missingness-by-each-variable-for-every-variable" class="level2">
+<h2 class="anchored" data-anchor-id="missingness-by-each-variable-for-every-variable">Missingness by each variable, for every variable</h2>
+<ul>
+<li><code>miss_var_summary()</code> gives one row per variable, with the count and percent missing</li>
+<li>Piping the result into <code>gt()</code> makes it a nicer table to read</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">miss_var_summary</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(<span class="at">table.font.size =</span> <span class="fu">px</span>(<span class="dv">40</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="zqyctjkozm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zqyctjkozm table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#zqyctjkozm thead, #zqyctjkozm tbody, #zqyctjkozm tfoot, #zqyctjkozm tr, #zqyctjkozm td, #zqyctjkozm th {
+  border-style: none;
+}
+
+#zqyctjkozm p {
+  margin: 0;
+  padding: 0;
+}
+
+#zqyctjkozm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 40px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#zqyctjkozm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zqyctjkozm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zqyctjkozm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zqyctjkozm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zqyctjkozm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zqyctjkozm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zqyctjkozm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zqyctjkozm .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#zqyctjkozm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#zqyctjkozm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zqyctjkozm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zqyctjkozm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zqyctjkozm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zqyctjkozm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zqyctjkozm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#zqyctjkozm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#zqyctjkozm .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#zqyctjkozm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zqyctjkozm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#zqyctjkozm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zqyctjkozm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zqyctjkozm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zqyctjkozm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zqyctjkozm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zqyctjkozm .gt_left {
+  text-align: left;
+}
+
+#zqyctjkozm .gt_center {
+  text-align: center;
+}
+
+#zqyctjkozm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zqyctjkozm .gt_font_normal {
+  font-weight: normal;
+}
+
+#zqyctjkozm .gt_font_bold {
+  font-weight: bold;
+}
+
+#zqyctjkozm .gt_font_italic {
+  font-style: italic;
+}
+
+#zqyctjkozm .gt_super {
+  font-size: 65%;
+}
+
+#zqyctjkozm .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#zqyctjkozm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#zqyctjkozm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#zqyctjkozm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#zqyctjkozm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#zqyctjkozm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#zqyctjkozm .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#zqyctjkozm .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#zqyctjkozm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">variable</th>
+<th id="n_miss" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n_miss</th>
+<th id="pct_miss" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">pct_miss</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">ed</td>
+<td class="gt_row gt_right" headers="n_miss">507</td>
+<td class="gt_row gt_center" headers="pct_miss">18.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">race_original</td>
+<td class="gt_row gt_right" headers="n_miss">486</td>
+<td class="gt_row gt_center" headers="pct_miss">17.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">height</td>
+<td class="gt_row gt_right" headers="n_miss">55</td>
+<td class="gt_row gt_center" headers="pct_miss">2.02</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">act_vig</td>
+<td class="gt_row gt_right" headers="n_miss">9</td>
+<td class="gt_row gt_center" headers="pct_miss">0.330</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="variable">srh</td>
+<td class="gt_row gt_right" headers="n_miss">4</td>
+<td class="gt_row gt_center" headers="pct_miss">0.147</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="variable">sex</td>
+<td class="gt_row gt_right" headers="n_miss">0</td>
+<td class="gt_row gt_center" headers="pct_miss">0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>The output is sorted from most to least missing, which makes it easy to spot the variables with the most missing data</li>
+</ul>
+</section>
+</section>
+<section id="visualizing-missing-data" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Visualizing missing data</h1>
+<section id="vis_miss-visualizing-missing-data-across-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="vis_miss-visualizing-missing-data-across-the-dataset"><code>vis_miss()</code>: visualizing missing data across the dataset</h2>
+<ul>
+<li>This plot helps identify whether:
+<ul>
+<li>There are <strong>variables</strong> with a lot of missing values (in columns of plot)</li>
+<li><strong>Observations</strong> with a lot of missing values (in rows of plot)</li>
+</ul></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>&nbsp;</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vis_miss</span>() <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">20</span>, <span class="at">hjust =</span> <span class="dv">0</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="1"><code>vis_miss()</code> is a function with a lot of built-in defaults that will produce a plot showing the missingness of the dataset</span>
+</dd>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="3" data-code-annotation="2">I made some changes to the <code>theme()</code> to make the variable names easier to read</span>
+</dd>
+</dl>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Missing_data_summ_viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gg_miss_fct-missingness-heatmap-by-group" class="level2">
+<h2 class="anchored" data-anchor-id="gg_miss_fct-missingness-heatmap-by-group"><code>gg_miss_fct()</code>: missingness heatmap by group</h2>
+<ul>
+<li>This plot is useful for comparing missingness rates <strong>stratified by a variable</strong>
+<ul>
+<li>Potentially detect patterns in missingness</li>
+</ul></li>
+<li>Specify the variable to stratify by in the <code>fct =</code> option of <code>gg_miss_fct()</code>
+<ul>
+<li>Each <strong>column</strong> (x-axis) is a <strong>different level of the stratifying variable</strong></li>
+<li>Each <strong>row</strong> (y-axis) is a <strong>different variable in the dataset</strong></li>
+</ul></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="blue">
+<div class="blue-cont">
+<p><strong>Example:</strong> percent missingness stratified by <code>srh</code> (self-reported health)</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_miss_fct</span>(<span class="at">fct =</span> srh) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-12-3" class="code-annotation-target"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">28</span>) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-12-4" class="code-annotation-target"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">30</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1"><code>gg_miss_fct()</code> is a function that produces a heatmap of missingness stratified by a factor variable. We are stratifying by self-reported health (<code>srh</code>) in this example</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="3" data-code-annotation="2">I’m changing the background and font size to make the plot easier to read</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="4" data-code-annotation="3">I’m rotating the x-axis labels to make them easier to read</span>
+</dd>
+</dl>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Missing_data_summ_viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gg_miss_upset-missingness-intersections-12" class="level2">
+<h2 class="anchored" data-anchor-id="gg_miss_upset-missingness-intersections-12"><code>gg_miss_upset()</code>: missingness intersections (1/2)</h2>
+<ul>
+<li><code>gg_miss_upset()</code> shows the most common combinations (sets) of missing variables</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_miss_upset</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">nsets =</span> <span class="dv">10</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-4" class="code-annotation-target"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">text.scale =</span> <span class="dv">3</span></span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="2,5" data-code-annotation="1"><code>gg_miss_upset()</code> is a function that produces an UpSet plot of missingness intersections</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="2"><code>nsets = 10</code> limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="4" data-code-annotation="3"><code>text.scale = 3</code> increases the size of the text in the plot, which makes it easier to read</span>
+</dd>
+</dl>
+</div>
+</div>
+</div><div class="column" style="width:70%;">
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the UpSetR package.
+  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the UpSetR package.
+  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+ℹ Please use the `linewidth` argument instead.
+ℹ The deprecated feature was likely used in the UpSetR package.
+  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Missing_data_summ_viz_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gg_miss_upset-missingness-intersections-22" class="level2">
+<h2 class="anchored" data-anchor-id="gg_miss_upset-missingness-intersections-22"><code>gg_miss_upset()</code>: missingness intersections (2/2)</h2>
+<ul>
+<li><code>gg_miss_upset()</code> shows the most common combinations (sets) of missing variables</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>hrs_00 <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_miss_upset</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-17-3" class="code-annotation-target"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">nsets =</span> <span class="dv">10</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-17-4" class="code-annotation-target"><a href="#annotated-cell-17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">text.scale =</span> <span class="dv">3</span></span>
+<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="2,5" data-code-annotation="1"><code>gg_miss_upset()</code> is a function that produces an UpSet plot of missingness intersections</span>
+</dd>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="3" data-code-annotation="2"><code>nsets = 10</code> limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable</span>
+</dd>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="4" data-code-annotation="3"><code>text.scale = 3</code> increases the size of the text in the plot, which makes it easier to read</span>
+</dd>
+</dl>
+</div>
+</div>
+<ul>
+<li><span style="color: #5BAFF8;"><strong>Main bar plot:</strong></span> ordered by the number of observations with specific set of missing variables</li>
+<li><span style="color: #459B99;"><strong>Bottom dots with lines:</strong></span> combination of variables missing</li>
+<li><span style="color: #C83532;"><strong>Bottom, sideways barplot:</strong></span> number of observations missing for each variable, regardless of combination</li>
+</ul>
+</div><div class="column" style="width:70%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Missing_data_summ_viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gg_miss_upset-what-am-i-taking-away-from-this-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gg_miss_upset-what-am-i-taking-away-from-this-plot"><code>gg_miss_upset()</code>: What am I taking away from this plot?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Missing_data_summ_viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="1440"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<ul>
+<li>The most common combination of missing variables is <code>race_original</code> and <code>ed</code> with 465 observations
+<ul>
+<li>There are not many observations that have one of these missing without the other</li>
+<li>There’s 36 (34 + 2) observations that have <code>ed</code> missing but not <code>race_original</code></li>
+<li>There’s 15 (12 + 3) observations that have <code>race_original</code> missing but not <code>ed</code></li>
+</ul></li>
+<li>Height seems to be mostly missing on its own
+<ul>
+<li>46 out of the 55 observations with height missing have no other variables missing</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="wrap-up" class="level1" data-visibility="hidden">
+<h1 data-visibility="hidden">Wrap-up</h1>
+<section id="wrap-up-1" class="level2">
+<h2 class="anchored" data-anchor-id="wrap-up-1">Wrap-up</h2>
+<ul>
+<li>We learned a few functions within <code>naniar</code> that help us summarize and visualize missingness in a dataset</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li><code>n_miss()</code> and <code>prop_miss()</code> give quick, high-level counts of missingness across a whole dataset</li>
+<li><code>miss_var_summary()</code> gives a tidy, sortable summary of missingness by variable</li>
+<li><code>vis_miss()</code> gives a bird’s-eye view of missingness across every row and column</li>
+<li><code>gg_miss_fct()</code> compares missingness rates across groups</li>
+<li><code>gg_miss_upset()</code> reveals which variables tend to be missing <em>together</em></li>
+</ul>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li><a href="https://allisonhorst.shinyapps.io/missingexplorer/">Exploring missing values in <code>naniar</code>: interactive tutorial</a></li>
+<li><a href="http://naniar.njtierney.com/"><code>{naniar}</code> package website</a></li>
+<li><a href="https://r4ds.hadley.nz/missing-values.html">Missing values chapter in <em>R for Data Science (2e)</em></a></li>
+<li><a href="https://epirhandbook.com/en/missing-data.html">Dealing with missing data in the <em>Epidemiologist R Handbook</em></a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
