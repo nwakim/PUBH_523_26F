@@ -193,7 +193,7 @@ We'll use R and RStudio (both free). **Please install them before our second les
 ## Course Structure {.sec-pink}
 
 | **Component** | **Frequency** | **Description** |
-|:------------------|:------------------|:----------------------------------|
+|:---|:---|:---|
 | Video lessons | Weekly | Pre-recorded lessons with explanations, interactive examples, and demos. |
 | Practice | Weekly | 9 assignments to practice coding and engage with key concepts. Working in groups is encouraged, but everyone submits their own work. |
 | Project (Labs + Poster) | 4 labs, 1 final poster | Labs guide you step-by-step through the coding for a data project, which comes together in a final poster (information sheet) at the end of the quarter. |
@@ -209,7 +209,7 @@ This class uses two types of assessments:
 - **Summative:** work meant to show *how well you've met the learning objectives* and can use your skills outside the classroom.
 
 | **Course activity** | **Type** | **Due** | **PUBH 523** | **PUBH 623** |
-|:--------------|:--------------|:--------------|:-------------:|:-------------:|
+|:---|:---|:---|:--:|:--:|
 | Practice | Formative | Every 1-2 weeks | 40% | 40% |
 | Office hours visit | — | Once during the quarter | 2% | 2% |
 | Slack post | — | Once during the quarter | 1% | 1% |
@@ -302,7 +302,7 @@ Think of this class as assembling a toolbox. A new handyperson might need help f
 #### What's allowed
 
 | **Can I use AI to...** | **Practice** | **Labs & Poster** |
-|:----------------------------------------|:--------------:|:--------------:|
+|:---|:--:|:--:|
 | ***Coding*** |  |  |
 | Explain an error message | [Yes]{.yes} | [Yes]{.yes} |
 | Explain what a function does | [Yes]{.yes} | [Yes]{.yes} |
@@ -376,7 +376,7 @@ Every instructor uses resources and assignments a little differently, so here's 
 ### Resources
 
 | **Resource** | **How to use it** |
-|:-----------------------|:----------------------------------------------|
+|:---|:---|
 | Lesson videos | Watch all of them, following the schedule. Follow the slides, take notes on details mentioned out loud, and work through examples with me. |
 | Office hours | Ask questions about assignments or lessons, work on your assignments with help nearby, or meet classmates to collaborate with. |
 | Slack | Ask questions anytime. Chances are a classmate has the same question! |
@@ -386,7 +386,7 @@ Every instructor uses resources and assignments a little differently, so here's 
 ### Assignments
 
 | **Assignment** | **Before you submit** | **After it's graded** |
-|:-------------------|:-------------------------|:-------------------------|
+|:---|:---|:---|
 | Practice | • Try each problem on your own first<br>• Talk it through with a peer<br>• Ask on Slack or come to office hours<br>• Show your thought process<br>• Search Stack Overflow for errors | • Review the solutions and your mistakes<br>• For written answers, check with me or a TA if yours fits<br>• Bring questions to office hours |
 | Labs and Poster | • Start early!<br>• Check your coding with classmates<br>• Bring specific R questions to office hours<br>• For the poster, pull together your lab work and decide what matters most | • Use lab feedback in future labs and your poster<br>• Email me with grade questions<br>• Keep your poster and add it to your resume! |
 
