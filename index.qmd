@@ -152,5 +152,5 @@ This course provides an introduction to programming in R in public health, medic
  
 
 ::: source-link
-[{{< iconify icomoon-free github size=24px >}} View the source on GitHub](https://github.com/nwakim/PUBH_523_26Su)
+[{{< iconify icomoon-free github size=24px >}} View the source on GitHub](https://github.com/nwakim/PUBH_523_26F)
 :::
