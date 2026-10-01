@@ -12330,22 +12330,22 @@
     "objectID": "lessons/06_Quarto_docs/Quarto_docs.html#what-is-quarto",
     "href": "lessons/06_Quarto_docs/Quarto_docs.html#what-is-quarto",
     "title": "Quarto and .qmd’s",
-    "section": "",
-    "text": "Quarto is a publishing system that lets us combine text and code into a single document\nIt is the successor to R Markdown — you may see both names online, but we’ll use Quarto\n\n\n\n\nArtwork by @allison_horst"
+    "section": "What is Quarto?",
+    "text": "What is Quarto?\n\nQuarto is a publishing system that lets us combine text and code into a single document\nIt is the successor to R Markdown — you may see both names online, but we’ll use Quarto\n\n\nArtwork by @allison_horst"
   },
   {
     "objectID": "lessons/06_Quarto_docs/Quarto_docs.html#qmd-file-code-text",
     "href": "lessons/06_Quarto_docs/Quarto_docs.html#qmd-file-code-text",
     "title": "Quarto and .qmd’s",
     "section": ".qmd file = code + text",
-    "text": ".qmd file = code + text\nA .qmd file holds two things together:\n\nCode (R or other languages) — the same code you’d write in a script\nText (like you’d write in Word) — headings, explanations, formatting\n\nWhen you render the file, Quarto combines them into a polished output: .html, .pdf, .docx, and more.\n\n\n\nArtwork from “Hello, Quarto” keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst."
+    "text": ".qmd file = code + text\nA .qmd file holds two things together:\n\nCode (R or other languages) — the same code you’d write in a script\nText (like you’d write in Word) — headings, explanations, formatting\n\nWhen you render the file, Quarto combines them into a polished output: .html, .pdf, .docx, and more.\n\nArtwork from “Hello, Quarto” keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst."
   },
   {
     "objectID": "lessons/06_Quarto_docs/Quarto_docs.html#types-of-content-in-a-.qmd",
     "href": "lessons/06_Quarto_docs/Quarto_docs.html#types-of-content-in-a-.qmd",
     "title": "Quarto and .qmd’s",
     "section": "3 types of content in a .qmd",
-    "text": "3 types of content in a .qmd\nEvery .qmd file is made up of exactly three things:\n\nYAML metadata — settings at the top of the file (title, author, output format)\nText — plain writing, lists, images, links\nCode chunks — blocks of R (or other) code\n\nWe’ll look at each one in detail — but first, let’s see them all together in a real example.\n\n\n\nIllustration by Alison Hill and Allison Horst, for RStudio."
+    "text": "3 types of content in a .qmd\nEvery .qmd file is made up of exactly three things:\n\nYAML metadata — settings at the top of the file (title, author, output format)\nText — plain writing, lists, images, links\nCode chunks — blocks of R (or other) code\n\nWe’ll look at each one in detail — but first, let’s see them all together in a real example.\n\nIllustration by Alison Hill and Allison Horst, for RStudio."
   },
   {
     "objectID": "lessons/06_Quarto_docs/Quarto_docs.html#a-complete-.qmd-file",
@@ -12422,7 +12422,7 @@
     "href": "lessons/06_Quarto_docs/Quarto_docs.html#qmd-vs.-.html-output",
     "title": "Quarto and .qmd’s",
     "section": ".qmd vs. .html output",
-    "text": ".qmd vs. .html output\n\nIn this class, you’ll turn in both files\nCollaborators typically only need the .html — they can view results without running any code themselves\n\n\n\n\n.qmd file\n\n\n\n\n\n\n\n\n\n\n.html output"
+    "text": ".qmd vs. .html output\n\nIn this class, you’ll turn in both files\nCollaborators typically only need the .html — they can view results without running any code themselves\n\n\n\n.qmd file\n\n\n\n\n\n\n\n\n.html output"
   },
   {
     "objectID": "lessons/06_Quarto_docs/Quarto_docs.html#tips-customizing-your-setup",
@@ -12638,8 +12638,8 @@
     "objectID": "lessons/09_Common_errors/Common_errors.html#errors-and-troubleshooting-are-a-huge-part-of-coding",
     "href": "lessons/09_Common_errors/Common_errors.html#errors-and-troubleshooting-are-a-huge-part-of-coding",
     "title": "Common errors",
-    "section": "",
-    "text": "A huge part of coding is learning to debug your own code and figuring out what’s going wrong.\n\n\n\nErrors can feel frustrating at first, but they are R trying to help you.\n\nWe will cover:\n\nHow to interpret error messages\nThe most common types of errors and how to fix them"
+    "section": "Errors and troubleshooting are a huge part of coding!",
+    "text": "Errors and troubleshooting are a huge part of coding!\n\n\n\nA huge part of coding is learning to debug your own code and figuring out what’s going wrong.\n\n\n\nErrors can feel frustrating at first, but they are R trying to help you.\n\nWe will cover:\n\nHow to interpret error messages\nThe most common types of errors and how to fix them"
   },
   {
     "objectID": "lessons/09_Common_errors/Common_errors.html#error-vs.-warning-vs.-message",
@@ -12736,8 +12736,8 @@
     "objectID": "lessons/10_Intro_to_HRS/Intro_to_HRS.html#the-health-and-retirement-study-hrs",
     "href": "lessons/10_Intro_to_HRS/Intro_to_HRS.html#the-health-and-retirement-study-hrs",
     "title": "Introduction to HRS dataset",
-    "section": "",
-    "text": "From HRS website:\n\nThe University of Michigan Health and Retirement Study (HRS) is a longitudinal panel study that surveys a representative sample of approximately 20,000 people in America, supported by the National Institute on Aging (NIA U01AG009740) and the Social Security Administration.\n\n \n\nHRS measures many aspects of aging, including health, retirement, and economic status"
+    "section": "The Health and Retirement Study (HRS)",
+    "text": "The Health and Retirement Study (HRS)\nFrom HRS website:\n\nThe University of Michigan Health and Retirement Study (HRS) is a longitudinal panel study that surveys a representative sample of approximately 20,000 people in America, supported by the National Institute on Aging (NIA U01AG009740) and the Social Security Administration.\n\n \n\nHRS measures many aspects of aging, including health, retirement, and economic status"
   },
   {
     "objectID": "lessons/10_Intro_to_HRS/Intro_to_HRS.html#we-are-using-synthetic-data",
@@ -12918,8 +12918,8 @@
     "objectID": "lessons/08_Comments/Comments.html#comments",
     "href": "lessons/08_Comments/Comments.html#comments",
     "title": "Comments",
-    "section": "",
-    "text": "R will ignore any text after # for that line.\nThis allows you to write comments, text that is ignored by R but read by other humans.\nWe’ll sometimes include comments in examples explaining why we are running code\n\n\n# This is a comment\n\n## This is also a comment\n\n########## This is a comment that can help me section off code ##########\n\nThis is not a comment # but this part is a comment"
+    "section": "Comments",
+    "text": "Comments\n\nR will ignore any text after # for that line.\nThis allows you to write comments, text that is ignored by R but read by other humans.\nWe’ll sometimes include comments in examples explaining why we are running code\n\n\n# This is a comment\n\n## This is also a comment\n\n########## This is a comment that can help me section off code ##########\n\nThis is not a comment # but this part is a comment"
   },
   {
     "objectID": "lessons/08_Comments/Comments.html#describing-your-process-with-comments",
@@ -12946,8 +12946,8 @@
     "objectID": "lessons/07_Scripts/Scripts.html#what-is-an-r-script",
     "href": "lessons/07_Scripts/Scripts.html#what-is-an-r-script",
     "title": "R Scripts",
-    "section": "",
-    "text": "R script\n\n\nAn R script is a document that can hold your code, comments, and outputs\n\n\n\nUnlike the console, we can save our work in an R script and come back to it later\nThink of this like a very basic Word or Google document file"
+    "section": "What is an R script?",
+    "text": "What is an R script?\n\n\n\n\nR script\n\n\nAn R script is a document that can hold your code, comments, and outputs\n\n\n\nUnlike the console, we can save our work in an R script and come back to it later\nThink of this like a very basic Word or Google document file"
   },
   {
     "objectID": "lessons/07_Scripts/Scripts.html#how-to-create-an-r-script",
@@ -13016,8 +13016,8 @@
     "objectID": "lessons/05_Organization/Organization.html#why-does-file-organization-matter",
     "href": "lessons/05_Organization/Organization.html#why-does-file-organization-matter",
     "title": "Folder and file organization",
-    "section": "",
-    "text": "Good organization means you can:\n\nFind files without hunting\nRe-run your analysis months later\nShare your work without thorough explanations\nAvoid broken paths and missing files\nCollaborate without stepping on each other"
+    "section": "Why does file organization matter?",
+    "text": "Why does file organization matter?\nGood organization means you can:\n\nFind files without hunting\nRe-run your analysis months later\nShare your work without thorough explanations\nAvoid broken paths and missing files\nCollaborate without stepping on each other"
   },
   {
     "objectID": "lessons/05_Organization/Organization.html#folder-organization",
@@ -13506,8 +13506,8 @@
     "objectID": "lessons/11_Packages/Packages.html#what-are-r-packages",
     "href": "lessons/11_Packages/Packages.html#what-are-r-packages",
     "title": "Packages",
-    "section": "",
-    "text": "A good analogy for R packages is that they are like apps you can download onto a mobile phone:\n\n\n\nModernDive Figure 1.4\n\n\n\nPackages contain additional functions and data that are not built into R"
+    "section": "What are R packages?",
+    "text": "What are R packages?\nA good analogy for R packages is that they are like apps you can download onto a mobile phone:\n\nModernDive Figure 1.4\nPackages contain additional functions and data that are not built into R"
   },
   {
     "objectID": "lessons/11_Packages/Packages.html#installing-packages",
@@ -13542,7 +13542,7 @@
     "href": "lessons/11_Packages/Packages.html#tidyverse",
     "title": "Packages",
     "section": "Tidyverse",
-    "text": "Tidyverse\n\n\n\nImage made by Silvia Canelón"
+    "text": "Tidyverse\n\nImage made by Silvia Canelón"
   },
   {
     "objectID": "lessons/11_Packages/Packages.html#install-and-load-packages",
@@ -13947,8 +13947,8 @@
     "objectID": "lessons/12_Rproj_wds/Rproj_wds.html#why-do-we-need-r-projects-and-the-here-package",
     "href": "lessons/12_Rproj_wds/Rproj_wds.html#why-do-we-need-r-projects-and-the-here-package",
     "title": "R projects and working directories",
-    "section": "",
-    "text": "Answer: Reproducibility!\n\n\n\n\n\n\n\nResearch data and code can reach the same results regardless of who is running the code\n\nThis can also refer to future or past you!\n\nWe want to set up our work so the entire folder can be moved around and work in its new location"
+    "section": "Why do we need R Projects and the here package?",
+    "text": "Why do we need R Projects and the here package?\n\n\n\n\n\n\nAnswer: Reproducibility!\n\n\n\n\n\n\nResearch data and code can reach the same results regardless of who is running the code\n\nThis can also refer to future or past you!\n\nWe want to set up our work so the entire folder can be moved around and work in its new location"
   },
   {
     "objectID": "lessons/12_Rproj_wds/Rproj_wds.html#what-is-a-working-directory",
@@ -13990,7 +13990,7 @@
     "href": "lessons/12_Rproj_wds/Rproj_wds.html#we-still-run-into-some-issues-with-r-projects",
     "title": "R projects and working directories",
     "section": "We still run into some issues with R Projects",
-    "text": "We still run into some issues with R Projects\nWe haven’t fixed this issue yet:\n\n\nWhen you use qmds, running code in the console and rendering result in two different working directories\n\nLet’s walk through an example!\n\n\n\n\n\nWe need the here package to fix this issue!"
+    "text": "We still run into some issues with R Projects\nWe haven’t fixed this issue yet:\n\n\n\nWhen you use qmds, running code in the console and rendering result in two different working directories\n\nLet’s walk through an example!\n\n\n\n\n\n\nWe need the here package to fix this issue!"
   },
   {
     "objectID": "lessons/12_Rproj_wds/Rproj_wds.html#the-here-package",

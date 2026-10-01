@@ -97,7 +97,7 @@ I can hit the copy button and paste it!
 - Weeks, class info, due dates
 
 |  |  |  |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 |  | Theme | Each lesson fits into a different theme for the class |
 | [[{{< iconify mdi video size=90px >}}](mothing)]{style="color:#f8f5f0;"} | Lesson video | I record our classes. This will be a link to the Loom page containing this recording. |
 | [[{{< iconify ri slideshow-fill size=80px >}}](lessons/17_Negative_binomial_rv/17_Negative_binomial_rv.qmd)]{style="color:#f8f5f0;"} | Slides | These are the basic slides that will open in your browser. |
