@@ -129,11 +129,13 @@ whenever needed.
 **I am out of town from October 12 to October 18**
 :::
 
-**[Nicky's Webex](https://ohsu.webex.com/meet/wakim)**
+| **Day**    | **Time**               | **Who**   | **Link**                                   |
+|:-----------|:-----------------------|:----------|:-------------------------------------------|
+| Tuesdays   | 11:30 AM - 12:30 PM PT | Nicky     | [Webex](https://ohsu.webex.com/meet/wakim) |
+| Wednesdays | 3:15 - 4:15 PM PT      | Madi (TA) | [Zoom](https://pdx.zoom.us/j/88334628156)  |
+| Thursdays  | 3:00 - 4:00 PM PT      | Madi (TA) | [Zoom](https://pdx.zoom.us/j/85361724787)  |
 
-[{{< iconify icon-park-solid time size=24px >}}]{.icon} TBD
-
-[{{< iconify icon-park-solid time size=24px >}}]{.icon} TBD
+You don't need to stay for the whole hour. Drop in for whatever part works for you!
 
 
 ## My scope of practice {.sec-green}
