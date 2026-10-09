@@ -65,11 +65,14 @@ format:
   font-weight: 600;
 }
 
-.sched table tbody tr:has(.week-row) td{
-  background-color: #3070BF !important; /* A light red; use 'red' for bright red */
-  color: #fff;
-  font-size: 0px;     /* Collapses the text height */
-  height: 5px;
+/* ---- Blank separator rows: any row whose cells are all empty turns blue ---- */
+.sched table tbody tr:not(:has(td:not(:empty))) td {
+  background-color: #3070BF !important;
+  box-shadow: none !important;   /* stops Bootstrap's striping from covering it */
+  padding: 0 !important;
+  height: 10px;
+  line-height: 0;
+  border: none;
 }
 
 .sched table th:nth-of-type(1) {
