@@ -128,6 +128,10 @@ $selection-color: #000 !default;
 $presentation-heading-font: Signika, sans-serif !default;
 $presentation-heading-color: $dark-blue !default;
 
+div.cell-output-stdout {
+  font-size: 1.63em;
+}
+
 .reveal .sourceCode {
   font-size: 0.98em !important;
 }
@@ -138,18 +142,6 @@ $presentation-heading-color: $dark-blue !default;
 
 .large-code code {
   font-size: 1.7em !important;;
-}
-
-/* Target stderr (errors), stdout (text), and regular outputs directly at the code level */
-.reveal .cell-output-stderr pre code,
-.reveal .cell-output pre code {
-  font-size: 1.63em !important;
-  max-height: 100% !important;
-}
-
-/* Optional: Make error blocks tall if they are getting cut off by a scrolling box */
-.reveal .cell-output-stderr pre {
-  max-height: 800px !important;
 }
 
 

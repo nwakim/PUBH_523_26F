@@ -23,12 +23,13 @@ pract2 = cal_dates[14]
 w3d1 = cal_dates[15]
 w3d2 = cal_dates[17]
 pract3 = cal_dates[21]
+lab1 = cal_dates[21]
 
 ## Week 4 dates 
 w4d1 = cal_dates[22]
 w4d2 = cal_dates[24]
 pract4 = cal_dates[28]
-lab1 = cal_dates[28]
+
 
 ## Week 5 dates
 w5d1 = cal_dates[29]
