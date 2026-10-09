@@ -23,10 +23,6 @@ execute:
   freeze: auto 
 ---
 
-::: callout-important
-This lab is **ready**! (Nicky 6/30/26)
-:::
-
 ```{r}
 #| message: false
 #| echo: false
@@ -90,14 +86,14 @@ Answer the following questions using information on WBNS:
 
 ### File organization
 
-Before downloading the data, set up your folders for the class and project. You may use the `.Rproj` already made in our class folder or make a new, project-specific `.Rproj` file. Make sure you are working with the project by using the `here()` function to display your working directory.
+Before downloading the data, Make sure your folders for the class and project are set up (revisit Practice 1, Question 18). Please use the `.Rproj` already made in our class folder. Make sure you are working with the project by using the `here()` function to display your working directory.
 
 ::: callout-important
-#### Task
+#### Tasks
 
-Display your working directory using the `here` package and `here()` function.
+- Display your working directory using the `here` package and `here()` function.
 
-Insert an image of your folder organization with the `.Rproj` file in the correct place.
+- Insert an image of your folder organization with the `.Rproj` file in the correct place. (If you need a refresher on inserting images, [here is a good Youtube video!](https://youtu.be/QlYgnf_qCNo?t=198&si=KtUN8VdmlzURe8Xv))
 :::
 
 ### Access and download the data
@@ -111,6 +107,7 @@ Insert an image of your folder organization with the `.Rproj` file in the correc
 7.  Make sure to move this into your project folder under the "data" folder.
 8.  Take a look at the folders/files you just downloaded. Make sure to locate and understand the difference between the Codebook, Questionnaire, and User Guide. (Note that the website also contains the codebook if you go to the variable tab. I think the online one has an easier user interface than the pdf.)
 9.  **Read the User Guide!** There is some important information about the dataset and how to use it.
+    - **This includes the fact that you CANNOT put the data into an AI chatbot!**
 
 ::: callout-important
 #### Task
@@ -136,17 +133,17 @@ At the end of this project, we will create a scrolling fact/information sheet th
 
 Choose one of the following 3 options for your project scope (you may change this at any point in the quarter):
 
-+----+------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| \# | Project Question                                                                                                       | Population                                                                                                                                                                                     |
-+====+========================================================================================================================+================================================================================================================================================================================================+
-| 1  | For individuals under the federal poverty line, how do food support systems help individuals' food security?           | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months                                                                                        |
-+----+------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 2  | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare effect self-reported health? | People who identify as LGBTQ and have a healthcare provider.                                                                                                                                   |
-|    |                                                                                                                        |                                                                                                                                                                                                |
-|    |                                                                                                                        | (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) |
-+----+------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 3  | For individuals with school-aged children, how do benefits received effect their mental health?                        | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL                                                                                           |
-+----+------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-----------+-----------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \#        | Project Question                                                                                                            | Population                                                                                                                                                                                     |
++===========+=============================================================================================================================+================================================================================================================================================================================================+
+| 1         | For individuals under the federal poverty line, how do food support systems help individuals' food security?                | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months                                                                                        |
++-----------+-----------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 2         | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare effect self-reported health?      | People who identify as LGBTQ and have a healthcare provider.                                                                                                                                   |
+|           |                                                                                                                             |                                                                                                                                                                                                |
+|           |                                                                                                                             | (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) |
++-----------+-----------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 3         | For individuals with school-aged children, how do benefits received effect their mental health? (*this is the hardest one*) | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL                                                                                           |
++-----------+-----------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
  
 
@@ -165,6 +162,7 @@ Use the following code (with your dataset's name) to remove the parentheses with
 ```{r}
 #| eval: false
 
+# Edit this code to remove parentheses artifacts in dataset
 new_df <- old_df |>
   mutate(
     across(
@@ -184,12 +182,16 @@ Use `glimpse` to verify that the parentheses are gone.
 Remove the parentheses with values that are in front of the category names. Verify that the parentheses are gone using `glimpse()`.
 :::
 
-### Save data for processing with `.Rda`
+### Save the data 
 
-Within this document, or in a separate document, use R to save a copy of the dataset so that you can process it without changing the raw data. Recall the file organization that we discussed to set up proper folders. Include a screenshot showing the new `.Rda` file within your data folder.
+In the code chunk below, use R to save a copy of the dataset (as an `.rds`) so that you can use it later and keep the raw data intact. Make sure to save it in `data_project/data_processed`. Include a screenshot showing the new `.rds` file within your data folder.
 
 ::: callout-important
 #### Task
 
-Include a screenshot showing the new `.Rda` file within your data folder.
+Include a screenshot showing the new `.rds` file within your data folder.
 :::
+
+```{r}
+# Code to save dataset here
+```

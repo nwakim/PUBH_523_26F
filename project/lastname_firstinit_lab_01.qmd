@@ -1,6 +1,5 @@
 ---
 title: "Lab 1"
-author: "Your name here!"
 subtitle: "PUBH 523/623"
 date-modified: "today"
 format: 
@@ -11,26 +10,17 @@ format:
     embed-resources: true
     number-sections: true
     number-depth: 4
-    code-annotations: hover
-    page-layout: full
     highlight-style: ayu
-    code-block-bg: "#f8f9fa"
-    code-block-border-left: "#5BAFF8" 
-  pdf: default 
 editor_options: 
   chunk_output_type: console
-execute:
-  freeze: auto 
 ---
-
 
 ```{r}
 #| message: false
-#| echo: false
 
 # PLEASE DO NOT REMOVE THIS CODE CHUNK!!!
 ### ADD YOUR LIBRARIES HERE!!! ####
-pacman::p_load( # These are my go to packages to load
+pacman::p_load( 
   here, 
   tidyverse, 
   writexl, 
@@ -43,9 +33,23 @@ pacman::p_load( # These are my go to packages to load
 )
 ```
 
-::: callout-warning
-Note that this is the editing file. **There are detailed instructions on our course page for Lab 1 that are not in this file.**
-:::
+```{=html}
+<style>
+/* Hide numbers for H1 and H2 in the main body */
+h1 .header-section-number, 
+h2 .header-section-number {
+    display: none;
+}
+</style>
+```
+
+## Directions {.unnumbered}
+
+Please turn in your `.qmd` and `.html` file on Brightspace. Please use the same naming convention as practice assignments: `lastname_firstinit_lab_01.qmd` and `lastname_firstinit_lab_01.html`.
+
+**Please do not remove anything from this file!!** You will only add your code and work to this file.
+
+[The instructions for this lab can be found here.](https://nwakim.github.io/PUBH_523_26Su/project/Lab_01_instructions.html)
 
 ## Lab activities
 
@@ -61,15 +65,34 @@ Answer the following questions using information on WBNS:
 - Why is it important to study basic needs?
 :::
 
+**What is the motivation for this study?**
+
+Type your answer here.
+
+**How could an information sheet on components of the WBNS help change policy?**
+
+Type your answer here.
+
+**Why is it important to study basic needs?**
+
+Type your answer here.
+
 ### File organization
 
 ::: callout-important
-#### Task
+#### Tasks
 
-Display your working directory using the `here` package and `here()` function.
+- Display your working directory using the `here` package and `here()` function.
 
-Insert an image of your folder organization with the `.Rproj` file in the correct place.
+- Insert an image of your folder organization with the `.Rproj` file in the correct place. 
 :::
+
+```{r}
+# Code to display your working directory here
+
+```
+
+Insert the image of your folder organization here.
 
 ### Access and download the data
 
@@ -87,6 +110,11 @@ No task to report back on. Just make sure you have the data and read the User Gu
 Load your downloaded data file into R. Rename the loaded object to a clean dataset name of your choice. (Make sure to show the code for this!)
 :::
 
+```{r}
+# Code to load and rename your dataset here
+
+```
+
 ### Decide on your project question
 
 ::: callout-important
@@ -94,6 +122,10 @@ Load your downloaded data file into R. Rename the loaded object to a clean datas
 
 Write down your chosen project option number and question.
 :::
+
+**Project option number:** 
+
+**Project question:** 
 
 ### Getting data in working format
 
@@ -103,10 +135,24 @@ Write down your chosen project option number and question.
 Remove the parentheses with values that are in front of the category names. Verify that the parentheses are gone using `glimpse()`.
 :::
 
-### Save data for processing with `.Rda`
+
+```{r}
+# Code to remove parentheses and then
+# verify the parentheses are gone using glimpse() here
+
+```
+
+### Save the data 
 
 ::: callout-important
 #### Task
 
-Include a screenshot showing the new `.Rda` file within your data folder.
+Include a screenshot showing the new `.rds` file within your data folder.
 :::
+
+```{r}
+# Code to save dataset here
+
+```
+
+Insert the screenshot of your `.rds` file in your data folder here.
