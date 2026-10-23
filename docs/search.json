@@ -13569,15 +13569,15 @@
     "objectID": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#before-we-start",
     "href": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#before-we-start",
     "title": "Missing data: transformations",
-    "section": "",
-    "text": "Install and load the naniar package (a play on Narnia) if you haven’t already!\n\n\n\n\nArtwork by @allison_horst\n\n\n\nWe’ll be working with only a few variables in the HRS dataset in this lesson!\n\nMostly to help us view the tables and plots within the slides\n\n\n\nhrs_00 &lt;- hrs_data |&gt;\n  select(ed, race_original, srh, sex, act_vig, height, degree)"
+    "section": "Before we start",
+    "text": "Before we start\n\nInstall and load the naniar package (a play on Narnia) if you haven’t already!\n\n\nArtwork by @allison_horst\nWe’ll be working with only a few variables in the HRS dataset in this lesson!\n\nMostly to help us view the tables and plots within the slides\n\n\n\nhrs_00 &lt;- hrs_data |&gt;\n  select(ed, race_original, srh, sex, act_vig, height, degree)"
   },
   {
     "objectID": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#what-do-we-do-with-missing-data",
     "href": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#what-do-we-do-with-missing-data",
     "title": "Missing data: transformations",
-    "section": "",
-    "text": "Filtering out missing values with drop_na()\nA common gotcha: how filter() silently drops NAs\n\n \n\nWe will also use naniar functions to work with NAs in a more flexible way\n\nFilling in missing values with replace_na() (and fct_na_value_to_level() for factors)\nReplacing a values (numbers or levels) with NA using replace_with_na()\n\n\n \n\nNot covered in this course (but very important in practice):\n\nImputation methods for filling in missing values\nWeighting methods for adjusting for missingness"
+    "section": "What do we do with missing data?",
+    "text": "What do we do with missing data?\n\nFiltering out missing values with drop_na()\nA common gotcha: how filter() silently drops NAs\n\n \n\nWe will also use naniar functions to work with NAs in a more flexible way\n\nFilling in missing values with replace_na() (and fct_na_value_to_level() for factors)\nReplacing a values (numbers or levels) with NA using replace_with_na()\n\n\n \n\nNot covered in this course (but very important in practice):\n\nImputation methods for filling in missing values\nWeighting methods for adjusting for missingness"
   },
   {
     "objectID": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#check-missingness-rates-first-before-dropping-nas",
@@ -13605,7 +13605,7 @@
     "href": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#warning-on-filter-it-can-silently-drop-your-nas",
     "title": "Missing data: transformations",
     "section": "Warning on filter(): it can silently drop your NAs",
-    "text": "Warning on filter(): it can silently drop your NAs\n\nSuppose we want to remove the \"Poor\" category from srh (self-reported health)\n\n\n\n\nhrs_00 |&gt; tabyl(srh)\n\n       srh   n     percent valid_percent\n Excellent 277 0.101539589    0.10168869\n Very Good 647 0.237170088    0.23751836\n      Good 870 0.318914956    0.31938326\n      Fair 743 0.272360704    0.27276065\n      Poor 187 0.068548387    0.06864905\n      &lt;NA&gt;   4 0.001466276            NA\n\n\n\nsrh has 4 missing values!\n\n\n\n\nWhen we try to filter using !=, we lose our NAs!\n\nhrs_03_rm_poor &lt;- hrs_00 |&gt; \n  filter(srh != \"Poor\")\n\n\nWhen R checks NA != \"Poor\", it evaluates to NA, not TRUE, so that row gets dropped\n\nhrs_03_rm_poor |&gt; tabyl(srh)\n\n       srh   n   percent\n Excellent 277 0.1091841\n Very Good 647 0.2550256\n      Good 870 0.3429247\n      Fair 743 0.2928656\n      Poor   0 0.0000000"
+    "text": "Warning on filter(): it can silently drop your NAs\n\nSuppose we want to remove the \"Poor\" category from srh (self-reported health)\n\n\n\n\nhrs_00 |&gt; tabyl(srh)\n\n       srh   n     percent valid_percent\n Excellent 277 0.101539589    0.10168869\n Very Good 647 0.237170088    0.23751836\n      Good 870 0.318914956    0.31938326\n      Fair 743 0.272360704    0.27276065\n      Poor 187 0.068548387    0.06864905\n      &lt;NA&gt;   4 0.001466276            NA\n\n\n\nsrh has 4 missing values!\n\n\n\nWhen we try to filter using !=, we lose our NAs!\n\nhrs_03_rm_poor &lt;- hrs_00 |&gt; \n  filter(srh != \"Poor\")\n\n\nWhen R checks NA != \"Poor\", it evaluates to NA, not TRUE, so that row gets dropped\n\nhrs_03_rm_poor |&gt; tabyl(srh)\n\n       srh   n   percent\n Excellent 277 0.1091841\n Very Good 647 0.2550256\n      Good 870 0.3429247\n      Fair 743 0.2928656\n      Poor   0 0.0000000"
   },
   {
     "objectID": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#use-filter_out-to-keep-nas",
@@ -13661,7 +13661,7 @@
     "href": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#example-3-replace-certain-levels-or-values-with-na-22",
     "title": "Missing data: transformations",
     "section": "Example 3: replace certain levels or values with NA (2/2)",
-    "text": "Example 3: replace certain levels or values with NA (2/2)\n\nWe need to check our data to make sure we replaced the values we wanted to replace with NA\n\n\n\n\n\nCheck sex_na\nhrs_07_other_na |&gt; \n  tabyl(sex, sex_na) |&gt;\n  gt() |&gt;\n  tab_options(table.font.size = px(35))\n\n\n\n\n\n\n\n\nsex\nFemale\nMale\nNA_\n\n\n\n\nFemale\n1568\n0\n0\n\n\nMale\n0\n0\n1160\n\n\n\n\n\n\n\n\n\n\nCheck race_filled_na\nhrs_07_other_na |&gt; \n  tabyl(race_filled, race_filled_na) |&gt;\n  gt() |&gt;\n  tab_options(table.font.size = px(35))\n\n\n\n\n\n\n\n\nrace_filled\nWhite/Caucasian\nBlack/African American\nOther\nUnknown\nNA_\n\n\n\n\nWhite/Caucasian\n1000\n0\n0\n0\n0\n\n\nBlack/African American\n0\n884\n0\n0\n0\n\n\nOther\n0\n0\n0\n0\n358\n\n\nUnknown\n0\n0\n0\n0\n486\n\n\n\n\n\n\n\n\n\n\n\nCheck height_na\nhrs_07_other_na |&gt; \n  filter(is.na(height_na)) |&gt;\n  select(height, height_na) |&gt;\n  head()\n\n\n  height height_na\n1 1.6002        NA\n2 1.6002        NA\n3 1.6002        NA\n4 1.6002        NA\n5     NA        NA\n6 1.6002        NA"
+    "text": "Example 3: replace certain levels or values with NA (2/2)\n\nWe need to check our data to make sure we replaced the values we wanted to replace with NA\n\n\n\n\n\nCheck sex_na\nhrs_07_other_na |&gt; \n  tabyl(sex, sex_na) |&gt;\n  gt() |&gt;\n  tab_options(table.font.size = px(35))\n\n\n\n\n\n\n\n\nsex\nFemale\nMale\nNA_\n\n\n\n\nFemale\n1568\n0\n0\n\n\nMale\n0\n0\n1160\n\n\n\n\n\n\n\n\n\n\nCheck race_filled_na\nhrs_07_other_na |&gt; \n  tabyl(race_filled, race_filled_na) |&gt;\n  gt() |&gt;\n  tab_options(table.font.size = px(35))\n\n\n\n\n\n\n\n\nrace_filled\nWhite/Caucasian\nBlack/African American\nOther\nUnknown\nNA_\n\n\n\n\nWhite/Caucasian\n1000\n0\n0\n0\n0\n\n\nBlack/African American\n0\n884\n0\n0\n0\n\n\nOther\n0\n0\n0\n0\n358\n\n\nUnknown\n0\n0\n0\n0\n486\n\n\n\n\n\n\n\n\n\n\nCheck height_na\nhrs_07_other_na |&gt; \n  filter(is.na(height_na)) |&gt;\n  select(height, height_na) |&gt;\n  head()\n\n\n  height height_na\n1 1.6002        NA\n2 1.6002        NA\n3 1.6002        NA\n4 1.6002        NA\n5     NA        NA\n6 1.6002        NA"
   },
   {
     "objectID": "lessons/25_Missing_data_transformations/Missing_data_transformations.html#wrap-up-1",
@@ -14290,15 +14290,15 @@
     "objectID": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#before-we-start",
     "href": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#before-we-start",
     "title": "Missing data: summarization and visualization",
-    "section": "",
-    "text": "Install and load the naniar package (a play on Narnia) if you haven’t already!\n\n\n\n\nArtwork by @allison_horst\n\n\n\nWe’ll be working with only a few variables in the HRS dataset in this lesson!\n\nMostly to help us view the tables and plots within the slides\n\n\n\nhrs_00 &lt;- hrs_data |&gt;\n  select(ed, race_original, srh, sex, act_vig, height)"
+    "section": "Before we start",
+    "text": "Before we start\n\nInstall and load the naniar package (a play on Narnia) if you haven’t already!\n\n\nArtwork by @allison_horst\nWe’ll be working with only a few variables in the HRS dataset in this lesson!\n\nMostly to help us view the tables and plots within the slides\n\n\n\nhrs_00 &lt;- hrs_data |&gt;\n  select(ed, race_original, srh, sex, act_vig, height)"
   },
   {
     "objectID": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#why-summarize-and-visualize-missingness-before-doing-anything-else",
     "href": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#why-summarize-and-visualize-missingness-before-doing-anything-else",
     "title": "Missing data: summarization and visualization",
-    "section": "",
-    "text": "Before you transform, model, or plot a variable, you need to know how much of it is actually there\n\n \n\n\n\n\nMissing data can be a problem for many reasons\n\n\n\nIt can reduce your sample size (and therefor your ability to make conclusions)\nIt can bias your results if there’s a pattern to missingness\nIt can make your plots look weird or misleading\n\n\n\n\n\n\nA quick missingness check can reveal\n\n\n\nWhich variables have the most missing data\nWhether missingness is scattered or clustered\nWhether missingness looks related to another variable (which matters for how you handle it later)"
+    "section": "Why summarize and visualize missingness before doing anything else?",
+    "text": "Why summarize and visualize missingness before doing anything else?\n\nBefore you transform, model, or plot a variable, you need to know how much of it is actually there\n\n \n\n\n\n\nMissing data can be a problem for many reasons\n\n\n\nIt can reduce your sample size (and therefor your ability to make conclusions)\nIt can bias your results if there’s a pattern to missingness\nIt can make your plots look weird or misleading\n\n\n\n\n\n\nA quick missingness check can reveal\n\n\n\nWhich variables have the most missing data\nWhether missingness is scattered or clustered\nWhether missingness looks related to another variable (which matters for how you handle it later)"
   },
   {
     "objectID": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#missing-values-in-a-dataset",
@@ -14340,7 +14340,7 @@
     "href": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#gg_miss_upset-missingness-intersections-12",
     "title": "Missing data: summarization and visualization",
     "section": "gg_miss_upset(): missingness intersections (1/2)",
-    "text": "gg_miss_upset(): missingness intersections (1/2)\n\ngg_miss_upset() shows the most common combinations (sets) of missing variables\n\n\n\n\nhrs_00 |&gt;\n1  gg_miss_upset(\n2    nsets = 10,\n3    text.scale = 3\n    )\n\n\n1\n\ngg_miss_upset() is a function that produces an UpSet plot of missingness intersections\n\n2\n\nnsets = 10 limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable\n\n3\n\ntext.scale = 3 increases the size of the text in the plot, which makes it easier to read\n\n\n\n\n\n\n\nWarning: `aes_string()` was deprecated in ggplot2 3.0.0.\nℹ Please use tidy evaluation idioms with `aes()`.\nℹ See also `vignette(\"ggplot2-in-packages\")` for more information.\nℹ The deprecated feature was likely used in the UpSetR package.\n  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;.\n\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\nℹ The deprecated feature was likely used in the UpSetR package.\n  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;.\n\n\nWarning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.\nℹ Please use the `linewidth` argument instead.\nℹ The deprecated feature was likely used in the UpSetR package.\n  Please report the issue at &lt;https://github.com/hms-dbmi/UpSetR/issues&gt;."
+    "text": "gg_miss_upset(): missingness intersections (1/2)\n\ngg_miss_upset() shows the most common combinations (sets) of missing variables\n\n\n\n\nhrs_00 |&gt;\n1  gg_miss_upset(\n2    nsets = 10,\n3    text.scale = 3\n    )\n\n\n1\n\ngg_miss_upset() is a function that produces an UpSet plot of missingness intersections\n\n2\n\nnsets = 10 limits the plot to the 10 largest combinations of co-missing variables, which keeps the plot readable\n\n3\n\ntext.scale = 3 increases the size of the text in the plot, which makes it easier to read"
   },
   {
     "objectID": "lessons/24_Missing_data_summ_viz/Missing_data_summ_viz.html#gg_miss_upset-missingness-intersections-22",
