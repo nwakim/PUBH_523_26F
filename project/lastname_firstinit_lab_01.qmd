@@ -1,8 +1,13 @@
 ---
+# !!! PLEASE READ !!!
+# Do NOT change anything in this YAML (this header section at the top)
+# EXCEPT replacing "Your name here - update this!!" with your name.
+# Changing anything else can stop your file from rendering.
 title: "Lab 1"
+author: "Your name here - update this!!"
 subtitle: "PUBH 523/623"
 date-modified: "today"
-format: 
+format:
   html:
     link-external-newwindow: true
     toc: true
@@ -11,7 +16,7 @@ format:
     number-sections: true
     number-depth: 4
     highlight-style: ayu
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -20,12 +25,12 @@ editor_options:
 
 # PLEASE DO NOT REMOVE THIS CODE CHUNK!!!
 ### ADD YOUR LIBRARIES HERE!!! ####
-pacman::p_load( 
-  here, 
-  tidyverse, 
-  writexl, 
-  rstatix, 
-  janitor, 
+pacman::p_load(
+  here,
+  tidyverse,
+  writexl,
+  rstatix,
+  janitor,
   naniar,
   gt,
   gtsummary,
@@ -36,7 +41,7 @@ pacman::p_load(
 ```{=html}
 <style>
 /* Hide numbers for H1 and H2 in the main body */
-h1 .header-section-number, 
+h1 .header-section-number,
 h2 .header-section-number {
     display: none;
 }
@@ -67,15 +72,15 @@ Answer the following questions using information on WBNS:
 
 **What is the motivation for this study?**
 
-Type your answer here.
+*Replace this line with your answer.*
 
 **How could an information sheet on components of the WBNS help change policy?**
 
-Type your answer here.
+*Replace this line with your answer.*
 
 **Why is it important to study basic needs?**
 
-Type your answer here.
+*Replace this line with your answer.*
 
 ### File organization
 
@@ -84,15 +89,15 @@ Type your answer here.
 
 - Display your working directory using the `here` package and `here()` function.
 
-- Insert an image of your folder organization with the `.Rproj` file in the correct place. 
+- Insert an image of your folder organization with the `.Rproj` file in the correct place.
 :::
 
 ```{r}
-# Code to display your working directory here
+# Display your working directory here
 
 ```
 
-Insert the image of your folder organization here.
+*Replace this line with the image of your folder organization.*
 
 ### Access and download the data
 
@@ -111,7 +116,12 @@ Load your downloaded data file into R. Rename the loaded object to a clean datas
 :::
 
 ```{r}
-# Code to load and rename your dataset here
+# Load your data here
+
+```
+
+```{r}
+# Rename your dataset here
 
 ```
 
@@ -123,9 +133,9 @@ Load your downloaded data file into R. Rename the loaded object to a clean datas
 Write down your chosen project option number and question.
 :::
 
-**Project option number:** 
+**Project option number:** *Replace this text with your option number.*
 
-**Project question:** 
+**Project question:** *Replace this text with your project question.*
 
 ### Getting data in working format
 
@@ -135,14 +145,18 @@ Write down your chosen project option number and question.
 Remove the parentheses with values that are in front of the category names. Verify that the parentheses are gone using `glimpse()`.
 :::
 
-
 ```{r}
-# Code to remove parentheses and then
-# verify the parentheses are gone using glimpse() here
+# Paste the code from the instructions here,
+# then change old_df and new_df to your dataset names
 
 ```
 
-### Save the data 
+```{r}
+# Use glimpse() here to check that the parentheses are gone
+
+```
+
+### Save the data
 
 ::: callout-important
 #### Task
@@ -151,8 +165,8 @@ Include a screenshot showing the new `.rds` file within your data folder.
 :::
 
 ```{r}
-# Code to save dataset here
+# Save your dataset as an .rds file here
 
 ```
 
-Insert the screenshot of your `.rds` file in your data folder here.
+*Replace this line with the screenshot of your `.rds` file in your data folder.*

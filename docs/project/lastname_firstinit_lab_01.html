@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your name here - update this!!">
 
 <title>Lab 1 – Introduction to R</title>
 <style>
@@ -4126,12 +4127,18 @@ vertical-align: -.125em;
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your name here - update this!! </p>
+          </div>
+  </div>
     
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">October 9, 2026</p>
+      <p class="date-modified">October 23, 2026</p>
     </div>
   </div>
     
@@ -4145,12 +4152,12 @@ vertical-align: -.125em;
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PLEASE DO NOT REMOVE THIS CODE CHUNK!!!</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD YOUR LIBRARIES HERE!!! ####</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>( </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  here, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  tidyverse, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  writexl, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  rstatix, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  janitor, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  here,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  tidyverse,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  writexl,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  rstatix,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  janitor,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  naniar,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  gt,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  gtsummary,</span>
@@ -4159,7 +4166,8 @@ vertical-align: -.125em;
 </div>
 <style>
 
-h1 .header-section-number, h2 .header-section-number {
+h1 .header-section-number,
+h2 .header-section-number {
 display: none;
 }
 </style>
@@ -4192,11 +4200,11 @@ display: none;
 </div>
 </div>
 <p><strong>What is the motivation for this study?</strong></p>
-<p>Type your answer here.</p>
+<p><em>Replace this line with your answer.</em></p>
 <p><strong>How could an information sheet on components of the WBNS help change policy?</strong></p>
-<p>Type your answer here.</p>
+<p><em>Replace this line with your answer.</em></p>
 <p><strong>Why is it important to study basic needs?</strong></p>
-<p>Type your answer here.</p>
+<p><em>Replace this line with your answer.</em></p>
 </section>
 <section id="file-organization" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="file-organization"><span class="header-section-number">1.2</span> File organization</h3>
@@ -4217,9 +4225,9 @@ display: none;
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to display your working directory here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display your working directory here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Insert the image of your folder organization here.</p>
+<p><em>Replace this line with the image of your folder organization.</em></p>
 </section>
 <section id="access-and-download-the-data" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="access-and-download-the-data"><span class="header-section-number">1.3</span> Access and download the data</h3>
@@ -4253,7 +4261,10 @@ display: none;
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to load and rename your dataset here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your data here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename your dataset here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="decide-on-your-project-question" class="level3" data-number="1.5">
@@ -4271,8 +4282,8 @@ display: none;
 <p>Write down your chosen project option number and question.</p>
 </div>
 </div>
-<p><strong>Project option number:</strong></p>
-<p><strong>Project question:</strong></p>
+<p><strong>Project option number:</strong> <em>Replace this text with your option number.</em></p>
+<p><strong>Project question:</strong> <em>Replace this text with your project question.</em></p>
 </section>
 <section id="getting-data-in-working-format" class="level3" data-number="1.6">
 <h3 data-number="1.6" class="anchored" data-anchor-id="getting-data-in-working-format"><span class="header-section-number">1.6</span> Getting data in working format</h3>
@@ -4290,8 +4301,11 @@ display: none;
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to remove parentheses and then</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># verify the parentheses are gone using glimpse() here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paste the code from the instructions here,</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then change old_df and new_df to your dataset names</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use glimpse() here to check that the parentheses are gone</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="save-the-data" class="level3" data-number="1.7">
@@ -4310,9 +4324,9 @@ display: none;
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to save dataset here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save your dataset as an .rds file here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Insert the screenshot of your <code>.rds</code> file in your data folder here.</p>
+<p><em>Replace this line with the screenshot of your <code>.rds</code> file in your data folder.</em></p>
 
 
 </section>

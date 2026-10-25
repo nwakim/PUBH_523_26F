@@ -35,6 +35,7 @@ This lab is **ready**! (Nicky 8/10/26)
 ### ADD YOUR LIBRARIES HERE!!! ####
 pacman::p_load( # These are my goto packages to load
   here, 
+  rio,
   tidyverse, 
   writexl, 
   rstatix, 
@@ -66,7 +67,7 @@ The above link will take you to your **editing** file. **Please do not remove an
 
 ## Purpose {.unnumbered}
 
-**The purpose of this lab is to summarize your data and make a few more targeted data transformations that your summaries and future visualizations will need.** In Lab 2, you filtered to your population, selected and renamed your variables, and built one or more composite scores. Now we'll actually look at what those variables tell us: quick numeric summaries, polished summary tables, and summaries grouped by a variable of interest. Along the way, you'll likely find that a variable isn't quite in the shape you need it in yet, that's the "further, needed data transformations" part of this lab. **This is meant to build your comfort translating a numeric result back into a plain-language sentence someone outside this class could understand.**
+**The purpose of this lab is to summarize your data and make a few more targeted data transformations that your summaries and future visualizations will need.** In Lab 2, you filtered to your population, selected and renamed your variables, and handled missing data. Now you'll build your composite score(s) and look at what your variables tell us: quick numeric summaries, polished summary tables, and summaries grouped by a variable of interest. Along the way, you'll likely find that a variable isn't quite in the shape you need it in yet, that's the "further, needed data transformations" part of this lab. **This is meant to build your comfort translating a numeric result back into a plain-language sentence someone outside this class could understand.**
 
 ## Lab activities
 
@@ -74,11 +75,11 @@ The above link will take you to your **editing** file. **Please do not remove an
 
 Recall the [following table from Lab 2](Lab_02_instructions.html#lab-activities) with each project's population, main variables, and composite score(s). You'll be summarizing the **main variables** and **composite score(s)** for your project throughout this lab.
 
-| \# | Project Question | Population | Population variables | Main variables | Suggested additional variables | Composite score |
+| \# | Project Question | Population | Population variables | Main variables | Additional variables | Composite score |
 |---------|---------|---------|---------|---------|------------------|---------|
-| 1 | For individuals under the federal poverty line, how do food support systems help individuals' food security? | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months | `FPL_LT50`, `FPL50_100` | `FOOD_INSEC`, `Q26D_1`, `Q26D_2`, `Q26D_3`, `Q26D_4` | `Q23`, `PPETHM`, `Q37`, `NUM_CHILD_HH`, `Q25`, `Q25A`, `Q26`, `Q26A` | Composite score of ease of access to free groceries or meals (combined score from `Q26D_`) |
-| 2 | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare effect self-reported health? | People who identify as LGBTQ and have a healthcare provider. <br><br> (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) | `LGBTQ`, `Q108` | `Q108B_2`, `Q108B_1`, `Q27` | `Q108`, `Q70F_4`, `Q70F_5`, `PPETHM`, `Q28O` | Level of trust, courtesy, and respect around treatment (combined score from `Q108B_1` and `Q108B_2`) |
-| 3 | For individuals with school-aged children and below the federal poverty line, how do benefits received effect their mental health? | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL | `ANY_CHILDHH_5_18`, `FPL_LT50`, `FPL50_100` | `Q30_1`, `Q30_2`, `Q30_3`, `Q30_4`, `Q30_5`, `Q30_6`, `Q53_A`, `Q53_B`, `Q53_C`, `Q53_D`, `Q53_E`, `Q53_G`, `Q53_H`, `Q53_I`, `Q53_J`, `Q11`, `Q31_4` | `NUM_CHILD_HH`, `Q1`, `Q37`, `PPETHM`, `Q27` | Total mental health (combined scores from `Q30_`), <br><br> Total benefits (combined scores from `Q53_`, `Q11`, and `Q31_4`) |
+| 1 | For individuals under the federal poverty line, how do food support systems help individuals' food security? | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months | `FPL_LT50`, `FPL50_100`, `Q25`, `Q25A`, `Q26`, `Q26A` | `FOOD_INSEC`, `Q26D_1`, `Q26D_2`, `Q26D_3`, `Q26D_4` | `Q23`, `PPETHM`, `Q37`, `NUM_CHILD_HH` | Composite score of ease of access to free groceries or meals (combined score from `Q26D_`) |
+| 2 | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare affect self-reported health? | People who identify as LGBTQ and have a healthcare provider. <br><br> (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) | `LGBTQ`, `Q108` | `Q108B_2`, `Q108B_1`, `Q27` | `Q70F_4`, `Q70F_5`, `PPETHM`, `Q28O` | Level of trust, courtesy, and respect around treatment (combined score from `Q108B_1` and `Q108B_2`) |
+| 3 | For individuals with school-aged children and below the federal poverty line, how do benefits received affect their mental health? | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL | `ANY_CHILDHH_5_18`, `FPL_LT50`, `FPL50_100` | `Q30_1`, `Q30_2`, `Q30_3`, `Q30_4`, `Q30_5`, `Q30_6`, `Q53_A`, `Q53_B`, `Q53_C`, `Q53_D`, `Q53_E`, `Q53_F`, `Q53_G`, `Q53_H`, `Q53_I`, `Q11`, `Q31_4` | `NUM_CHILD_HH`, `Q1`, `Q37`, `PPETHM`, `Q27` | Total mental health (combined scores from `Q30_`), <br><br> Total benefits (combined scores from `Q53_`, `Q11`, and `Q31_4`) |
 
 ::: callout-important
 #### Task
@@ -92,8 +93,193 @@ Copy and paste the row from the above table that corresponds to your project int
 ::: callout-important
 #### Task
 
-From the `.rda` file you exported at the end of Lab 2, import your data into R using `import()` from the `rio` package. Save this as a new object called `wbns_05_composite`. Print out the number of rows and columns to verify the import.
+From the `.rda` file you exported at the end of Lab 2, import `wbns_04_no_na` into R using `import()` from the `rio` package. Save it as an object called `wbns_04_no_na`. Use `dim()` to print the number of rows and columns to verify the import.
 :::
+
+Your Lab 2 `.rda` file holds several datasets, so we need to tell `import()` which one we want. The `which` argument does this: give it the name of the dataset in quotes. Replace the file name with yours:
+
+```{r}
+#| eval: false
+wbns_04_no_na <- import(
+  here("data_project", "data_processed", "wbns_data_lab_02_work.rda"),
+  which = "wbns_04_no_na"
+)
+```
+
+The number of rows should match what you got at the end of Lab 2.
+
+::: callout-note
+#### Projects 1 and 3: you will still see missing data, and that's okay!
+
+Some variables in `wbns_04_no_na` are still very missing on purpose. They are missing because of skip logic (people who were never asked the question because an earlier answer already told us), and we didn't drop them in Lab 2.
+
+- **Project 1:** `Q25A` and `Q26A` are only asked of people who said no to `Q25` or `Q26`. You don't need them for your composite score. Leave them as they are, and don't drop rows because of them.
+- **Project 3:** `medicaid_chip_q53`, `housing_q53`, `housing_q11`, and `benefit_wic`. You'll handle these in the next section when you build `total_benefits`.
+
+You'll see this missing data again in your quick summaries below. Note it, but don't remove it.
+:::
+
+### Constructing the Composite Score
+
+::: callout-caution
+Please make sure you are referencing the PDF with the questionnaire when creating your composite score. There are important descriptions and caveats in the questionnaire!
+:::
+
+Your project must create a brand-new variable that combines information from at least two source columns using `mutate()`. Please see the table above for the variables to combine, and the project-specific guidance below. The project-specific steps are in tabs: click your project's tab, and every set of tabs in this lab will switch to it.
+
+**The general recipe** (the same for every project):
+
+1.  **Confirm the response scale** for each item in the questionnaire. Is it Yes/No? A 5-point scale? What order are the levels in?
+2.  **Convert each item to a number** using `case_when()` inside `mutate()` (Lesson 23). Write one line for each category: `item == "Category" ~ number`. Save each converted item as a **new** variable ending in `_num` (e.g., `ease_find_place_num`), so you can compare it to the original.
+    - Any value that doesn't match one of your conditions (including `NA`) automatically becomes `NA`. That's what we want!
+3.  **Check each conversion** with `tabyl()`, using the pattern from Lesson 25: `wbns_05_composite |> tabyl(ease_find_place, ease_find_place_num)`. Every category should line up with the number you intended.
+4.  **Add the converted items together** into one new composite variable inside `mutate()`, using the required name from your project's tab.
+5.  **Sanity-check the result:** use `summary()` on your composite score, and confirm the minimum and maximum are within the possible range. Does a higher score mean *more* of what you think it means?
+    - **Check for `NA`s.** You removed missing values in Lab 2, so `ease_free_food`, `trust_courtesy_respect`, and `mental_health_score` should have **no** `NA`s. If `summary()` shows an `NA's` count, some category didn't match any line in your `case_when()`. Usually that's a "Refused" or "Don't know" that wasn't turned into `NA` in Lab 2 Part A, or a spelling mismatch. Use `tabyl()` on the original item and its `_num` version to find it. (Project 3's `total_benefits` can have a few `NA`s; step 5 in your tab handles those.)
+
+::: callout-warning
+#### Why not `as.numeric()`?
+
+You might see code online that converts survey answers with `as.numeric()`. **Don't use it for this lab.** Our variables are factors, and `as.numeric()` gives each level's *position* in the list of levels, **not** the survey's number for that answer. If a factor's first level is `"Refused"`, then `"Very difficult"` becomes 2 instead of 1, and your whole score shifts without any error message. `case_when()` lets you say exactly which number goes with which answer.
+:::
+
+To keep it beginner-friendly and easy to debug, build your composite in **two steps**: first one `mutate()` that creates all of your `_num` variables, then check them with `tabyl()`, and then add a second `mutate()` that adds them together.
+
+::: {.panel-tabset group="project"}
+#### Project 1
+
+**Composite name:** `ease_free_food`
+
+Your composite combines the four `ease_` items, which each ask how difficult or easy a different aspect of accessing free groceries/meals was (finding a place, finding transportation, variety of food, and getting there in a reasonable time). Per the questionnaire, the response scale is **Very difficult (1), Difficult (2), Neither difficult nor easy (3), Easy (4), Very easy (5), Don't know (6)**.
+
+1.  You already turned `"Don't know"` into `NA` in the last section, so you only need to convert five categories.
+2.  Convert each item with `case_when()`. Here is the first one; write the other three the same way:
+
+    ```{r}
+    #| eval: false
+    wbns_05_composite <- wbns_04_no_na |>
+      mutate(
+        ease_find_place_num = case_when(
+          ease_find_place == "Very difficult" ~ 1,
+          ease_find_place == "Difficult" ~ 2,
+          ease_find_place == "Neither difficult nor easy" ~ 3,
+          ease_find_place == "Easy" ~ 4,
+          ease_find_place == "Very easy" ~ 5
+        )
+        # add ease_transport_num, ease_variety_num, and ease_timely_num here
+      )
+    ```
+
+    Check that the category spelling matches your `tabyl()` output exactly.
+3.  Higher values already mean *easier*, so no reverse-coding is needed.
+4.  Add the four `_num` items together into `ease_free_food`.
+5.  With 4 items on a 1-5 scale, the possible range is 4 (very difficult across the board) to 20 (very easy across the board). Check that your `summary()` falls in this range.
+
+#### Project 2
+
+**Composite name:** `trust_courtesy_respect`
+
+Your composite combines `courtesy_respect` (Q108B_1: "I am treated with courtesy and respect by my personal health care provider") and `trust_provider` (Q108B_2: "I trust my personal health care provider"). Per the questionnaire, both share the same response scale: **Never true (1), Rarely true (2), Sometimes true (3), Often true (4), Always true (5)**.
+
+1.  Convert each item with `case_when()`. Here is the first one; write the second the same way:
+
+    ```{r}
+    #| eval: false
+    wbns_05_composite <- wbns_04_no_na |>
+      mutate(
+        courtesy_respect_num = case_when(
+          courtesy_respect == "Never true" ~ 1,
+          courtesy_respect == "Rarely true" ~ 2,
+          courtesy_respect == "Sometimes true" ~ 3,
+          courtesy_respect == "Often true" ~ 4,
+          courtesy_respect == "Always true" ~ 5
+        )
+        # add trust_provider_num here
+      )
+    ```
+
+    Check that the category spelling matches your `tabyl()` output exactly.
+2.  Higher values already mean *more* trust/courtesy/respect, so no reverse-coding is needed.
+3.  Add the two `_num` items together into `trust_courtesy_respect`. It will range from 2 (never true on both) to 10 (always true on both). Check that your `summary()` falls in this range.
+4.  *Optional:* if you kept `Q70F_4` and `Q70F_5`, you could build a second, related composite capturing whether the respondent felt judged unfairly based on gender identity or sexual orientation, and compare it against your trust/courtesy/respect score.
+
+#### Project 3
+
+**Composite names:** `mental_health_score` and `total_benefits`
+
+This project asks for *two* composite scores, and both have a wrinkle worth slowing down for. Don't try to do it all in one `mutate()`. Build it up piece by piece.
+
+**Mental health composite** (`mental_health_score`, from the six `mh_` items):
+
+These six items ask how often in the past 30 days the respondent felt nervous, hopeless, restless/fidgety, so sad that nothing could cheer them up, that everything was an effort, or worthless. Per the questionnaire, the scale is **All of the time (1), Most of the time (2), Some of the time (3), A little of the time (4), None of the time (5)**. That means a *lower* number = more frequent distress (worse mental health), and a *higher* number = less frequent distress (better mental health).
+
+1.  Decide which direction you want your composite to run, and say so in your write-up:
+    - **Option A:** Use the survey's numbers as-is (`"All of the time" ~ 1`, ..., `"None of the time" ~ 5`). Your total will run low = worse, high = better.
+    - **Option B:** Flip the numbers in your `case_when()` (`"All of the time" ~ 5`, ..., `"None of the time" ~ 1`). Your total will run low = better, high = worse, which many people find more intuitive.
+2.  Convert all six items with `case_when()`, using the same direction for every item. Here is the first one, using Option A:
+
+    ```{r}
+    #| eval: false
+    wbns_05_composite <- wbns_04_no_na |>
+      mutate(
+        mh_nervous_num = case_when(
+          mh_nervous == "All of the time" ~ 1,
+          mh_nervous == "Most of the time" ~ 2,
+          mh_nervous == "Some of the time" ~ 3,
+          mh_nervous == "A little of the time" ~ 4,
+          mh_nervous == "None of the time" ~ 5
+        )
+        # add the other five mh_ items here
+      )
+    ```
+
+3.  Add the six `_num` items together into `mental_health_score`. The possible range is 6 to 30.
+
+**Total benefits composite** (`total_benefits`) — this is the tricky part:
+
+The `Q53_` series asks about several *different* benefit programs, each a separate Yes/No question, not a scale. Two of them have **built-in skip logic** (which you saw in your `gg_miss_fct()` plots in Lab 2):
+
+- `medicaid_chip_q53` (Q53_B) is *only asked* of people who did **not** already report Medicaid/CHIP coverage in Q31 (item d). If someone said `"Covered"` on `medicaid_chip_q31`, they were skipped past Q53_B, so it is missing for them, even though they clearly do have this benefit. People who said "Not Covered" or "Not Sure" on Q31 **were** asked Q53_B.
+- `housing_q53` (Q53_C) has the same issue with `housing_q11` ("is your household paying lower rent because a government program is paying part of the cost?"). Anyone who said `"Yes"` on Q11 was skipped past Q53_C. Everyone else was asked Q53_C, including homeowners who never saw Q11.
+
+Here's how the two questions in each pair fit together:
+
+| What they said on Q31 item d (or Q11) | Asked Q53_B (or Q53_C)? | Receives the benefit? |
+|---|---|---|
+| "Covered" (or "Yes") | No, skipped | **Yes** (1) |
+| Anything else, or not asked | Yes | Use their Q53 answer: "Yes" = 1, "No" = 0 |
+| Anything else, and Q53 is `NA` (e.g., "Don't know") | Yes | Unknown (`NA`) |
+
+1.  **Combine each skipped pair into one 0/1 indicator.** Count the person as receiving the benefit (1) if *either* question says yes. Count them as not receiving it (0) only if they were asked Q53 and said `"No"`. Here is Medicaid/CHIP:
+
+    ```{r}
+    #| eval: false
+    medicaid_chip = case_when(
+      medicaid_chip_q53 == "Yes" | medicaid_chip_q31 == "Covered" ~ 1,
+      medicaid_chip_q53 == "No" ~ 0
+    )
+    ```
+
+    If both questions are missing, neither condition is true, so `medicaid_chip` becomes `NA`. Write `housing` the same way, using `housing_q53` and `housing_q11`.
+2.  **Convert the other benefit items** to 0/1 indicators with `case_when()` (`"Yes" ~ 1`, `"No" ~ 0`). Name each one with `_num` at the end (e.g., `benefit_snap_num`).
+    - `benefit_school_meals` is only asked of households with a child aged 5-18. Your population filter already requires that, so everyone in your sample should have an answer.
+    - `benefit_wic` is only asked of households with a child aged 0-5, which your population filter does **not** guarantee. WIC may be missing for many people because they weren't asked, not because they refused. Decide whether to include WIC in your total at all. If you do, use `replace_na()` from Lesson 25 to fill in missing `benefit_wic_num` values with 0 instead of dropping those rows, and explain your choice. (Because you turned "Don't know" into `NA` in Lab 2, this also counts the few people who answered "Don't know" about WIC as not receiving it. Mention that in your explanation.)
+3.  **Check** each indicator with `tabyl()`. For the combined pairs, check against both originals, e.g. `wbns_05_composite |> tabyl(medicaid_chip_q53, medicaid_chip_q31)` next to `wbns_05_composite |> tabyl(medicaid_chip)`.
+4.  **Add every 0/1 indicator together** into `total_benefits`, a count of how many *different* types of benefits the household receives.
+5.  **Remove rows with an unknown total.** If any indicator is `NA` (for example, someone who said "Don't know" on Q53_B and wasn't covered on Q31), `total_benefits` will be `NA`, because `1 + NA` is `NA`. Use `drop_na(total_benefits)` and save the result as `wbns_05_composite`. Use `dim()` before and after to see how many rows this removes. It should be a small number.
+6.  *Optional:* group `total_benefits` into a categorical variable (e.g., "0", "1", "2", "3", "4+") with `case_when()` for easier visualization later.
+:::
+
+::: callout-important
+#### Task
+
+Create your new composite score(s) using `case_when()` and `mutate()`, following the steps for your project. Save this as a new object called `wbns_05_composite`.
+
+1.  Use `tabyl()` to check at least two of your converted (`_num`) variables against the originals.
+2.  Use `summary()` to display a summary of each composite score.
+3.  Briefly explain (1-2 sentences) whether the range and direction of your composite score make sense. (Project 3: say which direction you chose for `mental_health_score`, whether you included WIC, and how many rows you removed because `total_benefits` was `NA`.)
+:::
+
 
 ### Quick summaries of your variables
 
@@ -107,7 +293,7 @@ Take your `wbns_05_composite` dataset and use `skim()` to generate a quick summa
 
 ### Creating categorical versions of your composite score(s)
 
-A continuous composite score is precise, but it's hard to summarize or visualize in a way that's easy to interpret at a glance (e.g., "the average score was 14.3" means less to a general audience than "most people reported easy access"). For this lab, create a **categorical version** of each composite score you built in Lab 2, so you have both forms available going forward.
+A continuous composite score is precise, but it's hard to summarize or visualize in a way that's easy to interpret at a glance (e.g., "the average score was 14.3" means less to a general audience than "most people reported easy access"). For this lab, create a **categorical version** of each composite score you built earlier in this lab, so you have both forms available going forward.
 
 There's no single correct set of categories — use your quick summaries above (the range, and where most of your data falls) to choose meaningful, roughly interpretable cut points. `case_when()` or `cut()` both work well for this.
 
@@ -136,7 +322,7 @@ For `total_benefits`, you likely already have a natural, interpretable scale (a 
 - 0-1: "0-1"
 - 2-3: "2-3"
 - 4-5: "4-5"
-- 6-8: "6-8"
+- 6-9: "6-9"
 
 ::: callout-important
 #### Task

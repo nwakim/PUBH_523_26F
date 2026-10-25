@@ -32,6 +32,7 @@ execute:
 ### ADD YOUR LIBRARIES HERE!!! ####
 pacman::p_load( # These are my go to packages to load
   here, 
+  rio,
   tidyverse, 
   writexl, 
   rstatix, 
@@ -62,8 +63,27 @@ Copy and paste the row from the above table that corresponds to your project int
 ::: callout-important
 #### Task
 
-From the `.rda` file you exported at the end of Lab 2, import your data into R using `import()` from the `rio` package. Save this as a new object called `wbns_05_composite`. Print out the number of rows and columns to verify the import.
+From the `.rda` file you exported at the end of Lab 2, import `wbns_04_no_na` into R using `import()` from the `rio` package. Save it as an object called `wbns_04_no_na`. Use `dim()` to print the number of rows and columns to verify the import.
 :::
+
+### Constructing the Composite Score
+
+::: callout-important
+#### Task
+
+Create your new composite score(s) using `case_when()` and `mutate()`, following the steps for your project. Save this as a new object called `wbns_05_composite`.
+
+1.  Use `tabyl()` to check at least two of your converted (`_num`) variables against the originals.
+2.  Use `summary()` to display a summary of each composite score.
+3.  Briefly explain (1-2 sentences) whether the range and direction of your composite score make sense. (Project 3: say which direction you chose for `mental_health_score`, whether you included WIC, and how many rows you removed because `total_benefits` was `NA`.)
+:::
+
+```{r}
+
+```
+
+**Does the range and direction of my composite score(s) make sense?**
+
 
 ### Quick summaries of your variables
 
