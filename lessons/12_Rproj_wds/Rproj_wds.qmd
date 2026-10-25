@@ -34,7 +34,21 @@ pacman::p_load(
 )
 ```
 
+
 ## Why do we need R Projects and the `here` package?
+
+```{css, echo=FALSE}
+/* Wrap long code output (like file paths) instead of scrolling sideways */
+.reveal .cell-output pre code {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-wrap: break-word !important;
+}
+
+.reveal .cell-output pre {
+  overflow-x: hidden !important;
+}
+```
 
 :::::::: columns
 ::: {.column width="35%"}

@@ -4329,54 +4329,57 @@ display: none;
 </section>
 <section id="lab-activities" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="lab-activities"><span class="header-section-number">1</span> Lab activities</h2>
-<p>The following table will help you identify the appropriate population and variables based on your selected project question from Lab 1. You will build the composite score(s) in the last column in Lab 3, but it helps to know now which variables they need.</p>
+<p>The following table will help you identify the appropriate population and variables based on your selected project question from Lab 1. You will build the composite score(s) in the last row in Lab 3, but it helps to know now which variables they need.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 25%">
-<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>#</th>
-<th>Project Question</th>
-<th>Population</th>
-<th>Population variables</th>
-<th>Main variables</th>
-<th>Additional variables</th>
-<th>Composite score</th>
+<th></th>
+<th>Project 1</th>
+<th>Project 2</th>
+<th>Project 3</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
+<td><strong>Project Question</strong></td>
 <td>For individuals under the federal poverty line, how do food support systems help individuals’ food security?</td>
-<td>People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months</td>
-<td><code>FPL_LT50</code>, <code>FPL50_100</code>, <code>Q25</code>, <code>Q25A</code>, <code>Q26</code>, <code>Q26A</code></td>
-<td><code>FOOD_INSEC</code>, <code>Q26D_1</code>, <code>Q26D_2</code>, <code>Q26D_3</code>, <code>Q26D_4</code></td>
-<td><code>Q23</code>, <code>PPETHM</code>, <code>Q37</code>, <code>NUM_CHILD_HH</code></td>
-<td>Composite score of ease of access to free groceries or meals (combined score from <code>Q26D_</code>)</td>
+<td>For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare affect self-reported health?</td>
+<td>For individuals with school-aged children and below the federal poverty line, how do benefits received affect their mental health?</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare affect self-reported health?</td>
+<td><strong>Population</strong></td>
+<td>People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months</td>
 <td>People who identify as LGBTQ and have a healthcare provider. <br><br> (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!)</td>
-<td><code>LGBTQ</code>, <code>Q108</code></td>
-<td><code>Q108B_2</code>, <code>Q108B_1</code>, <code>Q27</code></td>
-<td><code>Q70F_4</code>, <code>Q70F_5</code>, <code>PPETHM</code>, <code>Q28O</code></td>
-<td>Level of trust, courtesy, and respect around treatment (combined score from <code>Q108B_1</code> and <code>Q108B_2</code>)</td>
+<td>People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>For individuals with school-aged children and below the federal poverty line, how do benefits received affect their mental health?</td>
-<td>People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL</td>
+<td><strong>Population variables</strong></td>
+<td><code>FPL_LT50</code>, <code>FPL50_100</code>, <code>Q25</code>, <code>Q25A</code>, <code>Q26</code>, <code>Q26A</code></td>
+<td><code>LGBTQ</code>, <code>Q108</code></td>
 <td><code>ANY_CHILDHH_5_18</code>, <code>FPL_LT50</code>, <code>FPL50_100</code></td>
+</tr>
+<tr class="even">
+<td><strong>Main variables</strong></td>
+<td><code>FOOD_INSEC</code>, <code>Q26D_1</code>, <code>Q26D_2</code>, <code>Q26D_3</code>, <code>Q26D_4</code></td>
+<td><code>Q108B_2</code>, <code>Q108B_1</code>, <code>Q27</code></td>
 <td><code>Q30_1</code>, <code>Q30_2</code>, <code>Q30_3</code>, <code>Q30_4</code>, <code>Q30_5</code>, <code>Q30_6</code>, <code>Q53_A</code>, <code>Q53_B</code>, <code>Q53_C</code>, <code>Q53_D</code>, <code>Q53_E</code>, <code>Q53_F</code>, <code>Q53_G</code>, <code>Q53_H</code>, <code>Q53_I</code>, <code>Q11</code>, <code>Q31_4</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Additional variables</strong></td>
+<td><code>Q23</code>, <code>PPETHM</code>, <code>Q37</code>, <code>NUM_CHILD_HH</code></td>
+<td><code>Q70F_4</code>, <code>Q70F_5</code>, <code>PPETHM</code>, <code>Q28O</code></td>
 <td><code>NUM_CHILD_HH</code>, <code>Q1</code>, <code>Q37</code>, <code>PPETHM</code>, <code>Q27</code></td>
+</tr>
+<tr class="even">
+<td><strong>Composite score</strong></td>
+<td>Composite score of ease of access to free groceries or meals (combined score from <code>Q26D_</code>)</td>
+<td>Level of trust, courtesy, and respect around treatment (combined score from <code>Q108B_1</code> and <code>Q108B_2</code>)</td>
 <td>Total mental health (combined scores from <code>Q30_</code>), <br><br> Total benefits (combined scores from <code>Q53_</code>, <code>Q11</code>, and <code>Q31_4</code>)</td>
 </tr>
 </tbody>

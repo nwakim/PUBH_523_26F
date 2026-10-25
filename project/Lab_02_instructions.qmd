@@ -124,13 +124,16 @@ Each function name links to the lesson slide where it's taught, in case you want
 
 ## Lab activities
 
-The following table will help you identify the appropriate population and variables based on your selected project question from Lab 1. You will build the composite score(s) in the last column in Lab 3, but it helps to know now which variables they need.
+The following table will help you identify the appropriate population and variables based on your selected project question from Lab 1. You will build the composite score(s) in the last row in Lab 3, but it helps to know now which variables they need.
 
-| \# | Project Question | Population | Population variables | Main variables | Additional variables | Composite score |
-|---------|---------|---------|---------|---------|------------------|---------|
-| 1 | For individuals under the federal poverty line, how do food support systems help individuals' food security? | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months | `FPL_LT50`, `FPL50_100`, `Q25`, `Q25A`, `Q26`, `Q26A` | `FOOD_INSEC`, `Q26D_1`, `Q26D_2`, `Q26D_3`, `Q26D_4` | `Q23`, `PPETHM`, `Q37`, `NUM_CHILD_HH` | Composite score of ease of access to free groceries or meals (combined score from `Q26D_`) |
-| 2 | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare affect self-reported health? | People who identify as LGBTQ and have a healthcare provider. <br><br> (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) | `LGBTQ`, `Q108` | `Q108B_2`, `Q108B_1`, `Q27` | `Q70F_4`, `Q70F_5`, `PPETHM`, `Q28O` | Level of trust, courtesy, and respect around treatment (combined score from `Q108B_1` and `Q108B_2`) |
-| 3 | For individuals with school-aged children and below the federal poverty line, how do benefits received affect their mental health? | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL | `ANY_CHILDHH_5_18`, `FPL_LT50`, `FPL50_100` | `Q30_1`, `Q30_2`, `Q30_3`, `Q30_4`, `Q30_5`, `Q30_6`, `Q53_A`, `Q53_B`, `Q53_C`, `Q53_D`, `Q53_E`, `Q53_F`, `Q53_G`, `Q53_H`, `Q53_I`, `Q11`, `Q31_4` | `NUM_CHILD_HH`, `Q1`, `Q37`, `PPETHM`, `Q27` | Total mental health (combined scores from `Q30_`), <br><br> Total benefits (combined scores from `Q53_`, `Q11`, and `Q31_4`) |
+| | Project 1 | Project 2 | Project 3 |
+|---|-----|-----|-----|
+| **Project Question** | For individuals under the federal poverty line, how do food support systems help individuals' food security? | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare affect self-reported health? | For individuals with school-aged children and below the federal poverty line, how do benefits received affect their mental health? |
+| **Population** | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months | People who identify as LGBTQ and have a healthcare provider. <br><br> (You can change this population if you want. For example, you may want to focus on how trust and fair treatment may improve health for people with larger bodies. Check out Q70F for options!) | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL |
+| **Population variables** | `FPL_LT50`, `FPL50_100`, `Q25`, `Q25A`, `Q26`, `Q26A` | `LGBTQ`, `Q108` | `ANY_CHILDHH_5_18`, `FPL_LT50`, `FPL50_100` |
+| **Main variables** | `FOOD_INSEC`, `Q26D_1`, `Q26D_2`, `Q26D_3`, `Q26D_4` | `Q108B_2`, `Q108B_1`, `Q27` | `Q30_1`, `Q30_2`, `Q30_3`, `Q30_4`, `Q30_5`, `Q30_6`, `Q53_A`, `Q53_B`, `Q53_C`, `Q53_D`, `Q53_E`, `Q53_F`, `Q53_G`, `Q53_H`, `Q53_I`, `Q11`, `Q31_4` |
+| **Additional variables** | `Q23`, `PPETHM`, `Q37`, `NUM_CHILD_HH` | `Q70F_4`, `Q70F_5`, `PPETHM`, `Q28O` | `NUM_CHILD_HH`, `Q1`, `Q37`, `PPETHM`, `Q27` |
+| **Composite score** | Composite score of ease of access to free groceries or meals (combined score from `Q26D_`) | Level of trust, courtesy, and respect around treatment (combined score from `Q108B_1` and `Q108B_2`) | Total mental health (combined scores from `Q30_`), <br><br> Total benefits (combined scores from `Q53_`, `Q11`, and `Q31_4`) |
 
 Here is a map of the objects you will create in this lab. Each one is built from the one before it:
 
