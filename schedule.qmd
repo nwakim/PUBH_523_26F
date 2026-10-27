@@ -130,7 +130,7 @@ source(here("class_dates.R"))
 
 ::: sched
 | Week | Date | Les-son | Theme | Topic | Lesson video | Slides | [TB 1](https://r4ds.hadley.nz/) | [TB 2](https://epirhandbook.com/en/) |
-|:---|:---|:---|----|:---|:--:|:--:|:--:|:--:|
+|:-------|:-------|:-------|--------|:-------|:------:|:------:|:------:|:------:|
 | 1 | `{r} w1d1 %>% format("%m/%d")` | 1 | [Course info]{.info} | Welcome | [{{< iconify mdi video size=25px >}} 07min](https://www.loom.com/share/30380318cd394eeca67f2008319beda5){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/01_Welcome/Welcome.qmd)]{style="color:#f8f5f0;"} | [Intro](https://r4ds.hadley.nz/intro.html) |  |
 |  |  | 2 | [Course info]{.info} | Course logistics | [{{< iconify mdi video size=25px >}} 26min](https://www.loom.com/share/67787d356bc14319ba941162567ff19d){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/02_Course_log/Course_log.qmd)]{style="color:#f8f5f0;"} |  |  |
 |  |  | 3 | [R Basics]{.rbasics} | Download + Intro to R & Rstudio | [{{< iconify mdi video size=25px >}} 07min](https://www.loom.com/share/77f8aea2a5bf4b26acc886a28de33569){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/03_Download_R/Download_R.qmd)]{style="color:#f8f5f0;"} |  | [3.4-3.5](https://epirhandbook.com/en/new_pages/basics.html#installation) |
@@ -171,13 +171,13 @@ source(here("class_dates.R"))
 |  |  | 25 | [Data transformation]{.trans} | Missing data: transformations | [{{< iconify mdi video size=25px >}} 20min](https://www.loom.com/share/04599c305ec14ee5b3649460bd2e8e09){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/25_Missing_data_transformations/Missing_data_transformations.qmd)]{style="color:#f8f5f0;"} |  |  |
 |  |  |  |  |  | [Total: 73min]{.total} |  |  |  |
 |  | `{r} pract5 %>% format("%m/%d")` |  |  | [Practice 5 due]{.pract-row} |  |  |  |  |
-|  | `{r} lab2 %>% format("%m/%d")` |  |  | [Lab 2 due]{.lab-row} |  |  |  |  |
 |  |  |  |  |  |  |  |  |  |
 | 6 | `{r} w6d1 %>% format("%m/%d")` | 26 | [Data summarization]{.summ} | Data summarization: intro | [{{< iconify mdi video size=25px >}} 04min](https://www.loom.com/share/444652c20115444c936889f4c257b3d8){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/26_Data_summarization_intro/Data_summarization_intro.qmd)]{style="color:#f8f5f0;"} |  | [17](https://epirhandbook.com/en/new_pages/tables_descriptive.html) |
 |  |  | 27 | [Data summarization]{.summ} | Data summarization: quick summaries | [{{< iconify mdi video size=25px >}} 14min](https://www.loom.com/share/504f8e3b3c2a41d0b3cb60cdb281fa0a){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/27_Data_summarization_quick/Data_summarization_quick.qmd)]{style="color:#f8f5f0;"} |  | [17](https://epirhandbook.com/en/new_pages/tables_descriptive.html) |
 |  |  | 28 | [Data summarization]{.summ} | Data summarization: tables | [{{< iconify mdi video size=25px >}} 16min](https://www.loom.com/share/63222e62ec804fbda2f934b0176f8416){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/28_Data_summarization_tables/Data_summarization_tables.qmd)]{style="color:#f8f5f0;"} |  | [17](https://epirhandbook.com/en/new_pages/tables_descriptive.html) |
 |  |  | 29 | [Data summarization]{.summ} | Data summarization: grouped summaries | [{{< iconify mdi video size=25px >}} 13min](https://www.loom.com/share/ec3647c4b36e44b18ee2cc5aa577fd49){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/29_Data_summarization_groups/Data_summarization_groups.qmd)]{style="color:#f8f5f0;"} | [3.5](https://r4ds.hadley.nz/data-transform.html#groups) | [17](https://epirhandbook.com/en/new_pages/tables_descriptive.html) |
 |  |  |  |  |  | [Total: 47min]{.total} |  |  |  |
+|  | `{r} lab2 %>% format("%m/%d")` |  |  | [Lab 2 due]{.lab-row} |  |  |  |  |
 |  | `{r} pract6 %>% format("%m/%d")` |  |  | [Practice 6 due]{.pract-row} |  |  |  |  |
 |  |  |  |  |  |  |  |  |  |
 | 7 | `{r} w7d1 %>% format("%m/%d")` | 30 | [Data visualization]{.viz} | Data visualization: intro to ggplot | [{{< iconify mdi video size=25px >}} 18min](https://www.loom.com/share/a24cde6f35614716a665b6361ab1decc){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/30_Data_viz_Intro_to_ggplot/Data_viz_Intro_to_ggplot.qmd)]{style="color:#f8f5f0;"} | [1.1-1.3](https://r4ds.hadley.nz/data-visualize.html#introduction) | [30.2-30.5](https://epirhandbook.com/en/new_pages/ggplot_basics.html#basics-of-ggplot) |
