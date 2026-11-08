@@ -4141,7 +4141,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">October 24, 2026</p>
+      <p class="date-modified">November 8, 2026</p>
     </div>
   </div>
     
@@ -4332,10 +4332,10 @@ display: none;
 <p>The following table will help you identify the appropriate population and variables based on your selected project question from Lab 1. You will build the composite score(s) in the last row in Lab 3, but it helps to know now which variables they need.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4368,7 +4368,7 @@ display: none;
 <td><strong>Main variables</strong></td>
 <td><code>FOOD_INSEC</code>, <code>Q26D_1</code>, <code>Q26D_2</code>, <code>Q26D_3</code>, <code>Q26D_4</code></td>
 <td><code>Q108B_2</code>, <code>Q108B_1</code>, <code>Q27</code></td>
-<td><code>Q30_1</code>, <code>Q30_2</code>, <code>Q30_3</code>, <code>Q30_4</code>, <code>Q30_5</code>, <code>Q30_6</code>, <code>Q53_A</code>, <code>Q53_B</code>, <code>Q53_C</code>, <code>Q53_D</code>, <code>Q53_E</code>, <code>Q53_F</code>, <code>Q53_G</code>, <code>Q53_H</code>, <code>Q53_I</code>, <code>Q11</code>, <code>Q31_4</code></td>
+<td><code>Q30_1</code>, <code>Q30_2</code>, <code>Q30_3</code>, <code>Q30_4</code>, <code>Q30_5</code>, <code>Q30_6</code>, <code>Q53_A</code>, <code>Q53_B</code>, <code>Q53_C</code>, <code>Q53_D</code>, <code>Q53_E</code>, <code>Q53_G</code>, <code>Q53_H</code>, <code>Q53_I</code>, <code>Q53_J</code>, <code>Q11</code>, <code>Q31_4</code></td>
 </tr>
 <tr class="odd">
 <td><strong>Additional variables</strong></td>
@@ -4542,7 +4542,10 @@ Caution
 <ol type="1">
 <li>Make a list of the variables you need from the table: the respondent ID variable (find its name in the codebook), your <strong>population</strong> variables, your <strong>main</strong> variables, and the <strong>additional</strong> variables.</li>
 <li><em>Optional:</em> If you are interested in other variables, add 0-3 more that are not listed.</li>
-<li>Use <a href="https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/subsetting-columns-using-select"><code>select()</code></a> to keep only those variables. You can type each name, or use a helper from Lesson 23 like <code>starts_with(&quot;Q26D&quot;)</code> to grab a group of similarly named variables at once.</li>
+<li>Use <a href="https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/subsetting-columns-using-select"><code>select()</code></a> to keep only those variables. You can type each name, or use a helper from Lesson 23 like <code>starts_with(&quot;Q26D&quot;)</code> to grab a group of similarly named variables at once.
+<ul>
+<li><strong>Careful with <code>starts_with()</code>:</strong> it grabs <strong>every</strong> variable whose name starts with that text. For example, <code>starts_with(&quot;Q53_&quot;)</code> also grabs follow-up questions like <code>Q53_1_1</code> and <code>Q53_2_REFUSED</code>, which aren’t part of your project. Use <code>glimpse()</code> to check what you selected, and list variables by name if <code>starts_with()</code> grabbed extras.</li>
+</ul></li>
 <li>Save the result as <code>wbns_02_pop_vars</code>.</li>
 <li>Use <a href="https://nwakim.github.io/PUBH_523_26F/lessons/16_Piping/Piping.html#/two-types-of-pipes-you-might-see"><code>dim()</code></a> on <code>wbns_01_pop</code> and on <code>wbns_02_pop_vars</code>. The number of rows should stay the same, and the number of columns should drop.</li>
 </ol>
@@ -4799,27 +4802,28 @@ Caution
 <td>Social Security Disability Income (SSDI)</td>
 </tr>
 <tr class="even">
-<td><code>Q53_F</code></td>
+<td><code>Q53_G</code></td>
 <td><code>benefit_tanf</code></td>
 <td>Cash assistance from a state or county welfare program, including TANF</td>
 </tr>
 <tr class="odd">
-<td><code>Q53_G</code></td>
+<td><code>Q53_H</code></td>
 <td><code>benefit_unemployment</code></td>
 <td>Unemployment insurance</td>
 </tr>
 <tr class="even">
-<td><code>Q53_H</code></td>
+<td><code>Q53_I</code></td>
 <td><code>benefit_school_meals</code></td>
 <td>Free or reduced-price school meals</td>
 </tr>
 <tr class="odd">
-<td><code>Q53_I</code></td>
+<td><code>Q53_J</code></td>
 <td><code>benefit_wic</code></td>
 <td>WIC</td>
 </tr>
 </tbody>
 </table>
+<p>There is no <code>Q53_F</code> in the data: the letters skip from <code>Q53_E</code> to <code>Q53_G</code>. (In the questionnaire PDF, the items are lettered a-i with no gap, so the letters after E don’t match. Go by the table above, which matches the variable names in the data.)</p>
 <p><strong>Additional variables:</strong></p>
 <table class="caption-top table">
 <thead>
@@ -4954,16 +4958,16 @@ Caution
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href>Project 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href>Project 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href>Project 3</a></li></ul>
 <div class="tab-content" data-group="project">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<p><strong>Part A:</strong> Recode <code>&quot;Don&#39;t know&quot;</code> (and any refusals you found) to <code>NA</code> in the four <code>ease_</code> items and <code>food_insecure</code>.</p>
+<p><strong>Part A:</strong> Recode <code>&quot;Refused&quot;</code> and <code>&quot;Don&#39;t know&quot;</code> to <code>NA</code> in the four <code>ease_</code> items, and <code>&quot;Refused&quot;</code> in <code>food_insecure</code>. (Every WBNS variable has a <code>&quot;Refused&quot;</code> category, even if no one in your population chose it.)</p>
 <p><strong>Part B:</strong> Drop rows missing any of these: <code>food_insecure</code>, <code>ease_find_place</code>, <code>ease_transport</code>, <code>ease_variety</code>, <code>ease_timely</code>.</p>
 <p><strong>Do not</strong> drop rows based on <code>Q25A</code> or <code>Q26A</code>. They are missing because of skip logic, and dropping them would remove people who got free food in the past 30 days.</p>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<p><strong>Part A:</strong> Recode any refusals you found to <code>NA</code> in <code>courtesy_respect</code>, <code>trust_provider</code>, and <code>self_rated_health</code>.</p>
+<p><strong>Part A:</strong> Recode <code>&quot;Refused&quot;</code> to <code>NA</code> in <code>courtesy_respect</code>, <code>trust_provider</code>, and <code>self_rated_health</code>. (Every WBNS variable has a <code>&quot;Refused&quot;</code> category, even if no one in your population chose it.)</p>
 <p><strong>Part B:</strong> Drop rows missing any of these: <code>courtesy_respect</code>, <code>trust_provider</code>, <code>self_rated_health</code>.</p>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<p><strong>Part A:</strong> Recode <code>&quot;Don&#39;t know&quot;</code> to <code>NA</code> in all seven <code>benefit_</code> variables, <code>medicaid_chip_q53</code>, <code>housing_q53</code>, and <code>housing_q11</code>. Recode <code>&quot;Not Sure&quot;</code> to <code>NA</code> in <code>medicaid_chip_q31</code> (Q31 uses “Not Sure” instead of “Don’t know”). The <code>mh_</code> items have no “Don’t know” option, but recode any other non-answers you found with <code>tabyl()</code>.</p>
+<p><strong>Part A:</strong> Every WBNS variable has a <code>&quot;Refused&quot;</code> category, so recode <code>&quot;Refused&quot;</code> to <code>NA</code> in <strong>all</strong> of these: the six <code>mh_</code> items, the seven <code>benefit_</code> variables, <code>medicaid_chip_q53</code>, <code>medicaid_chip_q31</code>, <code>housing_q53</code>, and <code>housing_q11</code>. Also recode <code>&quot;Don&#39;t know&quot;</code> in the seven <code>benefit_</code> variables, <code>medicaid_chip_q53</code>, <code>housing_q53</code>, and <code>housing_q11</code>, and <code>&quot;Not Sure&quot;</code> in <code>medicaid_chip_q31</code> (Q31 uses “Not Sure” instead of “Don’t know”). The <code>mh_</code> items have no “Don’t know” option.</p>
 <p>Skipped questions are already <code>NA</code> in the data (there is no “Skipped” category), so you don’t need to recode anything for skip logic.</p>
 <p><strong>Part B:</strong> Drop rows missing any of the six <code>mh_</code> items, and any of the benefit variables that <strong>everyone</strong> in your population was asked: <code>benefit_snap</code>, <code>benefit_ssi</code>, <code>benefit_ssdi</code>, <code>benefit_tanf</code>, <code>benefit_unemployment</code>, and <code>benefit_school_meals</code>.</p>
 <p><strong>Do not</strong> drop rows based on <code>medicaid_chip_q53</code>, <code>medicaid_chip_q31</code>, <code>housing_q53</code>, <code>housing_q11</code>, or <code>benefit_wic</code>. Those are missing mostly because of skip logic. You’ll handle them when you build the composite score in Lab 3.</p>

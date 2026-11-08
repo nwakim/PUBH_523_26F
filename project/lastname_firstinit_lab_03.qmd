@@ -23,7 +23,6 @@ execute:
   freeze: auto 
 ---
 
-
 ```{r}
 #| message: false
 #| echo: false
@@ -40,12 +39,13 @@ pacman::p_load( # These are my go to packages to load
   naniar,
   gt,
   gtsummary,
-  readxl
+  readxl,
+  skimr
 )
 ```
 
 ::: callout-warning
-Note that this is the editing file. **There are detailed instructions on our course page for Lab 3 that are not in this file.**
+Note that this is the editing file. **There are detailed, step-by-step instructions on our course page for Lab 3 that are not in this file.** Keep the instructions open while you work, and click your project's tab whenever you see one.
 :::
 
 ## Lab activities
@@ -55,8 +55,18 @@ Note that this is the editing file. **There are detailed instructions on our cou
 ::: callout-important
 #### Task
 
-Copy and paste the row from the above table that corresponds to your project into your `.qmd` file. This will help you (and me hehe) keep track of your project question, population, main variables, and composite score(s) as you work through this lab.
+In your editing file, fill in the short list under "Restate your selected project" for your project: your project number, project question, population, main variable names (after Lab 2), and the composite score name(s) you'll create. This will help you (and me hehe) keep track of your project as you work through this lab.
 :::
+
+**My project number:** 
+
+**Project question:** 
+
+**Population:** 
+
+**Main variables (names after Lab 2):** 
+
+**Composite score name(s):** 
 
 ### Import your saved data from Lab 2
 
@@ -66,7 +76,23 @@ Copy and paste the row from the above table that corresponds to your project int
 From the `.rda` file you exported at the end of Lab 2, import `wbns_04_no_na` into R using `import()` from the `rio` package. Save it as an object called `wbns_04_no_na`. Use `dim()` to print the number of rows and columns to verify the import.
 :::
 
-### Constructing the Composite Score
+```{r}
+
+```
+
+### Clean up extra white space
+
+::: callout-important
+#### Task
+
+Use `trimws()` to remove extra white space from the categories of every factor variable. Save the result as `wbns_04_trimmed`. Use `levels()` on one of your main variables before and after to show the extra spaces are gone, and use `dim()` to confirm no rows or columns were lost.
+:::
+
+```{r}
+
+```
+
+### Construct the composite score
 
 ::: callout-important
 #### Task
@@ -75,58 +101,91 @@ Create your new composite score(s) using `case_when()` and `mutate()`, following
 
 1.  Use `tabyl()` to check at least two of your converted (`_num`) variables against the originals.
 2.  Use `summary()` to display a summary of each composite score.
-3.  Briefly explain (1-2 sentences) whether the range and direction of your composite score make sense. (Project 3: say which direction you chose for `mental_health_score`, whether you included WIC, and how many rows you removed because `total_benefits` was `NA`.)
+3.  Briefly explain (1-2 sentences) whether the range and direction of your composite score make sense. (Project 3: say which direction you chose for `mental_health_score`, whether you included WIC, and how many rows you removed because `total_benefits` or `mental_health_score` was `NA`.)
 :::
 
 ```{r}
 
 ```
 
-**Does the range and direction of my composite score(s) make sense?**
-
+**Does the range and direction of my composite score(s) make sense?** 
 
 ### Quick summaries of your variables
 
 ::: callout-important
 #### Task
 
-Take your `wbns_05_composite` dataset and use `skim()` to generate a quick summary of your main variables and composite score(s). Save the result as a new object called `quick_summaries`, and print it out. Use this to check for any unexpected values, missing data, or other issues that may need to be addressed before moving forward.
+Use `select()` and `skim()` to generate a quick summary of your main variables and composite score(s) from `wbns_05_composite`. Save the result as `quick_summaries`, and print it. Write 2-3 sentences describing what you see: Is everything in the expected range? Is anything surprising? Where do most composite scores fall?
 :::
 
-### Creating categorical versions of your composite score(s)
+```{r}
+
+```
+
+**What I see in my quick summaries:** 
+
+### Create categories for your composite score(s)
 
 ::: callout-important
 #### Task
 
-Use `mutate()` with `case_when()` or `cut()` to create a new categorical variable for each composite score, with meaningful category labels. Save the result as a new object called `wbns_06_cat`. Use `tabyl()` or `count()` to display how many respondents fall into each category, and confirm no one was left out (e.g., turned into an unexpected `NA`).
+Use `mutate()` with `case_when()` (or `cut()`) to create the categorical version(s) of your composite score(s), using the required name(s) from your project's tab. Put the categories in a meaningful order with `fct_relevel()` (or, if you used `cut()`, with the order of your `labels`). Save the result as `wbns_06_cat`.
+
+1.  Use `tabyl()` to cross-tabulate each composite score with its categorical version, and confirm every score falls into exactly one category with no `NA`s.
+2.  Use `tabyl()` to show how many respondents fall into each category.
+3.  In 1-2 sentences, say which cut points you used, and why if you changed them from the suggestions.
 :::
 
-### Building a summary table
+```{r}
+
+```
+
+**The cut points I used (and why, if I changed them):** 
+
+### Build a summary table
 
 ::: callout-important
 #### Task
 
-Use `tbl_summary()` to build a clean overall summary table of your composite score(s) and other main variable. Save this as a new object called `summary_table_overall`, and display it. 
-
-Customize at least one thing about the table's appearance or labels (e.g., with `modify_header()` or by relabeling variables) so it's easier for someone unfamiliar with your project to read.
+Use `select()` and `tbl_summary()` to build an overall summary table of your composite score(s) and their categories (plus `food_insecure` for Project 1 or `self_rated_health` for Project 2). Use the `label` argument to give every variable a readable name. Save this as `summary_table_overall`, and display it.
 :::
+
+```{r}
+
+```
 
 ### Grouped summaries
 
 ::: callout-important
 #### Task
 
-Use `group_by()` and `get_summary_stats()` to calculate your composite score's common summary statistics separately for each level of your chosen grouping variable. Write 2-3 sentences interpreting what you see. Does the composite score noticeably differ across groups? Does this align with what you'd expect given your project question?
+Use `group_by()` and `get_summary_stats()` to calculate summary statistics of your composite score for each level of your project's grouping variable. Save this as `summary_grouped`, and print it. Write 2-3 sentences interpreting what you see. Does the composite score differ across groups? Does this match what you'd expect given your project question?
 :::
 
-::: callout-note
-*Optional/Additional:* You can also pass your grouping variable into `tbl_summary(by = ...)` to get a nicely formatted side-by-side table instead of (or in addition to) the `group_by()`/`get_summary_stats()` output above.
-:::
+```{r}
 
-### Export tables
+```
+
+**What I see across groups:** 
+
+### Export your data and table
 
 ::: callout-important
 #### Task
 
-Save `wbns_06_cat` and `summary_table_overall` in a `.rda` file in your `data_project` folder. Name the file something that will help you identify it later, like `wbns_data_lab_03_work.rda` or `wbns_data_03_summ.rda`.
+Save `wbns_06_cat` and `summary_table_overall` in a `.rda` file in your `data_project/data_processed` folder. Name the file something that will help you identify it later, like `wbns_data_lab_03_work.rda`.
 :::
+
+```{r}
+
+```
+
+### AI Use Statement
+
+::: callout-important
+#### Task
+
+Write your AI Use Statement in your editing file.
+:::
+
+**AI Use Statement:** 
