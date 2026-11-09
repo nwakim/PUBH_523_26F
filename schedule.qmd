@@ -130,7 +130,7 @@ source(here("class_dates.R"))
 
 ::: sched
 | Week | Date | Les-son | Theme | Topic | Lesson video | Slides | [TB 1](https://r4ds.hadley.nz/) | [TB 2](https://epirhandbook.com/en/) |
-|:-------|:-------|:-------|--------|:-------|:------:|:------:|:------:|:------:|
+|:---|:---|:---|----|:---|:--:|:--:|:--:|:--:|
 | 1 | `{r} w1d1 %>% format("%m/%d")` | 1 | [Course info]{.info} | Welcome | [{{< iconify mdi video size=25px >}} 07min](https://www.loom.com/share/30380318cd394eeca67f2008319beda5){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/01_Welcome/Welcome.qmd)]{style="color:#f8f5f0;"} | [Intro](https://r4ds.hadley.nz/intro.html) |  |
 |  |  | 2 | [Course info]{.info} | Course logistics | [{{< iconify mdi video size=25px >}} 26min](https://www.loom.com/share/67787d356bc14319ba941162567ff19d){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/02_Course_log/Course_log.qmd)]{style="color:#f8f5f0;"} |  |  |
 |  |  | 3 | [R Basics]{.rbasics} | Download + Intro to R & Rstudio | [{{< iconify mdi video size=25px >}} 07min](https://www.loom.com/share/77f8aea2a5bf4b26acc886a28de33569){.video-badge} | [[{{< iconify ri slideshow-fill size=30px >}}](lessons/03_Download_R/Download_R.qmd)]{style="color:#f8f5f0;"} |  | [3.4-3.5](https://epirhandbook.com/en/new_pages/basics.html#installation) |
