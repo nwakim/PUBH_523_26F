@@ -3,7 +3,7 @@ title: "Lab 4 Instructions"
 author: "Nicky Wakim"
 subtitle: "PUBH 523/623"
 date-modified: "today"
-format: 
+format:
   html:
     link-external-newwindow: true
     toc: true
@@ -14,13 +14,13 @@ format:
     code-annotations: hover
     page-layout: full
     highlight-style: ayu
-    code-block-bg: "#f8f9fa"      
-    code-block-border-left: "#5BAFF8" 
-  pdf: default 
-editor_options: 
+    code-block-bg: "#f8f9fa"
+    code-block-border-left: "#5BAFF8"
+  pdf: default
+editor_options:
   chunk_output_type: console
 execute:
-  freeze: auto 
+  freeze: auto
 ---
 
 ```{r}
@@ -30,11 +30,12 @@ execute:
 # PLEASE DO NOT REMOVE THIS CODE CHUNK!!!
 ### ADD YOUR LIBRARIES HERE!!! ####
 pacman::p_load( # These are my goto packages to load
-  here, 
-  tidyverse, 
-  writexl, 
-  rstatix, 
-  janitor, 
+  here,
+  rio,
+  tidyverse,
+  writexl,
+  rstatix,
+  janitor,
   naniar,
   gt,
   gtsummary,
@@ -45,23 +46,22 @@ pacman::p_load( # These are my goto packages to load
 ```{=html}
 <style>
 /* Hide numbers for H1 and H2 in the main body */
-h1 .header-section-number, 
+h1 .header-section-number,
 h2 .header-section-number {
     display: none;
 }
 </style>
 ```
 
-## Directions 
+## Directions {.unnumbered}
 
 Please turn in your **.qmd** and **.html** file on Brightspace. Please use the same naming convention as previous labs: `lastname_firstinit_lab_04.qmd` and `lastname_firstinit_lab_04.html`.
 
-[You can download the `.qmd` file for this lab here](https://github.com/nwakim/PUBH_523_26Su/blob/main/project/lastname_firstinit_lab_04.qmd). 
+[You can download the `.qmd` file for this lab here.](https://github.com/nwakim/PUBH_523_26F/blob/main/project/lastname_firstinit_lab_04.qmd)
 
-The above link will take you to your **editing** file. **Please do not remove anything from this editing file!!** You will only add your code and work to this file.e.
+The above link will take you to your **editing** file. **Please do not remove anything from this editing file!!** You will only add your code and work to this file.
 
-
-## Purpose
+## Purpose {.unnumbered}
 
 In Lab 3, you built a categorical version of your composite score(s), a clean overall summary table, and a grouped summary comparing your composite score across the groups of your other main variable. This lab turns those summaries into the actual **visualizations** you'll use in your final project.
 
@@ -69,54 +69,153 @@ Your final project's one-page information sheet is built around three findings:
 
 1. One main variable on its own
 2. The relationship between your two main variables
-3. One main variable alongside one additional variable
+3. One main variable alongside one additional variable (optional in this lab, for 1 extra point)
 
 For Findings 2 and 3, you'll use the **categorical** version of your composite score (from Lab 3) rather than the raw numeric score. Category breakdowns like "33% described access as difficult" are easier for a general audience to take in at a glance than a mean and standard deviation.
 
-This lab has you build one polished visualization for each of these. By the end of this lab, you should have 3 finished, publication-ready plots saved as image files, which you can use in your final project. Some of the `ggplot2` code here is more involved than what you've used before, so this lab walks through each new piece in more detail than usual.
+This lab has you build one polished visualization for each of these. By the end of this lab, you should have 2-3 finished, publication-ready plots saved as image files, which you can use in your final project. Some of the `ggplot2` code here is more involved than what you've used before, so this lab walks through each new piece in more detail than usual.
+
+## Before you start {.unnumbered}
+
+**How to use these instructions:**
+
+- Each section ends with a red **Task** box. Each task box is copied into your editing file, and your code and writing go right below it.
+- Inside each section, the **numbered steps** walk you through the task in order. Run your code after each step, and look at the result before moving on.
+- **Use the exact object names given in each task** (like `finding1_data` and `finding1_plot`). It makes it much easier for me to help you when you get stuck.
+- When the instructions are different for each project, you will see **tabs**. Click on your project's tab. Once you pick a tab, every set of tabs on this page will switch to your project.
+- Code with blanks (`______`) or placeholders in angle brackets (`<your_main_variable>`) is a starting point. **Replace every blank and placeholder** with your own variable names or values before running it. Leftover placeholders will cause an error.
+
+::: {.callout-tip collapse="true"}
+#### Functions you'll use in this lab
+
+Each function name links to the lesson slide where it's taught, in case you want a refresher. Functions that are new in this lab link to their help page instead, and each one is explained when you first use it.
+
+| Function | What it does | Lesson |
+|----------|--------------|--------|
+| [`import()`](https://nwakim.github.io/PUBH_523_26F/lessons/17_Import_Export/Import_Export.html#/rio-package) | Read a data file into R | Lesson 17 |
+| [`here()`](https://nwakim.github.io/PUBH_523_26F/lessons/12_Rproj_wds/Rproj_wds.html#/the-here-package) | Build a file path that starts at your R project folder | Lesson 12 |
+| [`dim()`](https://nwakim.github.io/PUBH_523_26F/lessons/16_Piping/Piping.html#/two-types-of-pipes-you-might-see) | Print the number of rows and columns | Lesson 16 |
+| [`tabyl()`](https://nwakim.github.io/PUBH_523_26F/lessons/28_Data_summarization_tables/Data_summarization_tables.html#/what-does-tabyl-do) | Count how many rows fall in each category | Lesson 28 |
+| [`drop_na()`](https://nwakim.github.io/PUBH_523_26F/lessons/25_Missing_data_transformations/Missing_data_transformations.html#/drop_na-removing-missingness-from-all-variables-in-the-dataset-1) | Remove rows with NA in the columns you list | Lesson 25 |
+| [`replace_with_na()`](https://nwakim.github.io/PUBH_523_26F/lessons/25_Missing_data_transformations/Missing_data_transformations.html#/replace_with_na-replace-a-factor-level-with-na) | Turn specific values (like "Refused") into NA | Lesson 25 |
+| [`count()`](https://nwakim.github.io/PUBH_523_26F/lessons/21_Data_transformation_rows/Data_transformation_rows.html#/sorting-datasets-using-arrange) | Count rows in each category (or combination of categories) | Lesson 21 |
+| [`mutate()`](https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/mutate-transform-and-create-variables) | Create or change variables | Lesson 22 |
+| [`group_by()`](https://nwakim.github.io/PUBH_523_26F/lessons/29_Data_summarization_groups/Data_summarization_groups.html#/group-by-a-variable-in-get_summary_stats) | Tell the next function to work within groups | Lesson 29 |
+| [`ungroup()`](https://dplyr.tidyverse.org/reference/group_by.html) | Remove the grouping (new in this lab) | New (help page) |
+| [`ggplot()`](https://nwakim.github.io/PUBH_523_26F/lessons/30_Data_viz_Intro_to_ggplot/Data_viz_Intro_to_ggplot.html#/basic-layers-of-ggplot2) | Start a plot: data and aesthetic mappings | Lesson 30 |
+| [`geom_bar()`](https://nwakim.github.io/PUBH_523_26F/lessons/31_Data_viz_Basic_plotting/Data_viz_Basic_plotting.html#/example-4-barplot-of-self-rated-health) | Bar chart that counts rows for you | Lesson 31 |
+| [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) | Bar chart of values you already calculated (new in this lab) | New (help page) |
+| [`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html) | Add text labels to a plot (new in this lab) | New (help page) |
+| [`position_stack()`](https://ggplot2.tidyverse.org/reference/position_stack.html) | Place labels in the middle of stacked segments (new in this lab) | New (help page) |
+| [`scale_x_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) | Relabel the categories on the x-axis (new in this lab) | New (help page) |
+| [`scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html) | Set the y-axis limits (new in this lab) | New (help page) |
+| [`scale_fill_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) | Relabel the categories in the legend (new in this lab) | New (help page) |
+| [`labs()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/basic-labelling-using-labs-titles-and-axes) | Title, axis labels, and legend label | Lesson 32 |
+| [`theme_minimal()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/complete-themes) | A clean, complete theme | Lesson 32 |
+| [`geom_boxplot()`](https://nwakim.github.io/PUBH_523_26F/lessons/31_Data_viz_Basic_plotting/Data_viz_Basic_plotting.html#/example-2-one-continuous-one-categorical-variable-12) | Boxplot (alternative for Finding 2) | Lesson 31 |
+| [`fct_relevel()`](https://nwakim.github.io/PUBH_523_26F/lessons/23_Data_transformation_advanced/Data_transformation_advanced.html#/change-order-of-levels-12) | Put a factor's categories in order | Lesson 23 |
+| [`ggsave()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/saving-plots) | Save a plot as an image file | Lesson 32 |
+:::
 
 ## Lab activities
 
 ### Restate your selected project
 
-Recall the following table from Labs 2 and 3 with each project's population, main variables, and composite score(s).
+Look back at your Lab 2 and Lab 3 files to restate your project. They have your project question, population, the names you gave your variables in Lab 2, and the composite score(s) you built in Lab 3.
 
-| # | Project Question | Population | Population variables | Main variables | Suggested additional variables | Composite score |
-|---|---|---|---|---|---|---|
-| 1 | For individuals under the federal poverty line, how do food support systems help individuals' food security? | People under 100% federal poverty line (FPL) and received free groceries or meals in the past 12 months | `FPL_LT50`, `FPL50_100` | `FOOD_INSEC`, `Q26D_1`, `Q26D_2`, `Q26D_3`, `Q26D_4` | `Q23`, `PPETHM`, `Q37`, `NUM_CHILD_HH`, `Q25`, `Q25A`, `Q26`, `Q26A` | Composite score of ease of access to free groceries or meals (combined score from `Q26D_`) |
-| 2 | For individuals who identify as LGBTQ, how does trust and/or fair treatment in healthcare effect self-reported health? | People who identify as LGBTQ and have a healthcare provider | `LGBTQ`, `Q108` | `Q108B_2`, `Q108B_1`, `Q27` | `Q108`, `Q70F_4`, `Q70F_5`, `PPETHM`, `Q28O` | Level of trust, courtesy, and respect around treatment (combined score from `Q108B_1` and `Q108B_2`) |
-| 3 | For individuals with school-aged children and below the federal poverty line, how do benefits received effect their mental health? | People who have at least one child (aged 5-18 years old) in the household and are under the 100% FPL | `ANY_CHILDHH_5_18`, `FPL_LT50`, `FPL50_100` | `Q30_1`-`Q30_6`, `Q53_A`-`Q53_J`, `Q11`, `Q31_4` | `NUM_CHILD_HH`, `Q1`, `Q37`, `PPETHM`, `Q27` | Total mental health (combined scores from `Q30_`), Total benefits (combined scores from `Q53_`, `Q11`, and `Q31_4`) |
+Here is how the objects in this lab build on each other:
 
-::: {.callout-important}
+| Section | Object you create | What it holds |
+|---------|-------------------|---------------|
+| Import your saved data from Lab 3 | `wbns_06_cat` | Your data from Lab 3 |
+| Finding 1: Create the dataframe | `finding1_data` | Counts and percentages for one main variable |
+| Finding 1: Visualize | `finding1_plot` | Bar chart for Finding 1 |
+| Finding 2: Create the dataframe | `finding2_data` | Percentages within each group of your other main variable |
+| Finding 2: Visualize | `finding2_plot` | Stacked bar chart for Finding 2 |
+| Finding 3 (optional) | `finding3_clean`, `finding3_data`, `finding3_plot` | Your cleaned additional variable, its percentages, and its plot |
+| Export your visualizations | *(image files)* | `.png` files in your `plots` folder |
+
+::: callout-important
 #### Task
-Copy and paste the row from the above table that corresponds to your project into your `.qmd` file, same as you did in Lab 3.
+
+Using your Lab 2 and Lab 3 files, fill in the short list under "Restate your selected project" in your editing file: your project number, project question, main variable names, and composite score name(s) (numeric and categorical).
 :::
 
 ### Import your saved data from Lab 3
 
-::: {.callout-important}
+Your Lab 3 `.rda` file holds two objects: your dataset `wbns_06_cat` and your table `summary_table_overall`. This lab only needs `wbns_06_cat`, so we use the `which` argument to tell [`import()`](https://nwakim.github.io/PUBH_523_26F/lessons/17_Import_Export/Import_Export.html#/rio-package) to pull out just that one, the same way you did in Lab 3. (Your summary table stays saved in your Lab 3 file. You can bring it into your final project if you want a table of your composite score.)
+
+1.  Find your Lab 3 `.rda` file in your `data_project/data_processed` folder and note its exact name.
+2.  Import `wbns_06_cat`. Replace the file name with yours:
+
+    ```{r}
+    #| eval: false
+    wbns_06_cat <- import(
+      here("data_project", "data_processed", "wbns_data_lab_03_work.rda"),
+      which = "wbns_06_cat"
+    )
+    ```
+
+3.  Use [`dim()`](https://nwakim.github.io/PUBH_523_26F/lessons/16_Piping/Piping.html#/two-types-of-pipes-you-might-see) to print the number of rows and columns of `wbns_06_cat`. The number of rows should match the end of Lab 3.
+4.  **Check your categories for `NA`s.** Use [`tabyl()`](https://nwakim.github.io/PUBH_523_26F/lessons/28_Data_summarization_tables/Data_summarization_tables.html#/what-does-tabyl-do) on each categorical composite score (the variable(s) ending in `_cat`). If you see an `NA` row, those respondents don't have a composite score, and they'd show up as their own "NA" bar in every plot. Remove them with [`drop_na()`](https://nwakim.github.io/PUBH_523_26F/lessons/25_Missing_data_transformations/Missing_data_transformations.html#/drop_na-removing-missingness-from-all-variables-in-the-dataset-1) and save the result back into `wbns_06_cat`:
+
+    ```{r}
+    #| eval: false
+    wbns_06_cat <- wbns_06_cat |>
+      drop_na(ease_free_food_cat)
+    ```
+
+    Use your own `_cat` variable(s). If there's no `NA` row, skip the `drop_na()`.
+
+::: callout-important
 #### Task
-From the `.rda` file you exported at the end of Lab 3, import `wbns_06_cat` and `summary_table_overall` into R using `load()` or `import()` from the `rio` package. Print out the number of rows and columns of `wbns_06_cat` to verify the import.
+
+From the `.rda` file you exported at the end of Lab 3, import `wbns_06_cat` into R using `import()` with the `which` argument. Print the number of rows and columns of `wbns_06_cat` to verify the import. Use `tabyl()` to check each categorical composite score for `NA`s, and remove any with `drop_na()`.
 :::
 
 ### Plan your three findings
 
-In the final project, we will present 2-3 findings. These findings will include a table or plot to demonstrate the data/relationship. Before writing any plotting code, decide what each of your findings will show and which variable(s) it needs. This is a planning step, there is no code required here!
+In the final project, we will present 2-3 findings. These findings will include a table or plot to demonstrate the data/relationship. Before writing any plotting code, decide what each of your findings will show and which variable(s) it needs. This is a planning step: there is no code required here!
 
-- **Finding 1 (one main variable on its own):** Which one of your main variables will you visualize by itself? This could be your composite score's categorical version (from `wbns_06_cat` from Lab 3) or your other main variable (e.g., `FOOD_INSEC`, `Q27`, or your `total_benefits` category).
-- **Finding 2 (the relationship between your two main variables):** No decisions here! You will visualize the relationship between your composite score's categorical version compared across the groups of your other main variable.
-- **Finding 3, optional (one main variable + one additional variable):** If you're building this one, which additional variable from your Lab 2 table will you use, and which main variable will you pair it with? (Feel free to reference the table above for suggested additional variables.)
+- **Finding 1 (one main variable on its own):** Which one of your main variables will you visualize by itself? It should be a **categorical** variable. **We recommend your other main variable** (not your composite score), listed first in your project's tab. Your composite score's categories already appear in Finding 2, so showing them again in Finding 1 would tell your reader almost the same thing twice. Using your other main variable gives your poster three different facts.
+- **Finding 2 (the relationship between your two main variables):** No decisions here! Your project's tab lists which variable goes where. The rule: the variable your question asks *about the effect of* goes on the **x-axis** (one bar per group), and the **outcome** goes in the **fill** (the colored segments). That way, each bar answers a question like "Among people with difficult access to free food, what percent are food insecure?", which is the question your project asks.
+- **Finding 3, optional (one main variable + one additional variable):** If you're building this one, which additional variable will you use? It goes on the x-axis, and your categorical composite score goes in the fill. Pick a **categorical** additional variable with a few short categories. Avoid counts like `num_children` (too many bars) and variables with many long category names like `race_ethnicity` (the labels will overlap, and some groups will be very small).
 
-::: {.callout-important}
+::: {.panel-tabset group="project"}
+#### Project 1
+
+| Finding | x-axis | fill |
+|---------|--------|------|
+| Finding 1 | `food_insecure` (recommended), or `ease_free_food_cat` | (none) |
+| Finding 2 | `ease_free_food_cat` (ease of access) | `food_insecure` (the outcome) |
+| Finding 3 ideas | `ate_less` or `working` (use your names for `Q23` and `Q37`) | `ease_free_food_cat` |
+
+#### Project 2
+
+| Finding | x-axis | fill |
+|---------|--------|------|
+| Finding 1 | `self_rated_health` (recommended), or `trust_courtesy_respect_cat` | (none) |
+| Finding 2 | `trust_courtesy_respect_cat` (trust, courtesy, and respect) | `self_rated_health` (the outcome) |
+| Finding 3 ideas | `unfair_gender_identity`, `unfair_sexual_orientation`, or your name for `Q28O` | `trust_courtesy_respect_cat` |
+
+#### Project 3
+
+| Finding | x-axis | fill |
+|---------|--------|------|
+| Finding 1 | `total_benefits_cat` (recommended), or `mental_health_score_cat` | (none) |
+| Finding 2 | `total_benefits_cat` (benefits received) | `mental_health_score_cat` (the outcome) |
+| Finding 3 ideas | `working`, `marital_status`, or `self_rated_health` (use your names for `Q37` and `Q1`) | `mental_health_score_cat` |
+:::
+
+::: callout-important
 #### Task
-For Finding 1 and 3, write down which variable(s) you will visualize. 
+
+Write down which variable you will visualize for Finding 1, and the two variables for Finding 2 (which goes on the x-axis and which is the fill). If you're doing the optional Finding 3, write down your additional variable.
 :::
 
 ### Finding 1: Create the dataframe
 
-We want to visualize one of your main variables on its own. The variable you choose to visualize should be one of the main variables from the table above. This will be a categorical version of your composite score (from Lab 3) or the other main variable (e.g., `FOOD_INSEC`, `Q27`).
-
-Before plotting, we want to summarize the data into percentages to make our display a little more polished for the audience. We will summarize our main variable into a small dataframe of counts and percentages using `count()` and `mutate()`:
+Before plotting, we summarize the data into percentages to make our display a little more polished for the audience. We'll build a small dataframe of counts and percentages using [`count()`](https://nwakim.github.io/PUBH_523_26F/lessons/21_Data_transformation_rows/Data_transformation_rows.html#/sorting-datasets-using-arrange) and [`mutate()`](https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/mutate-transform-and-create-variables). Here's how the code works:
 
 ```{r}
 #| eval: false
@@ -124,19 +223,28 @@ Before plotting, we want to summarize the data into percentages to make our disp
 finding1_data <- wbns_06_cat |>
   count(<your_main_variable>) |>              # <1>
   mutate(pct = n / sum(n) * 100)               # <2>
+
+finding1_data
 ```
-1. Replace `<your_main_variable>` with the name of your main variable. `count()` counts how many respondents fall into each category of that variable, storing the result in a new column called `n`.
+1. `count()` counts how many respondents fall into each category of your Finding 1 variable, storing the result in a new column called `n`.
 2. `mutate(pct = n / sum(n) * 100)` divides each category's count by the total across *all* categories, turning `n` into a percentage. Since there's no grouping variable yet, `sum(n)` here is just the overall total.
+
+**Your turn:**
+
+1.  Copy the code above into your editing file.
+2.  Replace `<your_main_variable>` with your Finding 1 variable from your plan (no `< >`).
+3.  Run it, and save the result as `finding1_data`.
+4.  **Check your work:** the `pct` column should add up to 100.
 
 ::: callout-important
 #### Task
 
-Use `count()` and `mutate()` to build a small dataframe of counts and percentages for your Finding 1 variable. Save it as a new object called `finding1_data`.
+Use `count()` and `mutate()` to build a small dataframe of counts and percentages for your Finding 1 variable. Save it as a new object called `finding1_data`, and print it.
 :::
 
 ### Finding 1: Visualize one main variable
 
-Using the `finding1_data` dataframe you just built, create a bar chart of your main variable using `ggplot2`. The code below gives a starting point for this plot. Note that we are using `geom_col()` instead of `geom_bar()` here because we already calculated the percentages ourselves in `finding1_data`. `geom_col()` plots the y-values you give it directly, while `geom_bar()` would try to do its own internal counting.
+Using `finding1_data`, create a bar chart of your Finding 1 variable. We use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) instead of [`geom_bar()`](https://nwakim.github.io/PUBH_523_26F/lessons/31_Data_viz_Basic_plotting/Data_viz_Basic_plotting.html#/example-4-barplot-of-self-rated-health) (Lesson 31) here, because we already calculated the percentages ourselves. `geom_col()` plots the y-values you give it directly, while `geom_bar()` would try to do its own internal counting. Here's how the code works:
 
 ```{r}
 #| eval: false
@@ -152,163 +260,264 @@ finding1_plot <- ggplot(finding1_data, aes(x = <your_main_variable>, y = pct)) +
 
 finding1_plot #<7>
 ```
-1. Check out the extra arguments in `geom_col()`! You can change the fill or the width of the bars. 
-2. `geom_text()` adds the percentage labels above each bar. `vjust = -0.5` nudges the labels slightly above the top of the bar, and `paste0(round(pct, 1), "%")` rounds the percentage to one decimal place and adds a percent sign.
-3. Your data still has the raw category values (e.g., `"Yes"` and `"No"`). `scale_x_discrete(labels = ...)` lets you swap in reader-friendly labels for the x-axis *without changing your underlying data*. The names on the left of each `=` (`"No"`, `"Yes"`) must exactly match the values in your data; the names on the right are what the reader will actually see.
-4. We can add limits to the y-axis. When we plot percentages, it is often a good idea to plot the y-axis from 0 to 100. Check out the `limits` argument in `scale_y_continuous()` to set the y-axis limits.
-5. `labs()` lets you add a title, x-axis label, and y-axis label. Use plain-language labels rather than variable names or question codes.
-6. We can adjust the theme and font size!
+1. Check out the extra arguments in `geom_col()`! You can change the fill or the width of the bars (Lesson 31).
+2. [`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html) adds the percentage labels above each bar. `vjust = -0.5` nudges the labels slightly above the top of the bar, and `paste0(round(pct, 1), "%")` rounds the percentage to one decimal place and adds a percent sign.
+3. `scale_x_discrete(labels = ...)` lets you swap in reader-friendly labels for the x-axis *without changing your underlying data*. Give it `c("old" = "new", ...)`: the names on the left of each `=` must exactly match the categories in your data, and the names on the right are what the reader will actually see. **Only use it if your categories aren't already reader-friendly.** Otherwise, delete this line.
+4. When we plot percentages, it is often a good idea to plot the y-axis from 0 to 100: `c(0, 100)`.
+5. [`labs()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/basic-labelling-using-labs-titles-and-axes) (Lesson 32) lets you add a title, x-axis label, and y-axis label: `labs(title = "...", x = "...", y = "...")`. Use plain-language labels rather than variable names or question codes.
+6. We can adjust the theme and font size (Lesson 32)!
 7. Now we can print the plot!
 
-::: {.callout-important}
+**Your turn:**
+
+1.  Copy the code above into your editing file, and replace `<your_main_variable>` with your Finding 1 variable.
+2.  Fill in each blank (`______`), one at a time. Run the code after each one so you can see what it changed. Check your project's tab below for whether you need the [`scale_x_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) line.
+3.  Print `finding1_plot` and look at it: would someone who has never seen your data understand it?
+
+::: {.panel-tabset group="project"}
+#### Project 1
+
+- **`food_insecure`:** its categories are `"No"` and `"Yes"`, which won't make sense to a reader on their own. Keep the `scale_x_discrete()` line, and relabel `"No"` and `"Yes"` with something like "Not food insecure" and "Food insecure".
+- **`ease_free_food_cat`:** its categories are already reader-friendly, so delete the `scale_x_discrete()` line.
+
+#### Project 2
+
+- **`self_rated_health`** and **`trust_courtesy_respect_cat`:** both have reader-friendly categories, so delete the `scale_x_discrete()` line.
+
+#### Project 3
+
+- **`total_benefits_cat`** and **`mental_health_score_cat`:** both have reader-friendly categories, so delete the `scale_x_discrete()` line.
+:::
+
+**Write your takeaway.** Below your plot, write **one sentence** that states the main thing a reader should take away, in plain language with a number from your plot. This is practice for the headline you'll put on your poster. For example: *"[X]% of [population] [description of the category]."* Describe what you see; don't explain why.
+
+::: callout-important
 #### Task
-Build your Finding 1 visualization using `ggplot2`, adding and editing the code above with your own variable and category labels. Save the plot as a new object (e.g., `finding1_plot`).
+
+Build your Finding 1 visualization using `ggplot2`, starting from the template code in the instructions and filling in the blanks. Save the plot as a new object called `finding1_plot`, and print it. Below the plot, write a one-sentence takeaway.
 :::
 
 ### Finding 2: Create the dataframe
 
-Use the **categorical** version of your composite score here (e.g., `ease_free_food_cat`) rather than the raw numeric score. (In the final project, you may wish to use the number and a table from Lab 3 might be more appropriate to include.)
-
-Unlike Finding 1, you now need percentages calculated *within* each group of your other main variable (e.g., what percentage of the "food insecure" group falls into each access category?). `count()` and `mutate()` alone can't do that "within-group" calculation, so this time you'll add `group_by()` before you calculate `pct`.
+Unlike Finding 1, you now need percentages calculated *within* each group on your x-axis (e.g., among people with difficult access to free food, what percentage are food insecure?). This time, you'll add [`group_by()`](https://nwakim.github.io/PUBH_523_26F/lessons/29_Data_summarization_groups/Data_summarization_groups.html#/group-by-a-variable-in-get_summary_stats) before you calculate `pct`. Here's how the code works:
 
 ```{r}
 #| eval: false
 
 finding2_data <- wbns_06_cat |>
-  count(<your_grouping_variable>, <your_categorical_composite>) |>   # <1>
-  group_by(<your_grouping_variable>) |>                              # <2>
+  count(<your_x_variable>, <your_fill_variable>) |>   # <1>
+  group_by(<your_x_variable>) |>                       # <2>
   mutate(pct = ______) |> #<3>
-  ungroup()
+  ungroup() #<4>
 
 finding2_data
 ```
-1. Replace `<your_grouping_variable>` and `<your_categorical_composite>` with your two main variables. `count()` counts how many respondents fall into every *combination* of the two variables (e.g., "food insecure AND difficult access," "food insecure AND moderate access," and so on), storing the result in a new column called `n`.
-2. `group_by(<your_grouping_variable>)` tells the following `mutate()` to calculate `sum(n)` *separately within each group*.
-3. Calculate the percent of each category within its group. The formula is the same as Finding 1. 
+1. [`count()`](https://nwakim.github.io/PUBH_523_26F/lessons/21_Data_transformation_rows/Data_transformation_rows.html#/sorting-datasets-using-arrange) counts how many respondents fall into every *combination* of the two variables (e.g., "difficult access AND food insecure," "difficult access AND not food insecure," and so on), storing the result in a new column called `n`.
+2. `group_by(<your_x_variable>)` tells the following [`mutate()`](https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/mutate-transform-and-create-variables) to calculate `sum(n)` *separately within each group on your x-axis*. You used `group_by()` with `get_summary_stats()` in Lesson 29; it works the same way with `mutate()`.
+3. Calculate the percent of each category within its group. The formula is the same as Finding 1.
+4. [`ungroup()`](https://dplyr.tidyverse.org/reference/group_by.html) is new: it removes the grouping from the dataframe. It's a good habit after any `group_by()` + `mutate()`.
 
-::: {.callout-important}
+**Your turn:**
+
+1.  Copy the code above into your editing file.
+2.  Replace `<your_x_variable>` (in **both** places) and `<your_fill_variable>` with the Finding 2 variables from your project's tab in the plan above. Make sure the x-axis variable is the one inside `group_by()`: that's what makes each bar add up to 100%.
+3.  Fill in the `pct` formula.
+4.  Run it, and save the result as `finding2_data`.
+5.  **Check your work:** within each x-axis group, the `pct` values should add up to 100.
+
+::: {.panel-tabset group="project"}
+#### Project 1
+
+Nothing extra for Project 1.
+
+#### Project 2
+
+Look at the `n` column for "Low trust": it may be a small group. Percentages from a small group can swing a lot, so mention the group's size in your takeaway. If it's very small, it's reasonable to combine "Low trust" and "Moderate trust" first (the same way you made categories with `case_when()` in Lab 3), and say so.
+
+#### Project 3
+
+Nothing extra for Project 3.
+:::
+
+::: callout-important
 #### Task
-Use `count()`, `group_by()`, and `mutate()` to build a dataframe of within-group percentages for your two main variables. Save it as a new object called `finding2_data`.
+
+Use `count()`, `group_by()`, `mutate()`, and `ungroup()` to build a dataframe of within-group percentages for your two main variables. Save it as a new object called `finding2_data`, and print it.
 :::
 
 ### Finding 2: Visualize the relationship between your two main variables
 
-Using the `finding2_data` dataframe you just built, create a 100%-stacked bar chart with `ggplot2`. As in Finding 1, we use `geom_col()` instead of `geom_bar()` since you already calculated the percentages yourself. The code below gives a starting point for this plot.
+Using `finding2_data`, create a 100%-stacked bar chart: one bar per x-axis group, split into the categories of your fill variable. As in Finding 1, we use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html), since you already calculated the percentages yourself. Here's how the code works:
 
 ```{r}
 #| eval: false
 
-finding2_plot <- ggplot(finding2_data, 
+finding2_plot <- ggplot(finding2_data,
   aes(
-      x = <your_grouping_variable>, 
-      y = pct, 
-      fill = <your_categorical_composite>
+      x = <your_x_variable>,
+      y = pct,
+      fill = <your_fill_variable>
       )
   ) +
   geom_col() + #<1>
   geom_text(aes(label = paste0(round(pct), "%")), #<2>
             position = position_stack(vjust = 0.5), #<2>
             color = "white", fontface = "bold", size = 4.5) + #<2>
-  scale_x_discrete(labels = ________) + #<3>
+  scale_fill_discrete(labels = ________) + #<3>
   labs(______) + #<4>
   theme_minimal(base_size = 12) #<5>
 
 finding2_plot #<6>
 ```
-1. Mapping `fill = <your_categorical_composite>` (in the `ggplot()` line above) tells `geom_col()` to draw one segment per category, stacked on top of each other by default. This creates the 100%-stacked bar. Check out the extra arguments in `geom_col()` too, like `width`.
-2. `geom_text()` places its labels at the same x/y position as the data by default, which for stacked bars means the *top* of each segment. `position = position_stack(vjust = 0.5)` moves each label to the vertical *center* of its own segment instead, so it doesn't look like it belongs to the segment above it. `paste0(round(pct), "%")` builds the label text from your calculated percentage.
-3. Same as Finding 1: swap in reader-friendly labels for your x-axis categories without changing your underlying data. The names on the left must exactly match the raw category values in your data.
-4. Same as Finding 1: add a plain-language title, x-axis label, and y-axis label. Keep your title **descriptive, not causal**.
-5. Same as Finding 1:djust the theme and font size if you'd like.
-6. Same as Finding 1: adjust the theme and font size if you'd like.
+1. Mapping `fill = <your_fill_variable>` (in the [`ggplot()`](https://nwakim.github.io/PUBH_523_26F/lessons/30_Data_viz_Intro_to_ggplot/Data_viz_Intro_to_ggplot.html#/basic-layers-of-ggplot2) line above) tells `geom_col()` to draw one segment per category, stacked on top of each other by default. This creates the 100%-stacked bar. Check out the extra arguments in `geom_col()` too, like `width`.
+2. [`geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html) places its labels at the same x/y position as the data by default, which for stacked bars means the *top* of each segment. `position = position_stack(vjust = 0.5)` moves each label to the vertical *center* of its own segment instead, so it doesn't look like it belongs to the segment above it. `paste0(round(pct), "%")` builds the label text from your calculated percentage.
+3. [`scale_fill_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) is new: it works exactly like [`scale_x_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) from Finding 1, but relabels the **legend** instead of the x-axis. **Only use it if your fill categories aren't already reader-friendly.** Otherwise, delete this line. (If your x-axis categories need relabeling too, add a `scale_x_discrete()` line, the same way as Finding 1.)
+4. Same as Finding 1: add a plain-language title, x-axis label, and y-axis label. Also add `fill = "..."` to label the legend (Lesson 32). Keep your title **descriptive, not causal**: describe what the plot shows ("Food insecurity by ease of access to free food"), not why ("Easy access reduces food insecurity").
+5. Same as Finding 1: adjust the theme and font size if you'd like.
+6. Print the plot!
 
-::: {.callout-tip}
-If your composite score doesn't split cleanly into a small number of meaningful categories, a boxplot of the raw numeric score (`geom_boxplot(aes(x = <your_grouping_variable>, y = <your_numeric_composite>))`) is a reasonable alternative, just be consistent about which form (categorical or continuous) you use across Findings 2 and 3.
+**Your turn:**
+
+1.  Copy the code above into your editing file, and replace `<your_x_variable>` and `<your_fill_variable>` with the same variables you used to make `finding2_data`.
+2.  Fill in each blank, and run the code after each one. Check your project's tab below for whether you need the `scale_fill_discrete()` line.
+3.  Print `finding2_plot`. Check that the segments in each bar add up to 100%, and that the legend lists your categories in a meaningful order (the order comes from your data, not from this code).
+
+::: {.panel-tabset group="project"}
+#### Project 1
+
+Your fill variable, `food_insecure`, has the categories `"No"` and `"Yes"`, which would show up that way in the legend. Keep the `scale_fill_discrete()` line, and relabel them the same way you did for the x-axis in Finding 1.
+
+#### Project 2
+
+- `self_rated_health` already has reader-friendly categories, so delete the `scale_fill_discrete()` line.
+- `self_rated_health` has five categories, so each bar has up to five segments. If a small segment's label overlaps its neighbor, try a smaller `size` in `geom_text()`, or save the plot taller in the export step.
+
+#### Project 3
+
+`mental_health_score_cat` already has reader-friendly categories, so delete the `scale_fill_discrete()` line.
 :::
 
-::: {.callout-important}
+::: callout-tip
+If your composite score doesn't split cleanly into a small number of meaningful categories, a boxplot of the raw numeric score ([`geom_boxplot()`](https://nwakim.github.io/PUBH_523_26F/lessons/31_Data_viz_Basic_plotting/Data_viz_Basic_plotting.html#/example-2-one-continuous-one-categorical-variable-12), Lesson 31) is a reasonable alternative. Just be consistent about which form (categorical or continuous) you use across Findings 2 and 3.
+:::
+
+**Write your takeaway.** Below your plot, write **one sentence** that compares the groups on your x-axis, with numbers from your plot. For example: *"[X]% of [people in one x-axis group] [description of a fill category], compared with [Y]% of [people in another group]."* Keep it descriptive, not causal: say what differs between the groups, not that one variable causes the other. If the groups look about the same, say that. That's a finding too!
+
+::: callout-important
 #### Task
-Build your Finding 2 visualization using `ggplot2`, adding and editing the code above with your own variables and category labels. Save the plot as a new object (e.g., `finding2_plot`).
+
+Build your Finding 2 visualization using `ggplot2`, starting from the template code in the instructions and filling in the blanks. Save the plot as a new object called `finding2_plot`, and print it. Below the plot, write a one-sentence takeaway that compares the groups.
 :::
 
-### Finding 3: Create the dataframe
+### Finding 3 (optional): Create the dataframe
 
-Pick one of the suggested additional variables from your Lab 2 table and pair it with the categorical version of one of your main variables.
+Finding 3 is **optional** in this lab, and worth **1 extra point**. If you skip it, leave these sections blank in your editing file.
+
+Your additional variable goes on the x-axis, and your categorical composite score goes in the fill (see your project's tab in the plan above).
 
 ::: {.callout-caution}
-Your additional variables haven't been cleaned yet the way your main variables were in Lab 2, they may still contain "Don't know," "Refused," or skip-pattern missingness. Take a quick look with `count()` or `skim()` before you build this dataframe, and handle any `NA`/"Don't know"/"Refused" values the same (or improved) way you did for your main variables in Lab 2 (Section 1.6). Skipping this step can quietly distort your plot.
+Your additional variables weren't cleaned in Lab 2 the way your main variables were. They may still contain "Refused" or "Don't know" (as real categories), or `NA`s. Skipping the cleaning step can quietly distort your plot, with a "Refused" bar or an "NA" bar.
 :::
 
-Once your additional variable is cleaned, build the dataframe the exact same way you did for Finding 2:
+1.  **Look at your variable.** Use [`tabyl()`](https://nwakim.github.io/PUBH_523_26F/lessons/28_Data_summarization_tables/Data_summarization_tables.html#/what-does-tabyl-do) on your additional variable to see its categories, including any "Refused", "Don't know", or `NA`.
+2.  **Turn non-answers into `NA`.** Use [`replace_with_na()`](https://nwakim.github.io/PUBH_523_26F/lessons/25_Missing_data_transformations/Missing_data_transformations.html#/replace_with_na-replace-a-factor-level-with-na) (Lesson 25), the same way you did in Lab 2 Part A. Spell each category exactly as it appears in your `tabyl()` output.
+3.  **Remove the `NA`s.** Use [`drop_na()`](https://nwakim.github.io/PUBH_523_26F/lessons/25_Missing_data_transformations/Missing_data_transformations.html#/drop_na-removing-missingness-from-all-variables-in-the-dataset-1) with your additional variable.
+4.  Save the result as `finding3_clean`, and use `tabyl()` again to check that only real answers are left. A "Refused" row with a count of 0 is fine: the category name is still listed, but no one is in it, and [`count()`](https://nwakim.github.io/PUBH_523_26F/lessons/21_Data_transformation_rows/Data_transformation_rows.html#/sorting-datasets-using-arrange) will skip it.
+5.  **Build the dataframe** from `finding3_clean`, using the Finding 2 code: your additional variable takes the place of `<your_x_variable>`, and your composite score's `_cat` variable takes the place of `<your_fill_variable>`. Save it as `finding3_data`.
 
-```{r}
-#| eval: false
+::: callout-important
+#### Task (optional, 1 extra point)
 
-finding3_data <- wbns_06_cat |>
-  count(<your_additional_variable>, <your_categorical_composite>) |>
-  group_by(<your_additional_variable>) |>
-  mutate(pct = _______) |>
-  ungroup()
+Clean your chosen additional variable with `replace_with_na()` and `drop_na()`, and save it as `finding3_clean`. Then use `count()`, [`group_by()`](https://nwakim.github.io/PUBH_523_26F/lessons/29_Data_summarization_groups/Data_summarization_groups.html#/group-by-a-variable-in-get_summary_stats), [`mutate()`](https://nwakim.github.io/PUBH_523_26F/lessons/22_Data_transformation_columns/Data_transformation_columns.html#/mutate-transform-and-create-variables), and [`ungroup()`](https://dplyr.tidyverse.org/reference/group_by.html) to build a dataframe of within-group percentages. Save it as a new object called `finding3_data`, and print it.
+:::
 
-finding3_data
-```
+### Finding 3 (optional): Visualize one main variable + one additional variable
 
-::: {.callout-important}
+Use the Finding 2 plot code with `finding3_data`: your additional variable goes in `x =`, and your composite score's `_cat` variable goes in `fill =`. If you're unsure what any piece of the code is doing, revisit the explanations under Finding 2 above.
+
+Two things will likely change from Finding 2:
+
+- **Your x-axis labels.** Many additional variables have the categories `"No"` and `"Yes"`, which won't make sense to a reader on their own. If yours do, add a [`scale_x_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html) line (see Finding 1) with labels that describe your variable. Check your [`tabyl()`](https://nwakim.github.io/PUBH_523_26F/lessons/28_Data_summarization_tables/Data_summarization_tables.html#/what-does-tabyl-do) output so the names on the left of each `=` match your categories exactly.
+- **Your legend labels.** Your composite score's categories are already reader-friendly, so you likely won't need [`scale_fill_discrete()`](https://ggplot2.tidyverse.org/reference/scale_discrete.html).
+
+**Write your takeaway** the same way as Finding 2: one sentence comparing the groups, with numbers from your plot.
+
+::: callout-important
+#### Task (optional, 1 extra point)
+
+Build your Finding 3 visualization using `ggplot2`, starting from the Finding 2 template code in the instructions and filling in the blanks. Save the plot as a new object called `finding3_plot`, and print it. Below the plot, write a one-sentence takeaway that compares the groups.
+:::
+
+### Export your visualizations
+
+Save each of your finished plots as a `.png` file. These files will be used later in the final project! If you need to adjust the size and look of your plots, you will need to come back to this lab, modify them, and re-export them.
+
+::: {.callout-tip}
+#### Before you export: check each plot
+
+Go through this list for each plot. If anything is missing, go back and fix it before you save.
+
+- [ ] The **title** describes what the plot shows, in plain language, and doesn't claim that one thing causes another.
+- [ ] The **x-axis and y-axis labels** are plain language (no variable names like `food_insecure` or question codes like `Q27`).
+- [ ] The y-axis label says these are **percents** (e.g., "Percent of respondents").
+- [ ] Findings 2 and 3: the **legend** has a plain-language title.
+- [ ] The **categories** are in a meaningful order (low to high, or worst to best), not alphabetical.
+- [ ] There's **no "NA" bar** or "NA" segment, and no "Refused" or "Don't know" category.
+- [ ] The **percent labels** are readable and don't overlap.
+- [ ] Someone who has never seen your data could understand the plot **without reading your code**.
+:::
+
+1.  **Make a `plots` folder.** [`ggsave()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/saving-plots) can't create a folder for you: if the folder doesn't exist, you'll get an error like `Cannot find directory`. In RStudio's **Files** pane, go to your class folder (the one with your `.Rproj` file), click **New Folder**, and name it `plots`.
+2.  **Save each plot with `ggsave()`** (Lesson 32). Use [`here()`](https://nwakim.github.io/PUBH_523_26F/lessons/12_Rproj_wds/Rproj_wds.html#/the-here-package) to point to your `plots` folder, give each file a descriptive name, and tell `ggsave()` which plot to save:
+
+    ```{r}
+    #| eval: false
+    ggsave(
+      filename = here("plots", "finding1_ease_free_food.png"),
+      plot = finding1_plot,
+      width = 6, height = 5, units = "in", dpi = 300,
+      bg = "white"
+    )
+    ```
+
+    - `bg = "white"` gives the image a white background. Without it, [`theme_minimal()`](https://nwakim.github.io/PUBH_523_26F/lessons/32_Data_viz_Design_choices/Data_viz_Design_choices.html#/complete-themes) plots are saved with a see-through background, and the text can disappear on a dark screen or slide.
+    - Save at `dpi = 300` or higher so your plot looks crisp on a printed page.
+    - Use a descriptive file name for each plot (e.g., `finding1_...`, `finding2_...`) so they're easy to find later.
+    - Change `width` and `height` if your labels look crowded. A stacked bar chart with several groups usually needs to be wider.
+3.  **Open each `.png` file** from the Files pane and check that it looks the way you expect. The saved image can look different from the plot in RStudio, because the size is different.
+4.  Take a screenshot of your `plots` folder showing the files, save it in your `images` folder, and add it to your editing file (the same way you added screenshots in Lab 1).
+
+::: callout-important
 #### Task
-Clean your chosen additional variable, then use `count()`, `group_by()`, and `mutate()` to build a dataframe of within-group percentages. Save it as a new object called `finding3_data`.
+
+Export each of your polished visualizations as a `.png` file into your `plots` folder using `ggsave()`. Include a screenshot showing the exported files in your `plots` folder.
 :::
 
-### Finding 3: Visualize one main variable + one additional variable
+### AI Use Statement
 
-Same approach as Finding 2, again using the categorical version of your composite score so the story stays consistent across findings.
+**Using AI is not required in this class.** If you *did* use an AI tool (ChatGPT, Claude, Copilot, Gemini, an RStudio assistant, etc.) on this lab, add a brief AI Use Statement. Include:
 
-```{r}
-#| eval: false
+- **Which tool(s)** you used
+- **What for** (a sentence or two, with section names)
+- **Where** it contributed to any written answers (if at all)
+- *You do NOT need to link your conversation.*
 
-finding3_plot <- ggplot(finding3_data, 
-  aes(
-      x = <your_additional_variable>, 
-      y = pct, 
-      fill = <your_categorical_composite>)
-      ) +
-  geom_col() +
-  geom_text(aes(label = paste0(round(pct), "%")),
-            position = position_stack(vjust = 0.5),
-            color = "white", fontface = "bold", size = 4.5) +
-  scale_x_discrete(labels = ________) +
-  labs(______) +
-  theme_minimal(base_size = 12)
+For example:
 
-finding3_plot
-```
+> *AI Use Statement: Claude was used to explain an error message in the "Finding 2: Visualize" section. All reasoning and answers are my own.*
 
-If you're unsure what any piece of this code is doing, revisit the annotated explanations under Finding 2 above.
+OR
 
-::: {.callout-important}
+> *AI Use Statement: AI was not used in this assignment.*
+
+Before using AI, check the table of allowed uses in the [Generative AI Policy](https://nwakim.github.io/PUBH_523_26F/syllabus.html#generative-ai-policy). AI can help you explain errors, debug, and style your code, but it should not write your analysis for you.
+
+::: callout-important
 #### Task
-Build your Finding 3 visualization using `ggplot2`, adding and editing the code above with your own variables and category labels. Save the plot as a new object (e.g., `finding3_plot`).
+
+Write your AI Use Statement in your editing file.
 :::
 
-### Export your visualizations and save your environment 
+## Last word: Looking ahead to your final project {.unnumbered}
 
-Save each of your finished plots as a `.png` file. These files will be used in later in the final project! If you need to adjust the size and look of your plots, you will need to come back to this lab, modify them, and re-export them.
-
-Example: 
-```{r}
-#| eval: false
-
-ggsave(here("<insert file path>"), plot = finding1_plot,
-       width = 5, height = 5, units = "in", dpi = 300)
-```
-
-- Save at `dpi = 300` or higher so your plot looks crisp on a printed page.
-- Use a descriptive file name for each plot (e.g., `finding1_...`, `finding2_...`) so they're easy to find later.
-
-::: {.callout-important}
-#### Task
-Export each of your polished visualizations as a `.png` file into your `plots` folder. Include a screenshot showing the exported files in your `plots` folder.
-:::
-
-## Last word: Looking ahead to your final project
-
-The plots you polished and exported in this lab are exactly what will go into the three finding boxes on your final project template. You may need to adjust these plots or saved images for your information sheet. 
+The plots you polished and exported in this lab are exactly what will go into the finding boxes on your final project template. You may need to adjust these plots or saved images for your information sheet.

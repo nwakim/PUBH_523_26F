@@ -31,6 +31,7 @@ execute:
 ### ADD YOUR LIBRARIES HERE!!! ####
 pacman::p_load( 
   here, 
+  rio,
   tidyverse, 
   writexl, 
   rstatix, 
@@ -43,86 +44,149 @@ pacman::p_load(
 ```
 
 ::: callout-warning
-Note that this is the editing file. **There are detailed instructions on our course page for Lab 2 that are not in this file.**
+Note that this is the editing file. **There are detailed, step-by-step instructions on our course page for Lab 4 that are not in this file.** Keep the instructions open while you work, and click your project's tab whenever you see one.
 :::
 
 ## Lab activities
 
 ### Restate your selected project
 
-::: {.callout-important}
+::: callout-important
 #### Task
-Copy and paste the row from the above table that corresponds to your project into your `.qmd` file, same as you did in Lab 3.
+
+Using your Lab 2 and Lab 3 files, fill in the short list under "Restate your selected project" in your editing file: your project number, project question, main variable names, and composite score name(s) (numeric and categorical).
 :::
 
+**My project number:** 
+
+**Project question:** 
+
+**Main variables (names after Lab 2):** 
+
+**Composite score name(s) (numeric and categorical):** 
 
 ### Import your saved data from Lab 3
 
-::: {.callout-important}
+::: callout-important
 #### Task
-From the `.rda` file you exported at the end of Lab 3, import `wbns_06_cat` and `summary_table_overall` into R using `load()` or `import()` from the `rio` package. Print out the number of rows and columns of `wbns_06_cat` to verify the import.
+
+From the `.rda` file you exported at the end of Lab 3, import `wbns_06_cat` into R using `import()` with the `which` argument. Print the number of rows and columns of `wbns_06_cat` to verify the import. Use `tabyl()` to check each categorical composite score for `NA`s, and remove any with `drop_na()`.
 :::
 
+```{r}
+
+```
 
 ### Plan your three findings
 
-::: {.callout-important}
+::: callout-important
 #### Task
-For Finding 1 and 3, write down which variable(s) you will visualize. 
+
+Write down which variable you will visualize for Finding 1, and the two variables for Finding 2 (which goes on the x-axis and which is the fill). If you're doing the optional Finding 3, write down your additional variable.
 :::
 
 - **Finding 1 variable:** 
-- **Finding 3 variable(s) (optional):** 
+- **Finding 2 variables (x-axis and fill):** 
+- **Finding 3 variables (optional: additional variable and categorical composite):** 
 
 ### Finding 1: Create the dataframe
 
 ::: callout-important
 #### Task
 
-Use `count()` and `mutate()` to build a small dataframe of counts and percentages for your Finding 1 variable. Save it as a new object called `finding1_data`.
+Use `count()` and `mutate()` to build a small dataframe of counts and percentages for your Finding 1 variable. Save it as a new object called `finding1_data`, and print it.
 :::
+
+```{r}
+
+```
 
 ### Finding 1: Visualize one main variable
 
-::: {.callout-important}
+::: callout-important
 #### Task
-Build your Finding 1 visualization using `ggplot2`, adding and editing the code above with your own variable and category labels. Save the plot as a new object (e.g., `finding1_plot`).
+
+Build your Finding 1 visualization using `ggplot2`, starting from the template code in the instructions and filling in the blanks. Save the plot as a new object called `finding1_plot`, and print it. Below the plot, write a one-sentence takeaway.
 :::
+
+```{r}
+
+```
+
+**Takeaway:** 
 
 ### Finding 2: Create the dataframe
 
-::: {.callout-important}
+::: callout-important
 #### Task
-Use `count()`, `group_by()`, and `mutate()` to build a dataframe of within-group percentages for your two main variables. Save it as a new object called `finding2_data`.
+
+Use `count()`, `group_by()`, `mutate()`, and `ungroup()` to build a dataframe of within-group percentages for your two main variables. Save it as a new object called `finding2_data`, and print it.
 :::
 
+```{r}
+
+```
 
 ### Finding 2: Visualize the relationship between your two main variables
 
-::: {.callout-important}
+::: callout-important
 #### Task
-Build your Finding 2 visualization using `ggplot2`, adding and editing the code above with your own variables and category labels. Save the plot as a new object (e.g., `finding2_plot`).
+
+Build your Finding 2 visualization using `ggplot2`, starting from the template code in the instructions and filling in the blanks. Save the plot as a new object called `finding2_plot`, and print it. Below the plot, write a one-sentence takeaway that compares the groups.
 :::
 
+```{r}
 
-### Finding 3: Create the dataframe
+```
 
-::: {.callout-important}
-#### Task
-Clean your chosen additional variable, then use `count()`, `group_by()`, and `mutate()` to build a dataframe of within-group percentages. Save it as a new object called `finding3_data`.
+**Takeaway:** 
+
+### Finding 3 (optional): Create the dataframe
+
+::: callout-important
+#### Task (optional, 1 extra point)
+
+Clean your chosen additional variable with `replace_with_na()` and `drop_na()`, and save it as `finding3_clean`. Then use `count()`, `group_by()`, `mutate()`, and `ungroup()` to build a dataframe of within-group percentages. Save it as a new object called `finding3_data`, and print it.
 :::
 
-### Finding 3: Visualize one main variable + one additional variable
+```{r}
 
-::: {.callout-important}
-#### Task
-Build your Finding 3 visualization using `ggplot2`, adding and editing the code above with your own variables and category labels. Save the plot as a new object (e.g., `finding3_plot`).
+```
+
+### Finding 3 (optional): Visualize one main variable + one additional variable
+
+::: callout-important
+#### Task (optional, 1 extra point)
+
+Build your Finding 3 visualization using `ggplot2`, starting from the Finding 2 template code in the instructions and filling in the blanks. Save the plot as a new object called `finding3_plot`, and print it. Below the plot, write a one-sentence takeaway that compares the groups.
 :::
 
-### Export your visualizations and save your environment 
+```{r}
 
-::: {.callout-important}
+```
+
+**Takeaway:** 
+
+### Export your visualizations
+
+::: callout-important
 #### Task
-Export each of your polished visualizations as a `.png` file into your `plots` folder. Include a screenshot showing the exported files in your `plots` folder.
+
+Export each of your polished visualizations as a `.png` file into your `plots` folder using `ggsave()`. Include a screenshot showing the exported files in your `plots` folder.
 :::
 
+```{r}
+
+```
+
+**Screenshot of my `plots` folder:** 
+
+### AI Use Statement
+
+::: callout-important
+#### Task
+
+Write your AI Use Statement in your editing file.
+:::
+
+**AI Use Statement:** 
