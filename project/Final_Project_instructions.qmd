@@ -3,7 +3,7 @@ title: "Final Project Instructions"
 author: "Nicky Wakim"
 subtitle: "PUBH 523/623"
 date-modified: "today"
-format: 
+format:
   html:
     link-external-newwindow: true
     toc: true
@@ -14,29 +14,27 @@ format:
     code-annotations: hover
     page-layout: full
     highlight-style: ayu
-    code-block-bg: "#f8f9fa" 
+    code-block-bg: "#f8f9fa"
     code-block-border-left: "#5BAFF8"
-  pdf: default 
-editor_options: 
+editor_options:
   chunk_output_type: console
 execute:
-  freeze: auto 
+  freeze: auto
 ---
 
-::: callout-warning
-These instructions are ready to go! (Nicky 8/28/2026)
-:::
-
-
 ::: {.callout-note}
-Please turn in your final **.pptx** file and **.pdf** version on Brightspace, using the naming convention `lastname_firstinit_final_project.pptx` and `lastname_firstinit_final_project.pdf`.
+Please turn in your final **.qmd** file and the **.html** file it renders to on Brightspace, using the naming convention `lastname_firstinit_final_project.qmd` and `lastname_firstinit_final_project.html`.
 
-Most of this project is about **translating your work into plain language** and **polishing your visuals** so they can stand alone for a specific audience.
+Most of this project is about **translating your work into plain language** and **polishing your visuals** so they can stand alone for a specific audience. The rest is about pulling together the Quarto skills you've built all quarter into one clean, readable web page.
+
+[You can download the template `.qmd` file for the final project here.](https://github.com/nwakim/PUBH_523_26F/blob/main/project/Final_Project_template.qmd)
 :::
 
 ## Purpose
 
-Across Labs 1–4 you turned the raw Well-Being and Basic Needs Survey (WBNS) into a cleaned dataset, built a composite score, summarized it in a table, and visualized it. In this final project, you will translate that work for a reader who has never seen your code: a **one-page information sheet**, built from the provided PowerPoint template, that presents your project focus, your key findings, and why they matter.
+Across Labs 1–4 you turned the raw Well-Being and Basic Needs Survey (WBNS) into a cleaned dataset, built a composite score, summarized it in a table, and visualized it. In this final project, you will translate that work for a reader who has never seen your code: an **information page**, written in Quarto and rendered to HTML, that presents your project focus, how you measured your composite score, your key findings, and why they matter.
+
+Your reader should **never see your code**. They should see a short, scrollable web page with a clear headline, a few sentences of context, your findings in tabs, and what it all means. Behind the scenes, your `.qmd` does all the work: it imports your Lab 3 data, makes your plots, and fills numbers into your text.
 
 ::: {.callout-tip}
 Here are two sites that have examples of style and content:
@@ -46,35 +44,54 @@ Here are two sites that have examples of style and content:
   - A lot of these are very long, but I think it's helpful for you to see what a public health department puts out for the public!
 :::
 
-## What your information sheet should include
+## What your information page should include
 
-Use the provided PowerPoint template (`final_project_template.pptx`) as your starting point. It is sized for a normal sheet of paper (8.5" × 11", one slide) and laid out with the sections below already placed for you. More information on each section appears below.
+Use the provided template (`Final_Project_template.qmd`) as your starting point. It already has the YAML, the section headers, a tabset for your findings, and placeholder text in square brackets `[like this]`. More information on each section appears below.
 
-You will replace the placeholder text and placeholder image boxes with your own content. **You're welcome to adjust the layout and style**, but the following information should appear somewhere on your page:
+You will replace the placeholder text with your own content and fill in the code chunks. **You're welcome to adjust the layout and style**, but the following information should appear on your page, in this order:
 
-1. **Title + Author + Headline takeaway** (@sec-title): a short title and one plain-language sentence that captures your single most important finding. 
+1. **Title + Author + Headline takeaway** (@sec-title): a short title and one plain-language sentence that captures your single most important finding.
     - If someone only reads one line on your whole page, this should be it.
 2. **Background / Why it matters** (@sec-background): 1-3 sentences on what the WBNS is and why your topic matters, drawing on what you wrote for Lab 1 (motivation for the study, why basic needs matter).
-3. **Population / Who we looked at** (@sec-pop):a plain-language description of your population and sample size — no code, no variable names like `FPL_LT50` (e.g. "adults living below the poverty line who received free groceries or meals in the past year").
-4. **Findings** (@sec-findings): 2-3 short findings, each pairing **one image** (a polished plot or table, exported from R, see below) with **1-3 sentences of plain-language description** for each finding. Structure them so they build on each other:
-   - **Finding 1: One main variable on its own.** Describe what you found for a single main variable by itself (not yet in relation to anything else) — for example, the overall distribution of your composite score, or what share of your population fell into each category of your other main variable.
-   - **Finding 2: the relationship between your two main variables.** This is the heart of your project question. Show how your composite score compares across the groups of your other main variable (this is exactly what your Lab 3 grouped summary and Lab 4 visualization already show you).
-   - **Finding 3 (optional): one main variable alongside one additional variable.** If you have room, take one main variable and break it down by one of the suggested additional variables from your Lab 2 table (e.g., a demographic variable) to add texture to your story.
+3. **Population / Who we looked at** (@sec-pop): a plain-language description of your population and sample size. No code, no variable names like `FPL_LT50` (e.g. "adults living below the poverty line who received free groceries or meals in the past year").
+4. **How we measured your composite score** (@sec-composite): a collapsed callout that a curious reader can open to see which survey questions went into your composite score, how the answers were scored, and how you grouped the scores into categories.
+5. **Findings** (@sec-findings): 2-3 short findings in a **tabset**, one tab per finding. Each tab's header gives a **quick summary** of the finding, and the tab pairs **one plot** (or table) with **1-3 sentences of plain-language description**. Structure them so they build on each other:
+   - **Finding 1: One main variable on its own.** Describe what you found for a single main variable by itself (not yet in relation to anything else). For example, what share of your population fell into each category of your other main variable.
+   - **Finding 2: the relationship between your two main variables.** This is the heart of your project question. Compare the groups on your x-axis: among each group, what percent fell into each category of your outcome? (This is exactly what your Lab 4 Finding 2 plot already shows you.)
+   - **Finding 3 (optional): one main variable alongside one additional variable.** If you made Finding 3 in Lab 4, you can include it here to add texture to your story: how your composite score categories compare across the groups of one additional variable.
 
-   Your tables and plots are hopefully already completed from Labs 3/4. At this point, you should focus on choosing which findings to present, polishing the table/visual, and describing the finding in plain language. 
-5. **So what? / What does this mean?** (@sec-so-what): a few sentences connecting your findings back to your original question: why does this matter, and what might it suggest for programs or policy?
-6. **Data source and limitations** (@sec-data-source): a short citation of the WBNS, and at least one honest limitation of your analysis (e.g., small sample size after filtering, self-reported data, cross-sectional so no causal claims).
+   Your plots are hopefully already completed from Lab 4. At this point, you should focus on choosing which findings to present, polishing each plot, and describing each finding in plain language.
+6. **So what? / What does this mean?** (@sec-so-what): a few sentences connecting your findings back to your original question: why does this matter, and what might it suggest for programs or policy?
+7. **Data source and limitations** (@sec-data-source): a short citation of the WBNS, and at least one honest limitation of your analysis (e.g., small sample size after filtering, self-reported data, cross-sectional so no causal claims).
+8. **AI Use Statement** (@sec-ai): one line at the very bottom of the page.
 
-The sections below will give more detail on what is expected in each section.
+The sections below will give more detail on what is expected in each section. After that, @sec-html walks through how to build the page in Quarto.
+
+::: callout-important
+#### Word limits
+
+A web page can scroll, so you have a little more room than a one-page handout. That doesn't mean you should use all of it! Keep your page short enough that a reader can get through it in a few minutes:
+
+- **Your page: 450 words or fewer.** This counts everything a reader sees on the page (title, headline takeaway, section text, tab headers, and captions), **except**:
+  - the "How we measured" callout (it has its own limit, below),
+  - any text inside your plots (titles, axis labels, legends),
+  - your WBNS citation, and
+  - your AI Use Statement.
+- **"How we measured" callout: 150 words or fewer** (Projects 1 and 2), or **250 words or fewer** for Project 3, since you're explaining two scores. Text in a small table counts.
+
+Most strong pages land around 300-400 words. If you're over, ask yourself whether the reader really needs each sentence.
+
+**How to count:** open your rendered `.html` in your web browser, copy the text you want to count, and paste it into a Word or Google Doc to see its word count.
+:::
 
 ### Title + Author + Headline takeaway {#sec-title}
 
-This should appear at the top of your information sheet and be the first (and maybe only) thing a reader sees.
+The title and author go in the YAML at the top of your `.qmd`. The headline takeaway goes in a callout right below the YAML, so it is the first (and maybe only) thing a reader sees.
 
-- **Title:** Keep it descriptive, there's no need for a clever tile. In fact, a clever title is often distracting. A plain title like "Food Security Among Free Food Recipients" does the job. A reader should know what your page is about before they've read a single full sentence.
+- **Title:** Keep it descriptive, there's no need for a clever title. In fact, a clever title is often distracting. A plain title like "Food Security Among Free Food Recipients" does the job. A reader should know what your page is about before they've read a single full sentence.
 - **Author:** Include your name here.
-- **Headline takeaway:** One sentence, in plain language, that states your single most important finding. 
-    - This is the sentence you'd want someone to remember if they only read one line on the whole page. 
+- **Headline takeaway:** One sentence, in plain language, that states your single most important finding.
+    - This is the sentence you'd want someone to remember if they only read one line on the whole page.
     - **This will most likely pertain to the relationship between your two main variables and Finding 2.**
     - Write it the way you'd say it out loud to a person, not like the results line of a hypothesis test
         - e.g., "Most adults who received free groceries or meals also reported experiencing food insecurity," not "Food insecurity was observed in X% of the sample"
@@ -82,12 +99,12 @@ This should appear at the top of your information sheet and be the first (and ma
 ::: callout-tip
 #### Tip
 
-It's often easier to write this section (title and headline) *last*, after you've written your findings, that way you can easily summarize your findings. 
+It's often easier to write this section (title and headline) *last*, after you've written your findings, that way you can easily summarize your findings.
 :::
 
 ### Background / why it matters {#sec-background}
 
-This goes under **"Why This Matters"** on the left side of the page, just below the title banner. 
+This goes under the **"Why this matters"** header, right below your headline takeaway.
 
 In 1-3 sentences:
 
@@ -97,128 +114,335 @@ In 1-3 sentences:
   - Why should a reader care about food security, LGBTQ+ healthcare trust, or mental health and benefit receipt (whichever is your project)?
 
 ::: callout-tip
-Write it as if you're explaining your project to a relative with no public health background. 
+Write it as if you're explaining your project to a relative with no public health background.
 :::
 
 ### Population / who we looked at {#sec-pop}
 
-This goes under **"Who We Looked At"** on the right side, parallel to the background section. 
+This goes under the **"Who we looked at"** header.
 
 In 1-3 sentences, plainly state:
 
 - Who qualified for your study population (the filtering criteria from Lab 2)
     - Again, this should be in plain English, not variable names. Instead of "FPL_LT50 == 1," write something like "adults living below the federal poverty line."
-- Your final sample size, after all of your data cleaning in Labs 2-3
+- Your final sample size, after all of your data cleaning in Labs 2-4
     - This is very important! Giving a sense of the sample helps with context!
+    - **Use inline code for your sample size** (Lesson 33), so the number always matches your data. See @sec-inline.
 
 ::: callout-tip
 Avoid any variable names or question codes (`FOOD_INSEC`, `Q27`, etc.).
 :::
 
+### How we measured your composite score {#sec-composite}
+
+Your reader will see your composite score's categories (like "Difficult access" or "Low trust") in your plots, but they won't know where those categories came from. This section tells them, without getting in the way of readers who don't need the details.
+
+Put it in a **collapsed callout** at the top of your "What we found" section. A collapsed callout shows only its title until the reader clicks on it:
+
+```` markdown
+::: {.callout-note collapse="true"}
+#### How we measured ease of access to free food
+
+[Your plain-language explanation here]
+:::
+````
+
+`collapse="true"` is new: it's the same callout block from Lesson 33, with one extra option that starts it closed. You've seen these in the lab instructions (like the "Functions you'll use in this lab" box).
+
+Inside the callout, explain in plain language:
+
+- **Which survey questions** went into the score. Describe each one in words (e.g., "how easy it was to find a place to get free food"), not by its question code.
+- **How the answers were scored** (e.g., "Very difficult" = 1 up to "Very easy" = 5), and that you **added the scores** together.
+- **The range** of the score and **what a high score means** (e.g., "Scores range from 4 to 20, and higher scores mean easier access").
+- **How you grouped the scores** into the categories in your plots (e.g., "We grouped scores of 4-9 as difficult access, 10-15 as moderate access, and 16-20 as easy access").
+
+::: {.panel-tabset group="project"}
+#### Project 1
+
+Your callout explains `ease_free_food`: the four ease-of-access questions, the 1-5 scoring, the 4-20 range, and your three categories.
+
+#### Project 2
+
+Your callout explains `trust_courtesy_respect`: the two questions about trusting your provider and being treated with courtesy and respect, the 1-5 scoring, the 2-10 range, and your three categories.
+
+#### Project 3
+
+You have **two** composite scores, so explain both (you can use two collapsed callouts, or one callout with two short paragraphs):
+
+- **Mental health score:** the six questions about how often respondents felt nervous, hopeless, and so on, the scoring, the range, which direction is better (from your Lab 3 choice), and your categories.
+- **Total benefits:** the benefit programs you counted (in words, like "SNAP" or "free or reduced-price school meals"), that each one counts as 1 point, the range, and your categories. Mention any choices you made, like whether you counted WIC.
+:::
+
+::: callout-tip
+A small table can make this easier to read, for example one row per category with its score range. You can type a Markdown table directly into the callout, or include your Lab 3 `summary_table_overall` (see @sec-table).
+:::
+
 ### Findings {#sec-findings}
 
-Use the 2-3 findings to build your story in order (see the structure above): 
+Your findings go under the **"What we found"** header, in a **tabset** with one tab per finding (the template has this set up for you). Use the 2-3 findings to build your story in order (see the structure above):
 
-1. Finding 1 introduces one main variable on its own 
-2. Finding 2 shows the relationship between your two main variables (this is your core result) 
-3. Finding 3 (optional) adds one additional variable for texture 
+1. Finding 1 introduces one main variable on its own
+2. Finding 2 shows the relationship between your two main variables (this is your core result)
+3. Finding 3 (optional) adds one additional variable for texture
 
-Each finding box in the template has **two** pieces of text, not one:
+Each finding has **two** pieces of text, not one:
 
-- A **short headline** above the image (a few words, not a full sentence)
-    - Think of it like a newspaper subhead that names the point of that finding at a glance, e.g. "Access Difficulty Varies by Food Security Status."
-- A **1-3 sentence caption** below each image that spells the finding out in plain language.
+- A **quick summary in the tab header** (a few words, about 3-6, not a full sentence), written after the finding number: `### Finding 1: Most were food insecure`
+    - The summary should state **what you found**, not just the topic. "Most were food insecure" tells the reader the result; "Food insecurity" only tells them what the plot is about.
+    - Think of it like a newspaper subhead: a reader should be able to skim just your three tab headers and get the gist of your story.
+    - Keep it short. With three findings, your tabs may wrap onto a second row, and that's fine, but long tab headers make the tabs hard to scan.
+- A **1-3 sentence caption** below each plot that spells the finding out in plain language.
 
-For example, a Finding 1 headline/caption pair might look like:
+For example, a Finding 1 tab header/caption pair might look like:
 
-> **Headline:** Most Respondents Reported Food Insecurity
+> **Tab header:** Finding 1: Most were food insecure
 >
 > **Caption:** Among adults who received free groceries or meals in the past year, approximately 75\% also reported experiencing food insecurity in the past 12 months.
 
-(If you're on Project 3, a Finding 1 caption might instead read something like: "72% of respondents reported feeling nervous or hopeless at least some of the time in the past 30 days.")
+(If you're on Project 3, a Finding 1 caption might instead read something like: "About [X]% of families received two or three types of government benefits in the past year.")
 
-For every caption, state the number, then say what it means, not "the mean composite score was 14.3," but something closer to "most people in our sample reported relatively easy access to free food." 
+For every caption, state the number, then say what it means, not "the mean composite score was 14.3," but something closer to "most people in our sample reported relatively easy access to free food." Use inline code for the numbers in your captions where you can (@sec-inline).
 
 ::: callout-tip
-Keep your language **descriptive, not causal**: say what you found (e.g., "respondents who reported X also more often reported Y"), not that one thing caused, drove, or explains another. A single survey snapshot can't support that kind of claim. Words like "associated with" or "related to" also imply statistical testing you haven't done here, so we need to stick to desriptive language. 
+Keep your language **descriptive, not causal**: say what you found (e.g., "respondents who reported X also more often reported Y"), not that one thing caused, drove, or explains another. A single survey snapshot can't support that kind of claim. Words like "associated with" or "related to" also imply statistical testing you haven't done here, so we need to stick to descriptive language.
 :::
 
-### So what? / What does this mean?
+### So what? / What does this mean? {#sec-so-what}
 
-This section will appear near the bottom of your information sheet.
+This section goes under the **"So what?"** header, after your findings.
 
-In 1-3 sentences, connect your findings back to your original project question: why does this matter, and what might it suggest for programs or policy? 
+In 1-3 sentences, connect your findings back to your original project question: why does this matter, and what might it suggest for programs or policy?
 
 You don't need to make formal policy recommendations, just describe the implication in plain language, and keep it as descriptive as your findings (avoid claiming your data proves a program should change; describe what your findings might suggest is worth a closer look).
 
-### Data source and limitations
+### Data source and limitations {#sec-data-source}
 
-This is the small-print line at the very bottom of the page. In one or two sentences:
+This is the short section in small print at the bottom of the page (the template puts it in a `fine-print` box, see @sec-html). In one or two sentences:
 
 - Cite the WBNS
   - Check out the [website where we got the data](https://www.icpsr.umich.edu/web/HMCA/studies/39691/datadocumentation) (in Lab 1), and click on "Cite this study" near the top of the page.
 - Name at least one honest limitation of your analysis
   - For example, your sample size after filtering, the fact that responses are self-reported, or that the survey is cross-sectional (a single point in time), so your findings describe what respondents reported together, not what caused what.
 
-## Tips for exporting and polishing your visuals
+### AI Use Statement {#sec-ai}
 
-### Getting your images out of R
+Like the labs, end with a one-line AI Use Statement. Students may use AI to explain errors, debug, and style code, but not to write the analysis or the text of the page for you. Say whether you used AI, and if so, how (e.g., *"I used ChatGPT to help me understand an error message when rendering. All writing and analysis are my own."*). If you didn't, write *"AI was not used in this assignment."*
 
-Everything you place into the PowerPoint template is a static image (`.png` or `.jpg`). There's no R code in a PowerPoint file, so you'll export your finished plots and tables from your Lab 3/4 and then place the image files into your powerpoint.
+## Building your page in Quarto {#sec-html}
 
-This will require you to write some more code or adjust your previously saved images. Adjustments are usually needed to make sure it is legible within the powerpoint.
+This section walks through the template from top to bottom. Almost everything here comes from Lesson 6 (Quarto and `.qmd`'s) and Lesson 33 (Quarto revisited). A few small things are new, and they are marked **new**.
 
-::: tip-callout
-It might be nice to create a new folder within your project folder called `images` to hold all of your exported images.
+::: callout-important
+Save your `lastname_firstinit_final_project.qmd` in the same place you've kept your lab `.qmd` files, inside your class R project. That way, `here()` finds your data the same way it did in the labs.
 :::
 
-**Saving a `ggplot`:**
+### The YAML
 
-```r
-ggsave("plots/ease_food_by_insecurity.png", plot = my_plot,
-       width = 5, height = 4, units = "in", dpi = 300)
+The template's YAML looks like this:
+
+```yaml
+---
+title: "[Your descriptive title]"
+subtitle: "An information page using the Well-Being and Basic Needs Survey"   # <1>
+author: "[Your name]"
+date: today
+format:
+  html:
+    theme: cosmo                       # <2>
+    title-block-banner: "#3070BF"      # <3>
+    title-block-banner-color: "white"  # <3>
+    fig-width: 8                       # <4>
+    fig-height: 5                      # <4>
+    fig-align: center                  # <4>
+    toc: false                         # <5>
+    embed-resources: true              # <6>
+execute:                               # <7>
+  echo: false                          # <7>
+  warning: false                       # <7>
+  message: false                       # <7>
+---
 ```
+1. A `subtitle` (Lesson 6) shows up under your title. You can keep this one or write your own.
+2. **New:** `theme` changes the look of the whole page (fonts, colors, spacing) with one line. The template uses `cosmo`. Try `flatly`, `lux`, `minty`, or `united`, and render to see what you like. [Here is the full list of themes.](https://quarto.org/docs/output-formats/html-themes.html)
+3. **New:** `title-block-banner` puts your title in a colored banner across the top of the page, and `title-block-banner-color` sets the color of the text in the banner. Use a color name (like `"darkgreen"`) or a hex code (like `"#3070BF"`, our course blue). Pick colors with enough contrast that the title is easy to read.
+4. **New:** these set the default size and position of **every** plot on your page, so you don't have to set them chunk by chunk. You can still change the size of one plot by adding `#| fig-width:` or `#| fig-height:` to its chunk.
+5. A short page doesn't need a table of contents. You can turn it on if you'd like (Lesson 6).
+6. `embed-resources: true` packs your plots into the `.html` file, so it works when you send it to someone. It does the same thing as `self-contained: true` from Lesson 6.
+7. **New:** `execute` sets chunk options for **every** chunk at once. `echo: false` (Lesson 33) hides your code, and `warning: false` and `message: false` hide warnings and package messages. This keeps all code out of your reader's view, without having to add `#| echo: false` to every chunk.
 
-- Save at `dpi = 300` or higher so it looks crisp on a printed page.
-- Match the `width`/`height` roughly to the space you have in the template so you don't have to stretch or squish it later
+::: callout-tip
+#### Make it yours (without going overboard)
 
-**Saving a `gtsummary`/`gt` table as an image:**
+The template's look (theme, banner color, callout types) is a starting point. Change any of them to suit your topic, but stick to **one theme and one or two colors**, and use the same colors in your plots if you can. A page with a few consistent colors looks more polished than one with many.
+:::
 
-```r
-pacman::p_load(
-  gtsummary, 
-  gt, 
-  webshot2
-  )
+### Boxes and colors (the CSS chunk)
 
-my_table <- tbl_summary(wbns_06_cat, by = FOOD_INSEC) |>
-  as_gt()
-  
-gtsave(data = my_table, file = here("project", "images", "food_ins_table.png"))
+Right below the YAML, the template has a short `{css}` chunk. **CSS** is the language web pages use to control how things look (colors, borders, spacing). This is **new**, and **you don't need to write any CSS**. The chunk sets up three colored boxes, like the ones in our lesson notes, that you can put around your sections:
+
+```` markdown
+::: blue-box
+## Why this matters
+
+[Your text]
+:::
+````
+
+- There are three boxes: `blue-box`, `green-box`, and `pink-box`. A `##` header at the top of the box becomes its colored title bar, and any **bold** text inside the box takes on the box's color.
+- The template already puts each section in a box. You can switch a box's color by changing its name (e.g., `blue-box` to `pink-box`), or remove a box by deleting its opening `::: blue-box` and its closing `:::`.
+- **To change the colors**, edit the three hex codes at the top of the CSS chunk (`--box-1`, `--box-2`, `--box-3`). Every box of that color updates at once. If you change `--box-1`, change `title-block-banner` in your YAML to match.
+- The chunk also sets up `fine-print`, which the template uses for the data source and AI Use Statement at the bottom of the page: smaller, gray text that's there for anyone who needs it but doesn't compete with your findings.
+
+::: callout-caution
+Each box opens with `::: blue-box` (or another color) and closes with its own `:::`. If your page looks scrambled after you render (for example, everything below a box ends up inside it), check that every box has its closing `:::`. The "What we found" box holds the callout and the tabset, so it ends with **two** `:::` in a row: one closes the tabset, and one closes the box.
+:::
+
+### Load packages and import your data
+
+The first two chunks use `#| include: false` (Lesson 33): they run, but nothing from them shows up on your page.
+
+1.  **Load your packages** with `pacman::p_load()`, the same way you did in the labs. Add any packages you need (for example, `scales` for `percent()` and `comma()` in your inline code).
+2.  **Import `wbns_06_cat`** from your Lab 3 `.rda` file with `import()` and the `which` argument, exactly like the start of Lab 4.
+3.  **Repeat any cleaning from Lab 4** that your findings need: the `drop_na()` on your `_cat` variable(s), and (if you're including Finding 3) the cleaning steps that made `finding3_clean`.
+
+### Inline code for your numbers {#sec-inline}
+
+Instead of typing numbers into your text by hand, calculate them in a hidden chunk and drop them into your sentences with inline code (Lesson 33). If you ever fix something in your data, every number on your page updates when you re-render.
+
+The template has a hidden chunk for this. For example:
+
+```{r}
+#| eval: false
+
+n_total <- nrow(wbns_06_cat) |> comma()                                       # <1>
+
+pct_food_insecure <- mean(wbns_06_cat$food_insecure == "Yes") |>            # <2>
+  percent(accuracy = 1)                                                      # <2>
+
+difficult_access <- wbns_06_cat |>                                           # <3>
+  filter(ease_free_food_cat == "Difficult access")                           # <3>
+pct_fi_difficult <- mean(difficult_access$food_insecure == "Yes") |>         # <3>
+  percent(accuracy = 1)                                                      # <3>
 ```
+1. `nrow()` counts the rows (your sample size), and `comma()` adds a comma to big numbers (Lesson 33).
+2. `mean(... == "Yes")` gives the proportion of "Yes" answers, and `percent()` turns it into a percent (Lesson 33). This is a Finding 1 number.
+3. For a Finding 2 number, first `filter()` (Lesson 21) to one group on your x-axis, save it, and then calculate the percent within that group. Repeat for each group you want to compare.
 
-`gtsave()` needs the `webshot2` package installed the first time (`install.packages("webshot2")`). If you'd rather not install anything new, you can also just take a screenshot of the rendered table from your Viewer pane — that works fine for a one-pager.
+Then in your text:
 
+```` markdown
+We looked at `r knitr::inline_expr("n_total")` adults ...
+`r knitr::inline_expr("pct_food_insecure")` of respondents reported food insecurity ...
+````
+
+Use your own variables and categories. Check each number against your plot: they should match!
+
+### Headline takeaway in a callout
+
+Right after the setup chunks, put your headline takeaway in a callout (Lesson 33) so it stands out:
+
+```` markdown
 ::: {.callout-tip}
-Make sure to open the image file afterward and check that it's actually readable once you place it in your powerpoint. Text that looked fine on your screen can turn out tiny once you fit it into the appropriate space on a powerpoint.
+#### The bottom line
+[Your one-sentence headline takeaway]
+:::
+````
+
+You can pick a different callout type (`note`, `tip`, `important`, ...) or appearance (`default`, `simple`, `minimal`) to match your page (Lesson 33). The `default` appearance gives the callout a colored title bar, which helps your headline stand out.
+
+### Your findings in a tabset
+
+Your findings go in a tabset (Lesson 33). Each `###` header inside the tabset becomes a tab, and the header's text is what shows on the tab. Write the finding number, a colon, and your quick summary of the finding:
+
+```` markdown
+::: {.panel-tabset .nav-pills}
+### Finding 1: [quick summary of Finding 1]
+
+```{{r}}
+# Your Finding 1 plot code
+```
+
+[1-3 sentence caption for Finding 1]
+
+### Finding 2: [quick summary of Finding 2]
+
+...
+:::
+````
+
+**New:** adding `.nav-pills` after `.panel-tabset` turns the tabs into colored "pill" buttons, which are easier to spot. Delete it if you prefer regular tabs.
+
+A reader clicks through the tabs to move from Finding 1 to Finding 2 (and 3). If you're skipping Finding 3, delete its tab.
+
+### Getting your plots onto the page
+
+You can bring your Lab 4 plots onto your page in one of two ways. **Option A is recommended**, because your page then builds everything from your data, which is the whole point of a reproducible report.
+
+::: {.panel-tabset}
+#### Option A: Make the plots in your `.qmd` (recommended)
+
+Copy your Lab 4 code into the chunk in each finding tab: the code that makes the finding's dataframe (e.g., `finding1_data`), then your `ggplot()` code, then print the plot.
+
+- Because of `echo: false` in the YAML, only the plot shows up, not the code.
+- The YAML sets every plot to 8 by 5 inches. To change the size of one plot, add `#| fig-width:` or `#| fig-height:` (in inches) at the top of its chunk. A stacked bar chart with many categories may need to be taller.
+
+#### Option B: Insert your saved `.png` files
+
+If your Lab 4 plots are already polished and saved in your `plots` folder, you can insert the saved images instead:
+
+```{r}
+#| eval: false
+knitr::include_graphics(here("plots", "finding1_ease_free_food.png"))
+```
+
+- **New:** `knitr::include_graphics()` puts a saved image on the page from a code chunk. Using `here()` means you don't need to work out where your `plots` folder is relative to your `.qmd`.
+- If you change a plot, you'll need to re-run your Lab 4 code and re-save it with `ggsave()` before you render.
+- You'll still need your data imported for the inline code in your text.
 :::
 
+### A table (optional) {#sec-table}
 
-### Polishing plots and tables before you export them
+If a table helps your reader, you can include your Lab 3 `summary_table_overall`. Import it from the same `.rda` file with `which = "summary_table_overall"`, and print it in a chunk. Good places for it: inside your "How we measured" callout, or in its own tab in your findings tabset.
 
-The plots and table you made for Lab 3/4 may not be publication ready. They may still have default `ggplot` gray backgrounds, variable names as axis labels, or titles like "Boxplot of trust_courtesy_respect by Q27." Before exporting, revise each one so it can stand on its own for a general audience:
+A `tbl_summary()` table can be dense for a general audience, so consider whether a short table with just one or two variables would be easier to read. **Always keep in mind, simpler presentations with minimum needed information will be easier for your audience to digest!**
 
-- A plain-language, descriptive title (not a variable name or "Var1 x Var2")
-- Axis or column labels in plain language (no raw variable names or question codes)
-- A deliberate color choice, ideally consistent across your visuals
-- Clean theme to appear nicely on your powerpoint
+### Render early, render often
 
-A `tbl_summary()` table is great for a report but can be dense on a one-pager, maybe you select one variable to run through `tbl_summary()` or consider whether a simple bar chart is more appropriate. **Always keep in mind, simpler presentations with minimum needed information will be easier for you audience to digest!**
+Click **Render** after you finish each section, not just at the end. If something breaks, it's much easier to find when you've only changed one section since your last render.
+
+- If the render fails, read the error message: it tells you which chunk (by line number) has the problem.
+- If you see code, warnings, or messages on your page, check that the `execute` options are in your YAML (and indented correctly).
+- Open the `.html` file in your web browser (not just the RStudio Viewer) to see what your reader will see.
+
+## Polishing your plots
+
+The plots you made for Lab 4 may not be publication ready yet. Go back through the checklist from the end of Lab 4, and revise each plot so it can stand on its own for a general audience:
+
+- A plain-language, descriptive title (not a variable name or "Var1 x Var2"), and one that doesn't claim one thing causes another
+- Axis and legend labels in plain language (no raw variable names or question codes)
+- Categories in a meaningful order, with no "NA" or "Refused" bars
+- Percent labels that are readable and don't overlap
+- A deliberate color choice, ideally consistent across your plots (for example, `geom_col(fill = "steelblue")` for a single-color bar chart, Lesson 31)
+- A clean theme (no default gray `ggplot` background)
+
+::: callout-tip
+Your plot title and your tab header don't have to match. The tab header names the result ("Finding 2: More food insecurity with harder access"), and the plot title describes what's shown ("Food insecurity by ease of access to free food").
+:::
 
 ## Before you submit
 
-Read your finished page as if you were a stranger seeing it for the first time: does it read cleanly top to bottom, does every visual have a caption, and is there anything left over that still sounds like it was written for this class instead of for a general audience (leftover variable names, stats without interpretation, placeholder text from the template)?
+Open your `.html` file in your web browser and read your finished page as if you were a stranger seeing it for the first time:
 
-Confirm your files are named `lastname_firstinit_final_project.pptx` and `lastname_firstinit_final_project.pdf` before uploading to Brightspace.
+- [ ] Does it read cleanly top to bottom?
+- [ ] Is your headline takeaway the first thing a reader sees?
+- [ ] Does your "How we measured" callout open, and does it explain your composite score in plain language?
+- [ ] Does every tab header give a quick summary of its finding, and does every tab have a plot and a caption?
+- [ ] Can a reader get the gist of your story from your tab headers alone?
+- [ ] Do the numbers in your text match your plots?
+- [ ] Is there **no code, no warnings, and no messages** anywhere on the page?
+- [ ] Is your page within the word limits (450 words, plus 150 for your "How we measured" callout, or 250 for Project 3)?
+- [ ] Is there anything left over that still sounds like it was written for this class instead of for a general audience (leftover variable names, stats without interpretation, `[placeholder text]` from the template)?
+
+Confirm your files are named `lastname_firstinit_final_project.qmd` and `lastname_firstinit_final_project.html` before uploading to Brightspace.
 
 Check the rubric for all needed items for the final project!

@@ -141,7 +141,7 @@ The labs are meant to scaffold and build the work needed to complete the final p
 
 ::: labs
 | Lab Instructions | Points | Editing file | Rubric | Due Date | Topics |
-|----|----|----|----|----|----|
+|------------|------------|------------|------------|------------|------------|
 | [Lab 1](/project/Lab_01_instructions.qmd) | 20 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26F/blob/main/project/lastname_firstinit_lab_01.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_01_rubric.xlsx)]{style="color:#f8f5f0;"} | `r lab1 %>% format("%m/%d")` | Learn about WBNS + prepare your folders + download data |
 | [Lab 2](/project/Lab_02_instructions.qmd) | 25.5 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26F/blob/main/project/lastname_firstinit_lab_02.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_02_rubric.xlsx)]{style="color:#f8f5f0;"} | `r lab2 %>% format("%m/%d")` | Filter your population + rename variables + explore and handle missing data |
 | [Lab 3](/project/Lab_03_instructions.qmd) | 28.5 | [[{{< iconify mdi edit-box size=30px >}}](https://github.com/nwakim/PUBH_523_26F/blob/main/project/lastname_firstinit_lab_03.qmd)]{style="color:#f8f5f0;"} | [[{{< iconify material-symbols rubric-rounded size=30px >}}](/project/Lab_03_rubric.xlsx)]{style="color:#f8f5f0;"} | `r lab3 %>% format("%m/%d")` | Trim white space + create your composite score + create categories + summarize your data |
@@ -159,5 +159,7 @@ We are going to create an information sheet using the Well-Being and Basic Needs
 
 [{{< iconify material-symbols rubric-rounded size=22px >}} Final Project Rubric](/project/Final_project_rubric.xlsx){.proj-btn .b-green}
 
-[{{< iconify mdi edit-box size=22px >}} Final Project Template](/project/Final_Project_template.pptx){.proj-btn .b-green}
+[{{< iconify mdi edit-box size=22px >}} Final Project Template QMD](/project/Final_Project_template.qmd){.proj-btn .b-green}
+
+[{{< iconify mdi edit-box size=22px >}} Final Project Template HTML](/project/Final_Project_template.qmd){.proj-btn .b-green}
 :::

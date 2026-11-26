@@ -1,0 +1,175 @@
+---
+title: "[Your descriptive title]"
+subtitle: "An information page using the Well-Being and Basic Needs Survey"
+author: "[Your name]"
+date: today
+format:
+  html:
+    theme: cosmo                      # try flatly, lux, minty, united, ...
+    title-block-banner: "#3070BF"     # banner color (match --box-1 in the CSS below)
+    title-block-banner-color: "white" # text color in the banner
+    fig-width: 8                      # default plot width (inches)
+    fig-height: 5                     # default plot height (inches)
+    fig-align: center
+    toc: false
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+<!--
+  FINAL PROJECT TEMPLATE
+  - Replace everything in [square brackets] with your own content.
+  - Text between these arrows is a comment: it won't show up on your page.
+    You can delete the comments when you're done.
+  - Render early and often! Open the .html in your web browser to check it.
+  - Word limits: 450 words for the page (not counting the "How we measured"
+    callout, text in plots, the WBNS citation, or the AI Use Statement), and
+    150 words for the "How we measured" callout (250 for Project 3).
+-->
+
+```{css}
+/* ---- Page styling (optional to change) ----------------------------------
+   Change the three colors below to restyle every box at once.
+   Colors are hex codes. These match our course colors. */
+:root {
+  --box-1: #3070BF;   /* blue  */
+  --box-2: #367B79;   /* green */
+  --box-3: #BF396F;   /* pink  */
+}
+
+/* Boxes like the lesson notes: a colored outline with a colored title bar.
+   Use them with ::: blue-box, ::: green-box, or ::: pink-box */
+.blue-box  { --box: var(--box-1); }
+.green-box { --box: var(--box-2); }
+.pink-box  { --box: var(--box-3); }
+.blue-box, .green-box, .pink-box {
+  border: 3px solid var(--box);
+  border-radius: 10px;
+  padding: 0 16px 8px 16px;
+  margin: 1.5em 0;
+}
+.blue-box > h3, .green-box > h3, .pink-box > h3 {
+  background-color: var(--box);
+  color: white;
+  margin: 0 -16px 12px -16px;
+  padding: 0.4em 0.75em;
+  border-radius: 7px 7px 0 0;
+  border-bottom: none;
+}
+.blue-box strong, .green-box strong, .pink-box strong { color: var(--box); }
+
+/* Smaller, gray text for the data source and AI statement */
+.fine-print { font-size: 0.85em; color: #6c757d; }
+```
+
+```{r}
+#| include: false
+
+# Load your packages (add any others you need)
+pacman::p_load(
+  here,
+  rio,
+  tidyverse,
+  janitor,
+  naniar,
+  scales
+)
+```
+
+```{r}
+#| include: false
+
+# Import your data from Lab 3 (EDIT the file name to match yours)
+
+# Repeat any cleaning from Lab 4 that your findings need
+# (for example, drop_na() on your _cat variable(s), or making finding3_clean)
+
+```
+
+```{r}
+#| include: false
+
+# Calculate the numbers for your text here, then use them with inline code.
+# For example:
+#   n_total <- nrow(wbns_06_cat) |> comma()
+#   pct_something <- mean(wbns_06_cat$your_variable == "Your category") |>
+#     percent(accuracy = 1)
+
+```
+
+::: green-box
+#### The bottom line
+
+[Your one-sentence headline takeaway: the single most important thing a reader should remember.]
+:::
+
+::: blue-box
+### Why this matters
+
+[1-3 sentences: what is the Well-Being and Basic Needs Survey, and why does your topic matter? Draw on your Lab 1 motivation.]
+:::
+
+::: blue-box
+### Who we looked at
+
+[1-3 sentences describing your population in plain language, with your final sample size from inline code. No variable names or question codes.]
+:::
+
+::: green-box
+### What we found
+
+::: {.callout-note collapse="true"}
+#### How we measured [your composite score, in plain language]
+
+[Which survey questions went into your score (in words), how the answers were scored, the range of the score and what a high score means, and how you grouped scores into the categories you see in the plots. Project 3: explain both of your scores.]
+:::
+
+<!-- Each tab header: the finding number, a colon, and a quick summary (3-6 words) of what you found. Example: "### Finding 1: Most were food insecure" -->
+
+::: {.panel-tabset .nav-pills}
+#### Finding 1: [quick summary of Finding 1]
+
+```{r}
+# Finding 1: one main variable on its own
+# (your Lab 4 code for finding1_data and finding1_plot, then print the plot)
+
+```
+
+[1-3 sentence caption: state a number, then say what it means.]
+
+#### Finding 2: [quick summary of Finding 2]
+
+```{r}
+# Finding 2: the relationship between your two main variables
+# (your Lab 4 code for finding2_data and finding2_plot, then print the plot)
+
+```
+
+[1-3 sentence caption comparing the groups on your x-axis, with numbers. Descriptive, not causal.]
+
+#### Finding 3: [quick summary of Finding 3]
+
+<!-- Finding 3 is optional. If you're not including it, delete this whole tab (from "### Finding 3" down to just above the ":::" that closes the tabset). -->
+
+```{r}
+# Finding 3 (optional): one main variable + one additional variable
+# (your Lab 4 code for finding3_data and finding3_plot, then print the plot)
+
+```
+
+[1-3 sentence caption comparing the groups, with numbers.]
+:::
+:::
+
+::: pink-box
+### So what?
+
+[1-3 sentences connecting your findings back to your project question. What might your findings suggest is worth a closer look for programs or policy?]
+:::
+
+**Data source and limitations:** [Cite the WBNS (use "Cite this study" on the ICPSR page). Name at least one honest limitation of your analysis.]
+
+**AI Use Statement:** [Say whether you used AI, and if so, how. If not: "AI was not used in this assignment."]
